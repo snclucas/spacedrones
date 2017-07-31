@@ -23,7 +23,7 @@ public class Archive  extends HashMap<String, DataRecord> {
 		
 		Predicate<DataRecord> predicate = value -> value.equals(type);
 		
-		return (Map<String, DataRecord>) entrySet().stream()
+		return entrySet().stream()
 				.filter(entry -> predicate.test(entry.getValue()))
 				.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 	}

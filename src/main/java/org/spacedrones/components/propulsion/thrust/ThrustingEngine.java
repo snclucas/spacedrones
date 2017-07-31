@@ -9,7 +9,7 @@ import org.spacedrones.spacecraft.BusRequirement;
 
 public interface ThrustingEngine extends Engine {
 	
-	public static TypeInfo type() {
+	static TypeInfo type() {
 		return new TypeInfo("ThrustingEngine");
 	}
 	

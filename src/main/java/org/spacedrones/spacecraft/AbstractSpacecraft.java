@@ -110,8 +110,8 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	public void addComponent(SpacecraftBusComponent component) {
 		if(component instanceof SpacecraftBusComponent == false)
 			throw new ComponentConfigurationException("Cano only add SpacecraftBusComponents");
-		bus.addComponent((SpacecraftBusComponent)component);
-		((SpacecraftBusComponent)component).registerWithBus(bus);
+		bus.addComponent(component);
+		component.registerWithBus(bus);
 	}
 	
 	

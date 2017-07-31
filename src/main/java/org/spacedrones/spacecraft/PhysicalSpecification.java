@@ -163,11 +163,9 @@ public class PhysicalSpecification {
 		if (Double.doubleToLongBits(volume) != Double
 				.doubleToLongBits(other.volume))
 			return false;
-		if (Double.doubleToLongBits(width) != Double
-				.doubleToLongBits(other.width))
-			return false;
-		return true;
-	}
+    return Double.doubleToLongBits(width) == Double
+            .doubleToLongBits(other.width);
+  }
 	
 	
 	

@@ -46,7 +46,7 @@ public class SystemMessageService extends AbstractSoftware implements MessageMed
 		int componentIndex = registeredComponents.indexOf(component);
 		boolean componentIsRegistered = componentIndex != -1;
 		if(componentIsRegistered)
-			return ((BusCommunicator)registeredComponents.get(componentIndex)).recieveBusMessage(message);
+			return registeredComponents.get(componentIndex).recieveBusMessage(message);
 		else
 			return new SystemMessage(null, null, "Component not registered", getSystemComputer().getUniversalTime());
 	}
@@ -56,7 +56,7 @@ public class SystemMessageService extends AbstractSoftware implements MessageMed
 	public Map<String, Message> broadcastMessage(Message message) {
 		Map<String, Message> replies = new HashMap<String, Message>();
 		for(SpacecraftBusComponent component : registeredComponents) {
-			replies.put(component.getIdent(), ((BusCommunicator)component).recieveBusMessage(message));
+			replies.put(component.getIdent(), component.recieveBusMessage(message));
 		}
 		return replies;
 	}

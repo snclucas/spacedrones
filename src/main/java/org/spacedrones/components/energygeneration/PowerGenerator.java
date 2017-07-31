@@ -5,11 +5,11 @@ import org.spacedrones.components.TypeInfo;
 
 public interface PowerGenerator extends SpacecraftBusComponent{
 	
-	public static TypeInfo category() {
+	static TypeInfo category() {
 		return new TypeInfo("PowerGenerator");
 	}
 	
-	public double getPowerOutput();
-	public double getMaximumPowerOutput();
+	double getPowerOutput();
+	double getMaximumPowerOutput();
 
 }

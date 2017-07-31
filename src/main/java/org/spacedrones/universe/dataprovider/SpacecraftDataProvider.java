@@ -8,8 +8,9 @@ import org.spacedrones.spacecraft.Spacecraft;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.Location;
 
-public interface UniverseSpacecraftLocationDataProvider {
-	Map<String,Spacecraft> getSpacecraft();
+public interface SpacecraftDataProvider {
+	Map<String,Spacecraft> getAllSpacecraft();
+	Spacecraft getSpacecraftByIdent(String ident);
 	void addSpacecraft(Spacecraft spacecraft, Coordinates coordinates);
 	void updateSpacecraftLocation(String spacecraftIdent, Coordinates coordinates);	
 	void updateSpacecraftLocation(String spacecraftIdent, Location location);

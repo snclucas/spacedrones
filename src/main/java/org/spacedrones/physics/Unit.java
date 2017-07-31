@@ -53,6 +53,7 @@ public class Unit {
 	public static Unit m = new Unit(1.0, Type.LENGTH, "m");
 	public static Unit Km = new Unit(1.0e3, Type.LENGTH, "Km");
 	public static Unit Ly = new Unit(9460730472580800.0, Type.LENGTH, "Ly");
+	public static Unit kLy = new Unit(1.0e3 * Unit.Ly.value(), Type.LENGTH, "kLy");
 	public static Unit Pc = new Unit(3.2615679661840633266036314297735 * Unit.Ly.value(), Type.LENGTH, "Pc");
 	public static Unit kPc = new Unit(1.0e3 * Unit.Pc.value(), Type.LENGTH, "kPc");
 	public static Unit AU = new Unit(1.49597870700e11 * Unit.m.value(), Type.LENGTH, "AU");

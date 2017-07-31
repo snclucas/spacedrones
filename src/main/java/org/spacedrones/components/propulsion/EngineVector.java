@@ -63,10 +63,8 @@ public class EngineVector {
 		if (obj == null)
 			return false;
 		EngineVector other = (EngineVector) obj;
-		if (!Arrays.equals(vectorComponents, other.vectorComponents))
-			return false;
-		return true;
-	}
+    return Arrays.equals(vectorComponents, other.vectorComponents);
+  }
 
 
 	

@@ -24,8 +24,8 @@ public class Physics {
 	
 	public static BigDecimal distanceToSubspaceSignalDispersion(BigDecimal distance) {
 		BigDecimal index = new BigDecimal(2.0).setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP);
-		BigDecimal tenpc = new BigDecimal(10.0 * Unit.Pc.value()).setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP);;
-		return BigDecimalMath.pow(distance.divide(tenpc, new MathContext(Configuration.precision, RoundingMode.HALF_DOWN)), index);
+		BigDecimal tenpc = new BigDecimal(10.0 * Unit.Pc.value()).setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP);
+    return BigDecimalMath.pow(distance.divide(tenpc, new MathContext(Configuration.precision, RoundingMode.HALF_DOWN)), index);
 	}
 	
 	public static double dBm2W(double power_dBm) {

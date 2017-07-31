@@ -2,6 +2,7 @@ package org.spacedrones.game;
 
 import java.math.BigDecimal;
 
+import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.Spacecraft;
 import org.spacedrones.spacecraft.SpacecraftFactory;
 import org.spacedrones.universe.Coordinates;
@@ -14,19 +15,19 @@ public class GameRunner {
 	private int lastFpsTime;
 	private int fps;
 
-	public GameRunner(Universe universe) {
+	public GameRunner(Universe universe, Runner runner) {
 		gameRunning = true;
-		gameLoop(universe);
+		gameLoop(universe, runner);
 	}
 
 
-	public void gameLoop(Universe universe)
+	public void gameLoop(Universe universe, Runner runner)
 	{
 		 
 		
 		
 		long lastLoopTime = System.nanoTime();
-		final int TARGET_FPS = 10;
+		final int TARGET_FPS = 1;
 		final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;   
 
 		// keep looping round til the game ends
@@ -59,7 +60,7 @@ public class GameRunner {
 
 			// draw everything
             universe.tick();
-
+			runner.tick(delta);
 
 			// we want each frame to take 10 milliseconds, to do this
 			// we've recorded when we started the frame. We add 10 milliseconds
@@ -90,15 +91,16 @@ public class GameRunner {
 		
 		Universe universe = Universe.getInstance();
 		Spacecraft simpleSpacecraft = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SHUTTLE);
-		Coordinates coords = new Coordinates(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
+		Coordinates coords = new Coordinates(BigDecimal.ZERO, new BigDecimal(1* Unit.Ly.value()), BigDecimal.ZERO);
 		universe.addSpacecraft(simpleSpacecraft, coords);
 
+		universe.updateSpacecraftVelocity(simpleSpacecraft.getIdent(), new double[]{1.5e4, 4.2e10, 23.8e2});
 
 
 		Runner runner = new Runner();
-		runner.addManager(new SpacecraftMotionManager(universe));
+		runner.addManager(new SpacecraftManager(universe));
 		
-		new GameRunner(universe);
+		new GameRunner(universe, runner);
 	}
 
 }

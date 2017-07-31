@@ -1,6 +1,7 @@
 package org.spacedrones.universe;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 
 import org.spacedrones.Configuration;
@@ -41,22 +42,18 @@ public class Coordinates {
 	
 	
 	public Coordinates add(Coordinates coordinates) {
-		return new Coordinates( 
-				new BigDecimal[]{
-						this.location[0].add(coordinates.get(0)), 
-						this.location[1].add(coordinates.get(1)), 
-						this.location[2].add(coordinates.get(2))
-						});
+		return new Coordinates(
+						this.location[0].add(coordinates.get(0)),
+						this.location[1].add(coordinates.get(1)),
+						this.location[2].add(coordinates.get(2)));
 	}
 	
 	
 	public Coordinates addDistance(BigDecimal[] distance) {
-		return new Coordinates( 
-				new BigDecimal[]{
-						this.location[0].add(distance[0]), 
-						this.location[1].add(distance[1]), 
-						this.location[2].add(distance[2])
-						});
+		return new Coordinates(
+						this.location[0].add(distance[0]),
+						this.location[1].add(distance[1]),
+						this.location[2].add(distance[2]));
 	}
 	
 
@@ -71,29 +68,29 @@ public class Coordinates {
 
 	@Override
 	public boolean equals(Object obj) {
+	  if(this.getClass() != obj.getClass())
+	    return false;
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
 		Coordinates other = (Coordinates) obj;
-		if (!Arrays.equals(location, other.location))
-			return false;
-		return true;
-	}
+    return Arrays.equals(location, other.location);
+  }
 
 	@Override
 	public String toString() {
-		String location0 = location[0].toString();
-		if(location[0].compareTo(new BigDecimal(1* Unit.Ly.value()))>0)
-			location0 = (location[0].divide(new BigDecimal(1.0*Unit.Ly.value()), Configuration.mc)).toString() + "Ly";
-		String location1 = location[1].toString();
-		if(location[1].compareTo(new BigDecimal(1* Unit.Ly.value()))>0)
-			location1 = (location[1].divide(new BigDecimal(1.0*Unit.Ly.value()), Configuration.mc)).toString() + "Ly";
-		String location2 = location[2].toString();
-		if(location[2].compareTo(new BigDecimal(1* Unit.Ly.value()))>0)
-			location2 = (location[2].divide(new BigDecimal(1.0*Unit.Ly.value()), Configuration.mc)).toString() + "Ly";
-		
-		return location0 + ", " + location1 + ", " + location2;
+		return formatCoordinateOutput(location[0]) + ", " + formatCoordinateOutput(location[1]) + ", " + formatCoordinateOutput(location[2]);
+	}
+
+
+	private String formatCoordinateOutput(BigDecimal location) {
+	  if(location.compareTo(new BigDecimal(1000* Unit.kLy.value()))>0)
+      return (location.divide(new BigDecimal(1.0*Unit.kLy.value()), Configuration.mc)).setScale(2, RoundingMode.CEILING).toEngineeringString() + " kLy";
+    else if(location.compareTo(new BigDecimal(.1* Unit.Ly.value()))>0)
+      return (location.divide(new BigDecimal(1.0*Unit.Ly.value()), Configuration.mc)).setScale(8, RoundingMode.CEILING).toEngineeringString() + " Ly";
+		else if(location.compareTo(new BigDecimal(1* Unit.Km.value()))>0)
+			return (location.divide(new BigDecimal(1.0*Unit.Km.value()), Configuration.mc)).setScale(2, RoundingMode.CEILING).toEngineeringString() + " Km";
+		else
+			return location.toEngineeringString();
 	}
 	
 

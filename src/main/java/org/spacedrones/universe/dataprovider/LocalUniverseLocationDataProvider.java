@@ -67,7 +67,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 		Iterator<Entry<String, CelestialObject>> it = celestialObjectLocations.entrySet().iterator();
 		while (it.hasNext()) {
 			CelestialObject loc = it.next().getValue();
-			if(type == (((CelestialObject)loc).getType()))
+			if(type == (loc.getType()))
 				locations.add(loc);
 		}
 		return locations;
@@ -83,7 +83,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 		Iterator<Entry<String, CelestialObject>> it = celestialObjectLocations.entrySet().iterator();
 		while (it.hasNext()) {
 			CelestialObject loc = it.next().getValue();
-			if(category == (((CelestialObject)loc).getCategory()))
+			if(category == (loc.getCategory()))
 				locations.add(loc);
 		}
 		return celestialObjectLocations.entrySet().stream()
@@ -100,7 +100,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 		Iterator<Entry<String, CelestialObject>> it = celestialObjectLocations.entrySet().iterator();
 		while (it.hasNext()) {
 			CelestialObject loc = it.next().getValue();
-			if(type == (((CelestialObject)loc).getType()))
+			if(type == (loc.getType()))
 				if( Utils.distanceToLocation(loc.getCoordinates(), coordinates, Unit.One).compareTo(distance) <= 0)
 					locations.add(loc);
 		}

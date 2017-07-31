@@ -5,7 +5,7 @@ import org.spacedrones.components.Identifiable;
 import org.spacedrones.components.TypeInfo;
 
 public class SystemData implements Identifiable {
-	
+
 	private final String tag;
 	private final String data;
 	

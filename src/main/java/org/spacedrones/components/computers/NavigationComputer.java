@@ -9,11 +9,11 @@ import org.spacedrones.universe.celestialobjects.CelestialObject;
 
 public interface NavigationComputer extends Computer  {
 
-	public Coordinates getCurrentLocation();
+	Coordinates getCurrentLocation();
 	
-	public SystemStatusMessage updateCurrentLocation();
+	SystemStatusMessage updateCurrentLocation();
 	
-	public BigDecimal getDistanceToCoordinates(Coordinates location);
+	BigDecimal getDistanceToCoordinates(Coordinates location);
 	
 	//CelestialObject getCelestialObjectFromDatabase(int indent);
 	

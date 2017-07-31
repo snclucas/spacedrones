@@ -13,7 +13,7 @@ public interface DataStore {
 	DataRecord getData(String id, TypeInfo typeInfo);
 	Map<String, DataRecord> getData(TypeInfo typeInfo);
 	
-	public Map<String,DataRecord> getData(TypeInfo category, TypeInfo ... subType);
+	Map<String,DataRecord> getData(TypeInfo category, TypeInfo... subType);
 	
 	void saveData(Identifiable ... data);
 	void saveData(List<? extends Identifiable> data);

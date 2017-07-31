@@ -52,11 +52,8 @@ public class NavigationVector {
 			return false;
 		if(this.vectorComponents[1].compareTo(other.vectorComponents[1]) !=0)
 			return false;
-		if(this.vectorComponents[2].compareTo(other.vectorComponents[2]) !=0)
-			return false;
-		
-		return true;
-	}
+    return this.vectorComponents[2].compareTo(other.vectorComponents[2]) == 0;
+  }
 	
 	
 	

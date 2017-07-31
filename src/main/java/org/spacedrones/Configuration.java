@@ -11,15 +11,13 @@ import org.spacedrones.data.EnvironmentDataProvider;
 import org.spacedrones.data.LocalEnvironmentDataProvider;
 import org.spacedrones.data.LocalMaterialDataProvider;
 import org.spacedrones.data.LocalPhysicsDataProvider;
-import org.spacedrones.data.LocalSpacecraftDataProvider;
 import org.spacedrones.data.MaterialDataProvider;
 import org.spacedrones.data.PhysicsDataProvider;
-import org.spacedrones.data.SpacecraftDataProvider;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.universe.dataprovider.LocalUniverseLocationDataProvider;
-import org.spacedrones.universe.dataprovider.LocalUniverseSpacecraftDataProvider;
+import org.spacedrones.universe.dataprovider.LocalSpacecraftDataProvider;
 import org.spacedrones.universe.dataprovider.UniverseLocationDataProvider;
-import org.spacedrones.universe.dataprovider.UniverseSpacecraftLocationDataProvider;
+import org.spacedrones.universe.dataprovider.SpacecraftDataProvider;
 
 public class Configuration {
 
@@ -41,8 +39,8 @@ public class Configuration {
 	}
 	
 	
-	public static UniverseSpacecraftLocationDataProvider getUniverseSpacecraftLocationDataProvider() {
-		return new LocalUniverseSpacecraftDataProvider();
+	public static SpacecraftDataProvider getUniverseSpacecraftLocationDataProvider() {
+		return new LocalSpacecraftDataProvider();
 	}
 	
 	
@@ -55,8 +53,8 @@ public class Configuration {
 	}
 	
 	
-	public static SpacecraftDataProvider getSpacecraftDataProvider() {
-		return new LocalSpacecraftDataProvider();
+	public static org.spacedrones.data.SpacecraftDataProvider getSpacecraftDataProvider() {
+		return new org.spacedrones.data.LocalSpacecraftDataProvider();
 	}
 	
 	

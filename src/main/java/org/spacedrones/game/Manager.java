@@ -3,6 +3,6 @@ package org.spacedrones.game;
 
 public interface Manager {
 
-  void run(double dt);
+  void tick(double dt);
 
 }

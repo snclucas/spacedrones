@@ -72,7 +72,7 @@ public class SpacecraftFactory {
 			
 			FuelConsumingEngine engine = (FuelConsumingEngine)EngineFactory.getEngine(SimpleThruster.type(), false);
 			engine.setFuelSubSystem(fuelDeliverySystem);
-			spacecraft.addComponent((SpacecraftBusComponent)engine);
+			spacecraft.addComponent(engine);
 			
 			CommunicationComponent commDevice = CommunicatorDeviceFactory.getCommunicator(RadioCommunicator.type());
 			spacecraft.addComponent(commDevice);

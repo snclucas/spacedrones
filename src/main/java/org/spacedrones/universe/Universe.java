@@ -20,14 +20,14 @@ import org.spacedrones.universe.celestialobjects.SensorSignalResponseLibrary;
 import org.spacedrones.universe.celestialobjects.SensorSignalResponseProfile;
 import org.spacedrones.universe.celestialobjects.Star;
 import org.spacedrones.universe.dataprovider.UniverseLocationDataProvider;
-import org.spacedrones.universe.dataprovider.UniverseSpacecraftLocationDataProvider;
+import org.spacedrones.universe.dataprovider.SpacecraftDataProvider;
 import org.spacedrones.universe.structures.SubspaceBeacon;
 
 public class Universe implements UniverseLocationDataProvider,
-		UniverseSpacecraftLocationDataProvider, EnvironmentDataProvider, Tickable {
+		SpacecraftDataProvider, EnvironmentDataProvider, Tickable {
 
 	private UniverseLocationDataProvider universeLocationDataProvider = Configuration.getUniverseLocationDataProvider();
-	private UniverseSpacecraftLocationDataProvider universeSpacecraftLocationDataProvider = Configuration.getUniverseSpacecraftLocationDataProvider();
+	private SpacecraftDataProvider spacecraftDataProvider = Configuration.getUniverseSpacecraftLocationDataProvider();
 	private EnvironmentDataProvider universeEnvironmentDataProvider = Configuration.getEnvironmentDataProvider();
 
 	
@@ -77,22 +77,22 @@ public class Universe implements UniverseLocationDataProvider,
 
 
 	public void addSpacecraft(Spacecraft spacecraft, Coordinates coordinates) {
-		universeSpacecraftLocationDataProvider.addSpacecraft(spacecraft, coordinates);
+		spacecraftDataProvider.addSpacecraft(spacecraft, coordinates);
 	}
 
 
 	public void updateSpacecraftLocation(String spacecraftIdent, Coordinates coordinates) {
-		universeSpacecraftLocationDataProvider.updateSpacecraftLocation(spacecraftIdent, coordinates);
+		spacecraftDataProvider.updateSpacecraftLocation(spacecraftIdent, coordinates);
 	}
 
 
 	public void updateSpacecraftLocation(String spacecraftIdent, Location location) {
-		universeSpacecraftLocationDataProvider.updateSpacecraftLocation(spacecraftIdent, location.getCoordinates());
+		spacecraftDataProvider.updateSpacecraftLocation(spacecraftIdent, location.getCoordinates());
 	}
 
 
 	public Coordinates getSpacecraftLocation(String spacecraftIdent) {
-		return universeSpacecraftLocationDataProvider.getSpacecraftLocation(spacecraftIdent);
+		return spacecraftDataProvider.getSpacecraftLocation(spacecraftIdent);
 	}
 
 
@@ -164,6 +164,10 @@ public class Universe implements UniverseLocationDataProvider,
 	}
 
 
+	@Override
+	public Spacecraft getSpacecraftByIdent(String ident) {
+		return spacecraftDataProvider.getSpacecraftByIdent(ident);
+	}
 
 	public long getUniversalTime() {
 		return System.currentTimeMillis();
@@ -175,45 +179,12 @@ public class Universe implements UniverseLocationDataProvider,
 
 	@Override
 	public void tick() {
-		List<Spacecraft> col = universeSpacecraftLocationDataProvider.getSpacecraft()
+		List<Spacecraft> col = spacecraftDataProvider.getAllSpacecraft()
 				.entrySet().stream()
 				.map(x -> x.getValue()).collect(Collectors.toList());
 		col.stream().forEach(Spacecraft::tick);
 
-		//Move the spacecraft
-		for(Spacecraft spacecraft : universeSpacecraftLocationDataProvider.getSpacecraft().values()) {
-			spacecraft.tick();
-			Coordinates currentLocation = universeSpacecraftLocationDataProvider.getSpacecraftLocation(spacecraft.getIdent());
-			double[] currentVelocity = universeSpacecraftLocationDataProvider.getSpacecraftVelocity(spacecraft.getIdent());
 
-			double[] dV = new double[]{0.0, 0.0, 0.0};
-			List<SpacecraftBusComponent> components = spacecraft.getSpacecraftBus().findComponentByType(ThrustingEngine.type());
-			for(SpacecraftBusComponent component : components) {
-				double[] thrust = ((ThrustingEngine) component).getThrust(currentVelocity);
-				dV[0] += thrust[0] / spacecraft.getMass(Unit.kg) * 1 * Unit.s.value();
-				dV[1] += thrust[1] / spacecraft.getMass(Unit.kg) * 1 * Unit.s.value();
-				dV[2] += thrust[2] / spacecraft.getMass(Unit.kg) * 1 * Unit.s.value();
-			};
-			double[] newVelocity = new double[]{
-					currentVelocity[0] + dV[0],currentVelocity[1] + dV[1],currentVelocity[2] + dV[2]
-			};
-			
-			double[] translation = new double[]{
-					currentVelocity[0] * 1 * Unit.s.value(),currentVelocity[1] * 1 * Unit.s.value(),currentVelocity[2] * 1 * Unit.s.value()
-			};
-			
-			currentLocation.addDistance(new BigDecimal[]{
-					new BigDecimal(translation[0]),
-					new BigDecimal(translation[1]),
-					new BigDecimal(translation[2])
-			});
-			
-			universeSpacecraftLocationDataProvider.updateSpacecraftLocation(spacecraft.getIdent(), currentLocation);
-			universeSpacecraftLocationDataProvider.updateSpacecraftVelocity(spacecraft.getIdent(), newVelocity);
-			
-			
-			System.out.println(currentLocation);
-		}
 
 	}
 
@@ -250,32 +221,32 @@ public class Universe implements UniverseLocationDataProvider,
 
 
 	@Override
-	public Map<String, Spacecraft> getSpacecraft() {
-		return universeSpacecraftLocationDataProvider.getSpacecraft();
+	public Map<String, Spacecraft> getAllSpacecraft() {
+		return spacecraftDataProvider.getAllSpacecraft();
 	}
 
 
 	@Override
 	public double[] getSpacecraftVelocity(String spacecraftIdent) {
-		return universeSpacecraftLocationDataProvider.getSpacecraftVelocity(spacecraftIdent);
+		return spacecraftDataProvider.getSpacecraftVelocity(spacecraftIdent);
 	}
 
 
 	@Override
 	public void updateSpacecraftVelocity(String spacecraftIdent, double[] velocity) {
-		universeSpacecraftLocationDataProvider.updateSpacecraftVelocity(spacecraftIdent, velocity);
+		spacecraftDataProvider.updateSpacecraftVelocity(spacecraftIdent, velocity);
 	}
 
 
 	@Override
 	public BigDecimal getDistanceBetweenTwoSpacecraft(String spacecraftIdent1, String spacecraftIdent2, Unit unit) {
-		return universeSpacecraftLocationDataProvider.getDistanceBetweenTwoSpacecraft(spacecraftIdent1, spacecraftIdent2, unit);
+		return spacecraftDataProvider.getDistanceBetweenTwoSpacecraft(spacecraftIdent1, spacecraftIdent2, unit);
 	}
 
 
 	@Override
 	public Map<String, Coordinates> getSpacecraftWithinRangeOfLocation(Location location, BigDecimal range) {
-		return universeSpacecraftLocationDataProvider.getSpacecraftWithinRangeOfLocation(location, range);
+		return spacecraftDataProvider.getSpacecraftWithinRangeOfLocation(location, range);
 	}
 
 

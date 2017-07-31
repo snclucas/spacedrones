@@ -55,7 +55,7 @@ public class SpacecraftFirmware {
 	static List<SystemStatusMessage> scanSpacecraftComponents(Bus bus) {
 		List<SystemStatusMessage> systemStatusMessages = new ArrayList<>();
 		for(SpacecraftBusComponent component : bus.getComponents())
-			((SpacecraftBusComponent)component).accept(bus);
+			component.accept(bus);
 		return systemStatusMessages;
 	}
 
@@ -130,7 +130,7 @@ public class SpacecraftFirmware {
 
 	
 	public static double getTotalCurrentCPUThroughput(Bus bus, Unit unit) {
-		return bus.getComponents().stream().mapToDouble(d->((SpacecraftBusComponent)d).getCurrentCPUThroughput(unit)).sum();
+		return bus.getComponents().stream().mapToDouble(d-> d.getCurrentCPUThroughput(unit)).sum();
 	}
 
 }

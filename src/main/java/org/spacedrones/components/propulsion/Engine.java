@@ -7,11 +7,11 @@ import org.spacedrones.components.TypeInfo;
 
 public interface Engine extends SpacecraftBusComponent, Executable, BusCommunicator {
 	
-	public static TypeInfo category() {
+	static TypeInfo category() {
 		return new TypeInfo("Engine");
 	}
 	
-	public static TypeInfo type() {
+	static TypeInfo type() {
 		return new TypeInfo("Engine");
 	}
 		

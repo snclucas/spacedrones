@@ -119,8 +119,8 @@ public class DistanceSolver {
 
 
 		//int index[] = new int[n];
-		for (int i=0; i<n; ++i) b[i][i] = new BigDecimal("1").setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP);;
-		// Transform the matrix into an upper triangle
+		for (int i=0; i<n; ++i) b[i][i] = new BigDecimal("1").setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP);
+    // Transform the matrix into an upper triangle
 		gaussian(a, index);
 		// Update the matrix b[i][j] with the ratios stored
 		for (int i=0; i<n-1; ++i)
@@ -151,8 +151,8 @@ public class DistanceSolver {
 		for (int i=0; i<n; ++i) index[i] = i;
 		// Find the rescaling factors, one from each row
 		for (int i=0; i<n; ++i) {
-			BigDecimal c1 = new BigDecimal("0").setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP);;
-			for (int j=0; j<n; ++j) {
+			BigDecimal c1 = new BigDecimal("0").setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP);
+      for (int j=0; j<n; ++j) {
 				BigDecimal c0 = (a[i][j]).abs(mc);
 				if (c0.compareTo(c1)>0) c1 = c0;
 			}
@@ -161,8 +161,8 @@ public class DistanceSolver {
 		// Search the pivoting element from each column
 		int k = 0;
 		for (int j=0; j<n-1; ++j) {
-			BigDecimal pi1 = new BigDecimal("0").setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP);;
-			for (int i=j; i<n; ++i) {
+			BigDecimal pi1 = new BigDecimal("0").setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP);
+      for (int i=j; i<n; ++i) {
 				BigDecimal pi0 =a[index[i]][j].abs(mc);
 				pi0 =pi0.divide(c[index[i]], mc);
 				if (pi0.compareTo (pi1) >0) {

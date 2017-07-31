@@ -12,8 +12,8 @@ public class Runner {
     managers.add(manager);
   }
 
-  public void run(double dt) {
-    managers.forEach(m -> m.run(dt));
+  public void tick(double dt) {
+    managers.forEach(m -> m.tick(dt));
   }
 
 }

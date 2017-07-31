@@ -8,7 +8,7 @@ import org.spacedrones.components.TypeInfo;
 
 public interface CommunicationComponent extends SpacecraftBusComponent, BusCommunicator {
 	
-	public static TypeInfo categoryID = new TypeInfo("CommunicationDevice");
+	TypeInfo categoryID = new TypeInfo("CommunicationDevice");
 	
 	int TYPE = "Communication device".hashCode();
 	

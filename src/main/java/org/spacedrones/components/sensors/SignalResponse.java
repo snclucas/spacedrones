@@ -45,11 +45,9 @@ public class SignalResponse {
 		if (Double.doubleToLongBits(signalDispersion) != Double
 				.doubleToLongBits(other.signalDispersion))
 			return false;
-		if (Double.doubleToLongBits(signalStrength) != Double
-				.doubleToLongBits(other.signalStrength))
-			return false;
-		return true;
-	}
+    return Double.doubleToLongBits(signalStrength) == Double
+            .doubleToLongBits(other.signalStrength);
+  }
 	
 	
 	

@@ -125,11 +125,9 @@ public class OperationalSpecification {
 		if (Double.doubleToLongBits(nominalCPUThroughout) != Double
 				.doubleToLongBits(other.nominalCPUThroughout))
 			return false;
-		if (Double.doubleToLongBits(nominalPower) != Double
-				.doubleToLongBits(other.nominalPower))
-			return false;
-		return true;
-	}
+    return Double.doubleToLongBits(nominalPower) == Double
+            .doubleToLongBits(other.nominalPower);
+  }
 	
 	
 
