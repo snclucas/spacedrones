@@ -37,7 +37,7 @@ public abstract class AbstractReactor extends AbstractPowerGenerator implements 
 				if( ((FuelSubSystem)component).getFuelSubsystemType() == FuelSubSystem.PROPULSION_FUEL_SUBSYSTEM) {
 					systemStatus.addSystemMessage("Propulsion fuel subsystem found", getUniversalTime(), Status.OK);
 					FuelSubSystem fuelSubSystem = (FuelSubSystem)busComponents.get(0);
-					if(fuelSubSystem.hasFuelTanks() == false)
+					if(!fuelSubSystem.hasFuelTanks())
 						systemStatus.addSystemMessage("No fuel storage tanks found", 
 								getUniversalTime(), Status.WARNING);
 					else

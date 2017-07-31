@@ -29,9 +29,9 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 	
 
 	@Override
-	public double getCurrentPower() {
+	public double getCurrentPower(Unit unit) {
 		// Nominal and operation power are the same for this hull
-		return getNominalPower();
+		return getNominalPower(unit);
 	}
 	
 	@Override
@@ -43,9 +43,9 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 	
 
 	@Override
-	public double getCurrentCPUThroughput() {
+	public double getCurrentCPUThroughput(Unit unit) {
 		// Nominal and operation CPU are the same for this hull
-		return getNominalCPUThroughput();
+		return getNominalCPUThroughput(unit);
 	}
 
 

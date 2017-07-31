@@ -12,6 +12,7 @@ import org.spacedrones.components.comms.CommunicationComponent;
 import org.spacedrones.components.computers.SystemComputer;
 import org.spacedrones.components.energygeneration.PowerGenerator;
 import org.spacedrones.components.propulsion.Engine;
+import org.spacedrones.physics.Unit;
 import org.spacedrones.status.SystemStatusMessage;
 
 public class SpacecraftFirmware {
@@ -27,14 +28,14 @@ public class SpacecraftFirmware {
 	}
 	
 	
-	public static List<SpacecraftBusComponent> findBusComponentByCategory(Bus bus, TypeInfo componentCategory) {
+	static List<SpacecraftBusComponent> findBusComponentByCategory(Bus bus, TypeInfo componentCategory) {
 		return bus.getComponents().stream()
 				 .filter(x->x.getCategory().toString().equals(componentCategory.toString()))
 				 .collect(Collectors.toList());
 	}
 	
 	
-	public static List<SpacecraftBusComponent> findBusComponentByType(Bus bus, TypeInfo componentType) {
+	static List<SpacecraftBusComponent> findBusComponentByType(Bus bus, TypeInfo componentType) {
 		return bus.getComponents().stream()
 				 .filter(x->x.getType().toString().equals(componentType.toString()))
 				 .collect(Collectors.toList());
@@ -51,16 +52,16 @@ public class SpacecraftFirmware {
 	}
 
 
-	public static List<SystemStatusMessage> scanSpacecraftComponents(Bus bus) {
-		List<SystemStatusMessage> systemStatusMessages = new ArrayList<SystemStatusMessage>();
-		for(Component component : bus.getComponents())
+	static List<SystemStatusMessage> scanSpacecraftComponents(Bus bus) {
+		List<SystemStatusMessage> systemStatusMessages = new ArrayList<>();
+		for(SpacecraftBusComponent component : bus.getComponents())
 			((SpacecraftBusComponent)component).accept(bus);
 		return systemStatusMessages;
 	}
 
 
 	public static List<SystemComputer> getComputers(Bus bus) {
-		List<SystemComputer> computers = new ArrayList<SystemComputer>();		
+		List<SystemComputer> computers = new ArrayList<>();
 		for(SpacecraftBusComponent component : bus.getComponents())
 			if(component instanceof SystemComputer)
 				computers.add((SystemComputer)component);
@@ -70,7 +71,7 @@ public class SpacecraftFirmware {
 	
 	
 	public static List<PowerGenerator> getPowerGenerators(Bus bus) {
-		List<PowerGenerator> powerGenerators = new ArrayList<PowerGenerator>();		
+		List<PowerGenerator> powerGenerators = new ArrayList<>();
 		for(SpacecraftBusComponent component : bus.getComponents())
 			if(component instanceof PowerGenerator)
 				powerGenerators.add((PowerGenerator)component);
@@ -79,7 +80,7 @@ public class SpacecraftFirmware {
 	
 
 	public static List<CommunicationComponent> getCommunicationDevices(Bus bus) {
-		List<CommunicationComponent> communicationComponents = new ArrayList<CommunicationComponent>();		
+		List<CommunicationComponent> communicationComponents = new ArrayList<>();
 		for(SpacecraftBusComponent component : bus.getComponents())
 			if(component instanceof CommunicationComponent)
 				communicationComponents.add((CommunicationComponent)component);
@@ -88,7 +89,7 @@ public class SpacecraftFirmware {
 
 
 	public static List<Engine> getEngines(Bus bus) {
-		List<Engine> engines = new ArrayList<Engine>();		
+		List<Engine> engines = new ArrayList<>();
 		for(SpacecraftBusComponent component : bus.getComponents())
 			if(component instanceof Engine)
 				engines.add((Engine)component);
@@ -98,7 +99,7 @@ public class SpacecraftFirmware {
 
 	public static double getTotalPowerAvailable(Bus bus) {
 		double sumOfAvailablePowerFromGenerators = 0.0;
-		for(Component component : bus.getComponents())
+		for(SpacecraftBusComponent component : bus.getComponents())
 			if(component instanceof PowerGenerator)
 				sumOfAvailablePowerFromGenerators += ((PowerGenerator)component).getMaximumPowerOutput();
 		return sumOfAvailablePowerFromGenerators;
@@ -123,13 +124,13 @@ public class SpacecraftFirmware {
 	}
 	
 	
-	public static double getTotalCurrentPower(Bus bus) {
-		return bus.getComponents().stream().mapToDouble((ToDoubleFunction<? super Component>)d->((SpacecraftBusComponent)d).getCurrentPower()).sum();
+	public static double getTotalCurrentPower(Bus bus, Unit unit) {
+		return bus.getComponents().stream().mapToDouble(d->d.getCurrentPower(unit)).sum();
 	}
 
 	
-	public static double getTotalCurrentCPUThroughput(Bus bus) {
-		return bus.getComponents().stream().mapToDouble(d->((SpacecraftBusComponent)d).getCurrentCPUThroughput()).sum();
+	public static double getTotalCurrentCPUThroughput(Bus bus, Unit unit) {
+		return bus.getComponents().stream().mapToDouble(d->((SpacecraftBusComponent)d).getCurrentCPUThroughput(unit)).sum();
 	}
 
 }

@@ -79,7 +79,7 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg.value(), 1.1 * Unit.l.value()), new OperationalSpecification(1 * Unit.kW.value(), 1 * Unit.kFLOP.value())));
 
-		if(componentType.equals(SubSpaceCommunicator.type()))	
+		if(componentType.equals(SubSpaceCommunicator.type))
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg.value(), 1.3 * Unit.l.value()), new OperationalSpecification(1 * Unit.kW.value(), 1 * Unit.kFLOP.value())));
 

@@ -88,7 +88,7 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 
 	private List<Sensor> getSensors() {
 		List<SpacecraftBusComponent> components = getSystemComputer()
-				.findComponentByCategory(Sensor.category());
+				.findComponentByCategory(Sensor.category);
 		List<Sensor> sensors = new ArrayList<Sensor>();
 		for(SpacecraftBusComponent sensor : components)
 			sensors.add((Sensor)sensor);

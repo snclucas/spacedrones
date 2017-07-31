@@ -25,7 +25,7 @@ public class SubspaceBeaconTransceiver extends AbstractSensor implements Positio
 	
 	private static MathContext context = new MathContext(120, RoundingMode.HALF_UP);
 
-	protected List<BeaconSignal> beaconSignals;
+	private List<BeaconSignal> beaconSignals;
 	SensorResponseMediator sensorResponseMediator;
 
 	public SubspaceBeaconTransceiver(String name,
@@ -33,13 +33,19 @@ public class SubspaceBeaconTransceiver extends AbstractSensor implements Positio
 			SensorProfile sensorProfile) {
 		super(name, busResourceSpecification, sensorProfile);
 
-		beaconSignals = new ArrayList<BeaconSignal>();
+		beaconSignals = new ArrayList<>();
 		sensorResponseMediator = Configuration.getSensorResponseMediator();
 	}
 
 	@Override
 	public TypeInfo getType() {
 		return typeID;
+	}
+
+
+	@Override
+	public TypeInfo getCategory() {
+		return Sensor.category;
 	}
 
 
@@ -58,14 +64,14 @@ public class SubspaceBeaconTransceiver extends AbstractSensor implements Positio
 
 
 	@Override
-	public double getCurrentPower() {
-		return getNominalPower();
+	public double getCurrentPower(Unit unit) {
+		return getNominalPower(unit);
 	}
 
 
 	@Override
-	public double getCurrentCPUThroughput() {
-		return getNominalCPUThroughput();
+	public double getCurrentCPUThroughput(Unit unit) {
+		return getNominalCPUThroughput(unit);
 	}
 
 

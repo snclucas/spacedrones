@@ -3,6 +3,7 @@ package org.spacedrones.structures.hulls;
 import org.spacedrones.components.BusCommunicator;
 import org.spacedrones.components.PhysicalComponent;
 import org.spacedrones.components.TypeInfo;
+import org.spacedrones.physics.Unit;
 
 public interface Hull extends PhysicalComponent, BusCommunicator {
 	
@@ -14,9 +15,9 @@ public interface Hull extends PhysicalComponent, BusCommunicator {
 	//Hull mass fraction is the fraction of the hull thickness that is solid
 	double HULL_VOLUME_FRACTION = 0.5;
 
-	double getLength();
-	double getWidth();
-	double getThickness();
+	double getLength(Unit unit);
+	double getWidth(Unit unit);
+	double getThickness(Unit unit);
 
 	double getImpactResistance();
 	double getEMResistance();

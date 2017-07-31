@@ -1,4 +1,4 @@
-package org.spacedrones.universe;
+package org.spacedrones.universe.dataprovider;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -14,6 +14,7 @@ import org.spacedrones.components.sensors.Sensor;
 import org.spacedrones.components.sensors.SensorProfile;
 import org.spacedrones.physics.Constants;
 import org.spacedrones.physics.Unit;
+import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.celestialobjects.CelestialObject;
 import org.spacedrones.universe.celestialobjects.SensorSignalResponseLibrary;
 import org.spacedrones.universe.celestialobjects.Star;

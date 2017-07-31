@@ -3,6 +3,7 @@ package org.spacedrones.structures.hulls;
 import org.spacedrones.components.AbstractBusComponent;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.materials.Material;
+import org.spacedrones.physics.Unit;
 import org.spacedrones.software.Message;
 import org.spacedrones.software.SystemMessage;
 
@@ -22,8 +23,8 @@ public abstract class AbstractHull extends AbstractBusComponent implements Hull 
 		this.hullSpecification = hullSpecification;
 		this.hullType = hullType;
 		
-		busResourceSpecification.setVolume(calculateVolume(hullSpecification.getWidth(), hullSpecification.getLength(), hullSpecification.getHeight()));
-		this.hullSkinVolume = calculateVolumeOfHullOuter(hullSpecification.getWidth(), hullSpecification.getLength(), hullSpecification.getHeight(), hullSpecification.getThickness());
+		busResourceSpecification.setVolume(calculateVolume(hullSpecification.getWidth(Unit.m), hullSpecification.getLength(Unit.m), hullSpecification.getHeight(Unit.m)));
+		this.hullSkinVolume = calculateVolumeOfHullOuter(hullSpecification.getWidth(Unit.m), hullSpecification.getLength(Unit.m), hullSpecification.getHeight(Unit.m), hullSpecification.getThickness(Unit.m));
 	}
 	
 	
@@ -50,14 +51,14 @@ public abstract class AbstractHull extends AbstractBusComponent implements Hull 
 	}
 	
 	@Override
-	public double getThickness() {
-		return hullSpecification.getThickness();
+	public double getThickness(Unit unit) {
+		return hullSpecification.getThickness(unit);
 	}
 
 
 	@Override
-	public double getMass() {	
-		return this.hullSkinVolume * getMaterial().getDensity() * HULL_VOLUME_FRACTION;
+	public double getMass(Unit unit) {
+		return this.hullSkinVolume * getMaterial().getDensity() * HULL_VOLUME_FRACTION / unit.value();
 	}
 
 
@@ -66,13 +67,13 @@ public abstract class AbstractHull extends AbstractBusComponent implements Hull 
 	}
 	
 
-	public double getLength() {
-		return hullSpecification.getLength();
+	public double getLength(Unit unit) {
+		return hullSpecification.getLength(unit);
 	}
 
 
-	public double getWidth() {
-		return hullSpecification.getWidth();
+	public double getWidth(Unit unit) {
+		return hullSpecification.getWidth(unit);
 	}
 
 
@@ -81,13 +82,6 @@ public abstract class AbstractHull extends AbstractBusComponent implements Hull 
 		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
 		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
 	}
-
-
-	@Override
-	public double getVolume() {
-		return super.getVolume();
-	}
-
 	
 	
 	//Delegate methods to get the hull resistances

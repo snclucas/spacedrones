@@ -9,6 +9,7 @@ import org.spacedrones.components.BusCommunicator;
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
+import org.spacedrones.physics.Unit;
 import org.spacedrones.software.Message;
 import org.spacedrones.software.SystemMessage;
 import org.spacedrones.spacecraft.BusComponentSpecification;
@@ -27,9 +28,9 @@ public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBus
 	
 	public final static String BASIC_FUEL_SUBSYSTEM = "Basic fuel subsystem";
 
-	protected List<FuelStorageTank> fuelTanks;
+	private List<FuelStorageTank> fuelTanks;
 	
-	protected int fuelSubsystemType;
+	private int fuelSubsystemType;
 	
 	
 	@Override
@@ -43,9 +44,9 @@ public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBus
 	}
 	
 	
-	public FuelSubSystem(String name, BusComponentSpecification busResourceSpecification, int fuelSubsystemType) {
+	FuelSubSystem(String name, BusComponentSpecification busResourceSpecification, int fuelSubsystemType) {
 		super(name, busResourceSpecification);	
-		this.fuelTanks = new ArrayList<FuelStorageTank>();
+		this.fuelTanks = new ArrayList<>();
 		this.fuelSubsystemType = fuelSubsystemType;
 	}
 	
@@ -74,20 +75,20 @@ public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBus
 
 
 	@Override
-	public double getMass() {
+	public double getMass(Unit unit) {
 		double totalMassOfFuelTanks = 0.0;
 		for(FuelStorageTank tank : fuelTanks)
-			totalMassOfFuelTanks += tank.getMass();	
-		return super.getMass() + totalMassOfFuelTanks;
+			totalMassOfFuelTanks += tank.getMass(unit);
+		return super.getMass(unit) + totalMassOfFuelTanks;
 	}
 	
 	
 	@Override
-	public double getVolume() {
+	public double getVolume(Unit unit) {
 		double totalVolumeOfFuelTanks = 0.0;
 		for(FuelStorageTank tank : fuelTanks)
-			totalVolumeOfFuelTanks += tank.getVolume();	
-		return super.getVolume() + totalVolumeOfFuelTanks;
+			totalVolumeOfFuelTanks += tank.getVolume(unit);
+		return super.getVolume(unit) + totalVolumeOfFuelTanks;
 	}
 
 
@@ -107,14 +108,19 @@ public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBus
 
 
 	@Override
-	public double getCurrentPower() {
-		return busResourceSpecification.getNominalPower();
+	public double getMaximumOperationalCPUThroughput(Unit unit) {
+		return 0;
+	}
+
+	@Override
+	public double getCurrentPower(Unit unit) {
+		return busResourceSpecification.getNominalPower(unit);
 	}
 
 
 	@Override
-	public double getCurrentCPUThroughput() {
-		return busResourceSpecification.getNominalCPUThroughout();
+	public double getCurrentCPUThroughput(Unit unit) {
+		return busResourceSpecification.getNominalCPUThroughout(unit);
 	}
 
 

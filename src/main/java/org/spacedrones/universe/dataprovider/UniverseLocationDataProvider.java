@@ -1,10 +1,11 @@
-package org.spacedrones.universe;
+package org.spacedrones.universe.dataprovider;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.sensors.SensorProfile;
+import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.celestialobjects.CelestialObject;
 
 public interface UniverseLocationDataProvider {

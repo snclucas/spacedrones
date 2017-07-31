@@ -9,7 +9,7 @@ import org.spacedrones.data.EnvironmentDataProvider;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.Universe;
-import org.spacedrones.universe.UniverseLocationDataProvider;
+import org.spacedrones.universe.dataprovider.UniverseLocationDataProvider;
 import org.spacedrones.universe.celestialobjects.CelestialObject;
 import org.spacedrones.universe.celestialobjects.UnknownObject;
 import org.spacedrones.utils.Utils;

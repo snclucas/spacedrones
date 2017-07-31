@@ -1,5 +1,7 @@
 package org.spacedrones.spacecraft;
 
+import org.spacedrones.physics.Unit;
+
 public class OperationalSpecification {
 
 	private double nominalPower;
@@ -39,8 +41,8 @@ public class OperationalSpecification {
 		this.maximumOperationalCPUThroughput = 0.0;
 	}
 
-	public double getNominalPower() {
-		return nominalPower;
+	public double getNominalPower(Unit unit) {
+		return nominalPower / unit.value();
 	}
 
 
@@ -50,9 +52,8 @@ public class OperationalSpecification {
 	}
 
 
-
-	public double getNominalCPUThroughout() {
-		return nominalCPUThroughout;
+	public double getNominalCPUThroughout(Unit unit) {
+		return nominalCPUThroughout / unit.value();
 	}
 
 
@@ -63,8 +64,8 @@ public class OperationalSpecification {
 
 
 
-	public double getMaximumOperationalPower() {
-		return maximumOperationalPower;
+	public double getMaximumOperationalPower(Unit unit) {
+		return maximumOperationalPower / unit.value();
 	}
 
 
@@ -75,8 +76,8 @@ public class OperationalSpecification {
 
 
 
-	public double getMaximumOperationalCPUThroughput() {
-		return maximumOperationalCPUThroughput;
+	public double getMaximumOperationalCPUThroughput(Unit unit) {
+		return maximumOperationalCPUThroughput / unit.value();
 	}
 
 

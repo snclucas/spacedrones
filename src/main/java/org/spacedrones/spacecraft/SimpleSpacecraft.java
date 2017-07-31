@@ -31,6 +31,8 @@ public class SimpleSpacecraft extends AbstractSpacecraft {
 		return "Simple spacecraft";
 	}
 
-
-
+	@Override
+	public double getTotalVolumeOfComponents() {
+		return 0;
+	}
 }

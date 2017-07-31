@@ -16,7 +16,7 @@ import org.spacedrones.universe.UniverseAware;
 
 public abstract class AbstractBusComponent extends UniverseAware implements SpacecraftBusComponent {
 
-	protected boolean online;
+	protected boolean online = false;
 	
 	protected String name;
 	
@@ -24,7 +24,7 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 
 	protected Bus spacecraftBus;
 	
-	protected SystemComputer systemComputer;
+	private SystemComputer systemComputer;
 	
 	protected BusComponentSpecification busResourceSpecification;
 	
@@ -36,9 +36,8 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 		super();
 		this.name = name;
 		this.busResourceSpecification = busResourceSpecification;
-		this.currentPower = busResourceSpecification.getNominalPower();
-		this.currentCPUThroughput = busResourceSpecification.getNominalCPUThroughout();
-		this.online = false;
+		this.currentPower = busResourceSpecification.getNominalPower(Unit.MW);
+		this.currentCPUThroughput = busResourceSpecification.getNominalCPUThroughout(Unit.MFLOP);
 		this.ident = Configuration.getUUID();
 	}
 	
@@ -93,27 +92,10 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 	
 
 	@Override
-	public double getMass() {
-		return busResourceSpecification.getMass();
-	}
-	
-	
-	@Override
 	public double getMass(Unit unit) {
 		return busResourceSpecification.getMass(unit);
 	}
-	
 
-	@Override
-	public void setMass(double mass) {
-		busResourceSpecification.setMass(mass);
-	}
-	
-
-	@Override
-	public double getVolume() {
-		return busResourceSpecification.getVolume();
-	}
 	
 	@Override
 	public double getVolume(Unit unit) {
@@ -125,75 +107,40 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 		busResourceSpecification.setVolume(volume);
 	}
 
-	
-	public double getNominalPower() {
-		return busResourceSpecification.getNominalPower();
-	}
-	
-	
+
 	public double getNominalPower(Unit unit) {
-		return busResourceSpecification.getNominalPower() / unit.value();
+		return busResourceSpecification.getNominalPower(unit) / unit.value();
 	}
 
 	
 	@Override
-	public void setNominalPower(double nominalPower) {
-		busResourceSpecification.setNominalPower(nominalPower);
+	public double getNominalCPUThroughput(Unit unit) {
+		return busResourceSpecification.getNominalCPUThroughout(unit);
 	}
 
 	
 	@Override
-	public double getNominalCPUThroughput() {
-		return busResourceSpecification.getNominalCPUThroughout();
+	public double getMaximumOperationalPower(Unit unit) {
+		return busResourceSpecification.getMaximumOperationalPower(unit);
 	}
+	
 
-	
-	@Override
-	public void setNominalCPUThroughput(double nominalCPUThroughput) {
-		busResourceSpecification.setNominalCPUThroughout(nominalCPUThroughput);
-	}
-	
-	
-	@Override
-	public double getMaximumOperationalPower() {
-		return busResourceSpecification.getMaximumOperationalPower();
-	}
-	
-	
-	@Override
-	public double getMaximumOperationalCPUThroughput() {
-		return busResourceSpecification.getMaximumOperationalCPUThroughput();
-	}
-	
-	
 	@Override
 	public double getMaximumOperationalCPUThroughput(Unit unit) {
-		return busResourceSpecification.getMaximumOperationalCPUThroughput() / unit.value();
+		return busResourceSpecification.getMaximumOperationalCPUThroughput(unit) / unit.value();
 	}
 
 	
 	public void setMaximumOperationalCPUThroughput(double maximumOperationalCPUThroughput) {
 		busResourceSpecification.setMaximumOperationalCPUThroughput(maximumOperationalCPUThroughput);
 	}
-	
-	
-	
 
-	@Override
-	public double getCurrentPower() {
-		return currentPower * (isOnline()?1:0);
-	}
 
 	@Override
 	public double getCurrentPower(Unit unit) {
-		return getCurrentPower() / unit.value();
+		return currentPower * (isOnline()?1:0) / unit.value();
 	}
 
-
-	@Override
-	public double getCurrentCPUThroughput() {
-		return currentCPUThroughput * (isOnline()?1:0);
-	}
 
 	@Override
 	public double getCurrentCPUThroughput(Unit unit) {
@@ -202,7 +149,7 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 
 
 	public SystemComputer getSystemComputer() {
-		if(isRegisteredWithSystemComputer() == false)
+		if(!isRegisteredWithSystemComputer())
 			throw new ComponentConfigurationException(this.name + " is not registered with the computer");
 		return spacecraftBus.getSystemComputer();
 	}

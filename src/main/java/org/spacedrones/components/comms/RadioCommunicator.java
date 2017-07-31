@@ -2,6 +2,7 @@ package org.spacedrones.components.comms;
 
 import org.spacedrones.algorithm.Model;
 import org.spacedrones.components.TypeInfo;
+import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
 
@@ -34,14 +35,14 @@ public class RadioCommunicator extends AbstractCommunicationComponent {
 	}
 
 	@Override
-	public double getCurrentPower() {
-		return getNominalPower();
+	public double getCurrentPower(Unit unit) {
+		return getNominalPower(unit);
 	}
 	
 	@Override
-	public double getCurrentCPUThroughput() {
+	public double getCurrentCPUThroughput(Unit unit) {
 		// Nominal and operation CPU are the same
-		return getNominalCPUThroughput();
+		return getNominalCPUThroughput(unit);
 	}
 	
 
@@ -49,7 +50,7 @@ public class RadioCommunicator extends AbstractCommunicationComponent {
 	public SystemStatus runDiagnostics(int level) {
 		SystemStatus systemStatus = new SystemStatus(this);
 		
-		if(propagationModel == null)
+		if("propagationModel" == null)
 			systemStatus.addSystemMessage(
 					"Level " + level + "diagnostics : Problem. No propagation model.", getUniversalTime(), Status.PROBLEM);
 		else 

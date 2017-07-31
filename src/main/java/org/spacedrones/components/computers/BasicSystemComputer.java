@@ -6,6 +6,7 @@ import java.util.List;
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
+import org.spacedrones.physics.Unit;
 import org.spacedrones.software.MessageMediator;
 import org.spacedrones.software.SystemMessageService;
 import org.spacedrones.spacecraft.Bus;
@@ -131,7 +132,7 @@ public class BasicSystemComputer extends AbstractSystemComputer implements Syste
 	public List<SystemStatusMessage> checkSystems() {
 		List<SystemStatusMessage> systemStatusMessages = new ArrayList<SystemStatusMessage>();
 
-		double maximumAvailableVolume = getVolume();
+		double maximumAvailableVolume = getVolume(Unit.m3);
 
 		SystemData data = new SystemData("maximumAvailableVolume", Double.toString(maximumAvailableVolume));
 		storageDevice.saveData(new DataRecord("maximumAvailableVolume", data));
@@ -154,11 +155,11 @@ public class BasicSystemComputer extends AbstractSystemComputer implements Syste
 		}
 
 		systemStatusMessages.add(
-				new SystemStatusMessage(this, "Available CPU throughput: " + getTotalCPUThroughputAvailable(), getUniversalTime(), Status.INFO));
+				new SystemStatusMessage(this, "Available CPU throughput: " + getTotalCPUThroughputAvailable(Unit.MFLOP), getUniversalTime(), Status.INFO));
 		systemStatusMessages.add(
-				new SystemStatusMessage(this, "Required CPU throughput: " + getTotalCurrentCPUThroughput(), getUniversalTime(), Status.INFO));
+				new SystemStatusMessage(this, "Required CPU throughput: " + getTotalCurrentCPUThroughput(Unit.MFLOP), getUniversalTime(), Status.INFO));
 
-		if(getTotalCPUThroughputAvailable() < getCurrentCPUThroughput())
+		if(getTotalCPUThroughputAvailable(Unit.MW) < getCurrentCPUThroughput(Unit.MW))
 			systemStatusMessages.add(new SystemStatusMessage(this, "Not enough CPU", getUniversalTime(), Status.PROBLEM));
 
 
@@ -167,9 +168,10 @@ public class BasicSystemComputer extends AbstractSystemComputer implements Syste
 		return systemStatusMessages;
 	}
 
-
-
-
+	@Override
+	public double getTotalCPUThroughputAvailable(Unit unit) {
+		return 0;
+	}
 
 
 	@Override

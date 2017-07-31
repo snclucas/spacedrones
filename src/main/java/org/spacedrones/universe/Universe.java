@@ -19,10 +19,12 @@ import org.spacedrones.universe.celestialobjects.Region;
 import org.spacedrones.universe.celestialobjects.SensorSignalResponseLibrary;
 import org.spacedrones.universe.celestialobjects.SensorSignalResponseProfile;
 import org.spacedrones.universe.celestialobjects.Star;
+import org.spacedrones.universe.dataprovider.UniverseLocationDataProvider;
+import org.spacedrones.universe.dataprovider.UniverseSpacecraftLocationDataProvider;
 import org.spacedrones.universe.structures.SubspaceBeacon;
 
-public class Universe implements UniverseLocationDataProvider, 
-UniverseSpacecraftLocationDataProvider, EnvironmentDataProvider, Tickable {
+public class Universe implements UniverseLocationDataProvider,
+		UniverseSpacecraftLocationDataProvider, EnvironmentDataProvider, Tickable {
 
 	private UniverseLocationDataProvider universeLocationDataProvider = Configuration.getUniverseLocationDataProvider();
 	private UniverseSpacecraftLocationDataProvider universeSpacecraftLocationDataProvider = Configuration.getUniverseSpacecraftLocationDataProvider();
@@ -168,13 +170,7 @@ UniverseSpacecraftLocationDataProvider, EnvironmentDataProvider, Tickable {
 	}
 
 
-	public double[] moveSpacecraft() {
-		double[] thrust = new double[]{};
-		//for(Spacecraft spacecraft : spacecraftInUniverse.values()) {
-		//thrust = spacecraft.getThrust();
-		//}
-		return thrust;
-	}
+
 
 
 	@Override
@@ -194,9 +190,9 @@ UniverseSpacecraftLocationDataProvider, EnvironmentDataProvider, Tickable {
 			List<SpacecraftBusComponent> components = spacecraft.getSpacecraftBus().findComponentByType(ThrustingEngine.type());
 			for(SpacecraftBusComponent component : components) {
 				double[] thrust = ((ThrustingEngine) component).getThrust(currentVelocity);
-				dV[0] += thrust[0] / spacecraft.getMass() * 1 * Unit.s.value();
-				dV[1] += thrust[1] / spacecraft.getMass() * 1 * Unit.s.value();
-				dV[2] += thrust[2] / spacecraft.getMass() * 1 * Unit.s.value();
+				dV[0] += thrust[0] / spacecraft.getMass(Unit.kg) * 1 * Unit.s.value();
+				dV[1] += thrust[1] / spacecraft.getMass(Unit.kg) * 1 * Unit.s.value();
+				dV[2] += thrust[2] / spacecraft.getMass(Unit.kg) * 1 * Unit.s.value();
 			};
 			double[] newVelocity = new double[]{
 					currentVelocity[0] + dV[0],currentVelocity[1] + dV[1],currentVelocity[2] + dV[2]

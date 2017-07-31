@@ -4,14 +4,15 @@ import org.spacedrones.components.AbstractBusComponent;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.consumables.Fuel;
 import org.spacedrones.exceptions.NoFuelInTankException;
+import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
 
 public abstract class AbstractFuelStorageTank extends AbstractBusComponent implements FuelStorageTank {
 
-	protected double amountOfFuelInTank;
-	protected double capacity;
-	protected double fuelLevel;
+	private double amountOfFuelInTank;
+	private double capacity;
+	private double fuelLevel;
 
 	protected Fuel fuel;
 
@@ -30,11 +31,11 @@ public abstract class AbstractFuelStorageTank extends AbstractBusComponent imple
 
 
 	@Override
-	public double getMass() {
+	public double getMass(Unit unit) {
 		if(fuel != null)
-			return super.getMass() + fuel.getDensity() * amountOfFuelInTank;
+			return super.getMass(unit) + fuel.getDensity() * amountOfFuelInTank;
 		else 
-			return super.getMass();
+			return super.getMass(unit);
 	}
 
 
@@ -108,15 +109,15 @@ public abstract class AbstractFuelStorageTank extends AbstractBusComponent imple
 
 
 	@Override
-	public double getCurrentPower() {
-		return getNominalPower();
+	public double getCurrentPower(Unit unit) {
+		return getNominalPower(unit);
 	}
 
 
 
 	@Override
-	public double getCurrentCPUThroughput() {
-		return getNominalCPUThroughput();
+	public double getCurrentCPUThroughput(Unit unit) {
+		return getNominalCPUThroughput(unit);
 	}
 
 

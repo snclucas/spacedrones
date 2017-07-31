@@ -4,30 +4,18 @@ import java.util.List;
 
 import org.spacedrones.Configuration;
 import org.spacedrones.components.AbstractBusComponent;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 
 public abstract class AbstractSensor extends AbstractBusComponent implements Sensor {
 
 	protected SensorProfile sensorProfile;
 
-	public AbstractSensor(String name, BusComponentSpecification busResourceSpecification, 
-			SensorProfile sensorProfile) {
+	AbstractSensor(String name, BusComponentSpecification busResourceSpecification,
+								 SensorProfile sensorProfile) {
 		super(name, busResourceSpecification);
 		this.sensorProfile = sensorProfile;
 	}
-	
-	
-	public static TypeInfo category() {
-		return new TypeInfo("Sensor");
-	}
-	
-	
-	@Override
-	public final TypeInfo getCategory() {
-		return category();
-	}
-	
+
 	
 	@Override
 	public double getSensorGain() {
@@ -35,14 +23,10 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 	}
 
 
-
-
 	@Override
 	public double getSensorThreshold() {
 		return sensorProfile.getSignalThreshold();
 	}
-
-
 
 
 	@Override
@@ -52,8 +36,7 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 		String spacecraftIdent = (String)(this.getSystemComputer().getSystemData("spaceraft-ident"));
 		return activeScan(spacecraftIdent, duration, signalStrength, propagationModel, sensorType);
 	}
-	
-	
+
 
 	private List<SensorResult> activeScan(String spacecraftIdent, double duration, double signalStrength,
 			SignalPropagationModel propagationModel, int sensorType) {
@@ -74,15 +57,11 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 		return sensorResponseMediator.passiveScan(spacecraftIdent, duration, sensorProfile);
 	}
 
-	
-
 
 	@Override
 	public SensorProfile getSensorProfile() {
 		return sensorProfile;
 	}
-
-
 
 
 	@Override
@@ -95,8 +74,5 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 	@Override
 	public void tick() {
 	}
-
-
-	
 
 }

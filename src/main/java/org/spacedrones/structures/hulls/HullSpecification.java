@@ -1,6 +1,7 @@
 package org.spacedrones.structures.hulls;
 
 import org.spacedrones.materials.Material;
+import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 
 public class HullSpecification {
@@ -56,23 +57,23 @@ public class HullSpecification {
 	}
 
 
-	public double getLength() {
-		return busResourceSpecification.getLength();
+	public double getLength(Unit unit) {
+		return busResourceSpecification.getLength(unit);
 	}
 
 
-	public double getWidth() {
-		return busResourceSpecification.getWidth();
+	public double getWidth(Unit unit) {
+		return busResourceSpecification.getWidth(unit);
 	}
 	
 	
-	public double getHeight() {
-		return busResourceSpecification.getHeight();
+	public double getHeight(Unit unit) {
+		return busResourceSpecification.getHeight(unit);
 	}
 
 
-	public double getThickness() {
-		return thickness;
+	public double getThickness(Unit unit) {
+		return thickness / unit.value();
 	}
 
 

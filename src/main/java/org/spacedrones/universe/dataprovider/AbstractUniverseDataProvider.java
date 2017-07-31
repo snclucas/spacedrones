@@ -1,4 +1,4 @@
-package org.spacedrones.universe;
+package org.spacedrones.universe.dataprovider;
 
 public abstract class AbstractUniverseDataProvider implements UniverseLocationDataProvider {
 	

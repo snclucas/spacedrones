@@ -15,5 +15,4 @@ public interface Software extends StatusProvider, Identifiable {
 	String getDescription();
 	
 	SystemComputer getSystemComputer();
-
 }

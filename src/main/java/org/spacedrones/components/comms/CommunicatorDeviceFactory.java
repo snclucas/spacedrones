@@ -23,11 +23,11 @@ public class CommunicatorDeviceFactory extends DataFactory {
 			communicationComponent.setEfficiency(90 * Unit.percent.value());
 			return communicationComponent;
 		}
-		else if(commType.equals(SubSpaceCommunicator.type())){
+		else if(commType.equals(SubSpaceCommunicator.type)){
 			
 			Model propagationModel = new SimpleRadioFrequencyPropagationModel("SUBSPACE");
 			CommunicationComponent communicationComponent = 
-					new SubSpaceCommunicator(SubSpaceCommunicator.type().toString(), data.getBusComponentSpecification(), propagationModel);
+					new SubSpaceCommunicator(SubSpaceCommunicator.type.toString(), data.getBusComponentSpecification(), propagationModel);
 			return communicationComponent;
 		}
 		return null;

@@ -83,6 +83,11 @@ public class PhysicalSpecification {
 	}
 
 
+	public double getLength(Unit unit) {
+		return length / unit.value();
+	}
+
+
 	public void setLength(double length) {
 		this.length = length;
 	}
@@ -93,6 +98,11 @@ public class PhysicalSpecification {
 	}
 
 
+	public double getWidth(Unit unit) {
+		return width / unit.value();
+	}
+
+
 	public void setWidth(double width) {
 		this.width = width;
 	}
@@ -100,6 +110,11 @@ public class PhysicalSpecification {
 
 	public double getHeight() {
 		return height;
+	}
+
+
+	public double getHeight(Unit unit) {
+		return height / unit.value();
 	}
 
 

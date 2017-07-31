@@ -9,6 +9,7 @@ import org.spacedrones.algorithm.SimpleRadioFrequencyPropagationModel;
 import org.spacedrones.components.AbstractBusComponent;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.physics.Physics;
+import org.spacedrones.physics.Unit;
 import org.spacedrones.software.Message;
 import org.spacedrones.software.SystemMessage;
 import org.spacedrones.spacecraft.BusComponentSpecification;
@@ -21,17 +22,17 @@ public abstract class AbstractCommunicationComponent extends AbstractBusComponen
 	
 	private static double MAX_POWER_LEVEL = 100;
 	
-	protected double range;
+	private double range;
 	protected double powerLevel;
-	protected double efficiency = 0.3;
-	protected double deviceNoiseLevel = Physics.dBm2W(-80); // GJ/s or GW
-	
-	protected List<String> recievedMessages;
-	protected List<String> broadcastMessages;
-	
-	protected int broadcastMessageQueueSize = 10;
-	
-	protected Model propagationModel;
+	private double efficiency = 0.3;
+	private double deviceNoiseLevel = Physics.dBm2W(-80); // GJ/s or GW
+
+	private List<String> recievedMessages;
+	private List<String> broadcastMessages;
+
+	private int broadcastMessageQueueSize = 10;
+
+	private Model propagationModel;
 	
 
 	public AbstractCommunicationComponent(String name, BusComponentSpecification busResourceSpecification, Model propagationModel) {
@@ -92,11 +93,11 @@ public abstract class AbstractCommunicationComponent extends AbstractBusComponen
 	public double getRange(double powerLevel) {
 		ModelInputs inputs = new ModelInputs();
 		inputs.addInput("CALC_TYPE", SimpleRadioFrequencyPropagationModel.RANGE_CALC);
-		inputs.addInput("POWER", getMaximumOperationalPower() * (powerLevel/100.00));
+		inputs.addInput("POWER", getMaximumOperationalPower(Unit.MW) * (powerLevel/100.00));
 		inputs.addInput("NOISE", 0);
 		inputs.addInput("EFFICIENCY", this.efficiency);
 		inputs.addInput("RECIEVE_THRESHOLD", this.deviceNoiseLevel); //GJ/s
-		inputs.addInput("MAX_POWER", getMaximumOperationalPower());
+		inputs.addInput("MAX_POWER", getMaximumOperationalPower(Unit.MW));
 
 		ModelResult result = propagationModel.getResult(inputs);
 		return result.getResult("CALCULATED_RANGE");

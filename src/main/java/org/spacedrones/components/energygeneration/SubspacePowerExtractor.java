@@ -34,8 +34,8 @@ public class SubspacePowerExtractor extends AbstractPowerGenerator {
 	
 	
 	@Override
-	public double getCurrentPower() {
-		return getNominalPower();
+	public double getCurrentPower(Unit unit) {
+		return getNominalPower(unit);
 	}
 	
 	
@@ -65,9 +65,9 @@ public class SubspacePowerExtractor extends AbstractPowerGenerator {
 	
 	
 	@Override
-	public double getCurrentCPUThroughput() {
+	public double getCurrentCPUThroughput(Unit unit) {
 		// Nominal and operation CPU are the same for this hull
-		return getNominalCPUThroughput();
+		return getNominalCPUThroughput(unit);
 	}
 	
 	

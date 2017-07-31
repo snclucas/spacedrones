@@ -2,6 +2,7 @@ package org.spacedrones.structures.hulls;
 
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
+import org.spacedrones.physics.Unit;
 import org.spacedrones.software.Message;
 import org.spacedrones.software.SystemMessage;
 import org.spacedrones.status.SystemStatus;
@@ -26,16 +27,16 @@ public class SimpleMonocoqueHull extends AbstractHull {
 	
 	
 	@Override
-	public double getCurrentPower() {
+	public double getCurrentPower(Unit unit) {
 		// Nominal and operation power are the same for this hull
-		return getNominalPower();
+		return getNominalPower(unit);
 	}
 	
 
 	@Override
-	public double getCurrentCPUThroughput() {
+	public double getCurrentCPUThroughput(Unit unit) {
 		// Nominal and operation CPU are the same for this hull
-		return getNominalCPUThroughput();
+		return getNominalCPUThroughput(unit);
 	}
 
 	@Override

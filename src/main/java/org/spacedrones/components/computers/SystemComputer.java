@@ -11,20 +11,21 @@ import org.spacedrones.exceptions.ComponentConfigurationException;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.software.MessageMediator;
 import org.spacedrones.spacecraft.BusRequirement;
+import org.spacedrones.spacecraft.SpacecraftFirmware;
 import org.spacedrones.status.SystemStatusMessage;
 
 public interface SystemComputer extends Computer {
-	
+
 	static TypeInfo category() {
 		return new TypeInfo("Computer");
 	}
-	
+
 	static TypeInfo type() {
 		return new TypeInfo("SystemComputer");
 	}
-	
+
 	double getUniversalTime();
-	
+
 	SystemStatusMessage requestOperation(SpacecraftBusComponent component, BusRequirement busRequirement);
 
 	MessageMediator getMessagingSystem();
@@ -39,16 +40,14 @@ public interface SystemComputer extends Computer {
 
 	List<SpacecraftBusComponent> findComponentByType(TypeInfo componentType) throws ComponentConfigurationException;
 	List<SpacecraftBusComponent> findComponentByCategory(TypeInfo componentCategory) throws ComponentConfigurationException;
-	
-	double getTotalCPUThroughputAvailable();
-	double getTotalPowerAvailable();
-	double getTotalPowerAvailable(Unit unit);
-	
-	double getTotalCurrentPower();
-	double getTotalCurrentPower(Unit unit);
-    double getTotalCurrentCPUThroughput();
 
-    List<Engine> getEngines();
+	double getTotalCPUThroughputAvailable(Unit unit);
+	double getTotalPowerAvailable(Unit unit);
+
+	double getTotalCurrentPower(Unit unit);
+	double getTotalCurrentCPUThroughput(Unit unit);
+
+	List<Engine> getEngines();
 	List<SystemComputer> getComputers();
 	List<CommunicationComponent> getCommunicationDevices();
 }

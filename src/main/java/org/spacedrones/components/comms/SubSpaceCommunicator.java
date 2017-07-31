@@ -2,14 +2,13 @@ package org.spacedrones.components.comms;
 
 import org.spacedrones.algorithm.Model;
 import org.spacedrones.components.TypeInfo;
+import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
 
 public class SubSpaceCommunicator extends AbstractCommunicationComponent {
+  public static TypeInfo type = new TypeInfo("SubSpaceCommunicator");
 	
-	public static TypeInfo type() {
-		return new TypeInfo("SubSpaceCommunicator");
-	}
 
 	public SubSpaceCommunicator(String name, BusComponentSpecification busResourceSpecification, Model propagationModel) {
 		super(name, busResourceSpecification, propagationModel);
@@ -26,21 +25,22 @@ public class SubSpaceCommunicator extends AbstractCommunicationComponent {
 		systemStatus.addSystemMessage(getName() + " online.", getUniversalTime(), Status.OK);
 		return systemStatus; 
 	}
-	
+
+
 	public TypeInfo getType() {
-		return type();
+		return type;
 	}
 
 	
 	@Override
-	public double getCurrentPower() {
-		return getNominalPower();
+	public double getCurrentPower(Unit unit) {
+		return getNominalPower(unit);
 	}
 	
 	@Override
-	public double getCurrentCPUThroughput() {
+	public double getCurrentCPUThroughput(Unit unit) {
 		// Nominal and operation CPU are the same for this XX change
-		return getNominalCPUThroughput();
+		return getNominalCPUThroughput(unit);
 	}
 	
 	
@@ -48,7 +48,7 @@ public class SubSpaceCommunicator extends AbstractCommunicationComponent {
 	public SystemStatus runDiagnostics(int level) {
 		SystemStatus systemStatus = new SystemStatus(this);
 		
-		if(propagationModel == null)
+		if("propagationModel" == null)
 			systemStatus.addSystemMessage(
 					"Level " + level + "diagnostics : Problem. No propagation model.", getUniversalTime(), Status.PROBLEM);
 		else 

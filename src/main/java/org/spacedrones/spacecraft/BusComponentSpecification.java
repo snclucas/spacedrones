@@ -23,8 +23,8 @@ public class BusComponentSpecification {
 
 	
 
-	public double getLength() {
-		return physicalSpecification.getLength();
+	public double getLength(Unit unit) {
+		return physicalSpecification.getLength(unit);
 	}
 	
 	
@@ -33,8 +33,8 @@ public class BusComponentSpecification {
 	}
 	
 	
-	public double getWidth() {
-		return physicalSpecification.getWidth();
+	public double getWidth(Unit unit) {
+		return physicalSpecification.getWidth(unit);
 	}
 	
 	
@@ -43,8 +43,8 @@ public class BusComponentSpecification {
 	}
 
 
-	public double getHeight() {
-		return physicalSpecification.getHeight();
+	public double getHeight(Unit unit) {
+		return physicalSpecification.getHeight(unit);
 	}
 	
 	
@@ -52,10 +52,6 @@ public class BusComponentSpecification {
 		physicalSpecification.setHeight(height);
 	}
 
-
-	public double getMass() {
-		return physicalSpecification.getMass();
-	}
 	
 	public double getMass(Unit unit) {
 		return physicalSpecification.getMass(unit);
@@ -66,11 +62,7 @@ public class BusComponentSpecification {
 		physicalSpecification.setMass(mass);
 	}
 
-	
-	public double getVolume() {
-		return physicalSpecification.getVolume();
-	}
-	
+
 	public double getVolume(Unit unit) {
 		return physicalSpecification.getVolume(unit);
 	}
@@ -80,13 +72,9 @@ public class BusComponentSpecification {
 		physicalSpecification.setVolume(volume);
 	}
 
-
-	public double getNominalPower() {
-		return operationalSpecification.getNominalPower();
-	}
 	
 	public double getNominalPower(Unit unit) {
-		return operationalSpecification.getNominalPower() / unit.value();
+		return operationalSpecification.getNominalPower(unit) / unit.value();
 	}
 	
 	
@@ -95,22 +83,17 @@ public class BusComponentSpecification {
 	}
 
 
-	public double getNominalCPUThroughout() {
-		return operationalSpecification.getNominalCPUThroughout();
+	public double getNominalCPUThroughout(Unit unit) {
+		return operationalSpecification.getNominalCPUThroughout(unit);
 	}
-	
 	
 	public void setNominalCPUThroughout(double nominalCPUThroughout) {
 		operationalSpecification.setNominalCPUThroughout(nominalCPUThroughout);
 	}
 
-
-	public double getMaximumOperationalPower() {
-		return operationalSpecification.getMaximumOperationalPower();
-	}
 	
 	public double getMaximumOperationalPower(Unit unit) {
-		return operationalSpecification.getMaximumOperationalPower() / unit.value();
+		return operationalSpecification.getMaximumOperationalPower(unit) / unit.value();
 	}
 	
 	
@@ -119,8 +102,8 @@ public class BusComponentSpecification {
 	}
 
 
-	public double getMaximumOperationalCPUThroughput() {
-		return operationalSpecification.getMaximumOperationalCPUThroughput();
+	public double getMaximumOperationalCPUThroughput(Unit unit) {
+		return operationalSpecification.getMaximumOperationalCPUThroughput(unit);
 	}
 	
 	

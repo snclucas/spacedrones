@@ -1,3 +1,5 @@
+package org.spacedrones.game;
+
 import java.math.BigDecimal;
 
 import org.spacedrones.physics.Unit;
@@ -23,8 +25,7 @@ public class SingleSpacecraftUniverse {
 		
 		
 		
-		universe.moveSpacecraft();
-		
+
 		run();	
 	}
 

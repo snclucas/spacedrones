@@ -59,10 +59,10 @@ public class TrilaterationSoftware extends AbstractSoftware implements Software 
 
 		//Convert to locations
 		List<Location> subspaceBeaconsLocations = new ArrayList<>();
-		for (Map.Entry<String, DataRecord> entry : map.entrySet()) {
-			Location loc = new SimpleLocation(entry.getKey(), ((CelestialObject)entry.getValue()).getCoordinates()   );
-			subspaceBeaconsLocations.add(loc);
-		}
+//		for (Map.Entry<String, DataRecord> entry : map.entrySet()) {
+//			Location loc = new SimpleLocation(entry.getKey(), ((CelestialObject)entry.getValue()).getCoordinates()   );
+//			subspaceBeaconsLocations.add(loc);
+//		}
 		
 		if(subspaceBeacons.size() < 3) {
 			SystemMessage message = new SystemMessage(null, this, "Not enough beacons to triangulate.", getSystemComputer().getUniversalTime());
@@ -70,7 +70,7 @@ public class TrilaterationSoftware extends AbstractSoftware implements Software 
 		}
 		else {
 
-			Collections.sort(subspaceBeaconsLocations, (Location loc1, Location loc2) -> p1.firstName.compareTo(p2.firstName));
+		//	Collections.sort(subspaceBeaconsLocations, (Location loc1, Location loc2) -> loc1..compareTo(p2.firstName));
 
 
 			

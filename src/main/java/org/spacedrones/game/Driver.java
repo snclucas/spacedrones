@@ -1,4 +1,4 @@
-
+package org.spacedrones.game;
 
 import java.math.BigDecimal;
 import java.util.List;

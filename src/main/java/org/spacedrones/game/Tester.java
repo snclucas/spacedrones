@@ -1,4 +1,4 @@
-
+package org.spacedrones.game;
 
 import org.spacedrones.Configuration;
 import org.spacedrones.data.LocalMaterialDataProvider;

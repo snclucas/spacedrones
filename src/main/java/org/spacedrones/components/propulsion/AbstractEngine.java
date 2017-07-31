@@ -2,6 +2,7 @@ package org.spacedrones.components.propulsion;
 
 import org.spacedrones.components.AbstractBusComponent;
 import org.spacedrones.components.comms.Status;
+import org.spacedrones.physics.Unit;
 import org.spacedrones.software.Message;
 import org.spacedrones.software.PropulsionManagementSoftware;
 import org.spacedrones.software.SystemMessage;
@@ -33,7 +34,7 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
-		if(getSystemComputer().hasSoftware(PropulsionManagementSoftware.typeID) != true) 
+		if(!getSystemComputer().hasSoftware(PropulsionManagementSoftware.typeID))
 			systemStatus.addSystemMessage("No engine management software loaded", getUniversalTime(), Status.PROBLEM);
 		else
 			systemStatus.addSystemMessage("Engine management software loaded", getUniversalTime(), Status.OK);
@@ -65,8 +66,8 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 
 	public BusRequirement callVector(EngineVector engineVector) {
 		this.requestedEngineVector = engineVector;
-		double requiredPower = getCurrentPower();
-		double requiredCPUThroughput = getCurrentCPUThroughput();
+		double requiredPower = getCurrentPower(Unit.MW);
+		double requiredCPUThroughput = getCurrentCPUThroughput(Unit.MFLOP);
 		return new BusRequirement(requiredPower, requiredCPUThroughput);
 	}
 
@@ -77,7 +78,7 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 	@Override
 	public String describe() {
 		String description = " -- Simple Ion Engine -- \n" + 
-				"Mass: " + getMass() + " Kg, Volume: " + getVolume() + " m3, Power: <thrust dep.> GJ/s, CPU: " + getNominalCPUThroughput() + " GFLOPS";
+				"Mass: " + getMass(Unit.kg) + " Kg, Volume: " + getVolume(Unit.m3) + " m3, Power: <thrust dep.> GJ/s, CPU: " + getNominalCPUThroughput(Unit.MFLOP) + " GFLOPS";
 		description += "\n";
 		description += "   ---------------------------------------------";
 		return description;
@@ -104,12 +105,12 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 
 
 	@Override
-	public double getCurrentPower() {
+	public double getCurrentPower(Unit unit) {
 		return getRequiredPower(this.powerLevel);
 	}
 	
 	@Override
-	public double getCurrentCPUThroughput() {
+	public double getCurrentCPUThroughput(Unit unit) {
 		return getRequiredCPUThroughput(this.powerLevel);
 	}
 

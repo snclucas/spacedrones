@@ -1,11 +1,11 @@
 package org.spacedrones.components.storage.energy;
 
 import org.spacedrones.components.TypeInfo;
+import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
 
 public class Capacitor extends AbstractEnergyStorageDevice {
-	public static TypeInfo typeID = new TypeInfo("Capacitor");
 	
 	public Capacitor(String name,
 			BusComponentSpecification busResourceSpecification,
@@ -17,19 +17,17 @@ public class Capacitor extends AbstractEnergyStorageDevice {
 	
 	@Override
 	public TypeInfo getType() {
-		return typeID;
+		return new TypeInfo("Capacitor");
 	}
 	
 
 	@Override
-	public double getCurrentPower() {
-		// TODO Auto-generated method stub
+	public double getCurrentPower(Unit unit) {
 		return 0;
 	}
 
 	@Override
-	public double getCurrentCPUThroughput() {
-		// TODO Auto-generated method stub
+	public double getCurrentCPUThroughput(Unit unit) {
 		return 0;
 	}
 
@@ -57,11 +55,5 @@ public class Capacitor extends AbstractEnergyStorageDevice {
 		
 	}
 
-
-	
-	
-	
-	
-	
 
 }

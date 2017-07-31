@@ -1,4 +1,4 @@
-package org.spacedrones.universe;
+package org.spacedrones.universe.dataprovider;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import org.spacedrones.exceptions.SpacecraftNotFoundException;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.Spacecraft;
+import org.spacedrones.universe.Coordinates;
+import org.spacedrones.universe.Location;
 import org.spacedrones.utils.Utils;
 
 

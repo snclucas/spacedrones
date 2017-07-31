@@ -16,10 +16,10 @@ import org.spacedrones.data.MaterialDataProvider;
 import org.spacedrones.data.PhysicsDataProvider;
 import org.spacedrones.data.SpacecraftDataProvider;
 import org.spacedrones.physics.Unit;
-import org.spacedrones.universe.LocalUniverseLocationDataProvider;
-import org.spacedrones.universe.LocalUniverseSpacecraftLocationDataProvider;
-import org.spacedrones.universe.UniverseLocationDataProvider;
-import org.spacedrones.universe.UniverseSpacecraftLocationDataProvider;
+import org.spacedrones.universe.dataprovider.LocalUniverseLocationDataProvider;
+import org.spacedrones.universe.dataprovider.LocalUniverseSpacecraftLocationDataProvider;
+import org.spacedrones.universe.dataprovider.UniverseLocationDataProvider;
+import org.spacedrones.universe.dataprovider.UniverseSpacecraftLocationDataProvider;
 
 public class Configuration {
 

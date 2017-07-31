@@ -1,3 +1,5 @@
+package org.spacedrones.game;
+
 import java.math.BigDecimal;
 
 import org.spacedrones.spacecraft.Spacecraft;

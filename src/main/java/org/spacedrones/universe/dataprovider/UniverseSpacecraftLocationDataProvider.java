@@ -1,10 +1,12 @@
-package org.spacedrones.universe;
+package org.spacedrones.universe.dataprovider;
 
 import java.math.BigDecimal;
 import java.util.Map;
 
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.Spacecraft;
+import org.spacedrones.universe.Coordinates;
+import org.spacedrones.universe.Location;
 
 public interface UniverseSpacecraftLocationDataProvider {
 	Map<String,Spacecraft> getSpacecraft();

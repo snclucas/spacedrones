@@ -79,20 +79,20 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 	@Override
 	public SystemStatusMessage requestOperation(SpacecraftBusComponent component, BusRequirement busRequirement) {
 		//Remove current component power and add back the new requested power
-		double newBusPowerRequirement = getTotalCurrentPower() 
-				- component.getCurrentPower() + busRequirement.getPowerRequirement();
+		double newBusPowerRequirement = getTotalCurrentPower(Unit.MW)
+				- component.getCurrentPower(Unit.MW) + busRequirement.getPowerRequirement();
 		
-		double newBusCPUThroughputRequirement = getTotalCurrentCPUThroughput() 
-				- component.getCurrentCPUThroughput() + busRequirement.getCPUThroughputRequirement();
+		double newBusCPUThroughputRequirement = getTotalCurrentCPUThroughput(Unit.MFLOP)
+				- component.getCurrentCPUThroughput(Unit.MFLOP) + busRequirement.getCPUThroughputRequirement();
 
-		if((newBusPowerRequirement > getTotalPowerAvailable()))
+		if((newBusPowerRequirement > getTotalPowerAvailable(Unit.MW)))
 			return new SystemStatusMessage(this, "Not enough bus power to perform operation, " + 
-		newBusPowerRequirement + " needed, " + getTotalPowerAvailable() + " available", 
+		newBusPowerRequirement + " needed, " + getTotalPowerAvailable(Unit.MW) + " available",
 		getUniversalTime(), Status.NOT_ENOUGH_POWER);
 		
-		else if((newBusCPUThroughputRequirement > getTotalCPUThroughputAvailable()))
+		else if((newBusCPUThroughputRequirement > getTotalCPUThroughputAvailable(Unit.MFLOP)))
 			return new SystemStatusMessage(this, "Not enough bus CPU throughput to perform operation, " +
-					newBusCPUThroughputRequirement + " needed, " + getTotalCPUThroughputAvailable() + " available", getUniversalTime(), Status.NOT_ENOUGH_CPU);
+					newBusCPUThroughputRequirement + " needed, " + getTotalCPUThroughputAvailable(Unit.MFLOP) + " available", getUniversalTime(), Status.NOT_ENOUGH_CPU);
 		else
 			return new SystemStatusMessage(this, "Operation permitted", getUniversalTime(), Status.PERMITTED);
 	}
@@ -187,41 +187,23 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 				(millisecond/(365.0*86400000.0)));
 	}
 
-	
-	
-	@Override
-	public double getTotalPowerAvailable() {
-		return SpacecraftFirmware.getTotalPowerAvailable(spacecraftBus);
-	}
-	
+
 	
 	@Override
 	public double getTotalPowerAvailable(Unit unit) {
 		return SpacecraftFirmware.getTotalPowerAvailable(spacecraftBus) / unit.value();
 	}
-	
-	
-	@Override
-	public double getTotalCPUThroughputAvailable() {
-		return SpacecraftFirmware.getTotalCPUThroughputAvailable(spacecraftBus);
-	}
-	
-	
-	@Override
-	public double getTotalCurrentPower() {
-		return SpacecraftFirmware.getTotalCurrentPower(spacecraftBus);
-	}
-	
+
 	
 	@Override
 	public double getTotalCurrentPower(Unit unit) {
-		return SpacecraftFirmware.getTotalCurrentPower(spacecraftBus) / unit.value();
+		return SpacecraftFirmware.getTotalCurrentPower(spacecraftBus, unit) / unit.value();
 	}
 
 	
 	@Override
-	public double getTotalCurrentCPUThroughput() {
-		return SpacecraftFirmware.getTotalCurrentCPUThroughput(spacecraftBus);
+	public double getTotalCurrentCPUThroughput(Unit unit) {
+		return SpacecraftFirmware.getTotalCurrentCPUThroughput(spacecraftBus, unit);
 	}
 	
 	

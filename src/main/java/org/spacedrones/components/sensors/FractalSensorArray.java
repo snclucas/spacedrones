@@ -34,7 +34,14 @@ public class FractalSensorArray extends BasicSensorArray {
 	public static TypeInfo type() {
 		return new TypeInfo("FractalSensorArray");
 	}
-	
+
+
+	@Override
+	public TypeInfo getCategory() {
+		return Sensor.category;
+	}
+
+
 	@Override
 	public final TypeInfo getType() {
 		return type();

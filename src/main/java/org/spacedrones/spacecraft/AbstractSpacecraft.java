@@ -9,6 +9,7 @@ import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.components.computers.SystemData;
 import org.spacedrones.exceptions.ComponentConfigurationException;
+import org.spacedrones.physics.Unit;
 import org.spacedrones.status.SystemStatus;
 import org.spacedrones.structures.hulls.Hull;
 
@@ -45,21 +46,16 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	}
 
 
-	@Override
 	public TypeInfo getCategory() {
 		return Spacecraft.category;
 	}
-	
+
+
 	@Override
 	public Bus getSpacecraftBus() {
 		return bus;
 	}
 
-	@Override
-	public void setSpacecraftBus(Bus bus) {
-		this.bus = bus;
-	}
-	
 	@Override
 	public boolean isOnline() {
 		return this.online;
@@ -72,7 +68,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 		
 		SpacecraftFirmware.scanSpacecraftComponents(bus);
 		
-		if(SpacecraftFirmware.bootstrapSystemComputer(bus) == false) {
+		if(!SpacecraftFirmware.bootstrapSystemComputer(bus)) {
 			status.addSystemMessage("No system computer found! Aborting spacecraft onlining.", 11, Status.CRITICAL);
 			systemsOnline = false;
 			online = false;
@@ -111,7 +107,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 
 
 	@Override
-	public void addComponent(Component component) {
+	public void addComponent(SpacecraftBusComponent component) {
 		if(component instanceof SpacecraftBusComponent == false)
 			throw new ComponentConfigurationException("Cano only add SpacecraftBusComponents");
 		bus.addComponent((SpacecraftBusComponent)component);
@@ -126,23 +122,23 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 
 	//Hull delegate methods
 	@Override
-	public double getLength() {
-		return hull.getLength();
+	public double getLength(Unit unit) {
+		return hull.getLength(unit);
 	}
 
 	@Override
-	public double getWidth() {
-		return hull.getWidth();
+	public double getWidth(Unit unit) {
+		return hull.getWidth(unit);
 	}
 
 	@Override
-	public double getVolume() {
-		return hull.getVolume();
+	public double getVolume(Unit unit) {
+		return hull.getVolume(unit);
 	}
 	
 	@Override
-	public double getMass() {
-		return hull.getMass() + bus.getComponents().stream().mapToDouble(f-> f.getMass()).sum();
+	public double getMass(Unit unit) {
+		return hull.getMass(unit) + bus.getComponents().stream().mapToDouble(f-> f.getMass(unit)).sum();
 	}
 
 
@@ -172,9 +168,9 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	}
 
 
-	public double getTotalVolumeOfComponents() {
+	public double getTotalVolumeOfComponents(Unit unit) {
 		//Adjust total volume calculation for the hull as the hull actually provides volume not uses it.
-		spacecraftBusComponentsVolumeRequirement -= this.getHull().getVolume();
+		spacecraftBusComponentsVolumeRequirement -= this.getHull().getVolume(unit);
 		return spacecraftBusComponentsVolumeRequirement;
 	}
 
@@ -234,7 +230,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	
 	@Override
 	public void tick() {
-		getComponents().forEach(Component::tick);
+		getComponents().forEach(c-> c.tick());
 	}
 
 }
