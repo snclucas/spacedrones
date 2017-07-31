@@ -14,7 +14,7 @@ public interface CelestialObject extends Location{
 
 	SensorSignalResponseProfile getSensorSignalResponse();
 	SignalResponse getSignalResponse(TypeInfo sensorType, BigDecimal distance);
-	Location getLocation();
+	//Location getLocation();
 	
 	
 }

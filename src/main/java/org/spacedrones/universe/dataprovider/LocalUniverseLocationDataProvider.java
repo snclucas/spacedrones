@@ -87,7 +87,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 				locations.add(loc);
 		}
 		return celestialObjectLocations.entrySet().stream()
-				.map(x -> x.getValue())
+				.map(Entry::getValue)
 				.filter(map -> map.getCategory().equals(category))
 				.collect(Collectors.toList());
 	}
@@ -95,7 +95,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 	
 	@Override
 	public List<CelestialObject> getLocationsByTypeCloserThan(TypeInfo type, Coordinates coordinates, BigDecimal distance) {
-		List<CelestialObject> locations = new ArrayList<CelestialObject>();
+		List<CelestialObject> locations = new ArrayList<>();
 
 		Iterator<Entry<String, CelestialObject>> it = celestialObjectLocations.entrySet().iterator();
 		while (it.hasNext()) {
@@ -108,7 +108,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 		
 		
 		return celestialObjectLocations.entrySet().stream()
-				.map(x -> x.getValue())
+				.map(Entry::getValue)
 				.filter(map -> map.getType().equals(type))
 				.filter(map -> Utils.distanceToLocation(map.getCoordinates(), coordinates, Unit.One).compareTo(distance) <= 0)
 				.collect(Collectors.toList());
@@ -119,7 +119,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 
 	@Override
 	public List<CelestialObject> getLocationsCloserThan(Coordinates coordinates, BigDecimal distance) {
-		List<CelestialObject> locations = new ArrayList<CelestialObject>();
+		List<CelestialObject> locations = new ArrayList<>();
 		Iterator<Entry<String, CelestialObject>> it = celestialObjectLocations.entrySet().iterator();
 		while (it.hasNext()) {
 			CelestialObject loc = it.next().getValue();

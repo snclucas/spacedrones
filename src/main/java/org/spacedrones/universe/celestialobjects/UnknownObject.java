@@ -12,11 +12,7 @@ public class UnknownObject extends AbstractCelestialObject {
 	public UnknownObject(String name, Coordinates coordinates, SensorSignalResponseProfile sensorSignalResponseProfile) {
 		super(name, coordinates, sensorSignalResponseProfile);
 	}
-	
-	public UnknownObject(int id, String name, Coordinates coordinates, CelestialObject relativeTo, SensorSignalResponseProfile sensorSignalResponseProfile) {
-		super(name, coordinates, relativeTo, sensorSignalResponseProfile);
-	}
-	
+
 	@Override
 	public TypeInfo getType() {
 		return type();

@@ -6,10 +6,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.spacedrones.Configuration;
-import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.Tickable;
 import org.spacedrones.components.TypeInfo;
-import org.spacedrones.components.propulsion.thrust.ThrustingEngine;
 import org.spacedrones.components.sensors.SensorProfile;
 import org.spacedrones.data.EnvironmentDataProvider;
 import org.spacedrones.physics.Unit;
@@ -179,13 +177,10 @@ public class Universe implements UniverseLocationDataProvider,
 
 	@Override
 	public void tick() {
-		List<Spacecraft> col = spacecraftDataProvider.getAllSpacecraft()
+		List<Spacecraft> allSpacecraft = spacecraftDataProvider.getAllSpacecraft()
 				.entrySet().stream()
-				.map(x -> x.getValue()).collect(Collectors.toList());
-		col.stream().forEach(Spacecraft::tick);
-
-
-
+				.map(Map.Entry::getValue).collect(Collectors.toList());
+		allSpacecraft.forEach(Spacecraft::tick);
 	}
 
 	//Delegate methods

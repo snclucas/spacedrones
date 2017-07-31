@@ -70,53 +70,28 @@ public class SensorSignalResponseProfile {
 	}
 
 
-	public double getOpticalResponse() {
+	private double getOpticalResponse() {
 		return opticalResponse;
 	}
 
 
-	public void setOpticalResponse(double opticalResponse) {
-		this.opticalResponse = opticalResponse;
-	}
-
-
-	public double getRadarResponse() {
+	private double getRadarResponse() {
 		return radarResponse;
 	}
 
 
-	public void setRadarResponse(double radarResponse) {
-		this.radarResponse = radarResponse;
-	}
-
-
-	public double getGravimetricResponse() {
+	private double getGravimetricResponse() {
 		return gravimetricResponse;
 	}
 
 
-	public void setGravimetricResponse(double gravimetricResponse) {
-		this.gravimetricResponse = gravimetricResponse;
-	}
-
-
-	public double getMagnetometricResponse() {
+	private double getMagnetometricResponse() {
 		return magnetometricResponse;
 	}
 
 
-	public void setMagnetometricResponse(double magnetometricResponse) {
-		this.magnetometricResponse = magnetometricResponse;
-	}
-
-
-	public double getSubspaceResonanceResponse() {
+	private double getSubspaceResonanceResponse() {
 		return subspaceResonanceResponse;
 	}
 
-
-	public void setSubspaceResonanceResponse(double subspaceResonanceResponse) {
-		this.subspaceResonanceResponse = subspaceResonanceResponse;
-	}
-	
 }

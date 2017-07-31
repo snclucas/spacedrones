@@ -16,11 +16,6 @@ public class Region extends AbstractCelestialObject {
 		this.sizeOfRegion = sizeOfRegion;
 	}
 
-	public Region(String name, Coordinates coordinates, CelestialObject relativeTo, SensorSignalResponseProfile sensorSignalResponseProfile, double sizeOfRegion) {
-		super(name, coordinates, relativeTo, sensorSignalResponseProfile);
-		this.sizeOfRegion = sizeOfRegion;
-	}
-	
 	
 	@Override
 	public TypeInfo getType() {

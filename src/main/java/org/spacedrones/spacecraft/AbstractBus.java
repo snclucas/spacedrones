@@ -52,7 +52,7 @@ public abstract class AbstractBus implements Bus {
 
 	protected Spacecraft spacecraft;
 	
-	protected final List<SpacecraftBusComponent> components = new ArrayList<SpacecraftBusComponent>();
+	protected final List<SpacecraftBusComponent> components = new ArrayList<>();
 
 	private final String name;
 

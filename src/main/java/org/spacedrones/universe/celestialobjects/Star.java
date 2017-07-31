@@ -15,9 +15,7 @@ public class Star extends AbstractCelestialObject {
 	public final static String K_CLASS_STAR = "K-class star"; // e.g. Arcturus, Alderbaran
 	public final static String M_CLASS_STAR = "M-class star"; // e.g. Betegeuse
 	
-	
-	
-	
+
 	protected List<Asteroid> asteroids;
 	protected List<Planet> planets;
 	
@@ -28,12 +26,7 @@ public class Star extends AbstractCelestialObject {
 		this.classification = classification;
 	}
 	
-	public Star(String name, String classification, Coordinates coordinates, CelestialObject relativeTo, SensorSignalResponseProfile sensorSignalResponseProfile) {
-		super(name, coordinates, relativeTo, sensorSignalResponseProfile);
-		this.classification = classification;
-	}
-	
-	
+
 	public String getClassification() {
 		return classification;
 	}

@@ -34,7 +34,7 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 	public AbstractSystemComputer(String name, BusComponentSpecification busResourceSpecification, double maxCPUThroughput) {
 		super(name, busResourceSpecification);
 		this.maxCPUThroughput = maxCPUThroughput;
-		loadedSoftware = new HashMap<TypeInfo, Software>();
+		loadedSoftware = new HashMap<>();
 		storageDevice = DataStoreFactory.getDataStore(DataStoreFactory.BASIC_DATASTORE);
 		
 		
@@ -80,10 +80,10 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 	public SystemStatusMessage requestOperation(SpacecraftBusComponent component, BusRequirement busRequirement) {
 		//Remove current component power and add back the new requested power
 		double newBusPowerRequirement = getTotalCurrentPower(Unit.MW)
-				- component.getCurrentPower(Unit.MW) + busRequirement.getPowerRequirement();
+				- component.getCurrentPower(Unit.MW) + busRequirement.getPowerRequirement(Unit.MW);
 		
 		double newBusCPUThroughputRequirement = getTotalCurrentCPUThroughput(Unit.MFLOP)
-				- component.getCurrentCPUThroughput(Unit.MFLOP) + busRequirement.getCPUThroughputRequirement();
+				- component.getCurrentCPUThroughput(Unit.MFLOP) + busRequirement.getCPUThroughputRequirement(Unit.MFLOP);
 
 		if((newBusPowerRequirement > getTotalPowerAvailable(Unit.MW)))
 			return new SystemStatusMessage(this, "Not enough bus power to perform operation, " + 

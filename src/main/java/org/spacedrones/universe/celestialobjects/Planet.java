@@ -21,13 +21,6 @@ public class Planet extends AbstractCelestialObject {
 		this.habitatClass = habitatClass;
 	}
 
-	public Planet(String name, Coordinates coordinates, 
-			CelestialObject relativeTo, SensorSignalResponseProfile sensorSignalResponseProfile, double radius, String habitatClass) {
-		super(name, coordinates, relativeTo, sensorSignalResponseProfile);
-		this.radius = radius;
-		this.habitatClass = habitatClass;
-	}
-
 	
 	@Override
 	public TypeInfo getType() {
