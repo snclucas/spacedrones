@@ -92,6 +92,11 @@ public class GameRunner {
 		Spacecraft simpleSpacecraft = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SHUTTLE);
 		Coordinates coords = new Coordinates(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
 		universe.addSpacecraft(simpleSpacecraft, coords);
+
+
+
+		Runner runner = new Runner();
+		runner.addManager(new SpacecraftMotionManager(universe));
 		
 		new GameRunner(universe);
 	}

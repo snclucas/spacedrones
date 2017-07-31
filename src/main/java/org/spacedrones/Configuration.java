@@ -17,7 +17,7 @@ import org.spacedrones.data.PhysicsDataProvider;
 import org.spacedrones.data.SpacecraftDataProvider;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.universe.dataprovider.LocalUniverseLocationDataProvider;
-import org.spacedrones.universe.dataprovider.LocalUniverseSpacecraftLocationDataProvider;
+import org.spacedrones.universe.dataprovider.LocalUniverseSpacecraftDataProvider;
 import org.spacedrones.universe.dataprovider.UniverseLocationDataProvider;
 import org.spacedrones.universe.dataprovider.UniverseSpacecraftLocationDataProvider;
 
@@ -42,7 +42,7 @@ public class Configuration {
 	
 	
 	public static UniverseSpacecraftLocationDataProvider getUniverseSpacecraftLocationDataProvider() {
-		return new LocalUniverseSpacecraftLocationDataProvider();
+		return new LocalUniverseSpacecraftDataProvider();
 	}
 	
 	

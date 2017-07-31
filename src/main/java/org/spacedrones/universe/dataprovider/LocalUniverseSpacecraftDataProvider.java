@@ -13,14 +13,14 @@ import org.spacedrones.universe.Location;
 import org.spacedrones.utils.Utils;
 
 
-public class LocalUniverseSpacecraftLocationDataProvider implements UniverseSpacecraftLocationDataProvider {
+public class LocalUniverseSpacecraftDataProvider implements UniverseSpacecraftLocationDataProvider {
 	
-	private final Map<String,Spacecraft> spacecraftInUniverse = new HashMap<String, Spacecraft>();
-	private final Map<String,Coordinates> spacecraftLocationInUniverse = new HashMap<String, Coordinates>();
-	private final Map<String,Double[]> spacecraftVelocityInUniverse = new HashMap<String, Double[]>();
+	private final Map<String,Spacecraft> spacecraftInUniverse = new HashMap<>();
+	private final Map<String,Coordinates> spacecraftLocationInUniverse = new HashMap<>();
+	private final Map<String,Double[]> spacecraftVelocityInUniverse = new HashMap<>();
 
 
-	public LocalUniverseSpacecraftLocationDataProvider() {
+	public LocalUniverseSpacecraftDataProvider() {
 	}
 
 
@@ -81,7 +81,7 @@ public class LocalUniverseSpacecraftLocationDataProvider implements UniverseSpac
 	public Map<String,Coordinates> getSpacecraftWithinRangeOfLocation(Location location, BigDecimal range) {
 		return spacecraftLocationInUniverse.entrySet().stream()
 				.filter(map -> map.getValue().getCoordinates().equals(location.getCoordinates()))
-				.collect(Collectors.toMap(p -> p.getKey(),  p -> p.getValue()));
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 	}
 
 

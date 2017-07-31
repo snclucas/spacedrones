@@ -3,13 +3,12 @@ package org.spacedrones.game;
 
 import org.spacedrones.spacecraft.Spacecraft;
 import org.spacedrones.universe.Coordinates;
-import org.spacedrones.universe.Location;
 import org.spacedrones.universe.Universe;
 
 import java.math.BigDecimal;
 import java.util.Map;
 
-public class SpacecraftMotionManager {
+public class SpacecraftMotionManager implements Manager{
 
     private Universe universe;
 
@@ -17,6 +16,7 @@ public class SpacecraftMotionManager {
     public SpacecraftMotionManager(Universe universe) {
         this.universe = universe;
     }
+
 
 
     public void moveSpacecraft(double dt) {
@@ -42,4 +42,8 @@ public class SpacecraftMotionManager {
     }
 
 
+    @Override
+    public void run(double dt) {
+        moveSpacecraft(dt);
+    }
 }
