@@ -3,7 +3,6 @@ package org.spacedrones.universe.structures;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.celestialobjects.AbstractCelestialObject;
-import org.spacedrones.universe.celestialobjects.CelestialObject;
 import org.spacedrones.universe.celestialobjects.SensorSignalResponseProfile;
 
 public class SubspaceBeacon extends AbstractCelestialObject {
@@ -13,10 +12,7 @@ public class SubspaceBeacon extends AbstractCelestialObject {
 	public SubspaceBeacon(String name, Coordinates coordinates, SensorSignalResponseProfile sensorSignalResponseProfile) {
 		super(name, coordinates, sensorSignalResponseProfile);
 	}
-	
-	public SubspaceBeacon(String name, Coordinates coordinates, CelestialObject relativeTo, SensorSignalResponseProfile sensorSignalResponseProfile) {
-		super(name, coordinates, relativeTo, sensorSignalResponseProfile);
-	}
+
 
 	@Override
 	public TypeInfo getType() {

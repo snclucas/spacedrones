@@ -14,9 +14,9 @@ public interface Bus extends BusCommunicator, ComponentVisitor, Identifiable {
 
   TypeInfo category = new TypeInfo("Bus");
 
-  //List<SpacecraftBusComponent> findComponentByType(TypeInfo componentType);
-  //List<SpacecraftBusComponent> findComponentByCategory(TypeInfo componentCategory);
-  //List<SpacecraftBusComponent> getComponents();
+  List<SpacecraftBusComponent> findComponentByType(TypeInfo componentType);
+  List<SpacecraftBusComponent> findComponentByCategory(TypeInfo componentCategory);
+  List<SpacecraftBusComponent> getComponents();
 
   void addComponent(SpacecraftBusComponent component);
 
@@ -25,5 +25,5 @@ public interface Bus extends BusCommunicator, ComponentVisitor, Identifiable {
   SystemComputer getSystemComputer();
 
   Spacecraft getSpacecraft();
-  void setSpacecraft(Spacecraft spacecraft);
+  //void setSpacecraft(Spacecraft spacecraft);
 }
