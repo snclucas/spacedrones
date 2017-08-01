@@ -15,6 +15,8 @@ import org.spacedrones.components.sensors.SensorProfile;
 import org.spacedrones.physics.Constants;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.universe.Coordinates;
+import org.spacedrones.universe.Location;
+import org.spacedrones.universe.SimpleLocation;
 import org.spacedrones.universe.celestialobjects.CelestialObject;
 import org.spacedrones.universe.celestialobjects.SensorSignalResponseLibrary;
 import org.spacedrones.universe.celestialobjects.Star;
@@ -23,40 +25,57 @@ import org.spacedrones.utils.Utils;
 
 //XXX Make better
 
-public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvider implements UniverseLocationDataProvider {
+public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvider implements UniverseCelestialObjectDataProvider {
 	
-	private final Map<String, CelestialObject> celestialObjectLocations;
+	private final Map<String, CelestialObject> celestialObjects;
+	private final Map<String, Coordinates> celestialObjectLocations;
 
 	public LocalUniverseLocationDataProvider() {
 		super();
-		celestialObjectLocations = new HashMap<String, CelestialObject>();
+		celestialObjects = new HashMap<>();
+		celestialObjectLocations = new HashMap<>();
 	}
 
 	@Override
-	public int addLocation(CelestialObject location) {
-		return celestialObjectLocations.put(location.getIdent(), location) != null ? 1:0;
+	public void addCelestialObject(CelestialObject celestialObject, Coordinates coordinates) {
+		celestialObjectLocations.put(celestialObject.getIdent(), coordinates);
+		celestialObjects.put(celestialObject.getIdent(), celestialObject);
 	}
 
 
+	@Override
+	public CelestialObject getCelestialObjectById(String celestialObjectID) {
+		return celestialObjects.get(celestialObjectID);
+	}
 
 
 	@Override
-	public CelestialObject getLocationById(String locationID) {
-		return celestialObjectLocations.get(locationID);
+	public Coordinates getCelestialObjectCoordinatesById(String celestialObjectID) {
+		return celestialObjectLocations.get(celestialObjectID);
 	}
 	
 
 	@Override
-	public CelestialObject getLocationByName(String locationProperName) {
-		Iterator<Entry<String, CelestialObject>> it = celestialObjectLocations.entrySet().iterator();
-		while (it.hasNext()) {
-			CelestialObject loc = it.next().getValue();
-			if(locationProperName.equals(loc.getName()))
-				return loc;
+	public CelestialObject getCelestialObjectByName(String locationProperName) {
+		for (Entry<String, CelestialObject> stringCelestialObjectEntry : celestialObjects.entrySet()) {
+			CelestialObject co = stringCelestialObjectEntry.getValue();
+			if (locationProperName.equals(co.getName()))
+				return co;
 		}
 		return null;
-		
-		
+	}
+
+
+	@Override
+	public Coordinates getCelestialObjectCoordinatesByName(String celestialObjectName) {
+		Iterator<Entry<String, CelestialObject>> it = celestialObjects.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry<String, CelestialObject> me = it.next();
+			CelestialObject co = me.getValue();
+			if(celestialObjectName.equals(co.getName()))
+				return celestialObjectLocations.get(me.getKey());
+		}
+		return null;
 	}
 	
 
@@ -64,7 +83,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 	public List<CelestialObject> getLocationsByType(TypeInfo type) {
 		List<CelestialObject> locations = new ArrayList<CelestialObject>();
 
-		Iterator<Entry<String, CelestialObject>> it = celestialObjectLocations.entrySet().iterator();
+		Iterator<Entry<String, CelestialObject>> it = celestialObjects.entrySet().iterator();
 		while (it.hasNext()) {
 			CelestialObject loc = it.next().getValue();
 			if(type == (loc.getType()))
@@ -76,17 +95,15 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 	
 	@Override
 	public List<CelestialObject> getLocationsByCategory(TypeInfo category) {
-		
-		
-		List<CelestialObject> locations = new ArrayList<CelestialObject>();
+		List<CelestialObject> locations = new ArrayList<>();
 
-		Iterator<Entry<String, CelestialObject>> it = celestialObjectLocations.entrySet().iterator();
+		Iterator<Entry<String, CelestialObject>> it = celestialObjects.entrySet().iterator();
 		while (it.hasNext()) {
 			CelestialObject loc = it.next().getValue();
 			if(category == (loc.getCategory()))
 				locations.add(loc);
 		}
-		return celestialObjectLocations.entrySet().stream()
+		return celestialObjects.entrySet().stream()
 				.map(Entry::getValue)
 				.filter(map -> map.getCategory().equals(category))
 				.collect(Collectors.toList());
@@ -97,7 +114,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 	public List<CelestialObject> getLocationsByTypeCloserThan(TypeInfo type, Coordinates coordinates, BigDecimal distance) {
 		List<CelestialObject> locations = new ArrayList<>();
 
-		Iterator<Entry<String, CelestialObject>> it = celestialObjectLocations.entrySet().iterator();
+		Iterator<Entry<String, Coordinates>> it = celestialObjectLocations.entrySet().iterator();
 		while (it.hasNext()) {
 			CelestialObject loc = it.next().getValue();
 			if(type == (loc.getType()))
@@ -107,7 +124,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 		//return locations;
 		
 		
-		return celestialObjectLocations.entrySet().stream()
+		return celestialObjects.entrySet().stream()
 				.map(Entry::getValue)
 				.filter(map -> map.getType().equals(type))
 				.filter(map -> Utils.distanceToLocation(map.getCoordinates(), coordinates, Unit.One).compareTo(distance) <= 0)
@@ -120,7 +137,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 	@Override
 	public List<CelestialObject> getLocationsCloserThan(Coordinates coordinates, BigDecimal distance) {
 		List<CelestialObject> locations = new ArrayList<>();
-		Iterator<Entry<String, CelestialObject>> it = celestialObjectLocations.entrySet().iterator();
+		Iterator<Entry<String, CelestialObject>> it = celestialObjects.entrySet().iterator();
 		while (it.hasNext()) {
 			CelestialObject loc = it.next().getValue();
 			if( Utils.distanceToLocation(loc.getCoordinates(), coordinates, Unit.One).compareTo(distance) <= 0)
@@ -132,26 +149,28 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 
 
 	public void populate() {
-		Star sol = new Star("Sol", Star.G_CLASS_STAR, new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value())),
+		Coordinates solCoordinates = new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value()));
+		Star sol = new Star("Sol", Star.G_CLASS_STAR,
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.G_CLASS_STAR));
-		addLocation(sol);
 
-		Star alphaCenturi = new Star("Alpha centuri", Star.G_CLASS_STAR,  
-				new Coordinates(new BigDecimal(8*Unit.kPc.value() + 2.98*Unit.Ly.value()),new BigDecimal(2.83* Unit.Ly.value()),new BigDecimal(101.34*Unit.Ly.value())),
+		addCelestialObject(sol, solCoordinates);
+
+		Coordinates alphaCenturiCoordinates = new Coordinates(new BigDecimal(8*Unit.kPc.value() + 2.98*Unit.Ly.value()),new BigDecimal(2.83* Unit.Ly.value()),new BigDecimal(101.34*Unit.Ly.value()));
+
+		Star alphaCenturi = new Star("Alpha centuri", Star.G_CLASS_STAR
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.O_CLASS_STAR));
-		addLocation(alphaCenturi);
+
+		addCelestialObject(alphaCenturi, alphaCenturiCoordinates);
 		
-		
-		
+
 		//Setup subspace beacons
-		
+		Coordinates c1 = solCoordinates.add(new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1e8*Unit.Km.value())));
 		//Above Sol north pole, 1e8 Km
-		addLocation(new SubspaceBeacon("SolBeacon", new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1e8*Unit.Km.value())), sol,
-				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON)));
-		
-		addLocation(new SubspaceBeacon("ACBeacon", 
-				new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1e8*Unit.Km.value())), alphaCenturi,
-				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON)));
+		addCelestialObject(new SubspaceBeacon("SolBeacon",
+				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON)), c1);
+
+		Coordinates c2 = alphaCenturiCoordinates.add(new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1e8*Unit.Km.value())));
+		addCelestialObject(new SubspaceBeacon("ACBeacon", SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON)), c2);
 	}
 
 

@@ -34,8 +34,9 @@ import org.spacedrones.structures.storage.fuel.FuelStorageTankFactory;
 public class SpacecraftFactory {
 	
 	public final static String SHUTTLE="Shuttle"; 
-	public final static String SIMPLE_SATELITE="Simple satelite"; 
-	
+	public final static String SIMPLE_SATELITE="Simple satelite";
+
+
 	public static Spacecraft getSpacecraft(String spacecraftType) throws InvalidParameterException{
 		SpacecraftDataProvider spacecraftDataProvider = Configuration.getSpacecraftDataProvider();
 		 
@@ -46,17 +47,17 @@ public class SpacecraftFactory {
 			
 			Spacecraft spacecraft = new SimpleSpacecraft(SHUTTLE, hull);
 			
-			SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.type());	
-			spacecraft.addComponent(systemComputer);
+			SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.type());
+			SpacecraftBuildManager.addComponent(spacecraft, systemComputer);
 			
 			//PropulsionManagementSoftware engineManagementSoftware = new PropulsionManagementSoftware("Test EngineManagementSoftware", systemComputer);
 			//systemComputer.loadSoftware(engineManagementSoftware);
 			
 			PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.type());
-			spacecraft.addComponent(powerGenerator);
+			SpacecraftBuildManager.addComponent(spacecraft, powerGenerator);
 			
 			Sensor sensor = SensorFactory.getSensor(LinearSensorArray.type(), Sensor.RADAR, 1);
-			spacecraft.addComponent(sensor);
+			SpacecraftBuildManager.addComponent(spacecraft, sensor);
 			
 			
 			double tankCapacity = 100 * Unit.l.value();
@@ -67,15 +68,15 @@ public class SpacecraftFactory {
 			FuelSubSystem fuelDeliverySystem = FuelSubSystemFactory.getFuelSubsystem(
 					FuelSubSystem.BASIC_FUEL_SUBSYSTEM, FuelSubSystem.PROPULSION_FUEL_SUBSYSTEM);
 			fuelDeliverySystem.addFuelTank(tank);
-			spacecraft.addComponent(fuelDeliverySystem);
-			spacecraft.addComponent(tank);
+			SpacecraftBuildManager.addComponent(spacecraft, fuelDeliverySystem);
+			SpacecraftBuildManager.addComponent(spacecraft, tank);
 			
 			FuelConsumingEngine engine = (FuelConsumingEngine)EngineFactory.getEngine(SimpleThruster.type(), false);
 			engine.setFuelSubSystem(fuelDeliverySystem);
-			spacecraft.addComponent(engine);
+			SpacecraftBuildManager.addComponent(spacecraft, engine);
 			
 			CommunicationComponent commDevice = CommunicatorDeviceFactory.getCommunicator(RadioCommunicator.type());
-			spacecraft.addComponent(commDevice);
+			SpacecraftBuildManager.addComponent(spacecraft, commDevice);
 			
 			return spacecraft;
 		case SIMPLE_SATELITE:
@@ -83,11 +84,11 @@ public class SpacecraftFactory {
 			
 			Spacecraft sat = new SimpleSpacecraft("SimpleSatelite", satHull);
 			
-			SystemComputer satSystemComputer = ComputerFactory.getComputer(BasicSystemComputer.type());	
-			sat.addComponent(satSystemComputer);
+			SystemComputer satSystemComputer = ComputerFactory.getComputer(BasicSystemComputer.type());
+			SpacecraftBuildManager.addComponent(sat, satSystemComputer);
 			
 			PowerGenerator simpleSolarCell = PowerGenerationFactory.getPowerGenerator(SimpleSolarArray.type());
-			sat.addComponent(simpleSolarCell);
+			SpacecraftBuildManager.addComponent(sat, simpleSolarCell);
 			
 			return sat;
 		default:

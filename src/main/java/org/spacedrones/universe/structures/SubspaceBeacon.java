@@ -9,8 +9,8 @@ public class SubspaceBeacon extends AbstractCelestialObject {
 	
 	public static TypeInfo typeInfo = new TypeInfo("SubspaceBeacon");
 
-	public SubspaceBeacon(String name, Coordinates coordinates, SensorSignalResponseProfile sensorSignalResponseProfile) {
-		super(name, coordinates, sensorSignalResponseProfile);
+	public SubspaceBeacon(String name, SensorSignalResponseProfile sensorSignalResponseProfile) {
+		super(name, sensorSignalResponseProfile);
 	}
 
 
@@ -19,7 +19,12 @@ public class SubspaceBeacon extends AbstractCelestialObject {
 		return type();
 	}
 
-	
+	@Override
+	public String getName() {
+		return type().toString();
+	}
+
+
 	public static TypeInfo type() {
 		return typeInfo;
 	}

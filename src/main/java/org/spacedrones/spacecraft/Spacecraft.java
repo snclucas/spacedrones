@@ -19,7 +19,7 @@ public interface Spacecraft extends StatusProvider, Onlineable, Diagnosable, Tic
 	double getTotalMassOfComponents();
 	double getTotalVolumeOfComponents();
 	
-	void addComponent(SpacecraftBusComponent component);
+	//void addComponent(SpacecraftBusComponent component);
 	List<SpacecraftBusComponent> getComponents();
 	
 	Hull getHull();

@@ -35,7 +35,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 		this.name = name;
 		setHull(hull);
 		this.bus = new SpacecraftBus("Spacecraft bus", this);
-		this.bus.setSpacecraft(this);
+		//this.bus.setSpacecraft(this);
 		systemsOnline = false;
 		this.ident = Configuration.getUUID();
 	}
@@ -106,8 +106,8 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	}
 
 
-	@Override
-	public void addComponent(SpacecraftBusComponent component) {
+	//@Override
+	void addComponent(SpacecraftBusComponent component) {
 		if(component instanceof SpacecraftBusComponent == false)
 			throw new ComponentConfigurationException("Cano only add SpacecraftBusComponents");
 		bus.addComponent(component);

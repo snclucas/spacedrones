@@ -1,7 +1,6 @@
 package org.spacedrones.universe.celestialobjects;
 
 import org.spacedrones.components.TypeInfo;
-import org.spacedrones.universe.Coordinates;
 
 public class UnknownObject extends AbstractCelestialObject {
 	
@@ -9,13 +8,18 @@ public class UnknownObject extends AbstractCelestialObject {
 		return new TypeInfo("UnkownObject");
 	}
 
-	public UnknownObject(String name, Coordinates coordinates, SensorSignalResponseProfile sensorSignalResponseProfile) {
-		super(name, coordinates, sensorSignalResponseProfile);
+	public UnknownObject(String name, SensorSignalResponseProfile sensorSignalResponseProfile) {
+		super(name, sensorSignalResponseProfile);
 	}
 
 	@Override
 	public TypeInfo getType() {
 		return type();
+	}
+
+	@Override
+	public String getName() {
+		return type().toString();
 	}
 
 	@Override

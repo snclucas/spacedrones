@@ -7,7 +7,6 @@ import org.spacedrones.components.TypeInfo;
 import org.spacedrones.physics.Unit;
 
 public interface Location extends Identifiable {
-	
 	TypeInfo categoryID = new TypeInfo("Location");
 	
 	Coordinates getCoordinates();

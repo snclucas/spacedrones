@@ -1,7 +1,6 @@
 package org.spacedrones.universe.celestialobjects;
 
 import org.spacedrones.components.TypeInfo;
-import org.spacedrones.universe.Coordinates;
 
 public abstract class Asteroid extends AbstractCelestialObject {
 	
@@ -10,8 +9,8 @@ public abstract class Asteroid extends AbstractCelestialObject {
 	}
 
 	
-	public Asteroid(String name, Coordinates coordinates, SensorSignalResponseProfile sensorSignalResponseProfile) {
-		super(name, coordinates, sensorSignalResponseProfile);
+	public Asteroid(String name, SensorSignalResponseProfile sensorSignalResponseProfile) {
+		super(name, sensorSignalResponseProfile);
 	}
 
 	

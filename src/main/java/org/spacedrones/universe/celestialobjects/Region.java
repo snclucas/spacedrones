@@ -11,15 +11,20 @@ public class Region extends AbstractCelestialObject {
 
 	private double sizeOfRegion;
 
-	public Region(String name, Coordinates coordinates, SensorSignalResponseProfile sensorSignalResponseProfile, double sizeOfRegion) {
-		super(name, coordinates, sensorSignalResponseProfile);
+	public Region(String name, SensorSignalResponseProfile sensorSignalResponseProfile, double sizeOfRegion) {
+		super(name, sensorSignalResponseProfile);
 		this.sizeOfRegion = sizeOfRegion;
 	}
 
-	
+
 	@Override
 	public TypeInfo getType() {
 		return type();
+	}
+
+	@Override
+	public String getName() {
+		return type().toString();
 	}
 
 

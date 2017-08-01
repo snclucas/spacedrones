@@ -36,11 +36,6 @@ public abstract class AbstractBus implements Bus {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (spacecraft == null) {
-			if (other.spacecraft != null)
-				return false;
-		} else if (!spacecraft.equals(other.spacecraft))
-			return false;
 		return true;
 	}
 
@@ -50,15 +45,15 @@ public abstract class AbstractBus implements Bus {
 	}
 
 
-	//protected Spacecraft spacecraft;
+	protected Spacecraft spacecraft;
 	
 	protected final List<SpacecraftBusComponent> components = new ArrayList<>();
 
 	private final String name;
 
-	public AbstractBus(String name/*, Spacecraft spacecraft*/) {
+	public AbstractBus(String name, Spacecraft spacecraft) {
 		this.name = name;
-	//	this.spacecraft = spacecraft;
+		this.spacecraft = spacecraft;
 		this.ident = Configuration.getUUID();
 	}
 	
@@ -80,13 +75,13 @@ public abstract class AbstractBus implements Bus {
 
 	}
 
-	//public Spacecraft getSpacecraft() {
-	//	return spacecraft;
-	//}
+	public Spacecraft getSpacecraft() {
+		return spacecraft;
+	}
 
-	//public void setSpacecraft(Spacecraft spacecraft) {
-	//	this.spacecraft = spacecraft;
-	//}
+	public void setSpacecraft(Spacecraft spacecraft) {
+		this.spacecraft = spacecraft;
+	}
 
 	@Override
 	public String getName() {

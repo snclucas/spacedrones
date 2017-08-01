@@ -7,12 +7,8 @@ import java.util.List;
 import org.spacedrones.Configuration;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.sensors.SignalResponse;
-import org.spacedrones.universe.AbstractLocation;
-import org.spacedrones.universe.Coordinates;
-import org.spacedrones.universe.Location;
-import org.spacedrones.universe.SimpleLocation;
 
-public abstract class AbstractCelestialObject extends AbstractLocation implements CelestialObject {
+public abstract class AbstractCelestialObject implements CelestialObject {
 
 	
 	private String opticalSignature;
@@ -32,8 +28,7 @@ public abstract class AbstractCelestialObject extends AbstractLocation implement
 	protected final String ident;
 	
 	
-	public AbstractCelestialObject(String name, Coordinates coordinates, SensorSignalResponseProfile sensorSignalResponseProfile) {
-		super(name, coordinates);
+	public AbstractCelestialObject(String name, SensorSignalResponseProfile sensorSignalResponseProfile) {
 		celestialObjects = new ArrayList<>();
 		this.sensorSignalResponseProfile = sensorSignalResponseProfile;
 		this.ident = Configuration.getUUID();

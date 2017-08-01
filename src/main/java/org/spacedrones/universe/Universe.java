@@ -17,14 +17,14 @@ import org.spacedrones.universe.celestialobjects.Region;
 import org.spacedrones.universe.celestialobjects.SensorSignalResponseLibrary;
 import org.spacedrones.universe.celestialobjects.SensorSignalResponseProfile;
 import org.spacedrones.universe.celestialobjects.Star;
-import org.spacedrones.universe.dataprovider.UniverseLocationDataProvider;
+import org.spacedrones.universe.dataprovider.UniverseCelestialObjectDataProvider;
 import org.spacedrones.universe.dataprovider.SpacecraftDataProvider;
 import org.spacedrones.universe.structures.SubspaceBeacon;
 
-public class Universe implements UniverseLocationDataProvider,
+public class Universe implements UniverseCelestialObjectDataProvider,
 		SpacecraftDataProvider, EnvironmentDataProvider, Tickable {
 
-	private UniverseLocationDataProvider universeLocationDataProvider = Configuration.getUniverseLocationDataProvider();
+	private UniverseCelestialObjectDataProvider universeLocationDataProvider = Configuration.getUniverseLocationDataProvider();
 	private SpacecraftDataProvider spacecraftDataProvider = Configuration.getUniverseSpacecraftLocationDataProvider();
 	private EnvironmentDataProvider universeEnvironmentDataProvider = Configuration.getEnvironmentDataProvider();
 
@@ -103,7 +103,7 @@ public class Universe implements UniverseLocationDataProvider,
 				new BigDecimal(0),
 				new BigDecimal(100*Unit.Ly.value())),
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.G_CLASS_STAR));
-		addLocation(sol);
+		addCelestialObject(sol, );
 
 		Star alphaCenturi = new Star("Alpha centuri", Star.G_CLASS_STAR,  
 				new Coordinates(
@@ -111,21 +111,21 @@ public class Universe implements UniverseLocationDataProvider,
 						new BigDecimal(2.83* Unit.Ly.value()),
 						new BigDecimal(101.34*Unit.Ly.value())),
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.M_CLASS_STAR));
-		addLocation(alphaCenturi);
+		addCelestialObject(alphaCenturi, );
 
 
 
 		//Setup subspace beacons
 
 		//Above Sol north pole, 1e8 Km
-		addLocation(new SubspaceBeacon("SolBeacon", 
+		addCelestialObject(new SubspaceBeacon("SolBeacon",
 				new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1*Unit.AU.value())), sol,
-				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON)));
+				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON)), );
 
 
-		addLocation(new SubspaceBeacon("ACBeacon", 
+		addCelestialObject(new SubspaceBeacon("ACBeacon",
 				new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1*Unit.AU.value())), alphaCenturi,
-				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON)));
+				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON)), );
 
 	}
 
@@ -135,11 +135,11 @@ public class Universe implements UniverseLocationDataProvider,
 
 
 
-	public UniverseLocationDataProvider getDataProvider() {
+	public UniverseCelestialObjectDataProvider getDataProvider() {
 		return universeLocationDataProvider;
 	}
 
-	public void setDataProvider(UniverseLocationDataProvider dataProvider) {
+	public void setDataProvider(UniverseCelestialObjectDataProvider dataProvider) {
 		this.universeLocationDataProvider = dataProvider;
 	}
 
@@ -149,16 +149,16 @@ public class Universe implements UniverseLocationDataProvider,
 	}
 
 
-	public int addLocation(CelestialObject location) {
-		return universeLocationDataProvider.addLocation(location);
+	public int addCelestialObject(CelestialObject location, Location location) {
+		return universeLocationDataProvider.addCelestialObject(location, );
 	}
 
-	public CelestialObject getLocationById(String locationID) {
-		return universeLocationDataProvider.getLocationById(locationID);
+	public CelestialObject getCelestialObjectById(String locationID) {
+		return universeLocationDataProvider.getCelestialObjectById(locationID);
 	}
 
-	public CelestialObject getLocationByName(String locationProperName) {
-		return universeLocationDataProvider.getLocationByName(locationProperName);
+	public CelestialObject getCelestialObjectByName(String locationProperName) {
+		return universeLocationDataProvider.getCelestialObjectByName(locationProperName);
 	}
 
 

@@ -3,7 +3,6 @@ package org.spacedrones.universe.celestialobjects;
 import java.util.List;
 
 import org.spacedrones.components.TypeInfo;
-import org.spacedrones.universe.Coordinates;
 
 public class Star extends AbstractCelestialObject {
 	
@@ -21,8 +20,8 @@ public class Star extends AbstractCelestialObject {
 	
 	private String classification;
 
-	public Star(String name, String classification, Coordinates coordinates, SensorSignalResponseProfile sensorSignalResponseProfile) {
-		super(name, coordinates, sensorSignalResponseProfile);
+	public Star(String name, String classification, SensorSignalResponseProfile sensorSignalResponseProfile) {
+		super(name, sensorSignalResponseProfile);
 		this.classification = classification;
 	}
 	
@@ -40,16 +39,21 @@ public class Star extends AbstractCelestialObject {
 	public String describe() {
 		return "A luminous sphere of plasma large enough to be held together by its own gravity.";
 	}
-	
+
 	
 	
 	public static TypeInfo type() {
 		return new TypeInfo("Star");
 	}
-	
+
 	@Override
 	public TypeInfo getType() {
 		return type();
 	}
-	
+
+	@Override
+	public String getName() {
+		return type().toString();
+	}
+
 }

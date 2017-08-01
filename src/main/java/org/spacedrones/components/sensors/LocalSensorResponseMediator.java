@@ -9,14 +9,14 @@ import org.spacedrones.data.EnvironmentDataProvider;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.Universe;
-import org.spacedrones.universe.dataprovider.UniverseLocationDataProvider;
+import org.spacedrones.universe.dataprovider.UniverseCelestialObjectDataProvider;
 import org.spacedrones.universe.celestialobjects.CelestialObject;
 import org.spacedrones.universe.celestialobjects.UnknownObject;
 import org.spacedrones.utils.Utils;
 
 public class LocalSensorResponseMediator implements SensorResponseMediator {
 	Universe universe = Universe.getInstance();
-	UniverseLocationDataProvider universeDataProvider = Configuration.getUniverseLocationDataProvider();
+	UniverseCelestialObjectDataProvider universeDataProvider = Configuration.getUniverseLocationDataProvider();
 	EnvironmentDataProvider environmentDataProvider = Configuration.getEnvironmentDataProvider();
 
 	@Override
