@@ -6,7 +6,6 @@ import java.util.List;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.sensors.SensorProfile;
 import org.spacedrones.universe.Coordinates;
-import org.spacedrones.universe.Location;
 import org.spacedrones.universe.celestialobjects.CelestialObject;
 
 public interface UniverseCelestialObjectDataProvider {
@@ -20,7 +19,7 @@ public interface UniverseCelestialObjectDataProvider {
 	List<CelestialObject> getLocationsByType(TypeInfo type);
 	List<CelestialObject> getLocationsByCategory(TypeInfo category);
 	List<CelestialObject> getLocationsCloserThan(Coordinates coordinates, BigDecimal distance);
-	List<CelestialObject> getLocationsByTypeCloserThan(TypeInfo type, Coordinates coordinates, BigDecimal distance);
+	List<CelestialObject> getCelestialObjectByTypeCloserThan(TypeInfo type, Coordinates coordinates, BigDecimal distance);
 	double getSignalPropagationSpeed(SensorProfile sensorProfile);
 	void populate();
 }

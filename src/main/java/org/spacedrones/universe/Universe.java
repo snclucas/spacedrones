@@ -1,10 +1,5 @@
 package org.spacedrones.universe;
 
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.spacedrones.Configuration;
 import org.spacedrones.components.Tickable;
 import org.spacedrones.components.TypeInfo;
@@ -13,13 +8,13 @@ import org.spacedrones.data.EnvironmentDataProvider;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.Spacecraft;
 import org.spacedrones.universe.celestialobjects.CelestialObject;
-import org.spacedrones.universe.celestialobjects.Region;
-import org.spacedrones.universe.celestialobjects.SensorSignalResponseLibrary;
-import org.spacedrones.universe.celestialobjects.SensorSignalResponseProfile;
-import org.spacedrones.universe.celestialobjects.Star;
-import org.spacedrones.universe.dataprovider.UniverseCelestialObjectDataProvider;
 import org.spacedrones.universe.dataprovider.SpacecraftDataProvider;
-import org.spacedrones.universe.structures.SubspaceBeacon;
+import org.spacedrones.universe.dataprovider.UniverseCelestialObjectDataProvider;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Universe implements UniverseCelestialObjectDataProvider,
 		SpacecraftDataProvider, EnvironmentDataProvider, Tickable {
@@ -59,19 +54,13 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 		return localEmptyInstance;
 	}
 
-	public final static CelestialObject galacticCenter 
-	= new Region("Galactic center", new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0)),
-			new SensorSignalResponseProfile(1000.0, 1000.0, 1000.0, 1000.0, 1000.0), 10.0 * Unit.Pc.value());
-
 
 	public Universe() {
 		super();
 	}
 
 
-	public List<CelestialObject> getCelelestialObjects() {
-		return universeLocationDataProvider.getLocationsByCategory(CelestialObject.category());
-	}
+
 
 
 	public void addSpacecraft(Spacecraft spacecraft, Coordinates coordinates) {
@@ -84,63 +73,8 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 	}
 
 
-	public void updateSpacecraftLocation(String spacecraftIdent, Location location) {
-		spacecraftDataProvider.updateSpacecraftLocation(spacecraftIdent, location.getCoordinates());
-	}
-
-
 	public Coordinates getSpacecraftLocation(String spacecraftIdent) {
 		return spacecraftDataProvider.getSpacecraftLocation(spacecraftIdent);
-	}
-
-
-
-
-	public void setupSimpleUniverse() {
-		System.out.println("Adding ");
-		Star sol = new Star("Sol", Star.G_CLASS_STAR,  new Coordinates(
-				new BigDecimal(8*Unit.kPc.value()),
-				new BigDecimal(0),
-				new BigDecimal(100*Unit.Ly.value())),
-				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.G_CLASS_STAR));
-		addCelestialObject(sol, );
-
-		Star alphaCenturi = new Star("Alpha centuri", Star.G_CLASS_STAR,  
-				new Coordinates(
-						new BigDecimal(8*Unit.kPc.value() + 2.98*Unit.Ly.value()),
-						new BigDecimal(2.83* Unit.Ly.value()),
-						new BigDecimal(101.34*Unit.Ly.value())),
-				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.M_CLASS_STAR));
-		addCelestialObject(alphaCenturi, );
-
-
-
-		//Setup subspace beacons
-
-		//Above Sol north pole, 1e8 Km
-		addCelestialObject(new SubspaceBeacon("SolBeacon",
-				new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1*Unit.AU.value())), sol,
-				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON)), );
-
-
-		addCelestialObject(new SubspaceBeacon("ACBeacon",
-				new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1*Unit.AU.value())), alphaCenturi,
-				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON)), );
-
-	}
-
-
-
-
-
-
-
-	public UniverseCelestialObjectDataProvider getDataProvider() {
-		return universeLocationDataProvider;
-	}
-
-	public void setDataProvider(UniverseCelestialObjectDataProvider dataProvider) {
-		this.universeLocationDataProvider = dataProvider;
 	}
 
 
@@ -149,8 +83,8 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 	}
 
 
-	public int addCelestialObject(CelestialObject location, Location location) {
-		return universeLocationDataProvider.addCelestialObject(location, );
+	public void addCelestialObject(CelestialObject celestialObject, Coordinates coordinates) {
+		universeLocationDataProvider.addCelestialObject(celestialObject, coordinates);
 	}
 
 	public CelestialObject getCelestialObjectById(String locationID) {
@@ -161,8 +95,18 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 		return universeLocationDataProvider.getCelestialObjectByName(locationProperName);
 	}
 
+  @Override
+  public Coordinates getCelestialObjectCoordinatesById(String celestialObjectID) {
+    return universeLocationDataProvider.getCelestialObjectCoordinatesById(celestialObjectID);
+  }
 
-	@Override
+  @Override
+  public Coordinates getCelestialObjectCoordinatesByName(String celestialObjectName) {
+    return universeLocationDataProvider.getCelestialObjectCoordinatesByName(celestialObjectName);
+  }
+
+
+  @Override
 	public Spacecraft getSpacecraftByIdent(String ident) {
 		return spacecraftDataProvider.getSpacecraftByIdent(ident);
 	}
@@ -198,8 +142,8 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 
 
 	@Override
-	public List<CelestialObject> getLocationsByTypeCloserThan(TypeInfo type, Coordinates coordinates, BigDecimal distance) {
-		return universeLocationDataProvider.getLocationsByTypeCloserThan(type, coordinates, distance);
+	public List<CelestialObject> getCelestialObjectByTypeCloserThan(TypeInfo type, Coordinates coordinates, BigDecimal distance) {
+		return universeLocationDataProvider.getCelestialObjectByTypeCloserThan(type, coordinates, distance);
 	}
 
 
@@ -240,8 +184,8 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 
 
 	@Override
-	public Map<String, Coordinates> getSpacecraftWithinRangeOfLocation(Location location, BigDecimal range) {
-		return spacecraftDataProvider.getSpacecraftWithinRangeOfLocation(location, range);
+	public Map<String, Coordinates> getSpacecraftWithinRangeOfCoordinates(Coordinates coordinates, BigDecimal range) {
+		return spacecraftDataProvider.getSpacecraftWithinRangeOfCoordinates(coordinates, range);
 	}
 
 

@@ -1,16 +1,15 @@
 package org.spacedrones.universe.dataprovider;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.spacedrones.exceptions.SpacecraftNotFoundException;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.Spacecraft;
 import org.spacedrones.universe.Coordinates;
-import org.spacedrones.universe.Location;
 import org.spacedrones.utils.Utils;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
@@ -45,12 +44,6 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 		if(spacecraftVelocityInUniverse.put(spacecraftIdent, vel) == null)
 			throw new SpacecraftNotFoundException("Spacecraft [" + spacecraftIdent + "] is not in the Universe");
 	}
-	
-	
-	@Override
-	public void updateSpacecraftLocation(String spacecraftIdent, Location location) {
-		updateSpacecraftLocation(spacecraftIdent, location.getCoordinates());
-	}
 
 	
 	@Override
@@ -77,10 +70,11 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 		return Utils.distanceToLocation(coordsSpacecraft1, coordsSpacecraft2, unit);
 	}
 
-	
-	public Map<String,Coordinates> getSpacecraftWithinRangeOfLocation(Location location, BigDecimal range) {
+
+	@Override
+	public Map<String,Coordinates> getSpacecraftWithinRangeOfCoordinates(Coordinates coordinates, BigDecimal range) {
 		return spacecraftLocationInUniverse.entrySet().stream()
-				.filter(map -> map.getValue().getCoordinates().equals(location.getCoordinates()))
+				.filter(map -> map.getValue().equals(coordinates))
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 	}
 

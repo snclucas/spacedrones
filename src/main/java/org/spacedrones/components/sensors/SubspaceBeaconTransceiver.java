@@ -1,11 +1,5 @@
 package org.spacedrones.components.sensors;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.spacedrones.Configuration;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.navigation.BeaconSignal;
@@ -18,6 +12,12 @@ import org.spacedrones.status.SystemStatus;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.utils.Utils;
 import org.spacedrones.utils.math.DistanceSolver;
+
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SubspaceBeaconTransceiver extends AbstractSensor implements PositioningSensor {
 
@@ -128,7 +128,8 @@ public class SubspaceBeaconTransceiver extends AbstractSensor implements Positio
 
 
 	private BigDecimal getBeaconCoordinate(int beacon, int index, double unit) {
-		return beaconSignals.get(beacon).getBeacon().getCoordinates().get(index).divide(new BigDecimal(unit), context);
+    return null; //fix sensors, only uninverse whould know where they are  really
+		//return beaconSignals.get(beacon).getBeacon().getCoordinates().get(index).divide(new BigDecimal(unit), context);
 	}
 
 

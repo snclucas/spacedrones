@@ -1,18 +1,18 @@
 package org.spacedrones.components.sensors;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.spacedrones.Configuration;
 import org.spacedrones.data.EnvironmentDataProvider;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.Universe;
-import org.spacedrones.universe.dataprovider.UniverseCelestialObjectDataProvider;
 import org.spacedrones.universe.celestialobjects.CelestialObject;
 import org.spacedrones.universe.celestialobjects.UnknownObject;
+import org.spacedrones.universe.dataprovider.UniverseCelestialObjectDataProvider;
 import org.spacedrones.utils.Utils;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LocalSensorResponseMediator implements SensorResponseMediator {
 	Universe universe = Universe.getInstance();
@@ -48,7 +48,8 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 				universeDataProvider.getLocationsCloserThan(spacecraftLocation, maximumDistanceScanned);
 
 		for(CelestialObject object : objectsWithin1000Ly) {
-			BigDecimal distance = Utils.distanceToLocation(object.getCoordinates(), spacecraftLocation, Unit.One);
+			Coordinates coordinates = universe.getCelestialObjectCoordinatesById(object.getIdent());
+			BigDecimal distance = Utils.distanceToLocation(coordinates, spacecraftLocation, Unit.One);
 			
 			SignalResponse returnedSignalResponse = object.getSignalResponse(sensorProfile.getSensorType(), distance);
 			// TODO maybe set celestial object as UNKNOWN if under a certain threshold?
@@ -59,10 +60,10 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 			distance.doubleValue()/Unit.Ly.value());
 			
 			if(returnedSignalResponse.getSignalStrength() > 1.0)
-				object = new UnknownObject("Unknown object", object.getCoordinates(), object.getSensorSignalResponse());
+				object = new UnknownObject("Unknown object", object.getSensorSignalResponse());
 
-			SensorResult result = new SensorResult(object, Utils.distanceToLocation(object.getCoordinates(), spacecraftLocation, Unit.One), 
-					Utils.vectorToLocation(object.getCoordinates(), spacecraftLocation, false), returnedSignalResponse);
+			SensorResult result = new SensorResult(object, Utils.distanceToLocation(coordinates, spacecraftLocation, Unit.One),
+					Utils.vectorToLocation(coordinates, spacecraftLocation, false), returnedSignalResponse);
 			results.add(result);
 		}
 		return results;
