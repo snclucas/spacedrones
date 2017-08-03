@@ -10,6 +10,7 @@ import org.junit.rules.ExpectedException;
 import org.spacedrones.components.computers.BasicSystemComputer;
 import org.spacedrones.components.computers.ComputerFactory;
 import org.spacedrones.components.computers.SystemComputer;
+import org.spacedrones.physics.Unit;
 import org.spacedrones.status.SystemStatus;
 import org.spacedrones.structures.hulls.Hull;
 import org.spacedrones.structures.hulls.HullFactory;
@@ -30,9 +31,8 @@ public class SpacecraftTest {
 		assertEquals(true, systemStatus.hasCriticalMessages());
 		assertEquals(false, systemStatus.hasWarningMessages());
 		
-		SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.type());	
-		spacecraft.addComponent(systemComputer);
-		
+		SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.type());
+		SpacecraftBuildManager.addComponent(spacecraft, systemComputer);
 		
 		systemStatus = spacecraft.online();
 		
@@ -42,7 +42,7 @@ public class SpacecraftTest {
 		assertEquals(false, systemStatus.hasWarningMessages());
 		
 		
-		System.out.println(spacecraft.getMass());
+		System.out.println(spacecraft.getMass(Unit.kg));
 		
 	
 	}

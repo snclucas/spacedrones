@@ -20,7 +20,7 @@ public class SubspaceBeaconTest {
 		BigDecimal b1x =  new BigDecimal(10 * Unit.Pc.value()); BigDecimal b1y =  new BigDecimal(50 * Unit.Pc.value()); BigDecimal b1z =  new BigDecimal(0 * Unit.Pc.value()); 
 		
 		SensorSignalResponseProfile sensorSignalResponseProfile = SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON);
-		SubspaceBeacon subspaceBeacon1 = new SubspaceBeacon("Test beacon 1", new Coordinates(b1x, b1y, b1z), sensorSignalResponseProfile);
+		SubspaceBeacon subspaceBeacon1 = new SubspaceBeacon("Test beacon 1", sensorSignalResponseProfile);
 		
 		assertEquals("Subspace beacon type incorrect", SubspaceBeacon.typeInfo, subspaceBeacon1.getType());
 				

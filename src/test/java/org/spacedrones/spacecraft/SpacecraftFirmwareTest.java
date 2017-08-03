@@ -12,6 +12,7 @@ import org.spacedrones.components.computers.ComputerFactory;
 import org.spacedrones.components.computers.SystemComputer;
 import org.spacedrones.components.energygeneration.PowerGenerator;
 import org.spacedrones.components.propulsion.Engine;
+import org.spacedrones.physics.Unit;
 import org.spacedrones.structures.hulls.Hull;
 import org.spacedrones.structures.hulls.HullFactory;
 
@@ -83,18 +84,18 @@ public class SpacecraftFirmwareTest {
 		assertEquals("Total power available not correct", expectedTotalPowerAvailable, totalPower, 0.00001);
 		
 		
-		double currentPowerRequirement = SpacecraftFirmware.getTotalCurrentPower(spacecraftBus);
+		double currentPowerRequirement = SpacecraftFirmware.getTotalCurrentPower(spacecraftBus, Unit.MW);
 		double expectedPowerRequirement = 0.0;
 		for(SpacecraftBusComponent scComponent : spacecraftBus.getComponents())
-			expectedPowerRequirement += scComponent.getCurrentPower();
+			expectedPowerRequirement += scComponent.getCurrentPower(Unit.MW);
 		
 		assertEquals("Current power available not correct", expectedPowerRequirement, currentPowerRequirement, 0.00001);
 		
 		
-		double currentCPURequirement = SpacecraftFirmware.getTotalCurrentCPUThroughput(spacecraftBus);
+		double currentCPURequirement = SpacecraftFirmware.getTotalCurrentCPUThroughput(spacecraftBus, Unit.MW);
 		double expectedCPURequirement = 0.0;
 		for(SpacecraftBusComponent scComponent : spacecraftBus.getComponents())
-			expectedCPURequirement += scComponent.getCurrentCPUThroughput();
+			expectedCPURequirement += scComponent.getCurrentCPUThroughput(Unit.MW);
 		
 		assertEquals("Current CPU available not correct", expectedCPURequirement, currentCPURequirement, 0.00001);
 		

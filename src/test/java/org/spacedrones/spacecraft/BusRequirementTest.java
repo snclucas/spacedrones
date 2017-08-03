@@ -3,6 +3,7 @@ package org.spacedrones.spacecraft;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+import org.spacedrones.physics.Unit;
 
 public class BusRequirementTest {
 
@@ -14,8 +15,8 @@ public class BusRequirementTest {
 		
 		BusRequirement busRequirement = new BusRequirement(powerRequirement, cpuThroughputRequirement);
 		
-		assertEquals("Power from bus requirement DAO incorrect",powerRequirement, busRequirement.getPowerRequirement(), 0.001);
-		assertEquals("CPU throughput from bus requirement DAO incorrect",cpuThroughputRequirement, busRequirement.getCPUThroughputRequirement(), 0.001);
+		assertEquals("Power from bus requirement DAO incorrect",powerRequirement, busRequirement.getPowerRequirement(Unit.W), 0.001);
+		assertEquals("CPU throughput from bus requirement DAO incorrect",cpuThroughputRequirement, busRequirement.getCPUThroughputRequirement(Unit.MFLOP), 0.001);
 		
 		
 		

@@ -43,9 +43,9 @@ public class HullTest {
 		Hull hull = new SimpleMonocoqueHull("TestHull", hullSpecification, Hull.SPHEROID);
 		
 		assertEquals("Hull spec name not set correctly", "Simple test hull spec", hullSpecification.getName());
-		assertEquals("Hull thickness not set correctly", thickness, hull.getThickness(), 0.001);
-		assertEquals("Hull width not set correctly", width, hull.getWidth(), 0.001);
-		assertEquals("Hull length not set correctly", length, hull.getLength(), 0.001);
+		assertEquals("Hull thickness not set correctly", thickness, hull.getThickness(Unit.m), 0.001);
+		assertEquals("Hull width not set correctly", width, hull.getWidth(Unit.m), 0.001);
+		assertEquals("Hull length not set correctly", length, hull.getLength(Unit.m), 0.001);
 	}
 
 	
@@ -93,7 +93,7 @@ public class HullTest {
 
 		double massOfHullSHell = volumeDifference * material.getDensity() * Hull.HULL_VOLUME_FRACTION;
 
-		assertEquals("Hull shell mass not calculated correctly", massOfHullSHell, spheroidHull.getMass(), 0.001);
+		assertEquals("Hull shell mass not calculated correctly", massOfHullSHell, spheroidHull.getMass(Unit.kg), 0.001);
 		
 		
 		Hull rectangularHull = new SimpleMonocoqueHull("TestHull", hullSpecification, Hull.RECTANGULAR);
@@ -104,7 +104,7 @@ public class HullTest {
 
 		massOfHullSHell = volumeDifference * material.getDensity() * Hull.HULL_VOLUME_FRACTION;
 
-		assertEquals("Hull shell mass not calculated correctly", massOfHullSHell, rectangularHull.getMass(), 0.001);
+		assertEquals("Hull shell mass not calculated correctly", massOfHullSHell, rectangularHull.getMass(Unit.kg), 0.001);
 
 	}
 

@@ -30,7 +30,7 @@ public class SpacecraftComponentDataTest {
 				new PhysicalSpecification(mass, volume, length, width, height), new OperationalSpecification(nominalPower, nominalCPU, maxPower, maxCPU)),  values);
 		
 		
-		assertEquals("BusComponentSpecification incorrect", mass, spacecraftComponentData.getBusComponentSpecification().getMass(), 0.0001);
+		assertEquals("BusComponentSpecification incorrect", mass, spacecraftComponentData.getBusComponentSpecification().getMass(Unit.kg), 0.0001);
 		
 		assertEquals("Values incorrect", values, spacecraftComponentData.getValues());
 		assertEquals("Value 2 incorrect", values[1], spacecraftComponentData.getValues(1), 0.0001);

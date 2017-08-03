@@ -50,16 +50,16 @@ public class BusRequirementSpecificationTest {
 				new BusComponentSpecification(physicalSpecification, operationalSpecification);
 		
 		
-		assertEquals("Mass from physicalSpecification incorrect", mass, busComponentSpecification.getMass(), 0.001);
-		assertEquals("Volume from physicalSpecification incorrect", volume, busComponentSpecification.getVolume(), 0.001);
-		assertEquals("Length from physicalSpecification incorrect", length, busComponentSpecification.getLength(), 0.001);
-		assertEquals("Height from physicalSpecification incorrect", height, busComponentSpecification.getHeight(), 0.001);
-		assertEquals("Width from physicalSpecification incorrect", width, busComponentSpecification.getWidth(), 0.001);
+		assertEquals("Mass from physicalSpecification incorrect", mass, busComponentSpecification.getMass(Unit.kg), 0.001);
+		assertEquals("Volume from physicalSpecification incorrect", volume, busComponentSpecification.getVolume(Unit.m3), 0.001);
+		assertEquals("Length from physicalSpecification incorrect", length, busComponentSpecification.getLength(Unit.m), 0.001);
+		assertEquals("Height from physicalSpecification incorrect", height, busComponentSpecification.getHeight(Unit.m), 0.001);
+		assertEquals("Width from physicalSpecification incorrect", width, busComponentSpecification.getWidth(Unit.m), 0.001);
 		
-		assertEquals("Nominal power from operationalSpecification incorrect", nominalPower, busComponentSpecification.getNominalPower(), 0.001);
-		assertEquals("Nominal CPU from operationalSpecification incorrect", nominalCPU, busComponentSpecification.getNominalCPUThroughout(), 0.001);
-		assertEquals("Max power from operationalSpecification incorrect", maxPower, busComponentSpecification.getMaximumOperationalPower(), 0.001);
-		assertEquals("Max CPU from operationalSpecification incorrect", maxCPU, busComponentSpecification.getMaximumOperationalCPUThroughput(), 0.001);
+		assertEquals("Nominal power from operationalSpecification incorrect", nominalPower, busComponentSpecification.getNominalPower(Unit.W), 0.001);
+		assertEquals("Nominal CPU from operationalSpecification incorrect", nominalCPU, busComponentSpecification.getNominalCPUThroughout(Unit.MFLOP), 0.001);
+		assertEquals("Max power from operationalSpecification incorrect", maxPower, busComponentSpecification.getMaximumOperationalPower(Unit.W), 0.001);
+		assertEquals("Max CPU from operationalSpecification incorrect", maxCPU, busComponentSpecification.getMaximumOperationalCPUThroughput(Unit.MFLOP), 0.001);
 				
 		
 		mass = 10.5 * Unit.kg.value();
@@ -86,16 +86,17 @@ public class BusRequirementSpecificationTest {
 		busComponentSpecification.setMaximumOperationalCPUThroughput(maxCPU);
 		
 		
-		assertEquals("Mass from physicalSpecification incorrect", mass, busComponentSpecification.getMass(), 0.001);
-		assertEquals("Volume from physicalSpecification incorrect", volume, busComponentSpecification.getVolume(), 0.001);
-		assertEquals("Length from physicalSpecification incorrect", length, busComponentSpecification.getLength(), 0.001);
-		assertEquals("Height from physicalSpecification incorrect", height, busComponentSpecification.getHeight(), 0.001);
-		assertEquals("Width from physicalSpecification incorrect", width, busComponentSpecification.getWidth(), 0.001);
+		assertEquals("Mass from physicalSpecification incorrect", mass, busComponentSpecification.getMass(Unit.kg), 0.001);
+		assertEquals("Volume from physicalSpecification incorrect", volume, busComponentSpecification.getVolume(Unit.m3), 0.001);
+		assertEquals("Length from physicalSpecification incorrect", length, busComponentSpecification.getLength(Unit.m), 0.001);
+		assertEquals("Height from physicalSpecification incorrect", height, busComponentSpecification.getHeight(Unit.m), 0.001);
+		assertEquals("Width from physicalSpecification incorrect", width, busComponentSpecification.getWidth(Unit.m), 0.001);
 		
-		assertEquals("Nominal power from operationalSpecification incorrect", nominalPower, busComponentSpecification.getNominalPower(), 0.001);
-		assertEquals("Nominal CPU from operationalSpecification incorrect", nominalCPU, busComponentSpecification.getNominalCPUThroughout(), 0.001);
-		assertEquals("Max power from operationalSpecification incorrect", maxPower, busComponentSpecification.getMaximumOperationalPower(), 0.001);
-		assertEquals("Max CPU from operationalSpecification incorrect", maxCPU, busComponentSpecification.getMaximumOperationalCPUThroughput(), 0.001);
+		assertEquals("Nominal power from operationalSpecification incorrect", nominalPower, busComponentSpecification.getNominalPower(Unit.MW), 0.001);
+		assertEquals("Nominal CPU from operationalSpecification incorrect", nominalCPU, busComponentSpecification.getNominalCPUThroughout(Unit.MFLOP), 0.001);
+		assertEquals("Max power from operationalSpecification incorrect", maxPower, busComponentSpecification.getMaximumOperationalPower(Unit.MW
+		), 0.001);
+		assertEquals("Max CPU from operationalSpecification incorrect", maxCPU, busComponentSpecification.getMaximumOperationalCPUThroughput(Unit.MFLOP), 0.001);
 	}
 	
 

@@ -5,7 +5,7 @@ import org.spacedrones.components.TypeInfo;
 public class SpacecraftBus extends AbstractBus {
 	static TypeInfo type = new TypeInfo("SpacecraftBus");
 	
-	SpacecraftBus(String name, Spacecraft spacecraft) {
+	public SpacecraftBus(String name, Spacecraft spacecraft) {
 		super(name, spacecraft);
 	}
 

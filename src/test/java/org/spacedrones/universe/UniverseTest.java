@@ -23,10 +23,13 @@ public class UniverseTest {
 		Universe universe = Universe.getInstance();
 		
 		Spacecraft spacecraft = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SIMPLE_SATELITE);
-		
-		Star sol = new Star("Sol", Star.G_CLASS_STAR, new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value())),
+
+		Coordinates solCoords =  new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value()));
+
+
+		Star sol = new Star("Sol", Star.G_CLASS_STAR,
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.G_CLASS_STAR));
-		Coordinates coords = sol.getCoordinates().add(
+		Coordinates coords = solCoords.add(
 				new Coordinates(new BigDecimal(10*Unit.AU.value()), BigDecimal.ZERO, BigDecimal.ZERO));
 		universe.addSpacecraft(spacecraft, coords);
 		
@@ -49,13 +52,16 @@ public class UniverseTest {
 		BigDecimal coord2 = new BigDecimal(10000000000000000.0); // 2.3 Ly
 		BigDecimal coord3 = new BigDecimal(10000000000000000.0); // 100 Ly above galactic plane
 
-		Star sol = new Star("Sol", Star.G_CLASS_STAR, new Coordinates(coord1, coord2, coord3),
+		Star sol = new Star("Sol", Star.G_CLASS_STAR,
 				new SensorSignalResponseProfile(1.0, 1.0, 1.0, 1.0, 1.0));
-		universe.addLocation(sol);
 
-		assertEquals("Sol coord1 incorrectly set", coord1.doubleValue(), sol.getCoordinates().get(0).doubleValue(), 0.001);
-		assertEquals("Sol coord2 incorrectly set", coord2.doubleValue(), sol.getCoordinates().get(1).doubleValue(), 0.001);
-		assertEquals("Sol coord3 incorrectly set", coord3.doubleValue(), sol.getCoordinates().get(2).doubleValue(), 0.001);
+		Coordinates solCoords = new Coordinates(coord1, coord2, coord3);
+
+		universe.addCelestialObject(sol, solCoords);
+
+		assertEquals("Sol coord1 incorrectly set", coord1.doubleValue(), solCoords.get(0).doubleValue(), 0.001);
+		assertEquals("Sol coord2 incorrectly set", coord2.doubleValue(), solCoords.get(1).doubleValue(), 0.001);
+		assertEquals("Sol coord3 incorrectly set", coord3.doubleValue(), solCoords.get(2).doubleValue(), 0.001);
 
 
 		//Now add a companion star, Nemesis with offset coordinates
@@ -64,12 +70,15 @@ public class UniverseTest {
 		BigDecimal coordOffset2 = new BigDecimal(20000000000000000000.0); // 2.3 Ly
 		BigDecimal coordOffset3 = new BigDecimal(20000000000000000000.0); // 100 Ly above galactic plane
 
-		Star nemesis = new Star("Nemesis", Star.G_CLASS_STAR,  new Coordinates(coordOffset1, coordOffset2, coordOffset3), sol,
+		Coordinates nemesisCoords = new Coordinates(coordOffset1, coordOffset2, coordOffset3);
+		nemesisCoords = nemesisCoords.add(solCoords);
+
+		Star nemesis = new Star("Nemesis", Star.G_CLASS_STAR,
 				new SensorSignalResponseProfile(1.0, 1.0, 1.0, 1.0, 1.0));
 
-		assertEquals("Nemesis coord1 incorrectly set", coord1.doubleValue()+coordOffset1.doubleValue(), nemesis.getCoordinates().get(0).doubleValue(), 0.001);
-		assertEquals("Nemesis coord2 incorrectly set", coord2.doubleValue()+coordOffset2.doubleValue(), nemesis.getCoordinates().get(1).doubleValue(), 0.001);
-		assertEquals("Nemesis coord3 incorrectly set", coord3.doubleValue()+coordOffset3.doubleValue(), nemesis.getCoordinates().get(2).doubleValue(), 0.001);
+		assertEquals("Nemesis coord1 incorrectly set", coord1.doubleValue()+coordOffset1.doubleValue(), nemesisCoords.get(0).doubleValue(), 0.001);
+		assertEquals("Nemesis coord2 incorrectly set", coord2.doubleValue()+coordOffset2.doubleValue(), nemesisCoords.get(1).doubleValue(), 0.001);
+		assertEquals("Nemesis coord3 incorrectly set", coord3.doubleValue()+coordOffset3.doubleValue(), nemesisCoords.get(2).doubleValue(), 0.001);
 
 
 		BigDecimal dx = coord1.subtract(coordOffset1);
