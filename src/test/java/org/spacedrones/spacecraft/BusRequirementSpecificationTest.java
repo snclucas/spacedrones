@@ -1,9 +1,9 @@
 package org.spacedrones.spacecraft;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
 import org.spacedrones.physics.Unit;
+
+import static org.junit.Assert.assertEquals;
 
 public class BusRequirementSpecificationTest {
 
@@ -92,9 +92,9 @@ public class BusRequirementSpecificationTest {
 		assertEquals("Height from physicalSpecification incorrect", height, busComponentSpecification.getHeight(Unit.m), 0.001);
 		assertEquals("Width from physicalSpecification incorrect", width, busComponentSpecification.getWidth(Unit.m), 0.001);
 		
-		assertEquals("Nominal power from operationalSpecification incorrect", nominalPower, busComponentSpecification.getNominalPower(Unit.MW), 0.001);
+		assertEquals("Nominal power from operationalSpecification incorrect", nominalPower, busComponentSpecification.getNominalPower(Unit.W), 0.001);
 		assertEquals("Nominal CPU from operationalSpecification incorrect", nominalCPU, busComponentSpecification.getNominalCPUThroughout(Unit.MFLOP), 0.001);
-		assertEquals("Max power from operationalSpecification incorrect", maxPower, busComponentSpecification.getMaximumOperationalPower(Unit.MW
+		assertEquals("Max power from operationalSpecification incorrect", maxPower, busComponentSpecification.getMaximumOperationalPower(Unit.W
 		), 0.001);
 		assertEquals("Max CPU from operationalSpecification incorrect", maxCPU, busComponentSpecification.getMaximumOperationalCPUThroughput(Unit.MFLOP), 0.001);
 	}

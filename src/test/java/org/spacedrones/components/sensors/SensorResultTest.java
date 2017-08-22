@@ -1,13 +1,11 @@
 package org.spacedrones.components.sensors;
 
-import java.math.BigDecimal;
-
 import org.junit.Test;
-import org.spacedrones.physics.Unit;
-import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.NavigationVector;
 import org.spacedrones.universe.celestialobjects.SensorSignalResponseProfile;
 import org.spacedrones.universe.celestialobjects.Star;
+
+import java.math.BigDecimal;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,7 +15,7 @@ public class SensorResultTest {
 	public void testSensorResult() {
 		
 		
-		Star sol = new Star("Sol", Star.G_CLASS_STAR,  new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value())),
+		Star sol = new Star("Sol", Star.G_CLASS_STAR,
 				new SensorSignalResponseProfile(1.0, 1.0, 1.0, 1.0, 1.0));
 		
 		BigDecimal distance = new BigDecimal(24423522352352345.234234);

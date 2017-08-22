@@ -16,15 +16,15 @@ public class MockSystemComputer extends BasicSystemComputer{
 		super(name, busResourceSpecification, maxCPUThroughput);
 	}
 
-	@Override
-	public double getTotalPowerAvailable() {
-		return totalPowerAvailable;
-	}
-
-	@Override
-	public double getTotalCPUThroughputAvailable() {
-		return totalCPUAvailable;
-	}
+//	@Override
+//	public double getTotalPowerAvailable() {
+//		return totalPowerAvailable;
+//	}
+//
+//	@Override
+//	public double getTotalCPUThroughputAvailable() {
+//		return totalCPUAvailable;
+//	}
 
 	
 	

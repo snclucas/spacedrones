@@ -1,26 +1,23 @@
 package org.spacedrones.components.propulsion;
 
-import org.spacedrones.components.BusCommunicator;
 import org.spacedrones.components.Executable;
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.TypeInfo;
+import org.spacedrones.physics.Unit;
 
-public interface Engine extends SpacecraftBusComponent, Executable, BusCommunicator {
-	
-	static TypeInfo category() {
-		return new TypeInfo("Engine");
-	}
-	
+public interface Engine extends SpacecraftBusComponent, Executable {
+
+	TypeInfo category = new TypeInfo("Engine");
+
 	static TypeInfo type() {
 		return new TypeInfo("Engine");
 	}
-		
+
 	EngineVector getEngineVector();
-	
-	void setPowerLevel(double powerLevel);
-	
+
 	boolean isVectored();
 	double getPowerLevel();
-	double getRequiredPower(double powerLevel);
-    double getRequiredCPUThroughput(double powerLevel);
+	void setPowerLevel(double powerLevel);
+	double getRequiredPower(double powerLevel, Unit unit);
+	double getRequiredCPUThroughput(double powerLevel, Unit unit);
 }

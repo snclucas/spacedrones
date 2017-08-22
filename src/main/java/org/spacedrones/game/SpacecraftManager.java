@@ -6,7 +6,6 @@ import org.spacedrones.components.propulsion.thrust.ThrustingEngine;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.Spacecraft;
 import org.spacedrones.universe.Coordinates;
-import org.spacedrones.universe.Universe;
 import org.spacedrones.universe.dataprovider.SpacecraftDataProvider;
 
 import java.math.BigDecimal;
@@ -46,7 +45,7 @@ public class SpacecraftManager implements Manager{
             //System.out.println("Current velocity: " + currentVelocity[0] + " " + currentVelocity[1] + " " + currentVelocity[2]);
 
             double[] dV = new double[]{0.0, 0.0, 0.0};
-            List<SpacecraftBusComponent> components = spacecraft.getSpacecraftBus().findComponentByType(ThrustingEngine.type());
+            List<SpacecraftBusComponent> components = spacecraft.getSpacecraftBus().findComponentByType(ThrustingEngine.type);
             for(SpacecraftBusComponent component : components) {
                 double[] thrust = ((ThrustingEngine) component).getThrust(currentVelocity);
                 dV[0] += thrust[0] / spacecraft.getMass(Unit.kg) * 1 * Unit.s.value();

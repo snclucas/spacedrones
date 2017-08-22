@@ -1,7 +1,5 @@
 package org.spacedrones.software;
 
-import java.util.List;
-
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
@@ -11,6 +9,8 @@ import org.spacedrones.components.propulsion.ThrustDriveInterface;
 import org.spacedrones.components.propulsion.thrust.ThrustingEngine;
 import org.spacedrones.spacecraft.BusRequirement;
 import org.spacedrones.status.SystemStatusMessage;
+
+import java.util.List;
 
 public class PropulsionManagementSoftware extends AbstractSoftware implements Software, ThrustDriveInterface {
 
@@ -31,7 +31,7 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 
 	public SystemStatusMessage callDrive(double powerLevel) {
 		SystemStatusMessage message = null;
-		List<SpacecraftBusComponent> engines = getSystemComputer().getSystemComputer().findComponentByCategory(Engine.category());
+		List<SpacecraftBusComponent> engines = getSystemComputer().getSystemComputer().findComponentByCategory(Engine.category);
 		for(SpacecraftBusComponent engine : engines)
 			if(engine instanceof ThrustingEngine) {
 				message =    ((ThrustDriveInterface) engine).callDrive(powerLevel);
@@ -110,7 +110,7 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 
 
 	private ThrustingEngine findEngineByIdent(String ident) {
-		List<SpacecraftBusComponent> engines = getSystemComputer().getSystemComputer().findComponentByCategory(Engine.category());
+		List<SpacecraftBusComponent> engines = getSystemComputer().getSystemComputer().findComponentByCategory(Engine.category);
 		//TODO LOOK at thisif(engines != null)
 			for(SpacecraftBusComponent engine : engines) {
 				if(engine.getIdent() == ident)

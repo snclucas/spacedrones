@@ -2,9 +2,6 @@ package org.spacedrones.materials;
 
 
 public interface Material {
-	
-	
-	
 	double getAtomicNumber();
 	double getMassNumber();
 	double getDensity();

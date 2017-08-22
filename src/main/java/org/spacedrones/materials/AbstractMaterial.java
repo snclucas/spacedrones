@@ -13,13 +13,13 @@ public abstract class AbstractMaterial implements Material {
 	TypeInfo EM_RESISTANCE = new TypeInfo("EM_RESISTANCE");
 	TypeInfo IMPACT_RESISTANCE = new TypeInfo("IMPACT_RESISTANCE");
 
-	protected double thermalResistanceCoefficient;
-	protected double radiationResistanceCoefficient;
-	protected double emResistanceCoefficient;
-	protected double impactResistanceCoefficient;
+	private double thermalResistanceCoefficient;
+	private double radiationResistanceCoefficient;
+	private double emResistanceCoefficient;
+	private double impactResistanceCoefficient;
 	
-	protected Element[] elements;
-	protected double[] fractions;
+	private Element[] elements;
+	private double[] fractions;
 	
 	
 	public AbstractMaterial(

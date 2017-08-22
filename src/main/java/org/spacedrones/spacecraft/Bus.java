@@ -1,14 +1,10 @@
 package org.spacedrones.spacecraft;
 
-import java.util.List;
-
-import org.spacedrones.components.BusCommunicator;
-import org.spacedrones.components.ComponentVisitor;
-import org.spacedrones.components.Identifiable;
-import org.spacedrones.components.SpacecraftBusComponent;
-import org.spacedrones.components.TypeInfo;
+import org.spacedrones.components.*;
 import org.spacedrones.components.computers.SystemComputer;
 import org.spacedrones.status.SystemStatusMessage;
+
+import java.util.List;
 
 public interface Bus extends BusCommunicator, ComponentVisitor, Identifiable {
 
@@ -17,6 +13,8 @@ public interface Bus extends BusCommunicator, ComponentVisitor, Identifiable {
   List<SpacecraftBusComponent> findComponentByType(TypeInfo componentType);
   List<SpacecraftBusComponent> findComponentByCategory(TypeInfo componentCategory);
   List<SpacecraftBusComponent> getComponents();
+
+  PhysicalSpecification getPhysicalSpecification();
 
   void addComponent(SpacecraftBusComponent component);
 

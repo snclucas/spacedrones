@@ -1,31 +1,31 @@
 package org.spacedrones.spacecraft;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
 import org.spacedrones.physics.Unit;
+
+import static org.junit.Assert.assertEquals;
 
 public class OperationalSpecificationTest {
 	
 	@Test
 	public void testOperationalSpecification() {
 		
-		double nominalPower = 1.5 * Unit.W.value();
+		double nominalPower = 1.5 * Unit.MW.value();
 		double nominalCPU = 4.5 * Unit.MFLOP.value();		
-		double maxPower = 1.5 * Unit.W.value();
+		double maxPower = 1.5 * Unit.MW.value();
 		double maxCPU = 4.5 * Unit.MFLOP.value();
 		
 		OperationalSpecification operationalSpecification = 
 				new OperationalSpecification(nominalPower, nominalCPU, maxPower, maxCPU);
 		
-		assertEquals("Nominal power from operationalSpecification incorrect", nominalPower, operationalSpecification.getNominalPower(Unit.MW), 0.001);
+		assertEquals("Nominal power from operationalSpecification incorrect", nominalPower, operationalSpecification.getNominalPower(Unit.W), 0.001);
 		assertEquals("Nominal CPU from operationalSpecification incorrect", nominalCPU, operationalSpecification.getNominalCPUThroughout(Unit.MFLOP), 0.001);
 		assertEquals("Max power from operationalSpecification incorrect", maxPower, operationalSpecification.getMaximumOperationalPower(Unit.MFLOP), 0.001);
 		assertEquals("Max CPU from operationalSpecification incorrect", maxCPU, operationalSpecification.getMaximumOperationalCPUThroughput(Unit.MFLOP), 0.001);
 				
-		nominalPower = 10.5 * Unit.W.value();
+		nominalPower = 10.5 * Unit.MW.value();
 		nominalCPU = 40.5 * Unit.MFLOP.value();
-		maxPower = 10.5 * Unit.W.value();
+		maxPower = 10.5 * Unit.MW.value();
 		maxCPU = 40.5 * Unit.MFLOP.value();
 		
 		operationalSpecification.setNominalPower(nominalPower);
@@ -33,7 +33,7 @@ public class OperationalSpecificationTest {
 		operationalSpecification.setMaximumOperationalPower(maxPower);
 		operationalSpecification.setMaximumOperationalCPUThroughput(maxCPU);
 		
-		assertEquals("Nominal power from operationalSpecification incorrect", nominalPower, operationalSpecification.getNominalPower(Unit.MW), 0.001);
+		assertEquals("Nominal power from operationalSpecification incorrect", nominalPower, operationalSpecification.getNominalPower(Unit.W), 0.001);
 		assertEquals("Nominal CPU from operationalSpecification incorrect", nominalCPU, operationalSpecification.getNominalCPUThroughout(Unit.MFLOP), 0.001);
 		assertEquals("Max power from operationalSpecification incorrect", maxPower, operationalSpecification.getMaximumOperationalPower(Unit.MFLOP), 0.001);
 		assertEquals("Max CPU from operationalSpecification incorrect", maxCPU, operationalSpecification.getMaximumOperationalCPUThroughput(Unit.MFLOP), 0.001);

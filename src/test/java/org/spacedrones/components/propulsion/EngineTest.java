@@ -1,9 +1,6 @@
 package org.spacedrones.components.propulsion;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
-
 import org.spacedrones.components.propulsion.thrust.SimpleIonEngine;
 import org.spacedrones.components.propulsion.thrust.SimpleThruster;
 import org.spacedrones.components.propulsion.thrust.ThrustingEngine;
@@ -17,6 +14,8 @@ import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.spacecraft.OperationalSpecification;
 import org.spacedrones.spacecraft.PhysicalSpecification;
 
+import static org.junit.Assert.assertEquals;
+
 public class EngineTest {
 
 	//Align along axis of spacecraft
@@ -24,12 +23,24 @@ public class EngineTest {
 	EngineVector engineVector2 = new EngineVector(1,1,1);
 
 
+
+	double mass = 100 * Unit.kg.value();
+	double volume = 1.0 * Unit.m3.value();
+	double nominalPower = 1 * Unit.kW.value();
+	double nominalCPU = 1 * Unit.kFLOP.value();
+
+	double maxPower = 1000 * Unit.kW.value();
+	double maxCPU = 1 * Unit.kFLOP.value();
+
+	double maximumThrust = 1.04523 * Unit.kN.value(); // N
+
+
 	@Test
 	public void testEngineConstruction() {
 		ThrustingEngine engine = getTestEngine(true);
 		engine.callVector(new EngineVector(0.3,0.1, 0.5));
 
-		assertEquals("Engine category incorrect", Engine.category(), engine.getCategory());
+		assertEquals("Engine category incorrect", Engine.category, engine.getCategory());
 		assertEquals("Engine type ["+ engine.describe() +"] incorrect", SimpleThruster.type(), engine.getType());
 
 		//Check the engine set up
@@ -84,7 +95,7 @@ public class EngineTest {
 		assertEquals("Engine nominal power incorrect", nominalPower, engine.getNominalPower(Unit.W), 0.001);
 		assertEquals("Engine max power incorrect", maxPower, engine.getMaximumOperationalPower(Unit.W), 0.001);
 		assertEquals("Engine operating power incorrect", nominalPower, engine.getCurrentPower(Unit.W), 0.001);
-		assertEquals("Engine required power incorrect", nominalPower, engine.getRequiredPower(powerLevel), 0.001);
+		assertEquals("Engine required power incorrect", nominalPower, engine.getRequiredPower(powerLevel, Unit.W), 0.001);
 
 		
 		// Call drive with power level = 0;
@@ -93,7 +104,7 @@ public class EngineTest {
 		assertEquals("Engine nominal power incorrect", nominalPower, engine.getNominalPower(Unit.W), 0.001);
 		assertEquals("Engine max power incorrect", maxPower, engine.getMaximumOperationalPower(Unit.W), 0.001);
 		assertEquals("Engine operating power incorrect", nominalPower, engine.getCurrentPower(Unit.W), 0.001);
-		assertEquals("Engine required power incorrect", nominalPower, engine.getRequiredPower(powerLevel), 0.001);
+		assertEquals("Engine required power incorrect", nominalPower, engine.getRequiredPower(powerLevel, Unit.W), 0.001);
 
 		// Call drive with power level = 50% WITHOUT calling execute;
 		powerLevel = 50 * Unit.percent.value();
@@ -103,7 +114,7 @@ public class EngineTest {
 		assertEquals("Engine nominal power incorrect", nominalPower, engine.getNominalPower(Unit.W), 0.001);
 		assertEquals("Engine max power incorrect", maxPower, engine.getMaximumOperationalPower(Unit.W), 0.001);
 		assertEquals("Engine operating power incorrect", nominalPower, engine.getCurrentPower(Unit.W), 0.001);
-		assertEquals("Engine required power incorrect", nominalPower + (maxPower-nominalPower)*0.5, engine.getRequiredPower(powerLevel), 0.001);
+		assertEquals("Engine required power incorrect", nominalPower + (maxPower-nominalPower)*0.5, engine.getRequiredPower(powerLevel, Unit.W), 0.001);
 
 		//Call execute
 		
@@ -113,7 +124,7 @@ public class EngineTest {
 		assertEquals("Engine nominal power incorrect", nominalPower, engine.getNominalPower(Unit.W), 0.001);
 		assertEquals("Engine max power incorrect", maxPower, engine.getMaximumOperationalPower(Unit.W), 0.001);
 		assertEquals("Engine operating power incorrect", nominalPower + (maxPower-nominalPower)*0.5, engine.getCurrentPower(Unit.W), 0.001);
-		assertEquals("Engine required power incorrect", nominalPower + (maxPower-nominalPower)*0.5, engine.getRequiredPower(powerLevel), 0.001);
+		assertEquals("Engine required power incorrect", nominalPower + (maxPower-nominalPower)*0.5, engine.getRequiredPower(powerLevel, Unit.W), 0.001);
 
 	}
 
@@ -166,17 +177,7 @@ public class EngineTest {
 	
 	
 	
-	
-	
-	double mass = 100 * Unit.kg.value();
-	double volume = 1.0 * Unit.m3.value();
-	double nominalPower = 1 * Unit.kW.value();
-	double nominalCPU = 1 * Unit.kFLOP.value();
-	
-	double maxPower = 1000 * Unit.kW.value();
-	double maxCPU = 1 * Unit.kFLOP.value();
-	
-	double maximumThrust = 1.04523 * Unit.kN.value(); // N	
+
 	
 	
 	private ThrustingEngine getTestEngine(boolean vectored) {

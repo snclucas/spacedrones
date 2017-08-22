@@ -9,9 +9,7 @@ import org.spacedrones.spacecraft.BusRequirement;
 
 public interface ThrustingEngine extends Engine {
 	
-	static TypeInfo type() {
-		return new TypeInfo("ThrustingEngine");
-	}
+	TypeInfo type = new TypeInfo("ThrustingEngine");
 	
 	BusRequirement callDrive(double powerLevel);
 	BusRequirement callStop();

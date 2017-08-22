@@ -2,9 +2,9 @@ package org.spacedrones.materials;
 
 public class Element {
 
-	protected double massNumber;
-	protected double atomicNumber;
-	protected double density;
+	private double massNumber;
+	private double atomicNumber;
+	private double density;
 	
 	
 	public Element(double massNumber, double atomicNumber, double density) {

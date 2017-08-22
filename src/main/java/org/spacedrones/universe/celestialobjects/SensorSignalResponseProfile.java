@@ -1,11 +1,11 @@
 package org.spacedrones.universe.celestialobjects;
 
-import java.math.BigDecimal;
-
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.sensors.Sensor;
 import org.spacedrones.components.sensors.SignalResponse;
 import org.spacedrones.physics.Physics;
+
+import java.math.BigDecimal;
 
 public class SensorSignalResponseProfile {
 	
@@ -94,4 +94,24 @@ public class SensorSignalResponseProfile {
 		return subspaceResonanceResponse;
 	}
 
+
+  void setOpticalResponse(double opticalResponse) {
+    this.opticalResponse = opticalResponse;
+  }
+
+  void setRadarResponse(double radarResponse) {
+    this.radarResponse = radarResponse;
+  }
+
+  void setGravimetricResponse(double gravimetricResponse) {
+    this.gravimetricResponse = gravimetricResponse;
+  }
+
+  void setMagnetometricResponse(double magnetometricResponse) {
+    this.magnetometricResponse = magnetometricResponse;
+  }
+
+  void setSubspaceResonanceResponse(double subspaceResonanceResponse) {
+    this.subspaceResonanceResponse = subspaceResonanceResponse;
+  }
 }

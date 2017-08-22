@@ -1,9 +1,6 @@
 package org.spacedrones.spacecraft;
 
-import java.util.List;
-
 import org.spacedrones.Configuration;
-import org.spacedrones.components.Component;
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
@@ -12,6 +9,8 @@ import org.spacedrones.exceptions.ComponentConfigurationException;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.status.SystemStatus;
 import org.spacedrones.structures.hulls.Hull;
+
+import java.util.List;
 
 
 public abstract class AbstractSpacecraft implements Spacecraft {
@@ -121,23 +120,17 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 
 
 	//Hull delegate methods
-	@Override
-	public double getLength(Unit unit) {
-		return hull.getLength(unit);
-	}
 
-	@Override
-	public double getWidth(Unit unit) {
-		return hull.getWidth(unit);
-	}
+	public PhysicalSpecification getPhysicalSpecification() {
+	  return new PhysicalSpecification(getMass(Unit.kg),
+            hull.getVolume(Unit.m3),
+            hull.getLength(Unit.m),
+            hull.getWidth(Unit.m),
+            1);
+  }
 
-	@Override
-	public double getVolume(Unit unit) {
-		return hull.getVolume(unit);
-	}
-	
-	@Override
-	public double getMass(Unit unit) {
+
+	private double getMass(Unit unit) {
 		return hull.getMass(unit) + bus.getComponents().stream().mapToDouble(f-> f.getMass(unit)).sum();
 	}
 

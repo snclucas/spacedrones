@@ -1,7 +1,5 @@
 package org.spacedrones.components;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
 import org.spacedrones.components.comms.RadioCommunicator;
 import org.spacedrones.components.comms.SubSpaceCommunicator;
@@ -9,12 +7,10 @@ import org.spacedrones.components.computers.BasicSystemComputer;
 import org.spacedrones.components.computers.Computer;
 import org.spacedrones.components.computers.SystemComputer;
 import org.spacedrones.components.energygeneration.SimpleSolarArray;
-import org.spacedrones.universe.celestialobjects.Asteroid;
-import org.spacedrones.universe.celestialobjects.Planet;
-import org.spacedrones.universe.celestialobjects.Region;
-import org.spacedrones.universe.celestialobjects.Star;
-import org.spacedrones.universe.celestialobjects.UnknownObject;
+import org.spacedrones.universe.celestialobjects.*;
 import org.spacedrones.universe.structures.SubspaceBeacon;
+
+import static org.junit.Assert.assertEquals;
 
 public class TypeInfoTest {
 
@@ -41,15 +37,15 @@ public class TypeInfoTest {
 		
 		
 		assertEquals("", "RadioCommunicator", RadioCommunicator.type().toString());
-		assertEquals("", "SubSpaceCommunicator", SubSpaceCommunicator.type().toString());
+		assertEquals("", "SubSpaceCommunicator", SubSpaceCommunicator.type.toString());
 		
 		assertEquals("", "SystemComputer", BasicSystemComputer.type().toString());
 		
 		assertEquals("", "SimpleSolarArray", SimpleSolarArray.type().toString());
 		
-		assertEquals("", "SubSpaceCommunicator", SubSpaceCommunicator.type().toString());
-		assertEquals("", "SubSpaceCommunicator", SubSpaceCommunicator.type().toString());
-		assertEquals("", "SubSpaceCommunicator", SubSpaceCommunicator.type().toString());
+		assertEquals("", "SubSpaceCommunicator", SubSpaceCommunicator.type.toString());
+		assertEquals("", "SubSpaceCommunicator", SubSpaceCommunicator.type.toString());
+		assertEquals("", "SubSpaceCommunicator", SubSpaceCommunicator.type.toString());
 		
 	}
 

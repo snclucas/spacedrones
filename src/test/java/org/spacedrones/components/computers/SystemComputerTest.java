@@ -1,7 +1,5 @@
 package org.spacedrones.components.computers;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.spacedrones.components.SpacecraftBusComponent;
@@ -9,30 +7,27 @@ import org.spacedrones.components.comms.Status;
 import org.spacedrones.components.energygeneration.PowerGenerator;
 import org.spacedrones.components.energygeneration.SubspacePowerExtractor;
 import org.spacedrones.physics.Unit;
-import org.spacedrones.spacecraft.Bus;
-import org.spacedrones.spacecraft.BusComponentSpecification;
-import org.spacedrones.spacecraft.BusRequirement;
-import org.spacedrones.spacecraft.OperationalSpecification;
-import org.spacedrones.spacecraft.PhysicalSpecification;
-import org.spacedrones.spacecraft.SpacecraftBus;
+import org.spacedrones.spacecraft.*;
 import org.spacedrones.status.SystemStatus;
 import org.spacedrones.status.SystemStatusMessage;
+
+import static org.junit.Assert.assertEquals;
 
 
 public class SystemComputerTest {
 
-	double mass = 25.0 * Unit.kg.value();
-	double volume = 1.0 * Unit.m3.value();
-	double nominalPower = 1 * Unit.kW.value(); 
-	double nominalCPU = 10 * Unit.kFLOP.value();
-	double maximumPower = 1 * Unit.MW.value();
-	double maximumCPU = nominalCPU;
+	private double mass = 25.0 * Unit.kg.value();
+	private double volume = 1.0 * Unit.m3.value();
+	private double nominalPower = 1 * Unit.kW.value();
+	private double nominalCPU = 10 * Unit.kFLOP.value();
+	private double maximumPower = 1 * Unit.MW.value();
+	private double maximumCPU = nominalCPU;
 	boolean vectored = false;
 	
-	Bus spacecraftBus = new SpacecraftBus("Spacecraft bus", null); 
+	private Bus spacecraftBus = new SpacecraftBus("Spacecraft bus", null);
 
 	
-	BusComponentSpecification busSpecs = new BusComponentSpecification(
+	private BusComponentSpecification busSpecs = new BusComponentSpecification(
 			new PhysicalSpecification(mass, volume),
 			new OperationalSpecification(nominalPower, nominalCPU, maximumPower, maximumCPU));
 
@@ -62,7 +57,7 @@ public class SystemComputerTest {
 		SystemStatus systemStatus = computer.online();
 		assertEquals("System computer should not have critical messages", false, systemStatus.hasCriticalMessages());
 		assertEquals("System computer should have OK status", true, systemStatus.isOK());
-		assertEquals("Computer current power should be " + busSpecs.getNominalPower(Unit.kW) + " (online)", busSpecs.getNominalPower(Unit.kW), computer.getCurrentPower(Unit.kW), 0.00001);
+		assertEquals("Computer current power should be " + busSpecs.getNominalPower(Unit.W) + " (online)", busSpecs.getNominalPower(Unit.W), computer.getCurrentPower(Unit.W), 0.00001);
 		
 		
 		

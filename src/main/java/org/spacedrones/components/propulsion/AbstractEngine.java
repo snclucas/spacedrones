@@ -17,7 +17,7 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 	protected EngineVector engineVector;
 	protected boolean vectored;
 	protected double requestedPowerLevel;
-	protected EngineVector requestedEngineVector;
+	private EngineVector requestedEngineVector;
 
 	public AbstractEngine(String name, BusComponentSpecification busResourceSpecification, 
 			EngineVector engineVector, boolean vectored) {
@@ -52,6 +52,8 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 	
 	@Override
 	public void setPowerLevel(double powerLevel) {
+		if(powerLevel < 0 || powerLevel > 100)
+			throw new IllegalArgumentException("Power level must be btween 0 and 100");
 		this.powerLevel = powerLevel;
 	}
 	
@@ -60,8 +62,6 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 	public double getPowerLevel() {
 		return powerLevel;
 	}
-	
-	
 
 
 	public BusRequirement callVector(EngineVector engineVector) {
@@ -69,19 +69,6 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 		double requiredPower = getCurrentPower(Unit.MW);
 		double requiredCPUThroughput = getCurrentCPUThroughput(Unit.MFLOP);
 		return new BusRequirement(requiredPower, requiredCPUThroughput);
-	}
-
-
-
-
-
-	@Override
-	public String describe() {
-		String description = " -- Simple Ion Engine -- \n" + 
-				"Mass: " + getMass(Unit.kg) + " Kg, Volume: " + getVolume(Unit.m3) + " m3, Power: <thrust dep.> GJ/s, CPU: " + getNominalCPUThroughput(Unit.MFLOP) + " GFLOPS";
-		description += "\n";
-		description += "   ---------------------------------------------";
-		return description;
 	}
 
 
@@ -106,14 +93,24 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 
 	@Override
 	public double getCurrentPower(Unit unit) {
-		return getRequiredPower(this.powerLevel);
-	}
-	
-	@Override
-	public double getCurrentCPUThroughput(Unit unit) {
-		return getRequiredCPUThroughput(this.powerLevel);
+		return getRequiredPower(this.powerLevel, unit);
 	}
 
+
+	@Override
+	public double getCurrentCPUThroughput(Unit unit) {
+		return getRequiredCPUThroughput(this.powerLevel, unit);
+	}
+
+
+	@Override
+	public String describe() {
+		String description = " -- Simple Ion Engine -- \n" +
+						"Mass: " + getMass(Unit.kg) + " Kg, Volume: " + getVolume(Unit.m3) + " m3, Power: <thrust dep.> GJ/s, CPU: " + getNominalCPUThroughput(Unit.MFLOP) + " GFLOPS";
+		description += "\n";
+		description += "   ---------------------------------------------";
+		return description;
+	}
 
 
 }

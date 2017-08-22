@@ -36,8 +36,8 @@ public abstract class AbstractThrustingEngine extends AbstractEngine implements 
 	
 	public BusRequirement callDrive(double requestedPowerLevel) {
 		this.requestedPowerLevel = requestedPowerLevel;
-		double requiredPower = getRequiredPower(requestedPowerLevel);
-		double requiredCPUThroughput = getRequiredCPUThroughput(requestedPowerLevel);
+		double requiredPower = getRequiredPower(requestedPowerLevel, Unit.W);
+		double requiredCPUThroughput = getRequiredCPUThroughput(requestedPowerLevel, Unit.W);
 		return new BusRequirement(requiredPower, requiredCPUThroughput);
 	}
 	
@@ -75,18 +75,18 @@ public abstract class AbstractThrustingEngine extends AbstractEngine implements 
 
 	
 	@Override
-	public double getRequiredPower(double requiredPowerLevel) {
-		double nominalPower = busResourceSpecification.getNominalPower(Unit.MW);
-		double maximumOperatingPower = busResourceSpecification.getMaximumOperationalPower(Unit.MW);
+	public double getRequiredPower(double requiredPowerLevel, Unit unit) {
+		double nominalPower = busResourceSpecification.getNominalPower(unit);
+		double maximumOperatingPower = busResourceSpecification.getMaximumOperationalPower(unit);
 		return nominalPower + (maximumOperatingPower-nominalPower) * thrustProfile.getNormalizedPower(requiredPowerLevel);
 	}
 	
 
 	@Override
-	public double getRequiredCPUThroughput(double requiredPowerLevel) {
+	public double getRequiredCPUThroughput(double requiredPowerLevel, Unit unit) {
 		// The CPU throughput does not depend upon power level in this model
-		double nominalCPU = busResourceSpecification.getNominalCPUThroughout(Unit.MFLOP);
-		double maximumOperatingCPU = busResourceSpecification.getMaximumOperationalCPUThroughput(Unit.MFLOP);
+		double nominalCPU = busResourceSpecification.getNominalCPUThroughout(unit);
+		double maximumOperatingCPU = busResourceSpecification.getMaximumOperationalCPUThroughput(unit);
 		return nominalCPU + (maximumOperatingCPU-nominalCPU) * thrustProfile.getNormalizedCPU(requiredPowerLevel);
 	}
 	
