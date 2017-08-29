@@ -3,7 +3,6 @@ package org.spacedrones.spacecraft;
 import java.security.InvalidParameterException;
 
 import org.spacedrones.Configuration;
-import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.comms.CommunicationComponent;
 import org.spacedrones.components.comms.CommunicatorDeviceFactory;
 import org.spacedrones.components.comms.RadioCommunicator;
@@ -39,13 +38,15 @@ public class SpacecraftFactory {
 
 	public static Spacecraft getSpacecraft(String spacecraftType) throws InvalidParameterException{
 		SpacecraftDataProvider spacecraftDataProvider = Configuration.getSpacecraftDataProvider();
-		 
+
+		Bus spacecraftBus = new SpacecraftBus();
+
 		switch (spacecraftType) {
 			
 		case SHUTTLE:
 			Hull hull = HullFactory.getHull(SHUTTLE);
 			
-			Spacecraft spacecraft = new SimpleSpacecraft(SHUTTLE, hull);
+			Spacecraft spacecraft = new SimpleSpacecraft(SHUTTLE, Configuration.getUUID(), hull, spacecraftBus);
 			
 			SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.type());
 			SpacecraftBuildManager.addComponent(spacecraft, systemComputer);
@@ -82,7 +83,7 @@ public class SpacecraftFactory {
 		case SIMPLE_SATELITE:
 			Hull satHull = HullFactory.getHull("SimpleSatelite");
 			
-			Spacecraft sat = new SimpleSpacecraft("SimpleSatelite", satHull);
+			Spacecraft sat = new SimpleSpacecraft("SimpleSatelite", Configuration.getUUID(), satHull, spacecraftBus);
 			
 			SystemComputer satSystemComputer = ComputerFactory.getComputer(BasicSystemComputer.type());
 			SpacecraftBuildManager.addComponent(sat, satSystemComputer);

@@ -12,7 +12,7 @@ public abstract class AbstractSoftware implements Software {
 	private Computer computer;
 	protected final String ident;
 	
-	public AbstractSoftware(String name) {
+	AbstractSoftware(String name) {
 		this.name = name;
 		this.ident = Configuration.getUUID();
 	}
@@ -20,9 +20,10 @@ public abstract class AbstractSoftware implements Software {
 	
 	@Override
 	public final TypeInfo getCategory() {
-		return categoryID;
+		return new TypeInfo(Software.class.getName());
 	}
-	
+
+
 	@Override
 	public String getIdent() {
 		return ident;

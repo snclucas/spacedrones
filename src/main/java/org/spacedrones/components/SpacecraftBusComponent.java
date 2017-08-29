@@ -6,7 +6,7 @@ import org.spacedrones.spacecraft.Bus;
 import org.spacedrones.status.StatusProvider;
 import org.spacedrones.status.SystemStatusMessage;
 
-public interface SpacecraftBusComponent extends Identifiable, PhysicalComponent, Tickable, Diagnosable, StatusProvider,  Onlineable, BusCommunicator   {
+public interface SpacecraftBusComponent extends PhysicalComponent, Tickable, Diagnosable, StatusProvider, Onlineable, BusCommunicator   {
 	
 	void registerWithBus(Bus bus);
 
@@ -26,7 +26,6 @@ public interface SpacecraftBusComponent extends Identifiable, PhysicalComponent,
 	SystemStatusMessage registerSystemComputer(SystemComputer systemComputer);
 
 	boolean isOnSpacecraftBus();
-	void accept(ComponentVisitor componentVisitor);
 	
 	double getUniversalTime();
 }

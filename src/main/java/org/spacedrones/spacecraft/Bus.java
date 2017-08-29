@@ -6,15 +6,10 @@ import org.spacedrones.status.SystemStatusMessage;
 
 import java.util.List;
 
-public interface Bus extends BusCommunicator, ComponentVisitor, Identifiable {
-
-  TypeInfo category = new TypeInfo("Bus");
-
+public interface Bus extends BusCommunicator {
   List<SpacecraftBusComponent> findComponentByType(TypeInfo componentType);
   List<SpacecraftBusComponent> findComponentByCategory(TypeInfo componentCategory);
   List<SpacecraftBusComponent> getComponents();
-
-  PhysicalSpecification getPhysicalSpecification();
 
   void addComponent(SpacecraftBusComponent component);
 
@@ -22,6 +17,6 @@ public interface Bus extends BusCommunicator, ComponentVisitor, Identifiable {
 
   SystemComputer getSystemComputer();
 
-  Spacecraft getSpacecraft();
-  void setSpacecraft(Spacecraft spacecraft);
+  //Spacecraft getSpacecraft();
+  //void setSpacecraft(Spacecraft spacecraft);
 }

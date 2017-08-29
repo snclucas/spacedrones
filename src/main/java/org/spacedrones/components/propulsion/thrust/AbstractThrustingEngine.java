@@ -41,13 +41,7 @@ public abstract class AbstractThrustingEngine extends AbstractEngine implements 
 		return new BusRequirement(requiredPower, requiredCPUThroughput);
 	}
 	
-	
-	@Override
-	public TypeInfo getCategory() {
-		return new TypeInfo("Engine");
-	}
-	
-	
+
 	public BusRequirement callStop() {
 		return callDrive(0.0);
 	}

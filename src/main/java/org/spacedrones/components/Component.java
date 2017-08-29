@@ -1,5 +1,6 @@
 package org.spacedrones.components;
 
-public interface Component extends Identifiable, PhysicalComponent, Tickable {
-
+public interface Component extends Identifiable {
+  TypeInfo getCategory();
+  TypeInfo getType();
 }

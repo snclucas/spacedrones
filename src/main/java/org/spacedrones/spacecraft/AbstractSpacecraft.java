@@ -2,7 +2,6 @@ package org.spacedrones.spacecraft;
 
 import org.spacedrones.Configuration;
 import org.spacedrones.components.SpacecraftBusComponent;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.components.computers.SystemData;
 import org.spacedrones.exceptions.ComponentConfigurationException;
@@ -16,27 +15,25 @@ import java.util.List;
 public abstract class AbstractSpacecraft implements Spacecraft {
 	
 	private String name;
-	private boolean online;
+	private boolean online = false;
 	
 	private double spacecraftBusComponentsVolumeRequirement;
 	private double spacecraftBusComponentsMass;
 	
-	protected boolean systemsOnline;
-	protected Hull hull;
+	private boolean systemsOnline;
+	private final Hull hull;
+
+	private Bus bus;
+
+	private final String ident;
+
 	
-	protected Bus bus;
-	
-	protected final String ident;
-	
-	
-	
-	public AbstractSpacecraft(String name, Hull hull) {
+	public AbstractSpacecraft(String name, String ident, Hull hull, Bus bus) {
 		this.name = name;
-		setHull(hull);
-		this.bus = new SpacecraftBus("Spacecraft bus", this);
+		this.hull = hull;
+		this.bus = bus;
 		//this.bus.setSpacecraft(this);
-		systemsOnline = false;
-		this.ident = Configuration.getUUID();
+		this.ident = ident;
 	}
 
 	@Override
@@ -45,15 +42,10 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	}
 
 
-	public TypeInfo getCategory() {
-		return Spacecraft.category;
-	}
-
-
-	@Override
-	public Bus getSpacecraftBus() {
-		return bus;
-	}
+	//@Override
+	//public Bus getSpacecraftBus() {
+	//	return bus;
+	//}
 
 	@Override
 	public boolean isOnline() {
@@ -80,7 +72,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 			if(status.isOK()) {
 				systemsOnline = true;
 				online = true;
-				SystemData data = new SystemData("spaceraft-ident", getSpacecraftBus().getSpacecraft().getIdent());
+				SystemData data = new SystemData("spaceraft-ident", getIdent());
 				
 				bus.getSystemComputer().getStorageDevice().saveData(data);
 				
@@ -97,11 +89,6 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	@Override
 	public Hull getHull() {
 		return hull;
-	}
-
-
-	private void setHull(Hull hull) {
-		this.hull = hull;
 	}
 
 

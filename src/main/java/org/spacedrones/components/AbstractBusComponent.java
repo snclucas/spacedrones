@@ -78,12 +78,7 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 	public boolean isOnline() {
 		return this.online;
 	}
-	
 
-	@Override
-	public void accept(ComponentVisitor componentVisitor) {
-		componentVisitor.visit(this);
-	}
 
 	@Override
 	public String getName() {

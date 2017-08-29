@@ -49,18 +49,6 @@ public class SensorResult implements Identifiable {
 
 
 	@Override
-	public TypeInfo getType() {
-		return new TypeInfo("SensorResult");
-	}
-
-
-	@Override
-	public TypeInfo getCategory() {
-		return new TypeInfo("SensorResult");
-	}
-
-
-	@Override
 	public String getName() {
 		return "SensorResult" + "-" + celestialObject.getName();
 	}

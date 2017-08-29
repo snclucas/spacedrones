@@ -8,15 +8,13 @@ import java.util.List;
 
 public interface Spacecraft extends StatusProvider, Onlineable, Diagnosable, Tickable, Identifiable {
 	
-	TypeInfo category = new TypeInfo("Spacecraft");
-	
 	double getTotalMassOfComponents();
 	double getTotalVolumeOfComponents();
-	
-	//void addComponent(SpacecraftBusComponent component);
+
 	List<SpacecraftBusComponent> getComponents();
 	
 	Hull getHull();
 	
-	Bus getSpacecraftBus();
+	//Bus getSpacecraftBus();
+
 }
