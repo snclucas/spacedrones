@@ -17,10 +17,6 @@ public abstract class AbstractCelestialObject implements CelestialObject {
 	private String magnetometricSignature;
 	private String subspaceResonanceSignature;
 	
-	
-	public static TypeInfo category() {
-		return new TypeInfo("CelestialObject");
-	}
 
 	private List<CelestialObject> celestialObjects;
 	private SensorSignalResponseProfile sensorSignalResponseProfile;
@@ -28,7 +24,7 @@ public abstract class AbstractCelestialObject implements CelestialObject {
 	protected final String ident;
 	
 	
-	public AbstractCelestialObject(String name, SensorSignalResponseProfile sensorSignalResponseProfile) {
+	public AbstractCelestialObject(SensorSignalResponseProfile sensorSignalResponseProfile) {
 		celestialObjects = new ArrayList<>();
 		this.sensorSignalResponseProfile = sensorSignalResponseProfile;
 		this.ident = Configuration.getUUID();
@@ -46,26 +42,8 @@ public abstract class AbstractCelestialObject implements CelestialObject {
 
 
 	@Override
-	public String getIdent() {
-		return ident;
-	}
-
-
-	@Override
-	public final TypeInfo getCategory() {
-		return category();
-	}
-
-
-	@Override
 	public SensorSignalResponseProfile getSensorSignalResponse() {
 		return sensorSignalResponseProfile;
-	}
-
-
-	@Override
-	public String toString() {
-		return getName();
 	}
 
 

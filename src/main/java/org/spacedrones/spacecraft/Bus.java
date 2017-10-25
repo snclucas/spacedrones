@@ -10,8 +10,8 @@ public interface Bus extends BusCommunicator {
   List<SpacecraftBusComponent> findComponentByType(TypeInfo componentType);
   List<SpacecraftBusComponent> findComponentByCategory(TypeInfo componentCategory);
   List<SpacecraftBusComponent> getComponents();
-
-  void addComponent(SpacecraftBusComponent component);
+  
+  void register(SpacecraftBusComponent spacecraftBusComponent);
 
   SystemStatusMessage registerSystemComputer(SystemComputer computer);
 

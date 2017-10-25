@@ -19,22 +19,19 @@ public class SpacecraftBus implements Bus {
 		return null;
 	}
 
-
 	@Override
 	public List<SpacecraftBusComponent> findComponentByType(TypeInfo componentType) {
 		return SpacecraftFirmware.findBusComponentByType(this, componentType);
 	}
-	
-	
+
 	@Override
 	public List<SpacecraftBusComponent> findComponentByCategory(TypeInfo componentCategory) {
 		return SpacecraftFirmware.findBusComponentByCategory(this, componentCategory);
 	}
 
-	
 	@Override
 	public List<SpacecraftBusComponent> getComponents() {
-		return this.components;
+		return components;
 	}
 
 	@Override
@@ -44,15 +41,12 @@ public class SpacecraftBus implements Bus {
 	}
 
 	@Override
-	public void addComponent(SpacecraftBusComponent component) {
+	public void register(SpacecraftBusComponent component) {
 		if(component instanceof SystemComputer)
 			findComponentByType(SystemComputer.type()).clear();
 		this.components.add(component);
-		component.registerWithBus(this);
+		component.registerBus(this);
 	}
-
-
-	
 
 	@Override
 	public SystemComputer getSystemComputer() {
@@ -61,7 +55,5 @@ public class SpacecraftBus implements Bus {
 			return null;
 		return (SystemComputer)components.get(0);
 	}
-
-
 
 }

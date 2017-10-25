@@ -14,7 +14,6 @@ public class SimpleSpacecraft extends AbstractSpacecraft {
 	public SystemStatus runDiagnostics(int level) {
     return new SystemStatus(this);
 	}
-	
 
 	@Override
 	public String describe() {

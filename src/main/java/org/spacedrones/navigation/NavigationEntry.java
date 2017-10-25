@@ -7,7 +7,7 @@ import org.spacedrones.universe.celestialobjects.CelestialObject;
 
 import java.math.BigDecimal;
 
-public class NavigationEntry implements Identifiable{
+public class NavigationEntry implements Identifiable {
 
   private final CelestialObject celestialObject;
   private final BigDecimal distanceToCelestial;

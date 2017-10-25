@@ -1,6 +1,5 @@
 package org.spacedrones.spacecraft;
 
-import org.spacedrones.Configuration;
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.components.computers.SystemData;
@@ -97,7 +96,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 		if(component instanceof SpacecraftBusComponent == false)
 			throw new ComponentConfigurationException("Cano only add SpacecraftBusComponents");
 		bus.addComponent(component);
-		component.registerWithBus(bus);
+		component.registerBus(bus);
 	}
 	
 	

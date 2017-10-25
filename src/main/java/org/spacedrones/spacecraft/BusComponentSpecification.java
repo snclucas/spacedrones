@@ -8,13 +8,13 @@ public class BusComponentSpecification {
 	private OperationalSpecification operationalSpecification;
 	
 	
-	public BusComponentSpecification(PhysicalSpecification physicalSpecification, OperationalSpecification operationalSpecification) {
+	public BusComponentSpecification(PhysicalSpecification physicalSpecification,
+																	 OperationalSpecification operationalSpecification) {
 		super();
 		this.physicalSpecification = physicalSpecification;
 		this.operationalSpecification = operationalSpecification;
 	}
-	
-	
+
 	public BusComponentSpecification() {
 		super();
 		this.physicalSpecification = new PhysicalSpecification();

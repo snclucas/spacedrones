@@ -85,7 +85,7 @@ public class SystemComputerTest {
 
 		SystemComputer computer = new BasicSystemComputer("Test computer", busSpecs, 
 				10 * Unit.GFLOP.value());
-		computer.registerWithBus(spacecraftBus);
+		computer.registerBus(spacecraftBus);
 
 
 		assertEquals("Computer category incorrect", SystemComputer.category(), computer.getCategory());

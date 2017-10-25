@@ -1,16 +1,14 @@
 package org.spacedrones.universe.structures;
 
+import org.spacedrones.components.Identifiable;
 import org.spacedrones.components.TypeInfo;
-import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.celestialobjects.AbstractCelestialObject;
 import org.spacedrones.universe.celestialobjects.SensorSignalResponseProfile;
 
-public class SubspaceBeacon extends AbstractCelestialObject {
-	
-	public static TypeInfo typeInfo = new TypeInfo("SubspaceBeacon");
+public class SubspaceBeacon extends AbstractCelestialObject implements Identifiable{
 
-	public SubspaceBeacon(String name, SensorSignalResponseProfile sensorSignalResponseProfile) {
-		super(name, sensorSignalResponseProfile);
+	public SubspaceBeacon(SensorSignalResponseProfile sensorSignalResponseProfile) {
+		super(sensorSignalResponseProfile);
 	}
 
 
@@ -24,12 +22,12 @@ public class SubspaceBeacon extends AbstractCelestialObject {
 		return type().toString();
 	}
 
-
-	public static TypeInfo type() {
-		return typeInfo;
+	@Override
+	public String getIdent() {
+		return null;
 	}
-	
-	
+
+
 	@Override
 	public String describe() {
 		return "A artifical structure designed to emit subspace signals to be used as a beacon.";

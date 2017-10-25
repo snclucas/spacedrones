@@ -8,7 +8,7 @@ import org.spacedrones.status.SystemStatusMessage;
 
 public interface SpacecraftBusComponent extends PhysicalComponent, Tickable, Diagnosable, StatusProvider, Onlineable, BusCommunicator   {
 	
-	void registerWithBus(Bus bus);
+	void registerBus(Bus bus);
 
 	double getNominalPower(Unit unit);
 	
