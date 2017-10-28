@@ -25,7 +25,7 @@ public abstract class AbstractSoftware implements Software {
 
 
 	@Override
-	public String getIdent() {
+	public String getId() {
 		return ident;
 	}
 	

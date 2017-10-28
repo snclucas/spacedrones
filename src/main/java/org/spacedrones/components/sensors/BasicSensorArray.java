@@ -8,7 +8,9 @@ import org.spacedrones.status.SystemStatus;
 
 public abstract class BasicSensorArray extends AbstractSensor {
 
-	private int numberOfSensorElements;
+	public static TypeInfo type = new TypeInfo("BasicSensorArray");
+
+	final private int numberOfSensorElements;
 
 	BasicSensorArray(String name, BusComponentSpecification busResourceSpecification,
 									 SensorProfile sensorProfile, int numberOfSensorElements) {
@@ -17,37 +19,28 @@ public abstract class BasicSensorArray extends AbstractSensor {
 	}
 
 	@Override
-	public TypeInfo getType() {
-		return new TypeInfo("BasicSensorArray");
-	}
-
-	@Override
 	public double getSensorGain() {
 		return numberOfSensorElements * sensorProfile.getSignalGain();
 	}
-
 
 	@Override
 	public double getMass(Unit unit) {
 		return super.getMass(unit) * numberOfSensorElements;
 	}
 
-
 	@Override
 	public double getVolume(Unit unit) {
 		return super.getVolume(unit) * numberOfSensorElements;
 	}
 
-
 	@Override
 	public double getCurrentPower(Unit unit) {
-		return busResourceSpecification.getNominalPower(unit) * numberOfSensorElements;
+		return getNominalPower(unit) * numberOfSensorElements;
 	}
-
 
 	@Override
 	public double getCurrentCPUThroughput(Unit unit) {
-		return busResourceSpecification.getNominalCPUThroughout(unit) * numberOfSensorElements;
+		return getNominalCPUThroughput(unit) * numberOfSensorElements;
 	}
 
 	@Override
@@ -69,6 +62,9 @@ public abstract class BasicSensorArray extends AbstractSensor {
 
 
 
-
+	@Override
+	public TypeInfo getType() {
+		return type;
+	}
 
 }

@@ -20,13 +20,13 @@ public class SystemMessage implements Message {
 	}
 
 	@Override
-	public String getRecieverIdent() {
-		return reciever.getIdent();
+	public String getRecieverId() {
+		return reciever.getId();
 	}
 
 	@Override
-	public String getSenderIdent() {
-		return sender.getIdent();
+	public String getSenderId() {
+		return sender.getId();
 	}
 
 	@Override

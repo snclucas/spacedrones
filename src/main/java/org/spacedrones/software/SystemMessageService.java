@@ -56,7 +56,7 @@ public class SystemMessageService extends AbstractSoftware implements MessageMed
 	public Map<String, Message> broadcastMessage(Message message) {
 		Map<String, Message> replies = new HashMap<String, Message>();
 		for(SpacecraftBusComponent component : registeredComponents) {
-			replies.put(component.getIdent(), component.recieveBusMessage(message));
+			replies.put(component.getId(), component.recieveBusMessage(message));
 		}
 		return replies;
 	}

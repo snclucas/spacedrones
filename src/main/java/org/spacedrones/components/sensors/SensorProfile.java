@@ -1,16 +1,13 @@
 package org.spacedrones.components.sensors;
 
-import org.spacedrones.components.TypeInfo;
-
-
 public class SensorProfile {
 
-	private TypeInfo sensorType;
+	private SensorType sensorType;
 	private double signalThreshold;
 	private double signalGain;
 	
 	
-	public SensorProfile(TypeInfo sensorType, double signalThreshold,
+	public SensorProfile(SensorType sensorType, double signalThreshold,
 			double signalGain) {
 		super();
 		this.sensorType = sensorType;
@@ -18,35 +15,28 @@ public class SensorProfile {
 		this.signalGain = signalGain;
 	}
 
-
-	public TypeInfo getSensorType() {
+	public SensorType getSensorType() {
 		return sensorType;
 	}
 
-
-	public void setSensorType(TypeInfo sensorType) {
+	void setSensorType(SensorType sensorType) {
 		this.sensorType = sensorType;
 	}
 
-
-	public double getSignalThreshold() {
+	double getSignalThreshold() {
 		return signalThreshold;
 	}
 
-
-	public void setSignalThreshold(double signalThreshold) {
+	void setSignalThreshold(double signalThreshold) {
 		this.signalThreshold = signalThreshold;
 	}
 
-
-	public double getSignalGain() {
+	double getSignalGain() {
 		return signalGain;
 	}
 
-
-	public void setSignalGain(double signalGain) {
+	void setSignalGain(double signalGain) {
 		this.signalGain = signalGain;
 	}
-
 
 }

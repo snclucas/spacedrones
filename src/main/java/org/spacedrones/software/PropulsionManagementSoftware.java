@@ -55,7 +55,7 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 		if(operationPermittedMessage.getStatus() == Status.PERMITTED) {
 			engine.execute();
 			return new SystemStatusMessage(
-					engine, "Engine [ident:"+engine.getIdent() + "], power level set to " + powerLevel, getSystemComputer().getUniversalTime(), Status.SUCCESS);
+					engine, "Engine [ident:"+engine.getId() + "], power level set to " + powerLevel, getSystemComputer().getUniversalTime(), Status.SUCCESS);
 		}
 		else
 			return operationPermittedMessage;
@@ -83,11 +83,11 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 			if(engine.isVectored()) {
 				engine.execute();
 				return new SystemStatusMessage(
-						engine, "Engine [ident:"+engine.getIdent() + "], engine vector set to " + engineVector, getSystemComputer().getUniversalTime(), Status.SUCCESS);
+						engine, "Engine [ident:"+engine.getId() + "], engine vector set to " + engineVector, getSystemComputer().getUniversalTime(), Status.SUCCESS);
 			}
 			else {
 				return new SystemStatusMessage(
-						engine, "Engine [ident:"+engine.getIdent() + "], cannot be vectored", 
+						engine, "Engine [ident:"+engine.getId() + "], cannot be vectored",
 						getSystemComputer().getUniversalTime(), Status.NOT_PERMITTED);
 			}
 		}
@@ -113,7 +113,7 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 		List<SpacecraftBusComponent> engines = getSystemComputer().getSystemComputer().findComponentByCategory(Engine.category);
 		//TODO LOOK at thisif(engines != null)
 			for(SpacecraftBusComponent engine : engines) {
-				if(engine.getIdent() == ident)
+				if(engine.getId() == ident)
 					return (ThrustingEngine) engine;
 			}
 		return null;

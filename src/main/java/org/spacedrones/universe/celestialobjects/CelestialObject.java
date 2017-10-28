@@ -1,14 +1,15 @@
 package org.spacedrones.universe.celestialobjects;
 
-import java.math.BigDecimal;
-
-import org.spacedrones.components.TypeInfo;
+import org.spacedrones.components.Identifiable;
+import org.spacedrones.components.sensors.SensorType;
 import org.spacedrones.components.sensors.SignalResponse;
 
-public interface CelestialObject {
+import java.math.BigDecimal;
+
+public interface CelestialObject extends Identifiable {
 
 	SensorSignalResponseProfile getSensorSignalResponse();
 
-	SignalResponse getSignalResponse(TypeInfo sensorType, BigDecimal distance);
+	SignalResponse getSignalResponse(SensorType sensorType, BigDecimal distance);
 
 }

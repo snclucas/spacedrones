@@ -2,8 +2,8 @@ package org.spacedrones.components.sensors;
 
 public class SignalResponse {
 	
-	private double signalStrength;
-	private double signalDispersion;
+	private final double signalStrength;
+	private final double signalDispersion;
 	
 	public SignalResponse(double signalStrength, double signalDispersion) {
 		super();
@@ -15,11 +15,9 @@ public class SignalResponse {
 		return signalStrength;
 	}
 
-
 	public double getSignalDispersion() {
 		return signalDispersion;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -48,7 +46,5 @@ public class SignalResponse {
     return Double.doubleToLongBits(signalStrength) == Double
             .doubleToLongBits(other.signalStrength);
   }
-	
-	
 	
 }

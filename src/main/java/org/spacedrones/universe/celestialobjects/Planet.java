@@ -8,9 +8,9 @@ public class Planet extends AbstractCelestialObject {
 	private double radius;
 	private String habitatClass;
 
-	public Planet(SensorSignalResponseProfile sensorSignalResponseProfile,
+	public Planet(String name, SensorSignalResponseProfile sensorSignalResponseProfile,
 								double radius, String habitatClass) {
-		super(sensorSignalResponseProfile);
+		super(name, sensorSignalResponseProfile);
 		this.radius = radius;
 		this.habitatClass = habitatClass;
 	}

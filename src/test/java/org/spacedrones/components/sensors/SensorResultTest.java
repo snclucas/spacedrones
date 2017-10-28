@@ -14,13 +14,15 @@ public class SensorResultTest {
 	@Test
 	public void testSensorResult() {
 		
-		
-		Star sol = new Star("Sol", Star.G_CLASS_STAR,
+		Star sol = new Star(Star.G_CLASS_STAR,
 				new SensorSignalResponseProfile(1.0, 1.0, 1.0, 1.0, 1.0));
 		
 		BigDecimal distance = new BigDecimal(24423522352352345.234234);
-		NavigationVector navigationVector = new NavigationVector(new BigDecimal[]{new BigDecimal(234212112312.12321),new BigDecimal(46455464.12321),new BigDecimal(97978.12321)});
-	
+		NavigationVector navigationVector = new NavigationVector(
+						new BigDecimal[]{
+						        new BigDecimal(234212112312.12321),
+                    new BigDecimal(46455464.12321),
+                    new BigDecimal(97978.12321)});
 		
 		double signalStrength = 344.56;
 		double signalDispersion = 674.23;

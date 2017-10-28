@@ -1,7 +1,9 @@
 package org.spacedrones.components.comms;
 
+import org.spacedrones.components.TypeInfo;
+
 public interface Communicator {
-	
-	int getIdent();
+
+	TypeInfo category = new TypeInfo("Communicator");
 
 }

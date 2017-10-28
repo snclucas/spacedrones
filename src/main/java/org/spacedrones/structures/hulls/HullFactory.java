@@ -30,7 +30,7 @@ public class HullFactory {
 			HullSpecification hullSpecification = new HullSpecification("SimpleMonocoqueHullSpec",
 					busSpecs, thickness, material);
 
-			return new SimpleMonocoqueHull("Shuttle", hullSpecification, Hull.SPHEROID);
+			return new SimpleMonocoqueHull("Shuttle", hullSpecification, Hull.Type.SPHEROID);
 		}
 		if(hullType.equalsIgnoreCase("SimpleSatelite")){			
 			double nominalPower = 0 * Unit.kW.value();
@@ -50,7 +50,7 @@ public class HullFactory {
 			HullSpecification hullSpecification = new HullSpecification("SimpleMonocoqueHullSpec",
 					busSpecs, thickness, material);
 
-			return new SimpleMonocoqueHull("SimpleSatelite", hullSpecification, Hull.RECTANGULAR);
+			return new SimpleMonocoqueHull("SimpleSatelite", hullSpecification, Hull.Type.RECTANGULAR);
 		}
 
 		return null;

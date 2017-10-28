@@ -7,8 +7,7 @@ import org.spacedrones.spacecraft.BusComponentSpecification;
 
 public class FractalSensorArray extends BasicSensorArray {
 
-
-	public FractalSensorArray(String name,
+	FractalSensorArray(String name,
 			BusComponentSpecification busResourceSpecification,
 			SensorProfile sensorProfile, int numberOfSensorElements) {
 		super(name, busResourceSpecification, sensorProfile,
@@ -16,35 +15,25 @@ public class FractalSensorArray extends BasicSensorArray {
 	}
 	
 
-	@Override
-	public String describe() {
-		return "Fractal sensor array.";
-	}
+
+
 	
 	@Override
 	public Message recieveBusMessage(Message message) {
 		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
 		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
 	}
-	
-	
-	
-	
-	
-	public static TypeInfo type() {
-		return new TypeInfo("FractalSensorArray");
-	}
 
-
-	@Override
-	public TypeInfo getCategory() {
-		return Sensor.category;
-	}
 
 
 	@Override
 	public final TypeInfo getType() {
-		return type();
+		return new TypeInfo("FractalSensorArray");
 	}
+
+  @Override
+  public String describe() {
+    return "Fractal sensor array.";
+  }
 
 }

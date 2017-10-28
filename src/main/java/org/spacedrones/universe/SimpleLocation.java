@@ -33,7 +33,7 @@ public class SimpleLocation extends AbstractLocation {
 
 	@Override
 	public String toString() {
-		return name + ": ["+coordinates.toString() + "]";
+		return getName() + ": ["+getCoordinates().toString() + "]";
 	}
 	
 	

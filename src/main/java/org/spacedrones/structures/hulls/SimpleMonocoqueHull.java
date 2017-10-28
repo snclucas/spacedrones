@@ -10,7 +10,7 @@ import org.spacedrones.status.SystemStatus;
 public class SimpleMonocoqueHull extends AbstractHull {
 	public static TypeInfo typeID = new TypeInfo("SimpleMonocoqueHull");
 	
-	public SimpleMonocoqueHull(String name, HullSpecification hullSpecification, TypeInfo hullType) {
+	public SimpleMonocoqueHull(String name, HullSpecification hullSpecification, Hull.Type hullType) {
 		super(name, hullSpecification, hullType);
 	}
 	

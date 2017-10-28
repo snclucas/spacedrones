@@ -1,13 +1,12 @@
 package org.spacedrones.components.shields;
 
-import org.spacedrones.components.Executable;
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.spacecraft.BusRequirement;
 
-public interface Shield extends SpacecraftBusComponent, Executable {
+public interface Shield extends SpacecraftBusComponent {
 	
-	TypeInfo categoryID = new TypeInfo("Shield");
+	TypeInfo category = new TypeInfo("Shield");
 	
 	TypeInfo IMPACT_SHIELD = new TypeInfo("IMPACT_SHIELD");
 	TypeInfo EM_SHIELD = new TypeInfo("EM_SHIELD");

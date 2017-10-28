@@ -15,9 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LocalSensorResponseMediator implements SensorResponseMediator {
-	Universe universe = Universe.getInstance();
-	UniverseCelestialObjectDataProvider universeDataProvider = Configuration.getUniverseLocationDataProvider();
+	private Universe universe = Universe.getInstance();
+  private UniverseCelestialObjectDataProvider universeDataProvider = Configuration.getUniverseLocationDataProvider();
 	EnvironmentDataProvider environmentDataProvider = Configuration.getEnvironmentDataProvider();
+
 
 	@Override
 	public List<SensorResult> activeScan(String spacecraftIdent, double duration,
@@ -25,7 +26,7 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 		
 		double signalPropagationSpeed = universeDataProvider.getSignalPropagationSpeed(sensorProfile);
 
-		List<SensorResult> results = new ArrayList<SensorResult>();
+		List<SensorResult> results = new ArrayList<>();
 		Coordinates spacecraftLocation = universe.getSpacecraftLocation(spacecraftIdent);
 		
 		BigDecimal maximumDistanceScanned = new BigDecimal((duration * signalPropagationSpeed) / 2.0); // There and back
@@ -33,22 +34,21 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 		List<CelestialObject> objects = 
 				universeDataProvider.getLocationsCloserThan(spacecraftLocation, maximumDistanceScanned);
 
-
 		return results; 
 	}
 
 
 	public List<SensorResult> passiveScan(String spacecraftIdent, double duration, SensorProfile sensorProfile) {
-		List<SensorResult> results = new ArrayList<SensorResult>();
+		List<SensorResult> results = new ArrayList<>();
 		Coordinates spacecraftLocation = universe.getSpacecraftLocation(spacecraftIdent);
 		
 		BigDecimal maximumDistanceScanned = new BigDecimal(1000000 * Unit.Ly.value()); 
 		
-		List<CelestialObject> objectsWithin1000Ly = 
+		List<CelestialObject> objectsWithinDistance =
 				universeDataProvider.getLocationsCloserThan(spacecraftLocation, maximumDistanceScanned);
 
-		for(CelestialObject object : objectsWithin1000Ly) {
-			Coordinates coordinates = universe.getCelestialObjectCoordinatesById(object.getIdent());
+		for(CelestialObject object : objectsWithinDistance) {
+			Coordinates coordinates = universe.getCelestialObjectCoordinatesById(object.getId());
 			BigDecimal distance = Utils.distanceToLocation(coordinates, spacecraftLocation, Unit.One);
 			
 			SignalResponse returnedSignalResponse = object.getSignalResponse(sensorProfile.getSensorType(), distance);
@@ -59,8 +59,9 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 					returnedSignalResponse.getSignalDispersion() + " " + 
 			distance.doubleValue()/Unit.Ly.value());
 			
-			if(returnedSignalResponse.getSignalStrength() > 1.0)
-				object = new UnknownObject("Unknown object", object.getSensorSignalResponse());
+			if(returnedSignalResponse.getSignalStrength() > 1.0) {
+        object = new UnknownObject(object.getSensorSignalResponse());
+      }
 
 			SensorResult result = new SensorResult(object, Utils.distanceToLocation(coordinates, spacecraftLocation, Unit.One),
 					Utils.vectorToLocation(coordinates, spacecraftLocation, false), returnedSignalResponse);

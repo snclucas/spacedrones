@@ -1,13 +1,13 @@
 package org.spacedrones.universe;
 
-import java.math.BigDecimal;
-
 import org.spacedrones.components.Identifiable;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.physics.Unit;
 
+import java.math.BigDecimal;
+
 public interface Location extends Identifiable {
-	TypeInfo categoryID = new TypeInfo("Location");
+	TypeInfo category = new TypeInfo("Location");
 	
 	Coordinates getCoordinates();
 	BigDecimal getCoordinate(int index);

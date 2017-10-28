@@ -12,29 +12,18 @@ public class LinearSensorArray extends BasicSensorArray {
 		super(name, busResourceSpecification, sensorProfile,
 				numberOfSensorElements);
 	}
-	
+
+
+
 	
 	@Override
 	public String describe() {
 		return "Linear sensor array.";
 	}
 
-	
-	public static TypeInfo type() {
-		return new TypeInfo("LinearSensorArray");
-	}
-
-	
 	@Override
 	public final TypeInfo getType() {
-		return type();
+		return new TypeInfo("LinearSensorArray");
 	}
-
-
-	@Override
-	public TypeInfo getCategory() {
-		return Sensor.category;
-	}
-	
 
 }

@@ -3,8 +3,8 @@ package org.spacedrones.universe.celestialobjects;
 
 public class UnknownObject extends AbstractCelestialObject {
 
-	public UnknownObject(SensorSignalResponseProfile sensorSignalResponseProfile) {
-		super(sensorSignalResponseProfile);
+	public UnknownObject(String name, SensorSignalResponseProfile sensorSignalResponseProfile) {
+		super(name, sensorSignalResponseProfile);
 	}
 
 }

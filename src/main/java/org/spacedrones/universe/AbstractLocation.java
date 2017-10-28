@@ -9,59 +9,48 @@ import org.spacedrones.utils.Utils;
 
 public abstract class AbstractLocation implements Location {
 	
-	protected String name;
-	protected String id;
-	protected Coordinates coordinates;	
+	private final String name;
+	private final String id;
+	private final Coordinates coordinates;
 	
-	protected final String ident;
-	
-	public AbstractLocation(String name, Coordinates coordinates) {
+	AbstractLocation(String name, Coordinates coordinates) {
 		this.id = Configuration.getUUID();
 		this.name = name;
 		this.coordinates = coordinates;
-		this.ident = Configuration.getUUID();
 	}
 	
-	
-	public AbstractLocation(String name, Coordinates coordinates, Location relativeTo) {
+	AbstractLocation(String name, Coordinates coordinates, Location relativeTo) {
 		this(name, coordinates.add(relativeTo.getCoordinates()));
 	}
 	
-	
-	public AbstractLocation(String name, BigDecimal[] coordComponents) {
+	AbstractLocation(String name, BigDecimal[] coordComponents) {
 		this(name, new Coordinates(coordComponents));
 	}
 	
-	
 	@Override
-	public String getIdent() {
-		return ident;
+	public String getId() {
+		return id;
 	}
-	
 	
 	@Override
 	public TypeInfo getCategory() {
-		return categoryID;
+		return category;
 	}
-	
 
 	@Override
 	public String getName() {
 		return name;
 	}
 	
-	
 	@Override
 	public Coordinates getCoordinates() {
 		return coordinates;
 	}
 	
-	
 	@Override
 	public BigDecimal getCoordinate(int index) {
 		return this.coordinates.get(index);
 	}
-
 
 	@Override
 	public BigDecimal distanceToLocation(Location location, Unit unit)
@@ -69,16 +58,11 @@ public abstract class AbstractLocation implements Location {
 		return Utils.distanceToLocation(this.getCoordinates(), location.getCoordinates(), unit);
 	}
 
-
 	@Override
 	public NavigationVector vectorToLocation(Location location, boolean normalized) {
 		return Utils.vectorToLocation(this.getCoordinates(), location.getCoordinates(), normalized);
 	}
 
-	
-	
-
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -1,11 +1,10 @@
 package org.spacedrones.components.propulsion;
 
-import org.spacedrones.components.Executable;
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.physics.Unit;
 
-public interface Engine extends SpacecraftBusComponent, Executable {
+public interface Engine extends SpacecraftBusComponent {
 
 	TypeInfo category = new TypeInfo("Engine");
 

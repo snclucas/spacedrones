@@ -2,9 +2,9 @@ package org.spacedrones.software;
 
 public interface Message {
 
-	String getRecieverIdent();
+	String getRecieverId();
 	
-	String getSenderIdent();
+	String getSenderId();
 	
 	String getMessage();
 	

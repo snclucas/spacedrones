@@ -1,14 +1,15 @@
 package org.spacedrones.components.sensors;
 
-import java.util.List;
-
 import org.spacedrones.Configuration;
 import org.spacedrones.components.AbstractBusComponent;
+import org.spacedrones.components.TypeInfo;
 import org.spacedrones.spacecraft.BusComponentSpecification;
+
+import java.util.List;
 
 public abstract class AbstractSensor extends AbstractBusComponent implements Sensor {
 
-	protected SensorProfile sensorProfile;
+	final private SensorProfile sensorProfile;
 
 	AbstractSensor(String name, BusComponentSpecification busResourceSpecification,
 								 SensorProfile sensorProfile) {
@@ -16,18 +17,15 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 		this.sensorProfile = sensorProfile;
 	}
 
-	
 	@Override
 	public double getSensorGain() {
 		return sensorProfile.getSignalGain();
 	}
 
-
 	@Override
 	public double getSensorThreshold() {
 		return sensorProfile.getSignalThreshold();
 	}
-
 
 	@Override
 	public List<SensorResult> activeScan(double duration, double signalStrength,
@@ -37,7 +35,6 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 		return activeScan(spacecraftIdent, duration, signalStrength, propagationModel, sensorType);
 	}
 
-
 	private List<SensorResult> activeScan(String spacecraftIdent, double duration, double signalStrength,
 			SignalPropagationModel propagationModel, int sensorType) {
 
@@ -46,33 +43,29 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 	}
 
 	@Override
-	public List<SensorResult> passiveScan(double duration, SensorProfile sensorProfile) {
+	public final List<SensorResult> passiveScan(double duration, SensorProfile sensorProfile) {
 		String spacecraftIdent = (String)(this.getSystemComputer().getSystemData("spaceraft-ident"));
 		return passiveScan(spacecraftIdent, duration, sensorProfile);
 	}
-
 
 	private List<SensorResult> passiveScan(String spacecraftIdent, double duration, SensorProfile sensorProfile) {
 		SensorResponseMediator sensorResponseMediator = Configuration.getSensorResponseMediator();
 		return sensorResponseMediator.passiveScan(spacecraftIdent, duration, sensorProfile);
 	}
 
-
 	@Override
 	public SensorProfile getSensorProfile() {
 		return sensorProfile;
 	}
-
-
-	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	
 	@Override
 	public void tick() {
 	}
+
+
+  @Override
+  public TypeInfo getCategory() {
+    return Sensor.category;
+  }
 
 }

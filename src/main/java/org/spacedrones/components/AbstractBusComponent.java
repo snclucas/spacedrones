@@ -49,7 +49,7 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 	}
 	
 	@Override
-	public final Message recieveBusMessage(Message message) {
+	public Message recieveBusMessage(Message message) {
 		String replyMessage = "Message recieved by: " + getName() + ":\n " + message.getMessage();
 		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
 	}

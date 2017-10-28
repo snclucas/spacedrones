@@ -8,26 +8,22 @@ import org.spacedrones.spacecraft.Bus;
 import org.spacedrones.status.SystemStatusMessage;
 
 public interface Computer extends SpacecraftBusComponent, BusCommunicator  {
-	
-	static TypeInfo category() {
-		return new TypeInfo("Computer");
-	}
-	
-	static TypeInfo type() {
-		return category();
-	}
+
+	TypeInfo category = new TypeInfo("Computer");
 	
 	SystemComputer getSystemComputer();
 
 	// Software handling
 	Software getSoftware(TypeInfo softwareType);
+
 	boolean hasSoftware(TypeInfo softwareType);
+
 	SystemStatusMessage loadSoftware(Software software);
 	
 	Bus getSpacecraftBus();
+
 	double getMaxCPUThroughput();
-	
-	
-	
+
 	void registerSpacecraftBus(Bus bus);
+
 }

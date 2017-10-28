@@ -6,11 +6,23 @@ import org.spacedrones.components.TypeInfo;
 import org.spacedrones.physics.Unit;
 
 public interface Hull extends PhysicalComponent, BusCommunicator {
-	
-	TypeInfo category = new TypeInfo("Hull");
-	
-	TypeInfo RECTANGULAR = new TypeInfo("RECTANGULAR");
-	TypeInfo SPHEROID = new TypeInfo("SPHEROID");
+
+  TypeInfo category = new TypeInfo("Hull");
+
+	enum Type {
+    RECTANGULAR("RECTANGULAR"),
+    SPHEROID("SPHEROID");
+
+    Type(String typeName) {
+			this.typeName = typeName;
+		}
+
+		private final String typeName;
+
+		public String getType() {
+			return typeName;
+		}
+	}
 	
 	//Hull mass fraction is the fraction of the hull thickness that is solid
 	double HULL_VOLUME_FRACTION = 0.5;

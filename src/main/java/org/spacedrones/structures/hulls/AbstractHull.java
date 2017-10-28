@@ -10,7 +10,7 @@ import org.spacedrones.software.SystemMessage;
 public abstract class AbstractHull extends AbstractBusComponent implements Hull {
 
 	protected HullSpecification hullSpecification;
-	protected TypeInfo hullType;
+	protected Hull.Type hullType;
 	
 	protected double usedVolume;
 	
@@ -18,7 +18,7 @@ public abstract class AbstractHull extends AbstractBusComponent implements Hull 
 	
 	
 	
-	public AbstractHull(String name, HullSpecification hullSpecification, TypeInfo hullType) {
+	public AbstractHull(String name, HullSpecification hullSpecification, Hull.Type hullType) {
 		super(name, hullSpecification.getBusResourceSpecification());
 		this.hullSpecification = hullSpecification;
 		this.hullType = hullType;
@@ -36,7 +36,7 @@ public abstract class AbstractHull extends AbstractBusComponent implements Hull 
 	
 	private double calculateVolume(double width, double length, double height) {
 		
-		if(hullType == Hull.SPHEROID)
+		if(hullType == Hull.Type.SPHEROID)
 			return (4.0*Math.PI/3.0)*width*width*length;
 		else 
 			return width*length*height;

@@ -10,7 +10,6 @@ public class PowerLawSignalPropagationModel implements SignalPropagationModel {
 		this.exponent = exponent;
 	}
 
-
 	@Override
 	public double getSignal(double logInitalPower, BigDecimal distance) {
 		if(distance.compareTo(new BigDecimal(1e-50)) < 0)

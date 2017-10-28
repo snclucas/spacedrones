@@ -6,7 +6,7 @@ import org.spacedrones.spacecraft.Bus;
 import org.spacedrones.status.StatusProvider;
 import org.spacedrones.status.SystemStatusMessage;
 
-public interface SpacecraftBusComponent extends PhysicalComponent, Tickable, Diagnosable, StatusProvider, Onlineable, BusCommunicator   {
+public interface SpacecraftBusComponent extends PhysicalComponent, Tickable, Diagnosable, StatusProvider, Onlineable, BusCommunicator {
 	
 	void registerBus(Bus bus);
 

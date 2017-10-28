@@ -1,8 +1,8 @@
 package org.spacedrones.universe.dataprovider;
 
 import org.spacedrones.components.TypeInfo;
-import org.spacedrones.components.sensors.Sensor;
 import org.spacedrones.components.sensors.SensorProfile;
+import org.spacedrones.components.sensors.SensorType;
 import org.spacedrones.physics.Constants;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.universe.Coordinates;
@@ -32,8 +32,8 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 
 	@Override
 	public void addCelestialObject(CelestialObject celestialObject, Coordinates coordinates) {
-		celestialObjectLocations.put(celestialObject.getIdent(), coordinates);
-		celestialObjects.put(celestialObject.getIdent(), celestialObject);
+		celestialObjectLocations.put(celestialObject.getId(), coordinates);
+		celestialObjects.put(celestialObject.getId(), celestialObject);
 	}
 
 
@@ -135,8 +135,8 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 
 
     Coordinates solCoordinates = new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value()));
-		Star sol = new Star("Sol", Star.G_CLASS_STAR,
-				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.G_CLASS_STAR));
+		Star sol = new Star("Sol", StarClass.G,
+				SensorSignalResponseLibrary.getStandardSignalResponseProfile(StarClass.G));
 
 		addCelestialObject(sol, solCoordinates);
 
@@ -146,8 +146,8 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
                     new BigDecimal(2.83* Unit.Ly.value()),
                     new BigDecimal(101.34*Unit.Ly.value()));
 
-		Star alphaCenturi = new Star("Alpha centuri", Star.G_CLASS_STAR,
-				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.O_CLASS_STAR));
+		Star alphaCenturi = new Star("Alpha centuri", StarClass.G,
+				SensorSignalResponseLibrary.getStandardSignalResponseProfile(StarClass.O));
 
 		addCelestialObject(alphaCenturi, alphaCenturiCoordinates);
 		
@@ -169,23 +169,23 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 
 	
 	public double getSignalPropagationSpeed(SensorProfile sensorProfile) {
-		TypeInfo sensorType = sensorProfile.getSensorType();
-		if(sensorType == Sensor.OPTICAL) {
+		SensorType sensorType = sensorProfile.getSensorType();
+		if(sensorType == SensorType.OPTICAL) {
 			return 1.0 * Constants.c;
 		}
-		else if(sensorType == Sensor.RADAR) {
+		else if(sensorType == SensorType.RADAR) {
 			return 1.0 * Constants.c;
 		}
-		else if(sensorType == Sensor.GRAVIMETRIC) {
+		else if(sensorType == SensorType.GRAVIMETRIC) {
 			return 1.0 * Constants.c;
 		}
-		else if(sensorType == Sensor.MAGNETOMETRIC) {
+		else if(sensorType == SensorType.MAGNETOMETRIC) {
 			return 1.0 * Constants.c;
 		}
-		else if(sensorType == Sensor.GRAVIMETRIC) {
+		else if(sensorType == SensorType.GRAVIMETRIC) {
 			return 1.0 * Constants.c;
 		}
-		else if(sensorType == Sensor.SUBSPACE_RESONANCE) {
+		else if(sensorType == SensorType.SUBSPACE_RESONANCE) {
 			return 100000.0 * Constants.c;
 		}
 		else

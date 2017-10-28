@@ -1,12 +1,12 @@
 package org.spacedrones.game;
 
-import java.math.BigDecimal;
-
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.Spacecraft;
 import org.spacedrones.spacecraft.SpacecraftFactory;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.Universe;
+
+import java.math.BigDecimal;
 
 public class GameRunner {
 
@@ -94,7 +94,7 @@ public class GameRunner {
 		Coordinates coords = new Coordinates(BigDecimal.ZERO, new BigDecimal(1* Unit.Ly.value()), BigDecimal.ZERO);
 		universe.addSpacecraft(simpleSpacecraft, coords);
 
-		universe.updateSpacecraftVelocity(simpleSpacecraft.getIdent(), new double[]{1.5e4, 4.2e10, 23.8e2});
+		universe.updateSpacecraftVelocity(simpleSpacecraft.getId(), new double[]{1.5e4, 4.2e10, 23.8e2});
 
 
 		Runner runner = new Runner();
