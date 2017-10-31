@@ -17,6 +17,5 @@ public interface Bus extends BusCommunicator {
 
   SystemComputer getSystemComputer();
 
-  //Spacecraft getSpacecraft();
-  //void setSpacecraft(Spacecraft spacecraft);
+
 }

@@ -16,16 +16,13 @@ public class RadioCommunicator extends AbstractCommunicationComponent {
 		super(name, busResourceSpecification, propagationModel);
 	}
 
-	@Override
 	public String describe() {
 		return "RF communication device";
 	}
 
-	
 	public TypeInfo getType() {
 		return type();
 	}
-	
 	
 	@Override
 	public SystemStatus online() {
@@ -44,21 +41,19 @@ public class RadioCommunicator extends AbstractCommunicationComponent {
 		// Nominal and operation CPU are the same
 		return getNominalCPUThroughput(unit);
 	}
-	
 
 	@Override
 	public SystemStatus runDiagnostics(int level) {
 		SystemStatus systemStatus = new SystemStatus(this);
-		
-		if("propagationModel" == null)
+
+		if ("propagationModel" == null)
 			systemStatus.addSystemMessage(
-					"Level " + level + "diagnostics : Problem. No propagation model.", getUniversalTime(), Status.PROBLEM);
-		else 
+							"Level " + level + "diagnostics : Problem. No propagation model.", getUniversalTime(), Status.PROBLEM);
+		else
 			systemStatus.addSystemMessage(
-					"Running diagnostics [level " + level + "].", getUniversalTime(), Status.OK);
-		
+							"Running diagnostics [level " + level + "].", getUniversalTime(), Status.OK);
+
 		return systemStatus;
 	}
-
 	
 }

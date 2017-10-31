@@ -63,9 +63,14 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 	}
 
 
-  @Override
-  public TypeInfo getCategory() {
-    return Sensor.category;
-  }
+	@Override
+	public TypeInfo getCategory() {
+		return category;
+	}
+
+	@Override
+	public TypeInfo getType() {
+		return type;
+	}
 
 }

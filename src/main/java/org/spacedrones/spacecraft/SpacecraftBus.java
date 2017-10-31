@@ -1,13 +1,13 @@
 package org.spacedrones.spacecraft;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.computers.SystemComputer;
 import org.spacedrones.software.Message;
 import org.spacedrones.status.SystemStatusMessage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SpacecraftBus implements Bus {
 

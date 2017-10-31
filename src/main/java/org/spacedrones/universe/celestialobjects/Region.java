@@ -1,7 +1,10 @@
 package org.spacedrones.universe.celestialobjects;
 
 
+import org.spacedrones.components.TypeInfo;
+
 public class Region extends AbstractCelestialObject {
+	public static TypeInfo type = new TypeInfo("Region");
 
 	private double sizeOfRegion;
 
@@ -10,9 +13,13 @@ public class Region extends AbstractCelestialObject {
 		this.sizeOfRegion = sizeOfRegion;
 	}
 
-
 	public double getRegionSize() {
 		return sizeOfRegion;
+	}
+
+	@Override
+	public String describe() {
+		return "Region";
 	}
 
 }

@@ -9,11 +9,11 @@ import java.math.BigDecimal;
 
 public class SensorResult implements Identifiable {
 	
-	private CelestialObject celestialObject;
-	private BigDecimal distance;
-	private NavigationVector navigationVector;
-	private SignalResponse signalResponse;
-	private String ident;
+	private final CelestialObject celestialObject;
+	private final BigDecimal distance;
+	private final NavigationVector navigationVector;
+	private final SignalResponse signalResponse;
+	private final String id;
 	
 	
 	SensorResult(CelestialObject celestialObject, BigDecimal distance,
@@ -23,7 +23,7 @@ public class SensorResult implements Identifiable {
 		this.distance = distance;
 		this.navigationVector = navigationVector;
 		this.signalResponse = signalResponse;
-		this.ident = Configuration.getUUID();
+		this.id = Configuration.getUUID();
 	}
 
 	CelestialObject getCelestialObject() {
@@ -48,13 +48,13 @@ public class SensorResult implements Identifiable {
 	}
 
 	@Override
-	public String getIdent() {
-		return ident;
+	public String getId() {
+		return id;
 	}
 
 	@Override
 	public String describe() {
-		return "Sensor result";
+		return "SensorResult";
 	}
 
 }

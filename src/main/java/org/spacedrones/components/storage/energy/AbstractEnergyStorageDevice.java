@@ -22,7 +22,7 @@ public abstract class AbstractEnergyStorageDevice extends AbstractBusComponent i
 	
 	@Override
 	public TypeInfo getCategory() {
-		return categoryID;
+		return category;
 	}
 
 

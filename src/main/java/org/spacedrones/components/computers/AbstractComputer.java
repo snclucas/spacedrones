@@ -1,30 +1,26 @@
 package org.spacedrones.components.computers;
 
-import java.util.Map;
-
 import org.spacedrones.components.AbstractBusComponent;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
+import org.spacedrones.exceptions.ComponentConfigurationException;
 import org.spacedrones.software.Software;
 import org.spacedrones.spacecraft.Bus;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatusMessage;
 
-public abstract class AbstractComputer extends AbstractBusComponent implements Computer {
-	
-	//public static TypeInfo category() {
-	//	return new TypeInfo("Computer");
-	//}
-	
-	//public static TypeInfo type() {
-	//	return new TypeInfo("Computer");
-	//}
+import java.util.HashMap;
+import java.util.Map;
 
+public abstract class AbstractComputer extends AbstractBusComponent implements Computer {
+
+	private boolean online;
+  private Bus spacecraftBus;
+	private final Map<TypeInfo, Software> loadedSoftware;
 	
-	protected Map<TypeInfo, Software> loadedSoftware;
-	
-	public AbstractComputer(String name, BusComponentSpecification busResourceSpecification) {
+	AbstractComputer(String name, BusComponentSpecification busResourceSpecification) {
 		super(name, busResourceSpecification);
+    loadedSoftware = new HashMap<>();
 	}
 	
 	public SystemComputer getSystemComputer() {
@@ -40,27 +36,35 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
 			return new SystemStatusMessage(this, software.getDescription() + " software replaced exisiting software", getUniversalTime(), Status.OK);
 	}
 
-	
 	@Override
 	public Software getSoftware(TypeInfo softwareType) {
 		return loadedSoftware.get(softwareType);
 	}
 
-	
 	@Override
-	public boolean hasSoftware(TypeInfo softwareType) {
+	public boolean hasSoftwareType(TypeInfo softwareType) {
 		return loadedSoftware.get(softwareType) != null;
 	}
 
+  @Override
+  public boolean hasSoftware() {
+    return loadedSoftware.size() > 0;
+  }
+
+  @Override
+  public void registerSpacecraftBus(Bus spacecraftBus) {
+    this.spacecraftBus = spacecraftBus;
+  }
 	
 	@Override
 	public Bus getSpacecraftBus() {
-		return spacecraftBus;
+	  if(spacecraftBus != null) {
+      return spacecraftBus;
+    }
+    else {
+	    throw new ComponentConfigurationException("Computer " + this.getName() + " is not registreed with the bus");
+    }
 	}
-
-
-	
-	
 
 	@Override
 	public double getMaxCPUThroughput() {
@@ -68,14 +72,6 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
 		return 0;
 	}
 
-	@Override
-	public void registerSpacecraftBus(Bus bus) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-	
 	public static TypeInfo category() {
 		return new TypeInfo("Computer");
 	}
@@ -84,20 +80,28 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
 		return new TypeInfo("Computer");
 	}
 	
-	
-	public TypeInfo getType() {
-		return type();
-	}
-
-	public TypeInfo getCategory() {
-		return category();
-	}
-	
-	
 	@Override
 	public void tick() {
 	}
-	
+
+  @Override
+  public boolean isOnline() {
+    return online;
+  }
+
+  public void setOnline(final boolean online) {
+    this.online = online;
+  }
+
+  @Override
+	public TypeInfo getType() {
+		return new TypeInfo("Computer");
+	}
+
+	@Override
+	public TypeInfo getCategory() {
+		return new TypeInfo("Computer");
+	}
 	
 
 }

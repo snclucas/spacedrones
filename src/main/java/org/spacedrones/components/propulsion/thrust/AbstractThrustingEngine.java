@@ -1,6 +1,5 @@
 package org.spacedrones.components.propulsion.thrust;
 
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.propulsion.AbstractEngine;
 import org.spacedrones.components.propulsion.EngineVector;
 import org.spacedrones.physics.Unit;
@@ -70,8 +69,8 @@ public abstract class AbstractThrustingEngine extends AbstractEngine implements 
 	
 	@Override
 	public double getRequiredPower(double requiredPowerLevel, Unit unit) {
-		double nominalPower = busResourceSpecification.getNominalPower(unit);
-		double maximumOperatingPower = busResourceSpecification.getMaximumOperationalPower(unit);
+		double nominalPower = getBusResourceSpecification() .getNominalPower(unit);
+		double maximumOperatingPower = getBusResourceSpecification() .getMaximumOperationalPower(unit);
 		return nominalPower + (maximumOperatingPower-nominalPower) * thrustProfile.getNormalizedPower(requiredPowerLevel);
 	}
 	
@@ -79,8 +78,8 @@ public abstract class AbstractThrustingEngine extends AbstractEngine implements 
 	@Override
 	public double getRequiredCPUThroughput(double requiredPowerLevel, Unit unit) {
 		// The CPU throughput does not depend upon power level in this model
-		double nominalCPU = busResourceSpecification.getNominalCPUThroughout(unit);
-		double maximumOperatingCPU = busResourceSpecification.getMaximumOperationalCPUThroughput(unit);
+		double nominalCPU = getBusResourceSpecification() .getNominalCPUThroughout(unit);
+		double maximumOperatingCPU = getBusResourceSpecification() .getMaximumOperationalCPUThroughput(unit);
 		return nominalCPU + (maximumOperatingCPU-nominalCPU) * thrustProfile.getNormalizedCPU(requiredPowerLevel);
 	}
 	

@@ -11,13 +11,6 @@ public class SimpleLinearThrustProfile extends AbstractProfile implements Thrust
 	public SimpleLinearThrustProfile(String name) {
 		super(name);
 	}
-	
-	
-	@Override
-	public TypeInfo getType() {
-		return type;
-	}
-	
 
 	@Override
 	public double getNormalizedThrust(double powerLevel) {
@@ -39,7 +32,6 @@ public class SimpleLinearThrustProfile extends AbstractProfile implements Thrust
 		return "Simple Linear Thrust Model";
 	}
 
-
 	@Override
 	public double[][] getNormalizedThrustProfile() {
 		double[] profile = new double[10];
@@ -55,7 +47,6 @@ public class SimpleLinearThrustProfile extends AbstractProfile implements Thrust
 			profile[i] =  1.0 / (10-i);
 		return new double[][]{profile};
 	}
-	
 
 	@Override
 	public SystemStatus runDiagnostics(int level) {
@@ -68,20 +59,9 @@ public class SimpleLinearThrustProfile extends AbstractProfile implements Thrust
 		return systemStatus;
 	}
 	
-	
 	private boolean validateModel() {
 		return true;
 	}
-	
-	
-	
-
-
-	@Override
-	public final TypeInfo getCategory() {
-		return category;
-	}
-
 
 	@Override
 	public String describe() {

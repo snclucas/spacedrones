@@ -16,18 +16,14 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 
 	public static TypeInfo typeID = new TypeInfo("EngineManagementSoftware");
 
-
-
 	public PropulsionManagementSoftware(String name) {
 		super(name);
 	}
-
 
 	@Override
 	public TypeInfo getType() {
 		return typeID;
 	}
-
 
 	public SystemStatusMessage callDrive(double powerLevel) {
 		SystemStatusMessage message = null;
@@ -39,11 +35,7 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 		return message;
 	}
 
-
 	public SystemStatusMessage callDrive(double powerLevel, String engineIdent) {
-		
-
-		
 		ThrustingEngine engine = findEngineByIdent(engineIdent);
 		if(engine == null)
 			return new SystemStatusMessage(this, "No engine found with ident:"+engineIdent, 
@@ -64,12 +56,10 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 	public SystemStatusMessage callStop(String engineIdent) {
 		return callDrive(0, engineIdent);
 	}
-
 	
 	public SystemStatusMessage callStop() {
 		return callDrive(0);
 	}
-	
 	
 	public SystemStatusMessage callVector(EngineVector engineVector, String engineIdent) {
 		ThrustingEngine engine = findEngineByIdent(engineIdent);
@@ -95,8 +85,6 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 			return operationPermittedMessage;
 	}
 
-
-
 	@Override
 	public String getDescription() {
 		return "Engine management";
@@ -107,8 +95,6 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 		return getDescription() + " software";
 	}
 
-
-
 	private ThrustingEngine findEngineByIdent(String ident) {
 		List<SpacecraftBusComponent> engines = getSystemComputer().getSystemComputer().findComponentByCategory(Engine.category);
 		//TODO LOOK at thisif(engines != null)
@@ -118,7 +104,6 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 			}
 		return null;
 	}
-
 
 	@Override
 	public String describe() {

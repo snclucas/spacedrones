@@ -83,8 +83,8 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 	}
 
 
-	public void addCelestialObject(CelestialObject celestialObject, Coordinates coordinates) {
-		universeLocationDataProvider.addCelestialObject(celestialObject, coordinates);
+	public void addCelestialObject(String name, CelestialObject celestialObject, Coordinates coordinates) {
+		universeLocationDataProvider.addCelestialObject(name, celestialObject, coordinates);
 	}
 
 	public CelestialObject getCelestialObjectById(String locationID) {

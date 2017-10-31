@@ -1,10 +1,18 @@
 package org.spacedrones.universe.celestialobjects;
 
 
-public class UnknownObject extends AbstractCelestialObject {
+import org.spacedrones.components.TypeInfo;
 
-	public UnknownObject(String name, SensorSignalResponseProfile sensorSignalResponseProfile) {
-		super(name, sensorSignalResponseProfile);
+public class UnknownObject extends AbstractCelestialObject {
+  public static TypeInfo type = new TypeInfo("UnknownObject");
+
+	public UnknownObject(SensorSignalResponseProfile sensorSignalResponseProfile) {
+		super(sensorSignalResponseProfile);
 	}
+
+  @Override
+  public String describe() {
+    return "UnknownObject";
+  }
 
 }

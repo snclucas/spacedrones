@@ -25,7 +25,7 @@ public class Tester {
 		HullSpecification hullSpecification = new HullSpecification("SimpleMonocoqueHullSpec",
 				busSpecs, 0.25 * Unit.m.value(), material);
 		
-		Hull hull = new SimpleMonocoqueHull("Simple hull", hullSpecification, Hull.SPHEROID);
+		Hull hull = new SimpleMonocoqueHull("Simple hull", hullSpecification, Hull.Type.SPHEROID);
 		
 		Spacecraft spacecraft = new SimpleSpacecraft("", hull);
 		

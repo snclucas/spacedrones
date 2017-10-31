@@ -1,7 +1,5 @@
 package org.spacedrones.spacecraft;
 
-import java.security.InvalidParameterException;
-
 import org.spacedrones.Configuration;
 import org.spacedrones.components.comms.CommunicationComponent;
 import org.spacedrones.components.comms.CommunicatorDeviceFactory;
@@ -21,6 +19,7 @@ import org.spacedrones.components.propulsion.thrust.SimpleThruster;
 import org.spacedrones.components.sensors.LinearSensorArray;
 import org.spacedrones.components.sensors.Sensor;
 import org.spacedrones.components.sensors.SensorFactory;
+import org.spacedrones.components.sensors.SensorType;
 import org.spacedrones.consumables.Fuel;
 import org.spacedrones.data.SpacecraftDataProvider;
 import org.spacedrones.physics.Unit;
@@ -29,6 +28,8 @@ import org.spacedrones.structures.hulls.HullFactory;
 import org.spacedrones.structures.storage.fuel.CryogenicLiquidStorageTank;
 import org.spacedrones.structures.storage.fuel.FuelStorageTank;
 import org.spacedrones.structures.storage.fuel.FuelStorageTankFactory;
+
+import java.security.InvalidParameterException;
 
 public class SpacecraftFactory {
 	
@@ -57,7 +58,7 @@ public class SpacecraftFactory {
 			PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.type());
 			SpacecraftBuildManager.addComponent(spacecraft, powerGenerator);
 			
-			Sensor sensor = SensorFactory.getSensor(LinearSensorArray.type(), Sensor.RADAR, 1);
+			Sensor sensor = SensorFactory.getSensor(LinearSensorArray.type, SensorType.RADAR, 1);
 			SpacecraftBuildManager.addComponent(spacecraft, sensor);
 			
 			

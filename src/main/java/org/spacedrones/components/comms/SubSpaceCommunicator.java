@@ -14,7 +14,6 @@ public class SubSpaceCommunicator extends AbstractCommunicationComponent {
 		super(name, busResourceSpecification, propagationModel);
 	}
 
-	@Override
 	public String describe() {
 		return "Sub-space communication device";
 	}
@@ -26,12 +25,10 @@ public class SubSpaceCommunicator extends AbstractCommunicationComponent {
 		return systemStatus; 
 	}
 
-
 	public TypeInfo getType() {
 		return type;
 	}
 
-	
 	@Override
 	public double getCurrentPower(Unit unit) {
 		return getNominalPower(unit);
@@ -42,8 +39,7 @@ public class SubSpaceCommunicator extends AbstractCommunicationComponent {
 		// Nominal and operation CPU are the same for this XX change
 		return getNominalCPUThroughput(unit);
 	}
-	
-	
+
 	@Override
 	public SystemStatus runDiagnostics(int level) {
 		SystemStatus systemStatus = new SystemStatus(this);
@@ -57,8 +53,5 @@ public class SubSpaceCommunicator extends AbstractCommunicationComponent {
 		
 		return systemStatus;
 	}
-	
-	
-	
-	
+
 }

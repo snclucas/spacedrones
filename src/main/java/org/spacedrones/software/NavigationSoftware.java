@@ -1,13 +1,5 @@
 package org.spacedrones.software;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.spacedrones.Configuration;
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.TypeInfo;
@@ -18,6 +10,14 @@ import org.spacedrones.components.sensors.Sensor;
 import org.spacedrones.components.sensors.SensorResult;
 import org.spacedrones.navigation.NavigationInterface;
 import org.spacedrones.universe.Coordinates;
+
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class NavigationSoftware extends AbstractSoftware implements Software, NavigationInterface {
 	private static MathContext mc = new MathContext(Configuration.precision, RoundingMode.HALF_UP);
@@ -52,7 +52,7 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 	private void populateSensors() {
 		List<Sensor> sensorList = getSensors();
 		for(Sensor sensor : sensorList)
-			sensors.put(sensor.getIdent(), sensor);
+			sensors.put(sensor.getId(), sensor);
 	}
 
 
@@ -71,7 +71,7 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 	public List<SensorResult> scanAll(){
 		List<Sensor> sensors = getSensors();
 		for(Sensor sensor : sensors) 
-			sensorResults.addAll(scan(sensor.getIdent()));
+			sensorResults.addAll(scan(sensor.getId()));
 		dataStore.saveData(sensorResults);
 		return sensorResults;
 	}

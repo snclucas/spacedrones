@@ -12,19 +12,17 @@ public abstract class AbstractProfile implements Identifiable {
 		this.name = name;
 		this.ident = Configuration.getUUID();
 	}
-	
-	
+
 	public String getName() {
 		return name;
 	}
-
 	
 	public void setName(String name) {
 		this.name = name;
 	}
 	
 	@Override
-	public String getIdent() {
+	public String getId() {
 		return this.ident;
 	}
 	

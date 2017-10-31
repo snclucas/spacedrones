@@ -1,6 +1,7 @@
 package org.spacedrones.universe.celestialobjects;
 
 import org.spacedrones.Configuration;
+import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.sensors.SensorType;
 import org.spacedrones.components.sensors.SignalResponse;
 
@@ -20,12 +21,9 @@ public abstract class AbstractCelestialObject implements CelestialObject {
 	private final SensorSignalResponseProfile sensorSignalResponseProfile;
 
 	private final String id;
-	private final String name;
 	
-	
-	public AbstractCelestialObject(String name, SensorSignalResponseProfile sensorSignalResponseProfile) {
+	public AbstractCelestialObject(SensorSignalResponseProfile sensorSignalResponseProfile) {
 		celestialObjects = new ArrayList<>();
-		this.name = name;
 		this.sensorSignalResponseProfile = sensorSignalResponseProfile;
 		this.id = Configuration.getUUID();
 		generateSigniatures();
@@ -35,8 +33,14 @@ public abstract class AbstractCelestialObject implements CelestialObject {
 		return id;
 	}
 
-  public String getName() {
-    return name;
+	@Override
+	public TypeInfo getCategory() {
+		return category;
+	}
+
+  @Override
+  public TypeInfo getType() {
+    return type;
   }
 	
 	private void generateSigniatures() {

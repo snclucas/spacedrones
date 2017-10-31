@@ -34,7 +34,7 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
-		if(!getSystemComputer().hasSoftware(PropulsionManagementSoftware.typeID))
+		if(!getSystemComputer().hasSoftware(PropulsionManagementSoftware.type))
 			systemStatus.addSystemMessage("No engine management software loaded", getUniversalTime(), Status.PROBLEM);
 		else
 			systemStatus.addSystemMessage("Engine management software loaded", getUniversalTime(), Status.OK);

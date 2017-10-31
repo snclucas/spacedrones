@@ -1,6 +1,5 @@
 package org.spacedrones.spacecraft;
 
-
 import org.spacedrones.status.SystemStatus;
 import org.spacedrones.structures.hulls.Hull;
 
@@ -20,8 +19,4 @@ public class SimpleSpacecraft extends AbstractSpacecraft {
 		return "Simple spacecraft";
 	}
 
-	@Override
-	public double getTotalVolumeOfComponents() {
-		return 0;
-	}
 }

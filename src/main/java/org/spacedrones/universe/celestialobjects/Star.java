@@ -1,48 +1,29 @@
 package org.spacedrones.universe.celestialobjects;
 
+import org.spacedrones.components.TypeInfo;
+
 import java.util.List;
 
 
 public class Star extends AbstractCelestialObject {
-
-	enum StarClass {
-
-    O("O-class star"),
-    B("B-class star"),
-    A("A-class star"),
-    F("F-class star"),
-    G("G-class star"),
-    K("K-class star"),
-    M("M-class star");
-
-		private final String starClass;
-
-		private StarClass(String starClass) {
-			this.starClass = starClass;
-		}
-
-		public String getStarClass() {
-			return starClass;
-		}
-
-	}
+  public static TypeInfo type = new TypeInfo("Star");
 
 	protected List<Asteroid> asteroids;
 	protected List<Planet> planets;
 	
-	private String classification;
+	private final StarClass classification;
 
-	public Star(String name, String classification, SensorSignalResponseProfile sensorSignalResponseProfile) {
-		super(name, sensorSignalResponseProfile);
+	public Star(StarClass classification, SensorSignalResponseProfile sensorSignalResponseProfile) {
+		super(sensorSignalResponseProfile);
 		this.classification = classification;
 	}
 
-	public String getClassification() {
+	StarClass getClassification() {
 		return classification;
 	}
 
-	public void setClassification(String classification) {
-		this.classification = classification;
-	}
-
+  @Override
+  public String describe() {
+    return "Star";
+  }
 }

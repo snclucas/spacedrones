@@ -1,9 +1,5 @@
 package org.spacedrones.components.propulsion.thrust;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.spacedrones.components.AbstractBusComponent;
 import org.spacedrones.components.BusCommunicator;
 import org.spacedrones.components.SpacecraftBusComponent;
@@ -15,6 +11,10 @@ import org.spacedrones.software.SystemMessage;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
 import org.spacedrones.structures.storage.fuel.FuelStorageTank;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBusComponent, BusCommunicator {
@@ -114,13 +114,13 @@ public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBus
 
 	@Override
 	public double getCurrentPower(Unit unit) {
-		return busResourceSpecification.getNominalPower(unit);
+		return getBusResourceSpecification() .getNominalPower(unit);
 	}
 
 
 	@Override
 	public double getCurrentCPUThroughput(Unit unit) {
-		return busResourceSpecification.getNominalCPUThroughout(unit);
+		return getBusResourceSpecification() .getNominalCPUThroughout(unit);
 	}
 
 

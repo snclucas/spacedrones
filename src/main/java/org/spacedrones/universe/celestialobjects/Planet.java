@@ -1,16 +1,17 @@
 package org.spacedrones.universe.celestialobjects;
 
 
+import org.spacedrones.components.TypeInfo;
+
 public class Planet extends AbstractCelestialObject {
+	public static TypeInfo type = new TypeInfo("Planet");
 
-	public static String HABITABLE_CLASS_M = "M";
+	private final double radius;
+	private final PlanetClass habitatClass;
 
-	private double radius;
-	private String habitatClass;
-
-	public Planet(String name, SensorSignalResponseProfile sensorSignalResponseProfile,
-								double radius, String habitatClass) {
-		super(name, sensorSignalResponseProfile);
+	public Planet(SensorSignalResponseProfile sensorSignalResponseProfile,
+								double radius, PlanetClass habitatClass) {
+		super(sensorSignalResponseProfile);
 		this.radius = radius;
 		this.habitatClass = habitatClass;
 	}
@@ -19,16 +20,13 @@ public class Planet extends AbstractCelestialObject {
 		return radius;
 	}
 
-	public void setRadius(double radius) {
-		this.radius = radius;
-	}
-
-	public String getHabitatClass() {
+	public PlanetClass getHabitatClass() {
 		return habitatClass;
 	}
 
-	public void setHabitatClass(String habitatClass) {
-		this.habitatClass = habitatClass;
+  @Override
+	public String describe() {
+		return "Planet";
 	}
 
 }

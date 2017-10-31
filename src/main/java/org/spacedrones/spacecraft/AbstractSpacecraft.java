@@ -3,7 +3,6 @@ package org.spacedrones.spacecraft;
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.components.computers.SystemData;
-import org.spacedrones.exceptions.ComponentConfigurationException;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.status.SystemStatus;
 import org.spacedrones.structures.hulls.Hull;
@@ -13,33 +12,34 @@ import java.util.List;
 
 public abstract class AbstractSpacecraft implements Spacecraft {
 	
-	private String name;
+	private final String name;
+
+  private final String id;
+
+  private final Hull hull;
+
 	private boolean online = false;
 	
 	private double spacecraftBusComponentsVolumeRequirement;
 	private double spacecraftBusComponentsMass;
 	
 	private boolean systemsOnline;
-	private final Hull hull;
 
-	private Bus bus;
+	private final Bus bus;
 
-	private final String ident;
 
-	
-	public AbstractSpacecraft(String name, String ident, Hull hull, Bus bus) {
+	AbstractSpacecraft(String name, String id, Hull hull, Bus bus) {
 		this.name = name;
 		this.hull = hull;
 		this.bus = bus;
 		//this.bus.setSpacecraft(this);
-		this.ident = ident;
+		this.id = id;
 	}
 
 	@Override
 	public String getName() {
 		return this.name;
 	}
-
 
 	//@Override
 	//public Bus getSpacecraftBus() {
@@ -50,7 +50,6 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	public boolean isOnline() {
 		return this.online;
 	}
-
 
 	@Override
 	public SystemStatus online() {
@@ -71,7 +70,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 			if(status.isOK()) {
 				systemsOnline = true;
 				online = true;
-				SystemData data = new SystemData("spaceraft-ident", getIdent());
+				SystemData data = new SystemData("spaceraft-ident", getId());
 				
 				bus.getSystemComputer().getStorageDevice().saveData(data);
 				
@@ -79,8 +78,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 		}
 		return status;
 	}
-	
-	
+
 	protected boolean isSystemsOnline() {
 		return systemsOnline;
 	}
@@ -90,20 +88,15 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 		return hull;
 	}
 
-
 	//@Override
 	void addComponent(SpacecraftBusComponent component) {
-		if(component instanceof SpacecraftBusComponent == false)
-			throw new ComponentConfigurationException("Cano only add SpacecraftBusComponents");
-		bus.addComponent(component);
+		bus.register(component);
 		component.registerBus(bus);
 	}
-	
-	
+
 	public List<SpacecraftBusComponent> getComponents() {
 		return bus.getComponents();
 	}
-
 
 	//Hull delegate methods
 
@@ -116,36 +109,9 @@ public abstract class AbstractSpacecraft implements Spacecraft {
   }
 
 
-	private double getMass(Unit unit) {
+	public double getMass(Unit unit) {
 		return hull.getMass(unit) + bus.getComponents().stream().mapToDouble(f-> f.getMass(unit)).sum();
 	}
-
-
-	public double getImpactResistance() {
-		return hull.getImpactResistance();
-	}
-
-
-	public double getEMResistance() {
-		return hull.getEMResistance();
-	}
-
-
-	public double getRadiationResistance() {
-		return hull.getRadiationResistance();
-	}
-
-
-	public double getThermalResistance() {
-		return hull.getThermalResistance();
-	}
-
-
-	
-	public double getTotalMassOfComponents() {
-		return spacecraftBusComponentsMass;
-	}
-
 
 	public double getTotalVolumeOfComponents(Unit unit) {
 		//Adjust total volume calculation for the hull as the hull actually provides volume not uses it.
@@ -157,7 +123,6 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	public double getTotalPowerRequirementOfSpacecraftBusComponents() {
 		return SpacecraftFirmware.getTotalPowerAvailable(bus);
 	}
-
 
 	public double getTotalCPURequirementOfSpacecraftBusComponents() {
 		return SpacecraftFirmware.getTotalCPUThroughputAvailable(bus);
@@ -202,11 +167,10 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	
 	
 	@Override
-	public String getIdent() {
-		return ident;
+	public String getId() {
+		return id;
 	}
 
-	
 	@Override
 	public void tick() {
 		getComponents().forEach(c-> c.tick());

@@ -25,16 +25,16 @@ public class SubspaceBeaconTransceiver extends AbstractSensor implements Positio
 	
 	private static MathContext context = new MathContext(120, RoundingMode.HALF_UP);
 
-	private List<BeaconSignal> beaconSignals;
-	SensorResponseMediator sensorResponseMediator;
+	private final List<BeaconSignal> beaconSignals;
+	private final SensorResponseMediator sensorResponseMediator;
 
 	public SubspaceBeaconTransceiver(String name,
 			BusComponentSpecification busResourceSpecification,
 			SensorProfile sensorProfile) {
 		super(name, busResourceSpecification, sensorProfile);
 
-		beaconSignals = new ArrayList<>();
-		sensorResponseMediator = Configuration.getSensorResponseMediator();
+		this.beaconSignals = new ArrayList<>();
+    this.sensorResponseMediator = Configuration.getSensorResponseMediator();
 	}
 
 	@Override
@@ -42,46 +42,31 @@ public class SubspaceBeaconTransceiver extends AbstractSensor implements Positio
 		return typeID;
 	}
 
-
 	@Override
 	public TypeInfo getCategory() {
 		return Sensor.category;
 	}
-
-
-	@Override
-	public List<SensorResult> passiveScan(double duration, SensorProfile sensorProfile) {
-		return super.passiveScan(duration, sensorProfile);
-	}
-
-
-
 
 	@Override
 	public double getSensorGain() {
 		return 1;
 	}
 
-
 	@Override
 	public double getCurrentPower(Unit unit) {
 		return getNominalPower(unit);
 	}
-
 
 	@Override
 	public double getCurrentCPUThroughput(Unit unit) {
 		return getNominalCPUThroughput(unit);
 	}
 
-
-
 	@Override
 	public SystemStatus online() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override 
 	public Coordinates calculatePosition() {
@@ -149,18 +134,15 @@ public class SubspaceBeaconTransceiver extends AbstractSensor implements Positio
 
 	}
 
-	@Override
 	public String describe() {
 		return "Subspace beacon transciever: A device capable of detecting subspace harmonic distortions usually created by subspace beacons.";
 	}
-
 	
 	@Override
 	public Message recieveBusMessage(Message message) {
 		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
 		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
 	}
-
 
 }
 

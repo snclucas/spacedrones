@@ -7,15 +7,14 @@ public class SpacecraftData implements ArchivableData {
 	private TypeInfo type = new TypeInfo("SpacecraftData");
 	private final String dataName;
 	private final String data;
-	private final String ident;
+	private final String id;
 	
 	public SpacecraftData(String dataName, String data) {
 		super();
 		this.dataName = dataName;
 		this.data = data;
-		this.ident = Configuration.getUUID();
+		this.id = Configuration.getUUID();
 	}
-	
 
 	public String getDataName() {
 		return dataName;
@@ -26,35 +25,19 @@ public class SpacecraftData implements ArchivableData {
 		return data;
 	}
 
-
-	@Override
-	public TypeInfo getType() {
-		return type;
-	}
-
-
-	@Override
-	public TypeInfo getCategory() {
-		return category;
-	}
-
-
 	@Override
 	public String getName() {
 		return this.dataName;
 	}
 
-
 	@Override
-	public String getIdent() {
-		return this.ident;
+	public String getId() {
+		return this.id;
 	}
-
 
 	@Override
 	public String describe() {
 		return "Data record to hold spacecraft data.";
 	}
-
 
 }

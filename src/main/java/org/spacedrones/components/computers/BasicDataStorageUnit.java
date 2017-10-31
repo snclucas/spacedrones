@@ -1,16 +1,12 @@
 package org.spacedrones.components.computers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.spacedrones.components.Identifiable;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
+
+import java.util.*;
 
 
 public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
@@ -121,7 +117,7 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 	@Override
 	public void saveData(List<? extends Identifiable> data) {
 		for(Identifiable d : data) {
-			DataRecord record = new DataRecord(d.getIdent(), d);
+			DataRecord record = new DataRecord(d.getId(), d);
 			saveData(record);
 		}
 	}

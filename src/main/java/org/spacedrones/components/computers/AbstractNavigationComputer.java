@@ -1,12 +1,12 @@
 package org.spacedrones.components.computers;
 
-import java.util.Map;
-
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatusMessage;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.celestialobjects.CelestialObject;
 import org.spacedrones.universe.structures.SubspaceBeacon;
+
+import java.util.Map;
 
 public abstract class AbstractNavigationComputer extends AbstractComputer implements NavigationComputer {
 
@@ -26,7 +26,7 @@ public abstract class AbstractNavigationComputer extends AbstractComputer implem
 		DataStore dataStore = getSystemComputer().getStorageDevice();
 		
 		// Look for subspace beacons in navigation archive
-		Map<String,DataRecord> subspaceBeacons = dataStore.getData(CelestialObject.category(), SubspaceBeacon.type());
+		Map<String,DataRecord> subspaceBeacons = dataStore.getData(CelestialObject.category, SubspaceBeacon.type);
 		
 		
 		

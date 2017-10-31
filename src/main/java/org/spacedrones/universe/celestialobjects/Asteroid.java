@@ -1,10 +1,18 @@
 package org.spacedrones.universe.celestialobjects;
 
 
-public abstract class Asteroid extends AbstractCelestialObject {
+import org.spacedrones.components.TypeInfo;
 
-	public Asteroid(String name, SensorSignalResponseProfile sensorSignalResponseProfile) {
-		super(name, sensorSignalResponseProfile);
+public class Asteroid extends AbstractCelestialObject {
+	public static TypeInfo type = new TypeInfo("Asteroid");
+
+	public Asteroid(SensorSignalResponseProfile sensorSignalResponseProfile) {
+		super(sensorSignalResponseProfile);
 	}
+
+  @Override
+  public String describe() {
+    return "Asteroid";
+  }
 
 }

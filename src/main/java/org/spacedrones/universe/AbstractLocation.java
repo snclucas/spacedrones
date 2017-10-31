@@ -1,11 +1,10 @@
 package org.spacedrones.universe;
 
-import java.math.BigDecimal;
-
 import org.spacedrones.Configuration;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.utils.Utils;
+
+import java.math.BigDecimal;
 
 public abstract class AbstractLocation implements Location {
 	
@@ -30,11 +29,6 @@ public abstract class AbstractLocation implements Location {
 	@Override
 	public String getId() {
 		return id;
-	}
-	
-	@Override
-	public TypeInfo getCategory() {
-		return category;
 	}
 
 	@Override
@@ -72,23 +66,16 @@ public abstract class AbstractLocation implements Location {
 		return result;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		AbstractLocation other = (AbstractLocation) obj;
-		if (coordinates == null) {
-			if (other.coordinates != null)
-				return false;
-		} else if (!coordinates.equals(other.coordinates))
-			return false;
-		return true;
-	}
-	
-	
-	
-	
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    final AbstractLocation that = (AbstractLocation) o;
+
+    return name.equals(that.name) &&
+            id.equals(that.id) &&
+            coordinates.equals(that.coordinates);
+  }
 
 }

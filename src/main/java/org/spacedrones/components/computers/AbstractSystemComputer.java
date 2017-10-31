@@ -1,9 +1,5 @@
 package org.spacedrones.components.computers;
 
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.CommunicationComponent;
@@ -12,163 +8,114 @@ import org.spacedrones.components.propulsion.Engine;
 import org.spacedrones.exceptions.ComponentConfigurationException;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.software.Message;
-import org.spacedrones.software.Software;
 import org.spacedrones.software.SystemMessage;
 import org.spacedrones.software.SystemMessageService;
-import org.spacedrones.spacecraft.Bus;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.spacecraft.BusRequirement;
 import org.spacedrones.spacecraft.SpacecraftFirmware;
 import org.spacedrones.status.SystemStatus;
 import org.spacedrones.status.SystemStatusMessage;
 
+import java.util.Calendar;
+import java.util.List;
+
 public abstract class AbstractSystemComputer extends AbstractComputer implements SystemComputer {
-	
-	
-	
-	protected double maxCPUThroughput;
-	
-	protected DataStore storageDevice;
-	
-	
-	public AbstractSystemComputer(String name, BusComponentSpecification busResourceSpecification, double maxCPUThroughput) {
+
+	private final double maxCPUThroughput;
+
+	private final DataStore storageDevice;
+
+
+	AbstractSystemComputer(String name, BusComponentSpecification busResourceSpecification, double maxCPUThroughput) {
 		super(name, busResourceSpecification);
 		this.maxCPUThroughput = maxCPUThroughput;
-		loadedSoftware = new HashMap<>();
 		storageDevice = DataStoreFactory.getDataStore(DataStoreFactory.BASIC_DATASTORE);
-		
-		
-		
 		setMessagingSystem(new SystemMessageService("Default messaging system"));
 	}
-	
-	
+
 	@Override
 	public Object getSystemData(String id) {
 		return storageDevice.getData(id, SpacecraftData.category).getData();
 	}
-	
-	
-	
-	
-	
+
+
 
 	@Override
 	public List<SpacecraftBusComponent> findComponentByType(TypeInfo componentType) throws ComponentConfigurationException {
-		if(isOnSpacecraftBus()) {
-			return spacecraftBus.findComponentByType(componentType);
-		}
-		else {
-			throw new ComponentConfigurationException("Not connected to bus");
-		}
+		return getSpacecraftBus().findComponentByType(componentType);
 	}
 
-	
-	
 	@Override
 	public List<SpacecraftBusComponent> findComponentByCategory(TypeInfo componentCategory) throws ComponentConfigurationException {
-		if(isOnSpacecraftBus()) {
-			return spacecraftBus.findComponentByCategory(componentCategory);
-		}
-		else {
-			throw new ComponentConfigurationException("Not connected to bus");
-		}
+		return getSpacecraftBus().findComponentByCategory(componentCategory);
 	}
-	
-	
+
 	@Override
 	public SystemStatusMessage requestOperation(SpacecraftBusComponent component, BusRequirement busRequirement) {
 		//Remove current component power and add back the new requested power
 		double newBusPowerRequirement = getTotalCurrentPower(Unit.MW)
 				- component.getCurrentPower(Unit.MW) + busRequirement.getPowerRequirement(Unit.MW);
-		
+
 		double newBusCPUThroughputRequirement = getTotalCurrentCPUThroughput(Unit.MFLOP)
 				- component.getCurrentCPUThroughput(Unit.MFLOP) + busRequirement.getCPUThroughputRequirement(Unit.MFLOP);
 
 		if((newBusPowerRequirement > getTotalPowerAvailable(Unit.MW)))
-			return new SystemStatusMessage(this, "Not enough bus power to perform operation, " + 
+			return new SystemStatusMessage(this, "Not enough bus power to perform operation, " +
 		newBusPowerRequirement + " needed, " + getTotalPowerAvailable(Unit.MW) + " available",
 		getUniversalTime(), Status.NOT_ENOUGH_POWER);
-		
+
 		else if((newBusCPUThroughputRequirement > getTotalCPUThroughputAvailable(Unit.MFLOP)))
 			return new SystemStatusMessage(this, "Not enough bus CPU throughput to perform operation, " +
 					newBusCPUThroughputRequirement + " needed, " + getTotalCPUThroughputAvailable(Unit.MFLOP) + " available", getUniversalTime(), Status.NOT_ENOUGH_CPU);
 		else
 			return new SystemStatusMessage(this, "Operation permitted", getUniversalTime(), Status.PERMITTED);
 	}
-	
-
 
 	@Override
 	public SystemStatus online() {
 		//SystemStatus systemStatus = super.online();
 		SystemStatus systemStatus = new SystemStatus(this);
-		
-		if(spacecraftBus == null)
+
+		if(getSpacecraftBus() == null) {
 			systemStatus.addSystemMessage("No spacecraft bus found.", getUniversalTime(), Status.CRITICAL);
+		}
 		
-		if(loadedSoftware.size() == 0)
+		if(hasSoftware()) {
 			systemStatus.addSystemMessage("No interface software loaded", getUniversalTime(), Status.WARNING);
-		
-		
-		
-		
+		}
 		return systemStatus;
 	}
-
 
 	@Override
 	public DataStore getStorageDevice() {
 		return storageDevice;
 	}
 
-
-
 	@Override
 	public Message recieveBusMessage(Message message) {
 		String replyMessage = "Message recieved by computer: " + getName() + "\n " + message.getMessage();
 		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
 	}
-	
-	
-	
 
 	public double getMaxCPUThroughput() {
 		return maxCPUThroughput;
 	}
-
-
-	public void setMaxCPUThroughput(double maxCPUThroughput) {
-		this.maxCPUThroughput = maxCPUThroughput;
-	}
-
-	@Override
-	public void registerSpacecraftBus(Bus spacecraftBus) {
-		this.spacecraftBus = spacecraftBus;
-	}
-	
 	
 	@Override
 	public List<CommunicationComponent> getCommunicationDevices() {
-		return SpacecraftFirmware.getCommunicationDevices(this.spacecraftBus);
+		return SpacecraftFirmware.getCommunicationDevices(getSpacecraftBus());
 	}
-
 
 	@Override
 	public List<Engine> getEngines() {
-		return SpacecraftFirmware.getEngines(this.spacecraftBus);
+		return SpacecraftFirmware.getEngines(getSpacecraftBus());
 	}
-
 
 	@Override
 	public List<SystemComputer> getComputers() {
-		return SpacecraftFirmware.getComputers(this.spacecraftBus);
+		return SpacecraftFirmware.getComputers(getSpacecraftBus());
 	}
 
-
-	
-	
-	
 	@Override
 	public double getUniversalTime() {
 		Calendar cal = Calendar.getInstance();
@@ -186,29 +133,22 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 				(second/(365.0*86400.0)) + 
 				(millisecond/(365.0*86400000.0)));
 	}
-
-
 	
 	@Override
 	public double getTotalPowerAvailable(Unit unit) {
-		return SpacecraftFirmware.getTotalPowerAvailable(spacecraftBus) / unit.value();
+		return SpacecraftFirmware.getTotalPowerAvailable(getSpacecraftBus()) / unit.value();
 	}
 
-	
 	@Override
 	public double getTotalCurrentPower(Unit unit) {
-		return SpacecraftFirmware.getTotalCurrentPower(spacecraftBus, unit) / unit.value();
+		return SpacecraftFirmware.getTotalCurrentPower(getSpacecraftBus(), unit) / unit.value();
 	}
 
-	
 	@Override
 	public double getTotalCurrentCPUThroughput(Unit unit) {
-		return SpacecraftFirmware.getTotalCurrentCPUThroughput(spacecraftBus, unit);
+		return SpacecraftFirmware.getTotalCurrentCPUThroughput(getSpacecraftBus(), unit);
 	}
-	
-	
-	
-	
+
 	public static TypeInfo category() {
 		return new TypeInfo("Computer");
 	}
@@ -216,8 +156,7 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 	public static TypeInfo type() {
 		return new TypeInfo("SystemComputer");
 	}
-	
-	
+
 	public TypeInfo getType() {
 		return type();
 	}
@@ -225,6 +164,5 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 	public TypeInfo getCategory() {
 		return category();
 	}
-
 
 }

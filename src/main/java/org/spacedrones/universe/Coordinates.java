@@ -1,46 +1,41 @@
 package org.spacedrones.universe;
 
+import org.spacedrones.Configuration;
+import org.spacedrones.physics.Unit;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
-
-import org.spacedrones.Configuration;
-import org.spacedrones.physics.Unit;
 
 public class Coordinates {
 
 	public static BigDecimal[] NOT_KNOWN = new BigDecimal[]{new BigDecimal(-1), new BigDecimal(-1), new BigDecimal(-1)};
 	
-	private BigDecimal[] location;
+	private final BigDecimal[] location;
 	
 	
 	public Coordinates() {
-		super();
 		this.location = new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
 	}
 
-	
 	public Coordinates(BigDecimal ... coords) {
-		super();
+		if(coords.length != 3)
+			throw new IllegalArgumentException("Need 3 coordinates");
 		this.location = coords;
 	}
-	
 
 	public BigDecimal[] getCoordinates() {
 		return location;
 	}
-	
-	
+
 	public BigDecimal get(int index) {
 		return location[index];
 	}
-	
 
 	public BigDecimal get(int index, double unit) {
 		return location[index].divide(new BigDecimal(unit), Configuration.mc);
 	}
-	
-	
+
 	public Coordinates add(Coordinates coordinates) {
 		return new Coordinates(
 						this.location[0].add(coordinates.get(0)),
@@ -48,14 +43,12 @@ public class Coordinates {
 						this.location[2].add(coordinates.get(2)));
 	}
 	
-	
 	public Coordinates addDistance(BigDecimal[] distance) {
 		return new Coordinates(
 						this.location[0].add(distance[0]),
 						this.location[1].add(distance[1]),
 						this.location[2].add(distance[2]));
 	}
-	
 
 	@Override
 	public int hashCode() {
@@ -64,7 +57,6 @@ public class Coordinates {
 		result = prime * result + Arrays.hashCode(location);
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -81,7 +73,6 @@ public class Coordinates {
 		return formatCoordinateOutput(location[0]) + ", " + formatCoordinateOutput(location[1]) + ", " + formatCoordinateOutput(location[2]);
 	}
 
-
 	private String formatCoordinateOutput(BigDecimal location) {
 	  if(location.compareTo(new BigDecimal(1000* Unit.kLy.value()))>0)
       return (location.divide(new BigDecimal(1.0*Unit.kLy.value()), Configuration.mc)).setScale(2, RoundingMode.CEILING).toEngineeringString() + " kLy";
@@ -92,6 +83,5 @@ public class Coordinates {
 		else
 			return location.toEngineeringString();
 	}
-	
 
 }

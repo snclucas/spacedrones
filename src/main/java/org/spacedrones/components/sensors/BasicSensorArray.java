@@ -7,7 +7,6 @@ import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
 
 public abstract class BasicSensorArray extends AbstractSensor {
-
 	public static TypeInfo type = new TypeInfo("BasicSensorArray");
 
 	final private int numberOfSensorElements;
@@ -20,7 +19,7 @@ public abstract class BasicSensorArray extends AbstractSensor {
 
 	@Override
 	public double getSensorGain() {
-		return numberOfSensorElements * sensorProfile.getSignalGain();
+		return numberOfSensorElements * getSensorProfile().getSignalGain();
 	}
 
 	@Override
@@ -58,13 +57,6 @@ public abstract class BasicSensorArray extends AbstractSensor {
 				"Level " + level + "diagnostics : All OK.", getSystemComputer().getUniversalTime(), Status.OK);
 
 		return systemStatus;
-	}
-
-
-
-	@Override
-	public TypeInfo getType() {
-		return type;
 	}
 
 }

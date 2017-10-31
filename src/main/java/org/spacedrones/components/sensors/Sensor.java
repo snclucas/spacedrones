@@ -6,8 +6,8 @@ import org.spacedrones.components.TypeInfo;
 import java.util.List;
 
 public interface Sensor extends SpacecraftBusComponent {
-
 	TypeInfo category = new TypeInfo("Sensor");
+	TypeInfo type = category;
 	
 	SensorProfile getSensorProfile();
 	

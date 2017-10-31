@@ -21,7 +21,6 @@ public class SpacecraftManager implements Manager{
         this.spacecraftDataProvider = spacecraftDataProvider;
     }
 
-
     public void setSpacecraftVelocity(String ident, double[] velocity) {
         spacecraftDataProvider.updateSpacecraftVelocity(ident, velocity);
     }
@@ -29,18 +28,17 @@ public class SpacecraftManager implements Manager{
     private void moveAllSpacecraft(double dt) {
         for (Map.Entry<String, Spacecraft> spacecraft : spacecraftDataProvider.getAllSpacecraft().entrySet()) {
             Spacecraft sc = spacecraft.getValue();
-            double[] velocity = spacecraftDataProvider.getSpacecraftVelocity(sc.getIdent());
-            Coordinates scLocation = spacecraftDataProvider.getSpacecraftLocation(sc.getIdent());
+            double[] velocity = spacecraftDataProvider.getSpacecraftVelocity(sc.getId());
+            Coordinates scLocation = spacecraftDataProvider.getSpacecraftLocation(sc.getId());
             double[] distance = distanceTraveledInDt(velocity, dt);
             scLocation.addDistance(new BigDecimal[]{new BigDecimal(distance[0]), new BigDecimal(distance[1]), new BigDecimal(distance[2])});
         }
 
-
         //Move the spacecraft
         for(Spacecraft spacecraft : spacecraftDataProvider.getAllSpacecraft().values()) {
             spacecraft.tick();
-            Coordinates currentLocation = spacecraftDataProvider.getSpacecraftLocation(spacecraft.getIdent());
-            double[] currentVelocity = spacecraftDataProvider.getSpacecraftVelocity(spacecraft.getIdent());
+            Coordinates currentLocation = spacecraftDataProvider.getSpacecraftLocation(spacecraft.getId());
+            double[] currentVelocity = spacecraftDataProvider.getSpacecraftVelocity(spacecraft.getId());
 
             //System.out.println("Current velocity: " + currentVelocity[0] + " " + currentVelocity[1] + " " + currentVelocity[2]);
 
@@ -70,15 +68,14 @@ public class SpacecraftManager implements Manager{
                     new BigDecimal(translation[2])
             });
 
-            spacecraftDataProvider.updateSpacecraftLocation(spacecraft.getIdent(), currentLocation);
-            spacecraftDataProvider.updateSpacecraftVelocity(spacecraft.getIdent(), newVelocity);
+            spacecraftDataProvider.updateSpacecraftLocation(spacecraft.getId(), currentLocation);
+            spacecraftDataProvider.updateSpacecraftVelocity(spacecraft.getId(), newVelocity);
 
 
             System.out.println("Current location: " + currentLocation);
         }
 
     }
-
 
     private double[] distanceTraveledInDt(double[] velocity, double dt) {
         double[] distance = new double[]{
@@ -88,7 +85,6 @@ public class SpacecraftManager implements Manager{
         };
         return distance;
     }
-
 
     @Override
     public void tick(double dt) {

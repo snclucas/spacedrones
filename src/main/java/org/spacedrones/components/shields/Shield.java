@@ -5,8 +5,8 @@ import org.spacedrones.components.TypeInfo;
 import org.spacedrones.spacecraft.BusRequirement;
 
 public interface Shield extends SpacecraftBusComponent {
-	
 	TypeInfo category = new TypeInfo("Shield");
+	TypeInfo type = category;
 	
 	TypeInfo IMPACT_SHIELD = new TypeInfo("IMPACT_SHIELD");
 	TypeInfo EM_SHIELD = new TypeInfo("EM_SHIELD");

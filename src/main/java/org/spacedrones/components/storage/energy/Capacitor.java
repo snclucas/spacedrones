@@ -6,6 +6,7 @@ import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
 
 public class Capacitor extends AbstractEnergyStorageDevice {
+	public static TypeInfo type = new TypeInfo("Capacitor");
 	
 	public Capacitor(String name,
 			BusComponentSpecification busResourceSpecification,
@@ -14,12 +15,10 @@ public class Capacitor extends AbstractEnergyStorageDevice {
 				dischargeRate);
 	}
 
-	
 	@Override
 	public TypeInfo getType() {
 		return new TypeInfo("Capacitor");
 	}
-	
 
 	@Override
 	public double getCurrentPower(Unit unit) {
@@ -29,12 +28,6 @@ public class Capacitor extends AbstractEnergyStorageDevice {
 	@Override
 	public double getCurrentCPUThroughput(Unit unit) {
 		return 0;
-	}
-
-	@Override
-	public String describe() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -50,10 +43,8 @@ public class Capacitor extends AbstractEnergyStorageDevice {
 	}
 
 	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-		
+	public String describe() {
+		return "Capacitor";
 	}
-
 
 }

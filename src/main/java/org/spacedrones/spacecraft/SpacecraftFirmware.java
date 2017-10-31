@@ -2,10 +2,8 @@ package org.spacedrones.spacecraft;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
 
-import org.spacedrones.components.Component;
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.CommunicationComponent;
@@ -17,7 +15,7 @@ import org.spacedrones.status.SystemStatusMessage;
 
 public class SpacecraftFirmware {
 
-	public static boolean bootstrapSystemComputer(Bus bus) { 
+	static boolean bootstrapSystemComputer(Bus bus) {
 		int systemComputerIndex = findSystemComputerIndex(bus);
 		boolean hasSystemComputer = systemComputerIndex >= 0;
 		if(hasSystemComputer) {

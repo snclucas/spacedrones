@@ -18,7 +18,7 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 
   private boolean online = false;
 	private final String name;
-	private final String ident;
+	private final String id;
 	private Bus spacecraftBus;
 	private SystemComputer systemComputer;
 
@@ -34,7 +34,7 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 		this.busResourceSpecification = busSpec;
 		this.currentPower = busSpec.getNominalPower(Unit.MW);
 		this.currentCPUThroughput = busSpec.getNominalCPUThroughout(Unit.MFLOP);
-		this.ident = Configuration.getUUID();
+		this.id = Configuration.getUUID();
 	}
 	
 	
@@ -60,9 +60,13 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 		return new SystemStatusMessage(this, this.name + " registered with " + systemComputer.getName(), getUniversalTime(), Status.INFO);
 	}
 
-	@Override
-	public final String getIdent() {
-		return this.ident;
+  public BusComponentSpecification getBusResourceSpecification() {
+    return busResourceSpecification;
+  }
+
+  @Override
+	public final String getId() {
+		return this.id;
 	}
 
 	@Override

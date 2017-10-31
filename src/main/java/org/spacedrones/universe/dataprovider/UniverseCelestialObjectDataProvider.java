@@ -1,15 +1,15 @@
 package org.spacedrones.universe.dataprovider;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.sensors.SensorProfile;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.celestialobjects.CelestialObject;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 public interface UniverseCelestialObjectDataProvider {
-	void addCelestialObject(CelestialObject celestialObject, Coordinates coordinates);
+	void addCelestialObject(String name, CelestialObject celestialObject, Coordinates coordinates);
 	CelestialObject getCelestialObjectById(String celestialObjectID);
 	CelestialObject getCelestialObjectByName(String celestialObjectName);
 

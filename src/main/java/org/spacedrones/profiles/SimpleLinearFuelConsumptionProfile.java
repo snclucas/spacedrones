@@ -6,30 +6,21 @@ import org.spacedrones.status.SystemStatus;
 
 public class SimpleLinearFuelConsumptionProfile extends AbstractProfile implements FuelConsumptionProfile {
 	
-	public static TypeInfo typeID = new TypeInfo("SimpleLinearFuelConsumptionProfile");
+	public static TypeInfo type = new TypeInfo("SimpleLinearFuelConsumptionProfile");
 
 	public SimpleLinearFuelConsumptionProfile(String name) {
 		super(name);
 	}
-	
-	
-	@Override
-	public TypeInfo getType() {
-		return typeID;
-	}
-	
 
 	@Override
 	public double getNormalizedFuelConsumption(double powerLevel) {
 		return powerLevel;
 	}
-	
-	
+
 	@Override
 	public String toString() {
 		return "Simple Linear Fuel Consumption";
 	}
-
 
 	@Override
 	public double[][] getNormalizedFuelConsumptionProfile() {
@@ -38,8 +29,6 @@ public class SimpleLinearFuelConsumptionProfile extends AbstractProfile implemen
 			profile[i] =  1.0 / (10-i);
 		return new double[][]{profile};
 	}
-	
-
 
 	@Override
 	public SystemStatus runDiagnostics(int level) {
@@ -52,17 +41,9 @@ public class SimpleLinearFuelConsumptionProfile extends AbstractProfile implemen
 		return systemStatus;
 	}
 	
-	
 	private boolean validateModel() {
 		return true;
 	}
-
-
-	@Override
-	public final TypeInfo getCategory() {
-		return categoryID;
-	}
-
 
 	@Override
 	public String describe() {

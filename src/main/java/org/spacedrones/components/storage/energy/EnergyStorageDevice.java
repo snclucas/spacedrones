@@ -4,8 +4,8 @@ import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.TypeInfo;
 
 public interface EnergyStorageDevice extends SpacecraftBusComponent {
-	
-	TypeInfo categoryID = new TypeInfo("EnergyStorageDevice");
+	TypeInfo category = new TypeInfo("EnergyStorageDevice");
+	TypeInfo type = category;
 	
 	double getStorageCapacity();
 	
