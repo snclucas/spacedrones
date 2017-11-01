@@ -14,7 +14,7 @@ public abstract class AbstractThruster extends AbstractThrustingFuelConsumingEng
 
 
 	@Override
-	public TypeInfo getCategory() {
+	public TypeInfo category() {
 		return new TypeInfo("Engine");
 	}
 	

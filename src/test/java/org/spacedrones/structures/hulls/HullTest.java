@@ -1,7 +1,5 @@
 package org.spacedrones.structures.hulls;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
 import org.spacedrones.Configuration;
 import org.spacedrones.data.LocalMaterialDataProvider;
@@ -10,6 +8,8 @@ import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.spacecraft.OperationalSpecification;
 import org.spacedrones.spacecraft.PhysicalSpecification;
+
+import static org.junit.Assert.assertEquals;
 
 public class HullTest {
 
@@ -40,7 +40,7 @@ public class HullTest {
 
 	@Test
 	public void testSimpleHull() {
-		Hull hull = new SimpleMonocoqueHull("TestHull", hullSpecification, Hull.SPHEROID);
+		Hull hull = new SimpleMonocoqueHull("TestHull", hullSpecification, Hull.Type.SPHEROID);
 		
 		assertEquals("Hull spec name not set correctly", "Simple test hull spec", hullSpecification.getName());
 		assertEquals("Hull thickness not set correctly", thickness, hull.getThickness(Unit.m), 0.001);
@@ -55,7 +55,7 @@ public class HullTest {
 		
 		// Do not supply the resistance modifiers - should default to 1.0
 		
-		Hull hull = new SimpleMonocoqueHull("TestHull", hullSpecificationNoModifiers, Hull.SPHEROID);
+		Hull hull = new SimpleMonocoqueHull("TestHull", hullSpecificationNoModifiers, Hull.Type.SPHEROID);
 		
 		assertEquals("Hull impact resistance modifier not set correctly", 
 				material.getImpactResistance() * 1.0, hull.getImpactResistance(), 0.001);
@@ -69,7 +69,7 @@ public class HullTest {
 		
 		// Now with modifiers
 		
-		hull = new SimpleMonocoqueHull("TestHull", hullSpecification, Hull.SPHEROID);
+		hull = new SimpleMonocoqueHull("TestHull", hullSpecification, Hull.Type.SPHEROID);
 		
 		assertEquals("Hull impact resistance modifier not set correctly", 
 				material.getImpactResistance() * impactResistanceModifierFromHullConstruction, hull.getImpactResistance(), 0.001);
@@ -85,7 +85,7 @@ public class HullTest {
 
 	@Test
 	public void testHullVolumeCalculation() {
-		Hull spheroidHull = new SimpleMonocoqueHull("TestHull", hullSpecification, Hull.SPHEROID);
+		Hull spheroidHull = new SimpleMonocoqueHull("TestHull", hullSpecification, Hull.Type.SPHEROID);
 		
 		double volumeOfSphericalHull = (4.0*Math.PI/3.0)*width*height*length;
 		double volumeOfSphericalHullPlusHullThickness = (4.0*Math.PI/3.0)*(width+2*thickness)*(height+2*thickness)*(length+2*thickness);
@@ -96,7 +96,7 @@ public class HullTest {
 		assertEquals("Hull shell mass not calculated correctly", massOfHullSHell, spheroidHull.getMass(Unit.kg), 0.001);
 		
 		
-		Hull rectangularHull = new SimpleMonocoqueHull("TestHull", hullSpecification, Hull.RECTANGULAR);
+		Hull rectangularHull = new SimpleMonocoqueHull("TestHull", hullSpecification, Hull.Type.RECTANGULAR);
 		
 		double volumeOfRectangularHull = width*length*height;
 		double volumeOfRectangularHullPlusHullThickness = (width+2*thickness)*(length+2*thickness)*(height+2*thickness);

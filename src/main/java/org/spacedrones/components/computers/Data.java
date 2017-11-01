@@ -1,8 +1,8 @@
 package org.spacedrones.components.computers;
 
 
-import org.spacedrones.components.Component;
+import org.spacedrones.components.Taxonomic;
 
 public interface Data {
-  Component getSource();
+  Taxonomic getSource();
 }

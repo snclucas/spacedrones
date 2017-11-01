@@ -13,14 +13,14 @@ public interface Computer extends SpacecraftBusComponent, BusCommunicator  {
 
 	SystemComputer getSystemComputer();
 
+	DataStore getStorageDevice();
+
 	Software getSoftware(TypeInfo softwareType);
 
 	boolean hasSoftware();
 	boolean hasSoftwareType(TypeInfo softwareType);
 
 	SystemStatusMessage loadSoftware(Software software);
-	
-	Bus getSpacecraftBus();
 
 	double getMaxCPUThroughput();
 

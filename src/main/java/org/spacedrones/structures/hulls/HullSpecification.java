@@ -6,22 +6,21 @@ import org.spacedrones.spacecraft.BusComponentSpecification;
 
 public class HullSpecification {
 	
-	protected String name;
-	protected BusComponentSpecification busResourceSpecification; 
-	protected double thickness;
-	protected Material material;
+	private final String name;
+	private final BusComponentSpecification busResourceSpecification;
+	private final double thickness;
+	private final Material material;
+
+	private final double impactResistanceModifier;
+	private final double emResistanceModifier;
+	private final double thermalResistanceModifier;
+	private final double radiationResistanceModifier;
 	
-	protected double impactResistanceModifier;
-	protected double emResistanceModifier;
-	protected double thermalResistanceModifier;
-	protected double radiationResistanceModifier;
 	
-	
-	public HullSpecification(String name,
+	HullSpecification(String name,
 			BusComponentSpecification busResourceSpecification, double thickness, Material material,
 			double impactResistanceModifier, double emResistanceModifier,
 			double thermalResistanceModifier, double radiationResistanceModifier) {
-		super();
 		this.name = name;
 		this.busResourceSpecification = busResourceSpecification;
 		this.thickness = thickness;
@@ -35,7 +34,6 @@ public class HullSpecification {
 	
 	public HullSpecification(String name,
 			BusComponentSpecification busResourceSpecification, double thickness, Material material) {
-		super();
 		this.name = name;
 		this.busResourceSpecification = busResourceSpecification;
 		this.thickness = thickness;

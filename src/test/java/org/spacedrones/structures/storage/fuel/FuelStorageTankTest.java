@@ -1,7 +1,5 @@
 package org.spacedrones.structures.storage.fuel;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -10,6 +8,8 @@ import org.spacedrones.consumables.Fuel;
 import org.spacedrones.data.SpacecraftDataProvider;
 import org.spacedrones.exceptions.NoFuelInTankException;
 import org.spacedrones.physics.Unit;
+
+import static org.junit.Assert.assertEquals;
 
 public class FuelStorageTankTest {
 
@@ -23,15 +23,15 @@ public class FuelStorageTankTest {
 		
 		
 		
-		FuelStorageTank testLiquidTank = FuelStorageTankFactory.getFuelStorageTank(LiquidStorageTank.type(), capacity);
-		assertEquals("LiquidStorageTank category ID incorrect", FuelStorageTank.categoryID, testLiquidTank.getCategory());
-		assertEquals("LiquidStorageTank type ID incorrect", LiquidStorageTank.type(), testLiquidTank.getType());
+		FuelStorageTank testLiquidTank = FuelStorageTankFactory.getFuelStorageTank(LiquidStorageTank.type, capacity);
+		assertEquals("LiquidStorageTank category ID incorrect", FuelStorageTank.category, testLiquidTank.category());
+		assertEquals("LiquidStorageTank type ID incorrect", LiquidStorageTank.type, testLiquidTank.type());
 		
 		
-		FuelStorageTank testCryoTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.type(), capacity);
+		FuelStorageTank testCryoTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.type, capacity);
 		
-		assertEquals("CryogenicLiquidStorageTank category ID incorrect", FuelStorageTank.categoryID, testCryoTank.getCategory());
-		assertEquals("CryogenicLiquidStorageTank type ID incorrect", CryogenicLiquidStorageTank.type(), testCryoTank.getType());
+		assertEquals("CryogenicLiquidStorageTank category ID incorrect", FuelStorageTank.category, testCryoTank.category());
+		assertEquals("CryogenicLiquidStorageTank type ID incorrect", CryogenicLiquidStorageTank.type, testCryoTank.type());
 
 		assertEquals("Tank capacity should be 1000L", capacity, testCryoTank.getCapacity(), 0.001);
 		assertEquals("Fuel tank should be empty on creation", 0.0, testCryoTank.getAmountOfFuelInTank(), 0.001);
@@ -75,7 +75,7 @@ public class FuelStorageTankTest {
 	@Test(expected=NoFuelInTankException.class)
 	public void testTankThrowsErrorIfNoFuel() {
 		// Try to get the fuel, should throw NoFuelInTankException
-		FuelStorageTank testTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.type(), capacity);
+		FuelStorageTank testTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.type, capacity);
 		testTank.getFuel();
 	}
 

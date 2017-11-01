@@ -110,7 +110,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 
     for (Entry<String, ObjectMeta> stringCelestialObjectEntry : celestialObjects.entrySet()) {
       CelestialObject celObj = stringCelestialObjectEntry.getValue().celestialObject;
-      if (type == (celObj.getType()))
+      if (type == (celObj.type()))
         locations.add(celObj);
     }
 		return locations;
@@ -120,7 +120,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 	public List<CelestialObject> getLocationsByCategory(TypeInfo category) {
 		return celestialObjects.entrySet().stream()
 				.map(e -> e.getValue().celestialObject)
-				.filter(map -> map.getCategory().equals(category))
+				.filter(map -> map.category().equals(category))
 				.collect(Collectors.toList());
 	}
 	
@@ -131,7 +131,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 
     for (Entry<String, ObjectMeta> me : celestialObjects.entrySet()) {
       CelestialObject celestialObject = me.getValue().celestialObject;
-      if (type == (celestialObject.getType())) {
+      if (type == (celestialObject.type())) {
         Coordinates coords = celestialObjectLocations.get(me.getKey());
         if (Utils.distanceToLocation(coords, coordinates, Unit.One).compareTo(distance) <= 0)
           locations.add(celestialObject);

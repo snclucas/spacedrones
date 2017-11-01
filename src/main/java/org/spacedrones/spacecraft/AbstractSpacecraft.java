@@ -3,6 +3,7 @@ package org.spacedrones.spacecraft;
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.components.computers.SystemData;
+import org.spacedrones.game.Manager;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.status.SystemStatus;
 import org.spacedrones.structures.hulls.Hull;
@@ -27,12 +28,10 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 
 	private final Bus bus;
 
-
 	AbstractSpacecraft(String name, String id, Hull hull, Bus bus) {
 		this.name = name;
 		this.hull = hull;
 		this.bus = bus;
-		//this.bus.setSpacecraft(this);
 		this.id = id;
 	}
 
@@ -40,11 +39,6 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	public String getName() {
 		return this.name;
 	}
-
-	//@Override
-	//public Bus getSpacecraftBus() {
-	//	return bus;
-	//}
 
 	@Override
 	public boolean isOnline() {
@@ -113,6 +107,22 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 		return hull.getMass(unit) + bus.getComponents().stream().mapToDouble(f-> f.getMass(unit)).sum();
 	}
 
+	public double getLength(Unit unit) {
+	  return hull.getLength(unit);
+  }
+
+  public double getWidth(Unit unit) {
+    return hull.getWidth(unit);
+  }
+
+  public double getHeight(Unit unit) {
+    return hull.getHeight(unit);
+  }
+
+  public double getVolume(Unit unit) {
+    return hull.getVolume(unit);
+  }
+
 	public double getTotalVolumeOfComponents(Unit unit) {
 		//Adjust total volume calculation for the hull as the hull actually provides volume not uses it.
 		spacecraftBusComponentsVolumeRequirement -= this.getHull().getVolume(unit);
@@ -175,5 +185,15 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	public void tick() {
 		getComponents().forEach(c-> c.tick());
 	}
+
+  public void giveHandleTo(Manager other) {
+    other.receiveHandle(new Handle());
+  }
+
+  public class Handle {
+    public Bus getBus() { return bus; }
+    private Handle() { }
+  }
+
 
 }

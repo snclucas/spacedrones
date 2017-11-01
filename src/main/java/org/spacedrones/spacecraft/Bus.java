@@ -6,7 +6,10 @@ import org.spacedrones.status.SystemStatusMessage;
 
 import java.util.List;
 
-public interface Bus extends BusCommunicator {
+public interface Bus extends BusCommunicator, Taxonomic {
+  TypeInfo category = new TypeInfo("Bus");
+  TypeInfo type = category;
+
   List<SpacecraftBusComponent> findComponentByType(TypeInfo componentType);
   List<SpacecraftBusComponent> findComponentByCategory(TypeInfo componentCategory);
   List<SpacecraftBusComponent> getComponents();
@@ -16,6 +19,5 @@ public interface Bus extends BusCommunicator {
   SystemStatusMessage registerSystemComputer(SystemComputer computer);
 
   SystemComputer getSystemComputer();
-
 
 }

@@ -1,7 +1,5 @@
 package org.spacedrones.components.propulsion.thrust;
 
-import java.util.List;
-
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
@@ -12,12 +10,14 @@ import org.spacedrones.profiles.ThrustProfile;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
 
+import java.util.List;
+
 public abstract class AbstractThrustingFuelConsumingEngine extends AbstractThrustingEngine implements FuelConsumingEngine {
 
-	protected FuelConsumptionProfile fuelConsumptionProfile;
-	protected FuelSubSystem fuelSubSystem;
+	private final FuelConsumptionProfile fuelConsumptionProfile;
+	private FuelSubSystem fuelSubSystem;
 	
-	public AbstractThrustingFuelConsumingEngine(String name, BusComponentSpecification busResourceSpecification,
+	AbstractThrustingFuelConsumingEngine(String name, BusComponentSpecification busResourceSpecification,
 			double maximumThrust, ThrustProfile thrustModel, FuelConsumptionProfile fuelConsumptionModel,
 			EngineVector engineVector, boolean vectored) {
 		super(name, busResourceSpecification, maximumThrust, thrustModel, 
@@ -26,22 +26,20 @@ public abstract class AbstractThrustingFuelConsumingEngine extends AbstractThrus
 	}
 	
 
-	public AbstractThrustingFuelConsumingEngine(String name, BusComponentSpecification busResourceSpecification,
+	AbstractThrustingFuelConsumingEngine(String name, BusComponentSpecification busResourceSpecification,
 			double maximumThrust, EngineVector engineVector, boolean vectored) {
 		super(name, busResourceSpecification, maximumThrust,
 				engineVector, vectored);	
 		this.fuelConsumptionProfile = new SimpleLinearFuelConsumptionProfile("Linear model");
 	}
-	
-	
 
-	public static TypeInfo category() {
-		return new TypeInfo("Engine");
+	public TypeInfo type() {
+		return type;
 	}
 	
 	@Override
-	public TypeInfo getCategory() {
-		return category();
+	public TypeInfo category() {
+		return category;
 	}
 	
 	@Override
@@ -71,34 +69,24 @@ public abstract class AbstractThrustingFuelConsumingEngine extends AbstractThrus
 		return systemStatus;
 	}
 
-
 	@Override
 	public double getFuelConsumptionRate() {
 		return fuelConsumptionProfile.getNormalizedFuelConsumption(this.powerLevel);
 	}
-	
-	
+
 	@Override
 	public double getFuelConsumptionRate(double powerLevel) {
 		return fuelConsumptionProfile.getNormalizedFuelConsumption(powerLevel);
 	}
-	
-	
+
 	@Override
 	public void setFuelSubSystem(FuelSubSystem fuelSubSystem) {
 		this.fuelSubSystem = fuelSubSystem;
 	}
 	
-	
 	@Override
 	public FuelConsumptionProfile getFuelConsumptionProfile() {
 		return this.fuelConsumptionProfile;
-	}
-
-
-	@Override
-	public void setFuelConsumptionProfile(FuelConsumptionProfile fuelConsumptionProfile) {
-		this.fuelConsumptionProfile = fuelConsumptionProfile;
 	}
 	
 	@Override

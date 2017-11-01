@@ -62,15 +62,16 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 	public void tick() {
 	}
 
+	// ----- Taxonomy
 
 	@Override
-	public TypeInfo getCategory() {
+	public TypeInfo category() {
 		return category;
 	}
 
 	@Override
-	public TypeInfo getType() {
-		return type;
+	public TypeInfo type() {
+		return new TypeInfo(this.getClass().getSimpleName());
 	}
 
 }

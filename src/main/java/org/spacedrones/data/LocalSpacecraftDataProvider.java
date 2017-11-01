@@ -28,22 +28,22 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 
 		// computers 
 		
-		if(componentType.equals(BasicSystemComputer.type()))
+		if(componentType.equals(BasicSystemComputer.type))
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg.value(), 20 * Unit.m3.value()), new OperationalSpecification(10 * Unit.kW.value(), 0 * Unit.MFLOP.value())));
 
 
-		if(componentType.equals(LiquidStorageTank.type()))	
+		if(componentType.equals(LiquidStorageTank.type))
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg.value(), 1.1 * Unit.l.value()), new OperationalSpecification(1 * Unit.kW.value(), 1 * Unit.kFLOP.value())));
 
-		if(componentType.equals(CryogenicLiquidStorageTank.type()))	
+		if(componentType.equals(CryogenicLiquidStorageTank.type))
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg.value(), 1.3 * Unit.l.value()), new OperationalSpecification(1 * Unit.kW.value(), 1 * Unit.kFLOP.value())));
 
 		// Datastore 
 		
-		if(componentType.equals(BasicDataStorageUnit.type()))	
+		if(componentType.equals(BasicDataStorageUnit.type))
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg.value(), 1.3 * Unit.l.value()), new OperationalSpecification(1 * Unit.kW.value(), 1 * Unit.kFLOP.value())));
 
@@ -51,23 +51,23 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 
 		// Energy generators
 
-		if(componentType.equals(SimpleSolarArray.type()))	
+		if(componentType.equals(SimpleSolarArray.type))
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(1000 * Unit.kg.value(), 100 * Unit.m3.value()), new OperationalSpecification(1 * Unit.kW.value(), 1 * Unit.kFLOP.value())));
 
 
-		if(componentType.equals(SubspacePowerExtractor.type()))	
+		if(componentType.equals(SubspacePowerExtractor.type))
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(1000 * Unit.kg.value(), 100 * Unit.m3.value()), new OperationalSpecification(1 * Unit.kW.value(), 1 * Unit.kFLOP.value())));
 
 		
 		// Engines
 		
-		if(componentType.equals(SimpleIonEngine.type()))	
+		if(componentType.equals(SimpleIonEngine.type))
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg.value(), 1.0 * Unit.m3.value()), new OperationalSpecification(1 * Unit.kW.value(), 1 * Unit.kFLOP.value(), 1000 * Unit.kW.value(), 1 * Unit.kFLOP.value())));
 
-		if(componentType.equals(SimpleThruster.type()))	
+		if(componentType.equals(SimpleThruster.type))
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg.value(), 1.0 * Unit.m3.value()), new OperationalSpecification(100 * Unit.W.value(), 1 * Unit.kFLOP.value(), 1 * Unit.kW.value(), 1 * Unit.kFLOP.value())));
 
@@ -75,7 +75,7 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 
 		// Communication devices
 
-		if(componentType.equals(RadioCommunicator.type()))	
+		if(componentType.equals(RadioCommunicator.type))
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg.value(), 1.1 * Unit.l.value()), new OperationalSpecification(1 * Unit.kW.value(), 1 * Unit.kFLOP.value())));
 

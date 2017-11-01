@@ -19,7 +19,7 @@ public abstract class AbstractSoftware implements Software {
 
 	
 	@Override
-	public final TypeInfo getCategory() {
+	public final TypeInfo category() {
 		return new TypeInfo(Software.class.getName());
 	}
 

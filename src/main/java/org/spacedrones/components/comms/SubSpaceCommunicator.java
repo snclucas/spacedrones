@@ -25,10 +25,6 @@ public class SubSpaceCommunicator extends AbstractCommunicationComponent {
 		return systemStatus; 
 	}
 
-	public TypeInfo getType() {
-		return type;
-	}
-
 	@Override
 	public double getCurrentPower(Unit unit) {
 		return getNominalPower(unit);

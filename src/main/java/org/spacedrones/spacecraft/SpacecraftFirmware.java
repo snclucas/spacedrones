@@ -1,9 +1,5 @@
 package org.spacedrones.spacecraft;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.CommunicationComponent;
@@ -13,7 +9,16 @@ import org.spacedrones.components.propulsion.Engine;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.status.SystemStatusMessage;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class SpacecraftFirmware {
+
+  static void connectBusToSystemComputer(Bus bus, SystemComputer systemComputer) {
+    bus.register(systemComputer);
+    systemComputer.registerBus(bus);
+  }
 
 	static boolean bootstrapSystemComputer(Bus bus) {
 		int systemComputerIndex = findSystemComputerIndex(bus);
@@ -28,17 +33,23 @@ public class SpacecraftFirmware {
 	
 	static List<SpacecraftBusComponent> findBusComponentByCategory(Bus bus, TypeInfo componentCategory) {
 		return bus.getComponents().stream()
-				 .filter(x->x.getCategory().toString().equals(componentCategory.toString()))
+				 .filter(x->x.category().toString().equals(componentCategory.toString()))
 				 .collect(Collectors.toList());
 	}
 	
 	
 	static List<SpacecraftBusComponent> findBusComponentByType(Bus bus, TypeInfo componentType) {
 		return bus.getComponents().stream()
-				 .filter(x->x.getType().toString().equals(componentType.toString()))
+				 .filter(x->x.type().toString().equals(componentType.toString()))
 				 .collect(Collectors.toList());
 	}
 
+	static List<SpacecraftBusComponent> findBusComponent(Bus bus, TypeInfo componentCategoryOrType) {
+		return bus.getComponents().stream()
+						.filter(x->x.type().toString().equals(componentCategoryOrType.toString()) ||
+                    x.category().toString().equals(componentCategoryOrType.toString()))
+						.collect(Collectors.toList());
+	}
 	
 	private static int findSystemComputerIndex(Bus bus) {
 		List<SpacecraftBusComponent> components = bus.getComponents();
@@ -52,8 +63,9 @@ public class SpacecraftFirmware {
 
 	static List<SystemStatusMessage> scanSpacecraftComponents(Bus bus) {
 		List<SystemStatusMessage> systemStatusMessages = new ArrayList<>();
-		for(SpacecraftBusComponent component : bus.getComponents())
-			component.accept(bus);
+		for(SpacecraftBusComponent component : bus.getComponents()) {
+			// Do something maybe?
+		}
 		return systemStatusMessages;
 	}
 

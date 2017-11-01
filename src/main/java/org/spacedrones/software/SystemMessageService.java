@@ -18,7 +18,7 @@ public class SystemMessageService extends AbstractSoftware implements MessageMed
 	private List<SpacecraftBusComponent> registeredComponents;
 	
 	@Override
-	public TypeInfo getType() {
+	public TypeInfo type() {
 		return typeID;
 	}
 	
@@ -48,7 +48,7 @@ public class SystemMessageService extends AbstractSoftware implements MessageMed
 		if(componentIsRegistered)
 			return registeredComponents.get(componentIndex).recieveBusMessage(message);
 		else
-			return new SystemMessage(null, null, "Component not registered", getSystemComputer().getUniversalTime());
+			return new SystemMessage(null, null, "Taxonomic not registered", getSystemComputer().getUniversalTime());
 	}
 
 

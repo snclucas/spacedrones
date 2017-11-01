@@ -1,12 +1,12 @@
 package org.spacedrones.components.energygeneration;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.spacecraft.OperationalSpecification;
 import org.spacedrones.spacecraft.PhysicalSpecification;
+
+import static org.junit.Assert.assertEquals;
 
 public class SubspacePowerGeneratorTest {
 	
@@ -31,15 +31,13 @@ public class SubspacePowerGeneratorTest {
 				SubspacePowerExtractor("Test sub-ether generator", busSpecs, arrayArea, efficiency);
 		assertEquals("Max output power of sunether generator incorrect", arrayArea*efficiency*10.0*Unit.kW.value(), 
 				subspacePowerGenerator.getMaximumPowerOutput(), 0.001);
-		
-		
+
 		assertEquals("SubspacePowerExtractor category incorrect", 
-				SubspacePowerExtractor.category(), subspacePowerGenerator.getCategory());	
+				SubspacePowerExtractor.category, subspacePowerGenerator.category());
+
 		assertEquals("SubspacePowerExtractor type incorrect", 
-				SubspacePowerExtractor.type(), subspacePowerGenerator.getType());
-		
-		
-		
+				SubspacePowerExtractor.type, subspacePowerGenerator.type());
+
 	}
 
 }

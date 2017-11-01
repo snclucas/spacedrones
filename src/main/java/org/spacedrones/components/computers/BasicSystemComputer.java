@@ -1,88 +1,23 @@
 package org.spacedrones.components.computers;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.physics.Unit;
-import org.spacedrones.software.MessageMediator;
-import org.spacedrones.software.SystemMessageService;
 import org.spacedrones.spacecraft.Bus;
 import org.spacedrones.spacecraft.BusComponentSpecification;
-import org.spacedrones.spacecraft.Spacecraft;
 import org.spacedrones.status.SystemStatus;
 import org.spacedrones.status.SystemStatusMessage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BasicSystemComputer extends AbstractSystemComputer implements SystemComputer {
+  public static TypeInfo type = new TypeInfo("BasicSystemComputer");
+  public static TypeInfo category = new TypeInfo("SystemComputer");
 
-	private List<SystemStatusMessage> systemMessages;
-
-	public BasicSystemComputer(String name, BusComponentSpecification busResourceSpecification, 
-			double maxCPUThroughput) {
-		super(name, busResourceSpecification, maxCPUThroughput);
-		systemMessages = new ArrayList<>();
-	}
-
-	public SystemStatus online() {
-		SystemStatus status = super.online();
-		// Scan spacecraft bus components and register with the messaging system
-		status.mergeSystemMessages(scanSpacecraftBusForComponents());
-		// Check all systems
-		status.mergeSystemMessages(checkSystems());
-
-		status.addSystemMessage(addSystemMessage(this, "Onlining spacecraft components", Status.OK));
-		for(SpacecraftBusComponent component : getSpacecraftBus().getComponents()) {
-			if(component != this) { // Ignore this computer
-				SystemStatus busComponentStatus = component.online();
-				status.mergeSystemStatus(busComponentStatus);
-			}
-		}
-
-		if(status.hasCriticalMessages()) {
-			status.addSystemMessage(addSystemMessage(this, this.getName() + 
-					" cannot be onlined. Critical errors.", Status.CRITICAL));
-			setOnline(false);
-		}
-		else if(status.hasWarningMessages()) {
-			status.addSystemMessage(addSystemMessage(this, this.getName() + 
-					" online but with warnings.", Status.WARNING));
-			setOnline(true);
-		}
-		else if(status.isOK()) {
-			status.addSystemMessage(addSystemMessage(this, this.getName() + 
-					" online, no warnings or critical errors.", Status.INFO));
-			setOnline(true);
-		}
-		return status;
-	}
-
-	public List<SystemStatusMessage> scanSpacecraftBusForComponents() {
-		List<SystemStatusMessage> systemStatusMessages = new ArrayList<SystemStatusMessage>();
-		systemStatusMessages.add(new SystemStatusMessage(this, "Scanning spacecraft bus for components.", getUniversalTime(), Status.INFO));
-		List<SystemStatusMessage> registerMessages = registerSpacecraftComponents(getSpacecraftBus().getComponents());
-		systemStatusMessages.addAll(registerMessages);
-		return systemStatusMessages;
-	}
-
-	@Override
-	public void registerSpacecraftBus(Bus spacecraftBus) {
-		getSpacecraftBus() = spacecraftBus;
-		addSystemMessage(this, "Spacecraft bus " + spacecraftBus.getName() + " registered with system computer [" + this.getName() + "]", Status.OK);
-	}
-
-	private List<SystemStatusMessage> registerSpacecraftComponents(List<SpacecraftBusComponent> components) {
-		List<SystemStatusMessage> systemStatusMessages = new ArrayList<SystemStatusMessage>();
-
-		for(SpacecraftBusComponent component : components) {
-			//Set this as the registered computer in the component
-			systemStatusMessages.add(component.registerSystemComputer(this));
-			// Register the component with the messaging system
-			systemStatusMessages.add(getMessagingSystem().addComponent(component));
-		}
-
-		return systemStatusMessages;
+	public BasicSystemComputer(String name, Bus bus, BusComponentSpecification busResourceSpecification,
+														 double maxCPUThroughput) {
+		super(name, bus, busResourceSpecification, maxCPUThroughput);
 	}
 
 	@Override
@@ -98,7 +33,6 @@ public class BasicSystemComputer extends AbstractSystemComputer implements Syste
 		return "System computer";
 	}
 
-
 	@Override
 	public List<SystemStatusMessage> checkSystems() {
 		List<SystemStatusMessage> systemStatusMessages = new ArrayList<SystemStatusMessage>();
@@ -108,21 +42,6 @@ public class BasicSystemComputer extends AbstractSystemComputer implements Syste
 		SystemData data = new SystemData("maximumAvailableVolume", Double.toString(maximumAvailableVolume));
     getStorageDevice().saveData(new DataRecord("maximumAvailableVolume", data));
 
-		if(spacecraft != null) {
-			systemStatusMessages.add(
-					new SystemStatusMessage(this, "Total vessel mass: " + 
-							spacecraft.getTotalMassOfComponents(), getUniversalTime(), Status.INFO));
-			systemStatusMessages.add(
-					new SystemStatusMessage(this, "Available hull volume: " + 
-			maximumAvailableVolume, getUniversalTime(), Status.INFO));
-			systemStatusMessages.add(
-					new SystemStatusMessage(this, "Required hull volume: " + 
-			spacecraft.getTotalVolumeOfComponents(), getUniversalTime(), Status.INFO));
-			if(maximumAvailableVolume < spacecraft.getTotalVolumeOfComponents())
-				systemStatusMessages.add(
-						new SystemStatusMessage(this, "Not enough space", getUniversalTime(), Status.CRITICAL));
-		}
-
 		systemStatusMessages.add(
 				new SystemStatusMessage(this, "Available CPU throughput: " + getTotalCPUThroughputAvailable(Unit.MFLOP), getUniversalTime(), Status.INFO));
 		systemStatusMessages.add(
@@ -130,9 +49,6 @@ public class BasicSystemComputer extends AbstractSystemComputer implements Syste
 
 		if(getTotalCPUThroughputAvailable(Unit.MW) < getCurrentCPUThroughput(Unit.MW))
 			systemStatusMessages.add(new SystemStatusMessage(this, "Not enough CPU", getUniversalTime(), Status.PROBLEM));
-
-
-
 
 		return systemStatusMessages;
 	}
@@ -143,50 +59,16 @@ public class BasicSystemComputer extends AbstractSystemComputer implements Syste
 	}
 
 
-	@Override
-	public SystemStatusMessage addSystemMessage(SpacecraftBusComponent component, String message, Status status) {
-		SystemStatusMessage systemStatusMessage = new SystemStatusMessage(component, message, getUniversalTime(), status);
-		this.systemMessages.add(systemStatusMessage);
-		return systemStatusMessage;
-	}
+  // ----- Taxonomy
 
+  @Override
+  public TypeInfo type() {
+    return new TypeInfo(this.getClass().getSimpleName());
+  }
 
-
-
-
-
-
-
-	// -- Getters and setters -- //
-
-
-
-
-	@Override
-	public List<SystemStatusMessage> getSystemMessages() {
-		return this.systemMessages;
-	}
-
-
-
-	@Override
-	public MessageMediator getMessagingSystem() {
-		return (MessageMediator)getSoftware(SystemMessageService.typeID);
-	}
-
-
-	@Override
-	public void setMessagingSystem(MessageMediator messagingSystem) {
-		loadSoftware(messagingSystem);
-	}
-
-	
-	
-		
-	public static TypeInfo type() {
-		return new TypeInfo("SystemComputer");
-	}
-	
-	
+  @Override
+  public TypeInfo category() {
+    return new TypeInfo("SystemComputer");
+  }
 
 }

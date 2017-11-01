@@ -7,10 +7,8 @@ import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
 
 public class RadioCommunicator extends AbstractCommunicationComponent {
-	
-	public static TypeInfo type() {
-		return new TypeInfo("RadioCommunicator");
-	}
+  public static TypeInfo type = new TypeInfo("RadioCommunicator");
+
 
 	public RadioCommunicator(String name, BusComponentSpecification busResourceSpecification, Model propagationModel) {
 		super(name, busResourceSpecification, propagationModel);
@@ -20,10 +18,6 @@ public class RadioCommunicator extends AbstractCommunicationComponent {
 		return "RF communication device";
 	}
 
-	public TypeInfo getType() {
-		return type();
-	}
-	
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);

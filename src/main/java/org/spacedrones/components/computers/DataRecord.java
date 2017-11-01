@@ -22,8 +22,8 @@ public class DataRecord {
 	public DataRecord(String id, Identifiable data) {
 		super();
 		this.id = id;
-		this.type = data.getType();
-		this.category = data.getCategory();
+		this.type = new TypeInfo("Fix");//data.type();
+		this.category = new TypeInfo("Fix");// data.category();
 		this.data = data;
 	}
 	

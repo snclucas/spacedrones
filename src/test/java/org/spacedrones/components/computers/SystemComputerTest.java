@@ -24,7 +24,7 @@ public class SystemComputerTest {
 	private double maximumCPU = nominalCPU;
 	boolean vectored = false;
 	
-	private Bus spacecraftBus = new SpacecraftBus("Spacecraft bus", null);
+	private Bus spacecraftBus = new SpacecraftBus();
 
 	
 	private BusComponentSpecification busSpecs = new BusComponentSpecification(
@@ -37,15 +37,15 @@ public class SystemComputerTest {
 		double arrayArea = 1 * Unit.m.value() * 10 * Unit.m.value();
 		double efficiency = 75 * Unit.percent.value();
 		
-		SystemComputer computer = new BasicSystemComputer("Test computer", busSpecs, 10 * Unit.GFLOP.value());
-		spacecraftBus.addComponent(computer);
+		SystemComputer computer = new BasicSystemComputer("Test computer", spacecraftBus, busSpecs, 10 * Unit.GFLOP.value());
+		spacecraftBus.register(computer);
 		
 		BusComponentSpecification powerGeneratorBusSpecs = new BusComponentSpecification(
 				new PhysicalSpecification(mass, volume),
 				new OperationalSpecification(0, nominalCPU, 0, maximumCPU));
 		
 		PowerGenerator powerGenerator = new SubspacePowerExtractor("Test power generator", powerGeneratorBusSpecs, arrayArea, efficiency);
-		spacecraftBus.addComponent((SpacecraftBusComponent)powerGenerator);
+		spacecraftBus.register((SpacecraftBusComponent)powerGenerator);
 	}
 
 	@Test
@@ -58,12 +58,7 @@ public class SystemComputerTest {
 		assertEquals("System computer should not have critical messages", false, systemStatus.hasCriticalMessages());
 		assertEquals("System computer should have OK status", true, systemStatus.isOK());
 		assertEquals("Computer current power should be " + busSpecs.getNominalPower(Unit.W) + " (online)", busSpecs.getNominalPower(Unit.W), computer.getCurrentPower(Unit.W), 0.00001);
-		
-		
-		
-		
-		
-		
+
 		BusRequirement busRequirement = new BusRequirement(100 * Unit.W.value(), 100 * Unit.MFLOP.value());
 		SystemStatusMessage message = computer.requestOperation(computer, busRequirement);
 		assertEquals("Should be permitted", Status.PERMITTED, message.getStatus());
@@ -83,16 +78,16 @@ public class SystemComputerTest {
 	public void testSystemComputer() {
 
 
-		SystemComputer computer = new BasicSystemComputer("Test computer", busSpecs, 
+		SystemComputer computer = new BasicSystemComputer("Test computer", spacecraftBus, busSpecs,
 				10 * Unit.GFLOP.value());
 		computer.registerBus(spacecraftBus);
 
 
-		assertEquals("Computer category incorrect", SystemComputer.category(), computer.getCategory());
-		assertEquals("Computer type ["+ computer.describe() +"] incorrect", BasicSystemComputer.type(), computer.getType());
+		assertEquals("Computer category incorrect", SystemComputer.category, computer.category());
+		assertEquals("Computer type ["+ computer.describe() +"] incorrect", BasicSystemComputer.type, computer.type());
 
 
-		assertEquals("Incorrect spacecraft bus", spacecraftBus, computer.getSpacecraftBus());
+		//assertEquals("Incorrect spacecraft bus", spacecraftBus, computer.getSpacecraftBus());
 
 		//computer.checkSystems()
 

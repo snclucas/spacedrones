@@ -10,7 +10,7 @@ public class PowerGenerationFactory extends DataFactory {
 	public static PowerGenerator getPowerGenerator(TypeInfo powerGenerationType){
 		SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(powerGenerationType);
 		
-		if(powerGenerationType.equals(SimpleSolarArray.type())){
+		if(powerGenerationType.equals(SimpleSolarArray.type)){
 			double arrayArea = 1.0* Unit.m.value() * 15 * Unit.m.value();	
 			
 			double efficiency = 75 * Unit.percent.value();
@@ -21,7 +21,7 @@ public class PowerGenerationFactory extends DataFactory {
 
 			return solarArray;
 		}
-		else if(powerGenerationType.equals(SubspacePowerExtractor.type())){
+		else if(powerGenerationType.equals(SubspacePowerExtractor.type)){
 			double arrayArea = 1.0* Unit.m.value() * 15 * Unit.m.value();	
 			double efficiency = 75 * Unit.percent.value();
 			

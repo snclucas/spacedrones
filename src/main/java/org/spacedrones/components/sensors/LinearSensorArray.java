@@ -14,7 +14,7 @@ public class LinearSensorArray extends BasicSensorArray {
 	}
 
 	@Override
-	public final TypeInfo getType() {
+	public final TypeInfo type() {
 		return new TypeInfo("LinearSensorArray");
 	}
 

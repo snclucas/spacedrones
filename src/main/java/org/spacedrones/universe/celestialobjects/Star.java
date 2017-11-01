@@ -26,4 +26,16 @@ public class Star extends AbstractCelestialObject {
   public String describe() {
     return "Star";
   }
+
+	// ----- Taxonomy
+
+	@Override
+	public TypeInfo category() {
+		return category;
+	}
+
+	@Override
+	public TypeInfo type() {
+		return new TypeInfo("Star");
+	}
 }

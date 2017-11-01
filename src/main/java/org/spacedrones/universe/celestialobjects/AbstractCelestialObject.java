@@ -33,14 +33,8 @@ public abstract class AbstractCelestialObject implements CelestialObject {
 		return id;
 	}
 
-	@Override
-	public TypeInfo getCategory() {
-		return category;
-	}
-
-  @Override
-  public TypeInfo getType() {
-    return type;
+  public String getName() {
+    return "CelestialObject";
   }
 	
 	private void generateSigniatures() {
@@ -87,6 +81,18 @@ public abstract class AbstractCelestialObject implements CelestialObject {
 
 	public List<CelestialObject> getCelestialObjects() {
 		return celestialObjects;
+	}
+
+  // ----- Taxonomy
+
+	@Override
+	public TypeInfo category() {
+		return category;
+	}
+
+	@Override
+	public TypeInfo type() {
+		return type;
 	}
 
 }

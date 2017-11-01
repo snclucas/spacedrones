@@ -6,31 +6,26 @@ import org.spacedrones.spacecraft.BusComponentSpecification;
 
 public abstract class AbstractPowerGenerator extends AbstractBusComponent implements PowerGenerator {
 
+	private double maxPower;
 
-	protected double maxPower;
-	
-	public static TypeInfo category() {
-		return new TypeInfo("PowerGenerator");
+	@Override
+	public TypeInfo type() {
+		return new TypeInfo(this.getClass().getSimpleName());
 	}
-	
-	
-	public static TypeInfo type() {
-		return new TypeInfo("PowerGenerator");
+
+	public void setMaxPower(final double maxPower) {
+		this.maxPower = maxPower;
 	}
-	
-	public AbstractPowerGenerator(String name, BusComponentSpecification busResourceSpecification) {
+
+	AbstractPowerGenerator(String name, BusComponentSpecification busResourceSpecification) {
 		super(name, busResourceSpecification);
 	}
 
-
 	@Override
-	public final TypeInfo getCategory() {
-		return category();
+	public final TypeInfo category() {
+		return category;
 	}
-	
-	
-	
-	
+
 	@Override
 	public double getMaximumPowerOutput() {
 		return maxPower;

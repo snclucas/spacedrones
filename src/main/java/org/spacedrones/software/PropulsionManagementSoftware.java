@@ -14,15 +14,15 @@ import java.util.List;
 
 public class PropulsionManagementSoftware extends AbstractSoftware implements Software, ThrustDriveInterface {
 
-	public static TypeInfo typeID = new TypeInfo("EngineManagementSoftware");
+	public static TypeInfo type = new TypeInfo("EngineManagementSoftware");
 
 	public PropulsionManagementSoftware(String name) {
 		super(name);
 	}
 
 	@Override
-	public TypeInfo getType() {
-		return typeID;
+	public TypeInfo type() {
+		return type;
 	}
 
 	public SystemStatusMessage callDrive(double powerLevel) {

@@ -14,14 +14,14 @@ public class FuelStorageTankFactory {
 		
 		SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(tankType);
 
-		if(tankType.equals(LiquidStorageTank.type())){	
+		if(tankType.equals(LiquidStorageTank.type)){
 			double tankMassOverheadFraction = 1.1;
 			double volume = capacity * tankMassOverheadFraction;
 			BusComponentSpecification busSpecs = data.getBusComponentSpecification();
 			busSpecs.setVolume(volume);
 			return new LiquidStorageTank(tankType.toString(), busSpecs, capacity);
 		}
-		else if(tankType.equals(CryogenicLiquidStorageTank.type())){
+		else if(tankType.equals(CryogenicLiquidStorageTank.type)){
 			double tankMassOverheadFraction = 1.3;
 			double volume = capacity * tankMassOverheadFraction;
 			BusComponentSpecification busSpecs = data.getBusComponentSpecification();

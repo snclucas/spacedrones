@@ -1,7 +1,6 @@
 package org.spacedrones.status;
 
 import org.junit.Test;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
 
 import static org.junit.Assert.assertEquals;
@@ -66,22 +65,12 @@ public class SystemStatusTest {
 class MockStatusProvider implements StatusProvider{
 
 	@Override
-	public TypeInfo getType() {
-		return new TypeInfo("MockStatusProvider");
-	}
-
-	@Override
-	public TypeInfo getCategory() {
-		return new TypeInfo("MockStatusProviderCategory");
-	}
-
-	@Override
 	public String getName() {
 		return "Mock Status Provider";
 	}
 
 	@Override
-	public String getIdent() {
+	public String getId() {
 		return "100";
 	}
 

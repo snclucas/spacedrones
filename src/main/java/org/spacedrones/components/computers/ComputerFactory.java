@@ -8,18 +8,21 @@ import org.spacedrones.software.MessageMediator;
 import org.spacedrones.software.PropulsionManagementSoftware;
 import org.spacedrones.software.Software;
 import org.spacedrones.software.SystemMessageService;
+import org.spacedrones.spacecraft.SpacecraftBus;
 
 public class ComputerFactory extends DataFactory {
 
 	public static SystemComputer getComputer(TypeInfo computerType){
 		
-		if(computerType.equals(BasicSystemComputer.type())){
+		if(computerType.equals(BasicSystemComputer.type)){
 			SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(computerType);
 
 			double maxCPUThroughput = 1000; //GFLOP
+
+			SpacecraftBus bus = new SpacecraftBus();
 			
 			// Set spacecraft bus to null
-			SystemComputer computer = new BasicSystemComputer("Simple System Computer", data.getBusComponentSpecification(), maxCPUThroughput);
+			SystemComputer computer = new BasicSystemComputer("Simple System Computer", bus, data.getBusComponentSpecification(), maxCPUThroughput);
 			
 			Software engineSoftware = new PropulsionManagementSoftware("Engine software");
 			computer.loadSoftware(engineSoftware);

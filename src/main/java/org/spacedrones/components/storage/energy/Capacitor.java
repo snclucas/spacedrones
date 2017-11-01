@@ -16,11 +16,6 @@ public class Capacitor extends AbstractEnergyStorageDevice {
 	}
 
 	@Override
-	public TypeInfo getType() {
-		return new TypeInfo("Capacitor");
-	}
-
-	@Override
 	public double getCurrentPower(Unit unit) {
 		return 0;
 	}

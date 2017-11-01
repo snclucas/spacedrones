@@ -8,16 +8,10 @@ import org.spacedrones.software.SystemMessage;
 import org.spacedrones.status.SystemStatus;
 
 public class SimpleMonocoqueHull extends AbstractHull {
-	public static TypeInfo typeID = new TypeInfo("SimpleMonocoqueHull");
+	public static TypeInfo type = new TypeInfo("SimpleMonocoqueHull");
 	
 	public SimpleMonocoqueHull(String name, HullSpecification hullSpecification, Hull.Type hullType) {
 		super(name, hullSpecification, hullType);
-	}
-	
-
-	@Override
-	public TypeInfo getType() {
-		return typeID;
 	}
 
 	@Override
@@ -25,13 +19,11 @@ public class SimpleMonocoqueHull extends AbstractHull {
 		return "Simple Monocoque Hull ["+ hullSpecification.getName() +"]";
 	}
 	
-	
 	@Override
 	public double getCurrentPower(Unit unit) {
 		// Nominal and operation power are the same for this hull
 		return getNominalPower(unit);
 	}
-	
 
 	@Override
 	public double getCurrentCPUThroughput(Unit unit) {
@@ -59,7 +51,5 @@ public class SimpleMonocoqueHull extends AbstractHull {
 		systemStatus.addSystemMessage(getName() + " online.", getUniversalTime(), Status.OK);
 		return systemStatus; 
 	}
-	
-	
 
 }

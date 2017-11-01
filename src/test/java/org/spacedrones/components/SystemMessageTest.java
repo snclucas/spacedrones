@@ -12,13 +12,13 @@ public class SystemMessageTest {
 	@Test
 	public void testSystemMessage() {
 		
-		MockIdentifiableObject reciever = new MockIdentifiableObject("12", "Test reciever", RadioCommunicator.categoryID, RadioCommunicator.type());
-		MockIdentifiableObject sender = new MockIdentifiableObject("123", "Test sender", SimpleIonEngine.category(), SimpleIonEngine.type());
+		MockIdentifiableObject reciever = new MockIdentifiableObject("12", "Test reciever", RadioCommunicator.category, RadioCommunicator.type);
+		MockIdentifiableObject sender = new MockIdentifiableObject("123", "Test sender", SimpleIonEngine.category, SimpleIonEngine.type);
 	
 		SystemMessage systemMessage = new SystemMessage(reciever, sender, "This is a test message", 1273);
 		
-		assertEquals("Reciever ID incorrect", reciever.getIdent(), systemMessage.getRecieverIdent());
-		assertEquals("Sender ID incorrect", sender.getIdent(), systemMessage.getSenderIdent());
+		assertEquals("Reciever ID incorrect", reciever.getId(), systemMessage.getRecieverId());
+		assertEquals("Sender ID incorrect", sender.getId(), systemMessage.getSenderId());
 		assertEquals("Message incorrect", "This is a test message", systemMessage.getMessage());
 		assertEquals("Universal date incorrect", 1273, systemMessage.getUniversalDate(), 0.001);
 	}
@@ -33,26 +33,13 @@ class MockIdentifiableObject implements Identifiable {
 	TypeInfo type;
 	
 	
-	public MockIdentifiableObject(String ident, String name, TypeInfo category, TypeInfo type) {
+	MockIdentifiableObject(String ident, String name, TypeInfo category, TypeInfo type) {
 		super();
 		this.ident = ident;
 		this.name = name;
 		this.category = category;
 		this.type = type;
 	}
-	
-
-	@Override
-	public TypeInfo getType() {
-		return type;
-	}
-	
-
-	@Override
-	public TypeInfo getCategory() {
-		return category;
-	}
-	
 
 	@Override
 	public String getName() {
@@ -61,7 +48,7 @@ class MockIdentifiableObject implements Identifiable {
 	
 
 	@Override
-	public String getIdent() {
+	public String getId() {
 		return ident;
 	}
 

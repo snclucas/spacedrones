@@ -1,13 +1,14 @@
 package org.spacedrones.universe;
 
-import org.spacedrones.components.Identifiable;
+import org.spacedrones.components.Taxonomic;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.physics.Unit;
 
 import java.math.BigDecimal;
 
-public interface Location extends Identifiable {
+public interface Location extends Taxonomic {
 	TypeInfo category = new TypeInfo("Location");
+	TypeInfo type = category;
 	
 	Coordinates getCoordinates();
 	BigDecimal getCoordinate(int index);

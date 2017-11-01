@@ -1,7 +1,5 @@
 package org.spacedrones.components.computers;
 
-import java.util.List;
-
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.CommunicationComponent;
@@ -11,27 +9,24 @@ import org.spacedrones.exceptions.ComponentConfigurationException;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.software.MessageMediator;
 import org.spacedrones.spacecraft.BusRequirement;
-import org.spacedrones.spacecraft.SpacecraftFirmware;
 import org.spacedrones.status.SystemStatusMessage;
 
+import java.util.List;
+
 public interface SystemComputer extends Computer {
-
-	static TypeInfo category() {
-		return new TypeInfo("Computer");
-	}
-
-	static TypeInfo type() {
-		return new TypeInfo("SystemComputer");
-	}
+	TypeInfo category = new TypeInfo("SystemComputer");
+	TypeInfo type = category;
 
 	double getUniversalTime();
+
+	void registerComponent(SpacecraftBusComponent component);
 
 	SystemStatusMessage requestOperation(SpacecraftBusComponent component, BusRequirement busRequirement);
 
 	MessageMediator getMessagingSystem();
 	void setMessagingSystem(MessageMediator messagingSystem);
 	Object getSystemData(String id);
-	DataStore getStorageDevice();
+
 	SystemStatusMessage addSystemMessage(SpacecraftBusComponent component, String message, Status status);
 
 	List<SystemStatusMessage> getSystemMessages();
@@ -50,4 +45,5 @@ public interface SystemComputer extends Computer {
 	List<Engine> getEngines();
 	List<SystemComputer> getComputers();
 	List<CommunicationComponent> getCommunicationDevices();
+
 }

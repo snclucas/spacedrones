@@ -14,11 +14,11 @@ public class CommunicatorDeviceFactory extends DataFactory {
 	public static CommunicationComponent getCommunicator(TypeInfo commType){
 		SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(commType);
 		
-		if(commType.equals(RadioCommunicator.type())) {
+		if(commType.equals(RadioCommunicator.type)) {
 			
 			Model propagationModel = new SimpleRadioFrequencyPropagationModel("RF");
 			CommunicationComponent communicationComponent = 
-					new RadioCommunicator(RadioCommunicator.type().toString(), data.getBusComponentSpecification(), propagationModel);
+					new RadioCommunicator(RadioCommunicator.type.toString(), data.getBusComponentSpecification(), propagationModel);
 			communicationComponent.setDeviceNoiseLevel(Physics.dBm2W(-80)); // -80 dBm
 			communicationComponent.setEfficiency(90 * Unit.percent.value());
 			return communicationComponent;

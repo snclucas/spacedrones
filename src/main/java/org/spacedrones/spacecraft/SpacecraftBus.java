@@ -1,5 +1,6 @@
 package org.spacedrones.spacecraft;
 
+import org.spacedrones.Configuration;
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.computers.SystemComputer;
@@ -11,8 +12,14 @@ import java.util.List;
 
 public class SpacecraftBus implements Bus {
 
+  private final String name;
+  private final String id;
 	private final List<SpacecraftBusComponent> components = new ArrayList<>();
 
+	public SpacecraftBus() {
+    this.name = "SpacecraftBus";
+    this.id = Configuration.getUUID();
+  }
 
 	@Override
 	public Message recieveBusMessage(Message message) {
@@ -40,20 +47,41 @@ public class SpacecraftBus implements Bus {
 		return null;
 	}
 
-	@Override
 	public void register(SpacecraftBusComponent component) {
 		if(component instanceof SystemComputer)
-			findComponentByType(SystemComputer.type()).clear();
+			findComponentByType(SystemComputer.type).clear();
 		this.components.add(component);
 		component.registerBus(this);
 	}
 
-	@Override
 	public SystemComputer getSystemComputer() {
-		List<SpacecraftBusComponent> components = findComponentByType(SystemComputer.type());
-		if(components.size() == 0)
-			return null;
+		List<SpacecraftBusComponent> components = findComponentByCategory(SystemComputer.type);
+		if(components.size() == 0) {
+      return null;
+    }
 		return (SystemComputer)components.get(0);
+	}
+
+  public String getName() {
+	  return name;
+  }
+
+  public String getId(){
+    return id;
+  }
+
+  public String describe(){
+    return "SpacecraftBus";
+  }
+
+	@Override
+	public TypeInfo category() {
+		return category;
+	}
+
+	@Override
+	public TypeInfo type() {
+		return type;
 	}
 
 }

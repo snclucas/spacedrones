@@ -1,7 +1,5 @@
 package org.spacedrones.components.comms;
 
-import java.util.List;
-
 import org.spacedrones.algorithm.Model;
 import org.spacedrones.algorithm.ModelInputs;
 import org.spacedrones.algorithm.ModelResult;
@@ -14,12 +12,10 @@ import org.spacedrones.software.Message;
 import org.spacedrones.software.SystemMessage;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 
+import java.util.List;
+
 public abstract class AbstractCommunicationComponent extends AbstractBusComponent implements CommunicationComponent {
-	
-	public static TypeInfo category() {
-		return new TypeInfo("CommunicationDevice");
-	}
-	
+
 	private static double MAX_POWER_LEVEL = 100;
 	
 	private double range;
@@ -35,17 +31,20 @@ public abstract class AbstractCommunicationComponent extends AbstractBusComponen
 	private Model propagationModel;
 	
 
-	public AbstractCommunicationComponent(String name, BusComponentSpecification busResourceSpecification, Model propagationModel) {
+	AbstractCommunicationComponent(String name, BusComponentSpecification busResourceSpecification, Model propagationModel) {
 		super(name, busResourceSpecification);
 		this.propagationModel = propagationModel;
 	}
 	
-	
 	@Override
-	public TypeInfo getCategory() {
-		return categoryID;
+	public TypeInfo category() {
+		return category;
 	}
 
+	@Override
+	public TypeInfo type() {
+		return new TypeInfo(this.getClass().getSimpleName());
+	}
 
 	@Override
 	public void broadcast(String message, int recipient) {

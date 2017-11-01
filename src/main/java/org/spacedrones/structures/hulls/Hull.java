@@ -6,8 +6,8 @@ import org.spacedrones.components.TypeInfo;
 import org.spacedrones.physics.Unit;
 
 public interface Hull extends PhysicalComponent, BusCommunicator {
-
-  TypeInfo category = new TypeInfo("Hull");
+	TypeInfo category = new TypeInfo("Hull");
+	TypeInfo type = category;
 
 	enum Type {
     RECTANGULAR("RECTANGULAR"),
@@ -29,6 +29,7 @@ public interface Hull extends PhysicalComponent, BusCommunicator {
 
 	double getLength(Unit unit);
 	double getWidth(Unit unit);
+	double getHeight(Unit unit);
 	double getThickness(Unit unit);
 
 	double getImpactResistance();
@@ -40,6 +41,5 @@ public interface Hull extends PhysicalComponent, BusCommunicator {
 	double getEmResistanceModifier();
 	double getThermalResistanceModifier();
 	double getRadiationResistanceModifier();
-
 
 }

@@ -8,24 +8,18 @@ import org.spacedrones.spacecraft.BusComponentSpecification;
 
 
 public class SimpleIonEngine extends AbstractThrustingFuelConsumingEngine implements ThrustingEngine {
-	
-	public static TypeInfo type() {
-		return new TypeInfo("SimpleIonEngine");
-	}
+	public static TypeInfo type = new TypeInfo("SimpleIonEngine");
 
 	public SimpleIonEngine(String name, BusComponentSpecification busResourceSpecification, double maximumThrust, ThrustProfile thrustModel, FuelConsumptionProfile fuelConsumptionModel, EngineVector engineVector, boolean vectored) {
 		super(name, busResourceSpecification, maximumThrust, thrustModel, fuelConsumptionModel, engineVector, vectored);
 	}
-	
-	
+
 	public SimpleIonEngine(String name, BusComponentSpecification busResourceSpecification, double maximumThrust, EngineVector engineVector, boolean vectored) {
 		super(name, busResourceSpecification, maximumThrust, engineVector, vectored);
 	}
-	
-	
+
 	@Override
-	public TypeInfo getType() {
-		return type();
+	public void setFuelConsumptionProfile(final FuelConsumptionProfile fuelConsumptionProfile) {
+
 	}
-	
 }

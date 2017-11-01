@@ -1,9 +1,9 @@
 package org.spacedrones.components.computers;
 
-import java.security.InvalidParameterException;
-
 import org.spacedrones.Configuration;
 import org.spacedrones.data.SpacecraftDataProvider;
+
+import java.security.InvalidParameterException;
 
 public class DataStoreFactory {
 
@@ -17,7 +17,7 @@ public class DataStoreFactory {
 		case BASIC_DATASTORE:
 
 			DataStore dataStore = new BasicDataStorageUnit("Data store", 
-					spacecraftDataProvider.getComponentParameters(BasicDataStorageUnit.type()).getBusComponentSpecification());
+					spacecraftDataProvider.getComponentParameters(BasicDataStorageUnit.type).getBusComponentSpecification());
 
 
 			return dataStore;

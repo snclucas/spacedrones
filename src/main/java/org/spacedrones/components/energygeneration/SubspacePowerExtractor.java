@@ -9,30 +9,19 @@ import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
 
 public class SubspacePowerExtractor extends AbstractPowerGenerator {
+	public static TypeInfo type = new TypeInfo("SubspacePowerExtractor");
 	
-	private double arrayArea;
-	private double efficiency;
-	
-	public static TypeInfo type() {
-		return new TypeInfo("SubspacePowerExtractor");
-	}
+	private final double arrayArea;
+	private final double efficiency;
 
-	
 	public SubspacePowerExtractor(String name, BusComponentSpecification busResourceSpecification, 
 			double arrayArea, double efficiency) {
 		super(name, busResourceSpecification);
 		this.arrayArea = arrayArea;
 		this.efficiency = efficiency;
-		this.maxPower = arrayArea*efficiency*10.0*Unit.kW.value();
+		setMaxPower(arrayArea*efficiency*10.0*Unit.kW.value());
 	}
-	
-	
-	@Override
-	public TypeInfo getType() {
-		return type();
-	}
-	
-	
+
 	@Override
 	public double getCurrentPower(Unit unit) {
 		return getNominalPower(unit);
@@ -43,19 +32,10 @@ public class SubspacePowerExtractor extends AbstractPowerGenerator {
 		return arrayArea;
 	}
 
-	public void setArrayArea(double arrayArea) {
-		this.arrayArea = arrayArea;
-	}
-
 	public double getEfficiency() {
 		return efficiency;
 	}
 
-	public void setEfficiency(double efficiency) {
-		this.efficiency = efficiency;
-	}
-	
-	
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
@@ -69,9 +49,6 @@ public class SubspacePowerExtractor extends AbstractPowerGenerator {
 		// Nominal and operation CPU are the same for this hull
 		return getNominalCPUThroughput(unit);
 	}
-	
-	
-
 
 	@Override
 	public SystemStatus runDiagnostics(int level) {
@@ -92,14 +69,12 @@ public class SubspacePowerExtractor extends AbstractPowerGenerator {
 		return toString();
 	}
 
-
 	@Override
 	public String toString() {
 		return "SubEtherPowerGenerator [maximumPowerOutputFromEther="
 				+ getMaximumPowerOutput() + "]";
 	}
-	
-	
+
 	@Override
 	public double getPowerOutput() {
 		return 0;

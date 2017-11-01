@@ -9,6 +9,7 @@ import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
 
 public abstract class AbstractFuelStorageTank extends AbstractBusComponent implements FuelStorageTank {
+	public static TypeInfo category = new TypeInfo("FuelStorageTank");
 
 	private double amountOfFuelInTank;
 	private double capacity;
@@ -25,8 +26,8 @@ public abstract class AbstractFuelStorageTank extends AbstractBusComponent imple
 
 
 	@Override
-	public TypeInfo getCategory() {
-		return categoryID;
+	public TypeInfo category() {
+		return category;
 	}
 
 

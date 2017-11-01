@@ -5,8 +5,8 @@ import org.spacedrones.components.TypeInfo;
 import org.spacedrones.consumables.Fuel;
 
 public interface FuelStorageTank extends SpacecraftBusComponent {
-	
-	TypeInfo categoryID = new TypeInfo("FuelStorageTank");
+	TypeInfo category = new TypeInfo("FuelStorageTank");
+	TypeInfo type = category;
 
 	double getCapacity();
 

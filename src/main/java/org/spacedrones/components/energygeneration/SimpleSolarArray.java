@@ -13,7 +13,8 @@ import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.Universe;
 
 public class SimpleSolarArray extends AbstractPowerGenerator {
-	
+	public static TypeInfo type = new TypeInfo("SimpleSolarArray");
+
 	private EnvironmentDataProvider environmentDataProvider = Configuration.getEnvironmentDataProvider();
 	
 	private double arrayArea;
@@ -24,7 +25,7 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 		super(name, busResourceSpecification);
 		this.arrayArea = arrayArea;
 		this.efficiency = efficiency;
-		this.maxPower = arrayArea*efficiency*10.0*Unit.kW.value();
+		setMaxPower(arrayArea*efficiency*10.0*Unit.kW.value());
 	}
 	
 
@@ -96,14 +97,10 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 				.getSpacecraftLocation(spacecraftIdent);
 		return environmentDataProvider.getEnvironmentData(coordinates).getSolarFlux();
 	}
-
-	public static TypeInfo type() {
-		return new TypeInfo("SimpleSolarArray");
-	}
 	
 	@Override
-	public TypeInfo getType() {
-		return type();
+	public TypeInfo type() {
+		return type;
 	}
 
 }

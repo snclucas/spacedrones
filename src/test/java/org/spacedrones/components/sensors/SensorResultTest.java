@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.spacedrones.universe.NavigationVector;
 import org.spacedrones.universe.celestialobjects.SensorSignalResponseProfile;
 import org.spacedrones.universe.celestialobjects.Star;
+import org.spacedrones.universe.celestialobjects.StarClass;
 
 import java.math.BigDecimal;
 
@@ -14,7 +15,7 @@ public class SensorResultTest {
 	@Test
 	public void testSensorResult() {
 		
-		Star sol = new Star(Star.G_CLASS_STAR,
+		Star sol = new Star(StarClass.G,
 				new SensorSignalResponseProfile(1.0, 1.0, 1.0, 1.0, 1.0));
 		
 		BigDecimal distance = new BigDecimal(24423522352352345.234234);

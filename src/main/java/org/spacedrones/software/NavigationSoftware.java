@@ -20,16 +20,14 @@ import java.util.List;
 import java.util.Map;
 
 public class NavigationSoftware extends AbstractSoftware implements Software, NavigationInterface {
+  public static TypeInfo type = new TypeInfo("NavigationSoftware");
+
 	private static MathContext mc = new MathContext(Configuration.precision, RoundingMode.HALF_UP);
 	
 	private DataStore dataStore;
-	
-	public static TypeInfo type() {
-		return new TypeInfo("NavigationSoftware");
-	}
 
-	private final Map<String, Sensor> sensors = new HashMap<String, Sensor>();
-	private final List<SensorResult> sensorResults = new ArrayList<SensorResult>();
+	private final Map<String, Sensor> sensors = new HashMap<>();
+	private final List<SensorResult> sensorResults = new ArrayList<>();
 	
 	public NavigationSoftware(String name) {
 		super(name);
@@ -44,8 +42,8 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 	
 	
 	@Override
-	public TypeInfo getType() {
-		return type();
+	public TypeInfo type() {
+		return type;
 	}
 
 

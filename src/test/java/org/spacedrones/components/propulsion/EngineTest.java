@@ -40,8 +40,8 @@ public class EngineTest {
 		ThrustingEngine engine = getTestEngine(true);
 		engine.callVector(new EngineVector(0.3,0.1, 0.5));
 
-		assertEquals("Engine category incorrect", Engine.category, engine.getCategory());
-		assertEquals("Engine type ["+ engine.describe() +"] incorrect", SimpleThruster.type(), engine.getType());
+		assertEquals("Engine category incorrect", Engine.category, engine.category());
+		assertEquals("Engine type ["+ engine.describe() +"] incorrect", SimpleThruster.type, engine.type());
 
 		//Check the engine set up
 		assertEquals("Engine power not set correctly", nominalPower, engine.getNominalPower(Unit.W), 0.001);
@@ -88,7 +88,7 @@ public class EngineTest {
 
 	@Test
 	public void testEnginePowerLevels() {
-		ThrustingEngine engine = EngineFactory.getEngine(SimpleIonEngine.type(), true);
+		ThrustingEngine engine = EngineFactory.getEngine(SimpleIonEngine.type, true);
 		/* Power level 0, expected zero thrust and nominal power use */
 		double powerLevel = 0.0;
 		
@@ -195,7 +195,7 @@ public class EngineTest {
 		EngineVector engineVector = new EngineVector(1,0,0);
 
 		return new SimpleThruster(
-				SimpleThruster.type().toString(), spacecraftComponentData.getBusComponentSpecification(), 
+				SimpleThruster.type.toString(), spacecraftComponentData.getBusComponentSpecification(),
 				maximumThrust,
 				thrustProfile, fuelProfile,  engineVector, vectored);
 	}

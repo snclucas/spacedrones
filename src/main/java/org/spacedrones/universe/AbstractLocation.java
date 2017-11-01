@@ -1,6 +1,7 @@
 package org.spacedrones.universe;
 
 import org.spacedrones.Configuration;
+import org.spacedrones.components.TypeInfo;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.utils.Utils;
 
@@ -77,5 +78,15 @@ public abstract class AbstractLocation implements Location {
             id.equals(that.id) &&
             coordinates.equals(that.coordinates);
   }
+
+	@Override
+	public TypeInfo category() {
+		return category;
+	}
+
+	@Override
+	public TypeInfo type() {
+		return type;
+	}
 
 }

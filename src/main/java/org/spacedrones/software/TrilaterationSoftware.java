@@ -13,14 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 public class TrilaterationSoftware extends AbstractSoftware implements Software {
+  public static TypeInfo type = new TypeInfo("TrilaterationSoftware");
 
 	public TrilaterationSoftware(String name) {
 		super(name);
-	}
-
-
-	public static TypeInfo type() {
-		return new TypeInfo("NavigationSoftware");
 	}
 
 
@@ -43,15 +39,11 @@ public class TrilaterationSoftware extends AbstractSoftware implements Software 
 
 
 	@Override
-	public TypeInfo getType() {
-		return type();
+	public TypeInfo type() {
+		return type;
 	}
 
-
-
 	private Coordinates calculatePosition() {
-
-
 
 		DataStore dataStore = getSystemComputer().getStorageDevice();
 

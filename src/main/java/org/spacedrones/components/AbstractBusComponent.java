@@ -29,15 +29,13 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 	
 
 	public AbstractBusComponent(String name, BusComponentSpecification busSpec) {
-		super();
 		this.name = name;
 		this.busResourceSpecification = busSpec;
 		this.currentPower = busSpec.getNominalPower(Unit.MW);
 		this.currentCPUThroughput = busSpec.getNominalCPUThroughout(Unit.MFLOP);
 		this.id = Configuration.getUUID();
 	}
-	
-	
+
 	@Override
 	public final boolean isOnSpacecraftBus() {
 		return spacecraftBus != null;
@@ -172,5 +170,7 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 	public double getUniversalTime() {
 		return getSystemComputer().getUniversalTime();
 	}
+
+
 
 }

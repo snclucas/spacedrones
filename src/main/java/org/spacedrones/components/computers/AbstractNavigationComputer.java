@@ -12,12 +12,9 @@ public abstract class AbstractNavigationComputer extends AbstractComputer implem
 
 	Coordinates currentLocation;
 
-	public AbstractNavigationComputer(String name, BusComponentSpecification busResourceSpecification) {
-		super(name, busResourceSpecification);
+	public AbstractNavigationComputer(String name, BusComponentSpecification busResourceSpecification, double maxCPUThroughput) {
+		super(name, busResourceSpecification, maxCPUThroughput);
 	}
-
-
-
 
 	@Override
 	public SystemStatusMessage updateCurrentLocation() {
@@ -27,13 +24,9 @@ public abstract class AbstractNavigationComputer extends AbstractComputer implem
 		
 		// Look for subspace beacons in navigation archive
 		Map<String,DataRecord> subspaceBeacons = dataStore.getData(CelestialObject.category, SubspaceBeacon.type);
-		
-		
-		
-		
+
 		return null;
 	}
-
 
 	@Override
 	public Coordinates getCurrentLocation() {

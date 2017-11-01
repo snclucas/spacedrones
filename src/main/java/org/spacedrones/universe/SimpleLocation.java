@@ -5,8 +5,7 @@ import org.spacedrones.components.TypeInfo;
 import java.math.BigDecimal;
 
 public class SimpleLocation extends AbstractLocation {
-	
-	public static TypeInfo typeID = new TypeInfo("SimpleLocation");
+	public static TypeInfo type = new TypeInfo("SimpleLocation");
 
 	SimpleLocation(String name, Coordinates coordinates) {
 		super(name, coordinates );

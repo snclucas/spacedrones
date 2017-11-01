@@ -10,10 +10,6 @@ public class ThrustProfileTest {
 		
 		ThrustProfile profile = ThrustProfileFactory.getThrustAlgorithm(ThrustProfileFactory.SIMPLE_LINEAR);
 		
-		profile.describe();
-		
-		profile.getCategory();
-		
 		profile.getName();
 		
 		profile.getNormalizedCPU(0);
@@ -28,8 +24,6 @@ public class ThrustProfileTest {
 		profile.getNormalizedThrust(0.0);
 		profile.getNormalizedThrust(50.0);
 		profile.getNormalizedThrust(100.0);
-		
-		profile.getType();
 		
 	}
 

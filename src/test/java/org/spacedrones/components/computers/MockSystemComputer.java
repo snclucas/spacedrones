@@ -10,10 +10,10 @@ public class MockSystemComputer extends BasicSystemComputer{
 	private double totalCPUAvailable = 0.0;
 	
 	
-	public MockSystemComputer(String name,
+	public MockSystemComputer(String name, Bus bus,
 			BusComponentSpecification busResourceSpecification,
 			double maxCPUThroughput, Bus spacecraftBus) {
-		super(name, busResourceSpecification, maxCPUThroughput);
+		super(name, bus, busResourceSpecification, maxCPUThroughput);
 	}
 
 //	@Override

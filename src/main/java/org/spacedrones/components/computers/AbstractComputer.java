@@ -7,6 +7,7 @@ import org.spacedrones.exceptions.ComponentConfigurationException;
 import org.spacedrones.software.Software;
 import org.spacedrones.spacecraft.Bus;
 import org.spacedrones.spacecraft.BusComponentSpecification;
+import org.spacedrones.status.SystemStatus;
 import org.spacedrones.status.SystemStatusMessage;
 
 import java.util.HashMap;
@@ -17,10 +18,30 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
 	private boolean online;
   private Bus spacecraftBus;
 	private final Map<TypeInfo, Software> loadedSoftware;
-	
-	AbstractComputer(String name, BusComponentSpecification busResourceSpecification) {
+
+  private final double maxCPUThroughput;
+
+  private final DataStore storageDevice;
+
+	AbstractComputer(String name, BusComponentSpecification busResourceSpecification, double maxCPUThroughput) {
 		super(name, busResourceSpecification);
     loadedSoftware = new HashMap<>();
+    this.maxCPUThroughput = maxCPUThroughput;
+    storageDevice = DataStoreFactory.getDataStore(DataStoreFactory.BASIC_DATASTORE);
+	}
+
+  @Override
+  public DataStore getStorageDevice() {
+    return storageDevice;
+  }
+
+  public double getMaxCPUThroughput() {
+    return maxCPUThroughput;
+  }
+
+  @Override
+	public void registerSpacecraftBus(Bus spacecraftBus) {
+		this.spacecraftBus = spacecraftBus;
 	}
 	
 	public SystemComputer getSystemComputer() {
@@ -30,7 +51,7 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
 	@Override
 	public SystemStatusMessage loadSoftware(Software software) {
 		software.setComputer(this);
-		if(loadedSoftware.put(software.getType(), software) != null)
+		if(loadedSoftware.put(software.type(), software) != null)
 			return new SystemStatusMessage(this, software.getDescription() + " software loaded", getUniversalTime(), Status.OK);
 		else 
 			return new SystemStatusMessage(this, software.getDescription() + " software replaced exisiting software", getUniversalTime(), Status.OK);
@@ -51,12 +72,7 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
     return loadedSoftware.size() > 0;
   }
 
-  @Override
-  public void registerSpacecraftBus(Bus spacecraftBus) {
-    this.spacecraftBus = spacecraftBus;
-  }
-	
-	@Override
+	//@Override
 	public Bus getSpacecraftBus() {
 	  if(spacecraftBus != null) {
       return spacecraftBus;
@@ -66,20 +82,6 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
     }
 	}
 
-	@Override
-	public double getMaxCPUThroughput() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public static TypeInfo category() {
-		return new TypeInfo("Computer");
-	}
-	
-	public static TypeInfo type() {
-		return new TypeInfo("Computer");
-	}
-	
 	@Override
 	public void tick() {
 	}
@@ -94,14 +96,30 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
   }
 
   @Override
-	public TypeInfo getType() {
-		return new TypeInfo("Computer");
-	}
+  public SystemStatus online() {
+    //SystemStatus systemStatus = super.online();
+    SystemStatus systemStatus = new SystemStatus(this);
 
-	@Override
-	public TypeInfo getCategory() {
-		return new TypeInfo("Computer");
-	}
-	
+    if(getSpacecraftBus() == null) {
+      systemStatus.addSystemMessage("No spacecraft bus found.", getUniversalTime(), Status.CRITICAL);
+    }
+
+    if(hasSoftware()) {
+      systemStatus.addSystemMessage("No interface software loaded", getUniversalTime(), Status.WARNING);
+    }
+    return systemStatus;
+  }
+
+  // ----- Taxonomy
+
+  @Override
+  public TypeInfo type() {
+    return new TypeInfo(this.getClass().getSimpleName());
+  }
+
+  @Override
+  public TypeInfo category() {
+    return type();
+  }
 
 }

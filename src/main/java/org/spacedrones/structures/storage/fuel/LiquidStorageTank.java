@@ -4,10 +4,8 @@ import org.spacedrones.components.TypeInfo;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 
 public class LiquidStorageTank extends AbstractFuelStorageTank {
-	
-	public static TypeInfo type() {
-		return new TypeInfo("LiquidStorageTank");
-	}
+	public static TypeInfo type = new TypeInfo("LiquidStorageTank");
+
 
 	public LiquidStorageTank(String name, BusComponentSpecification busResourceSpecification, double capacity) {
 		super(name, busResourceSpecification, capacity);
@@ -15,8 +13,8 @@ public class LiquidStorageTank extends AbstractFuelStorageTank {
 
 	
 	@Override
-	public TypeInfo getType() {
-		return type();
+	public TypeInfo type() {
+		return type;
 	}
 
 

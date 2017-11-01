@@ -6,12 +6,7 @@ import org.spacedrones.components.TypeInfo;
 import org.spacedrones.physics.Unit;
 
 public interface Engine extends SpacecraftBusComponent, Executable {
-
 	TypeInfo category = new TypeInfo("Engine");
-
-	static TypeInfo type() {
-		return new TypeInfo("Engine");
-	}
 
 	EngineVector getEngineVector();
 

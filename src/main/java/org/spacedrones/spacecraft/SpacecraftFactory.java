@@ -49,13 +49,13 @@ public class SpacecraftFactory {
 			
 			Spacecraft spacecraft = new SimpleSpacecraft(SHUTTLE, Configuration.getUUID(), hull, spacecraftBus);
 			
-			SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.type());
+			SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.type);
 			SpacecraftBuildManager.addComponent(spacecraft, systemComputer);
 			
 			//PropulsionManagementSoftware engineManagementSoftware = new PropulsionManagementSoftware("Test EngineManagementSoftware", systemComputer);
 			//systemComputer.loadSoftware(engineManagementSoftware);
 			
-			PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.type());
+			PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.type);
 			SpacecraftBuildManager.addComponent(spacecraft, powerGenerator);
 			
 			Sensor sensor = SensorFactory.getSensor(LinearSensorArray.type, SensorType.RADAR, 1);
@@ -64,7 +64,7 @@ public class SpacecraftFactory {
 			
 			double tankCapacity = 100 * Unit.l.value();
 			Fuel fuel = spacecraftDataProvider.getFuel(Fuel.HYDRAZINE);
-			FuelStorageTank tank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.type(), tankCapacity);
+			FuelStorageTank tank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.type, tankCapacity);
 			tank.setFuel(fuel, tankCapacity);
 			
 			FuelSubSystem fuelDeliverySystem = FuelSubSystemFactory.getFuelSubsystem(
@@ -73,11 +73,11 @@ public class SpacecraftFactory {
 			SpacecraftBuildManager.addComponent(spacecraft, fuelDeliverySystem);
 			SpacecraftBuildManager.addComponent(spacecraft, tank);
 			
-			FuelConsumingEngine engine = (FuelConsumingEngine)EngineFactory.getEngine(SimpleThruster.type(), false);
+			FuelConsumingEngine engine = (FuelConsumingEngine)EngineFactory.getEngine(SimpleThruster.type, false);
 			engine.setFuelSubSystem(fuelDeliverySystem);
 			SpacecraftBuildManager.addComponent(spacecraft, engine);
 			
-			CommunicationComponent commDevice = CommunicatorDeviceFactory.getCommunicator(RadioCommunicator.type());
+			CommunicationComponent commDevice = CommunicatorDeviceFactory.getCommunicator(RadioCommunicator.type);
 			SpacecraftBuildManager.addComponent(spacecraft, commDevice);
 			
 			return spacecraft;
@@ -86,10 +86,10 @@ public class SpacecraftFactory {
 			
 			Spacecraft sat = new SimpleSpacecraft("SimpleSatelite", Configuration.getUUID(), satHull, spacecraftBus);
 			
-			SystemComputer satSystemComputer = ComputerFactory.getComputer(BasicSystemComputer.type());
+			SystemComputer satSystemComputer = ComputerFactory.getComputer(BasicSystemComputer.type);
 			SpacecraftBuildManager.addComponent(sat, satSystemComputer);
 			
-			PowerGenerator simpleSolarCell = PowerGenerationFactory.getPowerGenerator(SimpleSolarArray.type());
+			PowerGenerator simpleSolarCell = PowerGenerationFactory.getPowerGenerator(SimpleSolarArray.type);
 			SpacecraftBuildManager.addComponent(sat, simpleSolarCell);
 			
 			return sat;

@@ -21,8 +21,8 @@ public class SimpleLocationTest {
 		SimpleLocation simpleLocation2 =  new SimpleLocation("Simple test location 2", new BigDecimal[]{new BigDecimal(1), new BigDecimal(1),new BigDecimal(1)});
 		SimpleLocation simpleLocation3 =  new SimpleLocation("Simple test location 3", coordinates3);
 		
-		assertEquals("SimpleLocation category incorrect", Location.categoryID, simpleLocation1.getCategory());
-		assertEquals("SimpleLocation type incorrect", SimpleLocation.typeID, simpleLocation1.getType());
+		assertEquals("SimpleLocation category incorrect", Location.category, simpleLocation1.category());
+		assertEquals("SimpleLocation type incorrect", SimpleLocation.type, simpleLocation1.type());
 		
 		assertEquals("Location 1 not equal to location 2", simpleLocation1, simpleLocation2);
 		assertNotEquals("Location 1 equal to location 3", simpleLocation1, simpleLocation3);

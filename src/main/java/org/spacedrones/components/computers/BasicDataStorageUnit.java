@@ -10,21 +10,19 @@ import java.util.*;
 
 
 public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
+	public static TypeInfo type = new TypeInfo("BasicDataStorageUnit");
 
-	public static TypeInfo type() {
-		return new TypeInfo("BasicDataStorageUnit");
-	}
-	
-	public BasicDataStorageUnit(String name,
+
+	BasicDataStorageUnit(String name,
 			BusComponentSpecification busResourceSpecification) {
 		super(name, busResourceSpecification);
 	}
 
-	private final Map<TypeInfo, Archive> dataArchives = new HashMap<TypeInfo, Archive>();
+	private final Map<TypeInfo, Archive> dataArchives = new HashMap<>();
 
 	
-	public TypeInfo getType() {
-		return type();
+	public TypeInfo type() {
+		return type;
 	}
 
 	@Override
@@ -40,7 +38,6 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 		}
 	}
 
-
 	@Override
 	public DataRecord getData(String id, TypeInfo typeInfo) {
 		if(dataArchives.containsKey(typeInfo)) {
@@ -51,8 +48,7 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 			return new DataRecord();
 		}
 	}
-	
-	
+
 	@Override
 	public Map<String, DataRecord> getData(TypeInfo typeInfo) {
 		if(dataArchives.containsKey(typeInfo)) {
@@ -63,10 +59,9 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 		}
 	}
 	
-	
 	@Override
 	public Map<String,DataRecord> getData(TypeInfo category, TypeInfo ... subTypes) {
-		Map<String,DataRecord> results = new HashMap<String,DataRecord>();
+		Map<String,DataRecord> results = new HashMap<>();
 		if(dataArchives.containsKey(category)) {
 			for(Map.Entry<String,DataRecord>  a : dataArchives.get(category).entrySet()) {
 				if(Arrays.asList(subTypes).contains(a.getValue().getRecordType())) {
@@ -77,7 +72,6 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 		}
 		return results;
 	}
-	
 
 	@Override
 	public SystemStatus runDiagnostics(int level) {
@@ -87,15 +81,12 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 		return systemStatus;
 	}
 
-
-
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
 		systemStatus.addSystemMessage(getName() + " online.", getUniversalTime(), Status.OK);
 		return systemStatus; 
 	}
-
 
 	@Override
 	public String describe() {
@@ -109,7 +100,7 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 
 	@Override
 	public void saveData(Identifiable... data) {
-		List<Identifiable> list = new ArrayList<Identifiable>(Arrays.asList(data));
+		List<Identifiable> list = new ArrayList<>(Arrays.asList(data));
 		saveData(list);
 	}
 	
