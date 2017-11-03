@@ -51,7 +51,6 @@ public class SpacecraftBus implements Bus {
 		if(component instanceof SystemComputer)
 			findComponentByType(SystemComputer.type).clear();
 		this.components.add(component);
-		component.registerBus(this);
 	}
 
 	public SystemComputer getSystemComputer() {

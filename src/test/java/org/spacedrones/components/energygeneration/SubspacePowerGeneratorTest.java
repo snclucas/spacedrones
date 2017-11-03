@@ -17,7 +17,7 @@ public class SubspacePowerGeneratorTest {
 		double mass = 25.0;
 		double volume = 1.0;
 		double nominalPower = 100 * Unit.W.value(); 
-		double nominalCPUThroughput = 10 * Unit.kFLOP.value();
+		double nominalCPUThroughput = 10 * Unit.kFLOPs.value();
 		double maxOutputPower = 100 * Unit.kW.value();
 		
 		double arrayArea = 1 * Unit.m.value() * 10 * Unit.m.value();

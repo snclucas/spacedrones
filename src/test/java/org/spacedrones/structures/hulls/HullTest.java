@@ -15,7 +15,7 @@ public class HullTest {
 
 	Material material = Configuration.getMaterialDataProvider().getMaterial(LocalMaterialDataProvider.ALUMINUM);
 	double nominalPower = 1 * Unit.kW.value();
-	double nominalCPUThroughput = 1 * Unit.kFLOP.value();
+	double nominalCPUThroughput = 1 * Unit.kFLOPs.value();
 	double length = 10 * Unit.m.value();
 	double width = 10 * Unit.m.value();
 	double height = width;

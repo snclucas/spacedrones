@@ -1,5 +1,6 @@
 package org.spacedrones.universe.dataprovider;
 
+import org.spacedrones.components.Identifiable;
 import org.spacedrones.exceptions.SpacecraftNotFoundException;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.Spacecraft;
@@ -8,13 +9,14 @@ import org.spacedrones.utils.Utils;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 
 public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 	
-	private final Map<String,Spacecraft> spacecraftInUniverse = new HashMap<>();
+	private final Map<String,Identifiable> objectsInUniverse = new HashMap<>();
 	private final Map<String,Coordinates> spacecraftLocationInUniverse = new HashMap<>();
 	private final Map<String,Double[]> spacecraftVelocityInUniverse = new HashMap<>();
 
@@ -25,9 +27,16 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 
 	@Override
 	public void addSpacecraft(Spacecraft spacecraft, Coordinates coordinates) {
-		spacecraftInUniverse.put(spacecraft.getId(), spacecraft);
+		objectsInUniverse.put(spacecraft.getId(), spacecraft);
 		spacecraftLocationInUniverse.put(spacecraft.getId(), coordinates);
 		spacecraftVelocityInUniverse.put(spacecraft.getId(), new Double[]{0.0, 0.0, 0.0});
+	}
+
+	@Override
+	public void addComponent(Identifiable object, Coordinates coordinates) {
+		objectsInUniverse.put(object.getId(), object);
+		spacecraftLocationInUniverse.put(object.getId(), coordinates);
+		spacecraftVelocityInUniverse.put(object.getId(), new Double[]{0.0, 0.0, 0.0});
 	}
 
 	
@@ -80,14 +89,24 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 
 
 	@Override
-	public Map<String, Spacecraft> getAllSpacecraft() {
-		return spacecraftInUniverse;
+	public List<Spacecraft> getAllSpacecraft() {
+		return objectsInUniverse.entrySet()
+            .stream()
+            .filter(Spacecraft.class::isInstance)
+            .map(Spacecraft.class::cast)
+            .collect(Collectors.toList());
 	}
 
 
 	@Override
 	public Spacecraft getSpacecraftByIdent(String ident) {
-		return spacecraftInUniverse.get(ident);
+	  Identifiable possibleSpacecraft = objectsInUniverse.get(ident);
+	  if(possibleSpacecraft instanceof Spacecraft) {
+	    return (Spacecraft)possibleSpacecraft;
+    }
+    else {
+	    return null;
+    }
 	}
 
 }

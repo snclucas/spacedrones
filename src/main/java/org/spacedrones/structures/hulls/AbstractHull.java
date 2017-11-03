@@ -127,7 +127,7 @@ public abstract class AbstractHull extends AbstractBusComponent implements Hull 
 	}
 	
 	@Override
-	public void tick() {
+	public void tick(double dt) {
 		System.out.println(this.getName() + " tick!");
 	}
 

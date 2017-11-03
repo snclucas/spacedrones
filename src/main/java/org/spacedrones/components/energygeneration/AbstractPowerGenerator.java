@@ -30,10 +30,9 @@ public abstract class AbstractPowerGenerator extends AbstractBusComponent implem
 	public double getMaximumPowerOutput() {
 		return maxPower;
 	}
-	
-	@Override
-	public void tick() {
 
+	@Override
+	public void tick(double dt) {
 	}
 	
 }

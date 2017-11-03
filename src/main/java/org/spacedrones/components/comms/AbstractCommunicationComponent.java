@@ -144,10 +144,9 @@ public abstract class AbstractCommunicationComponent extends AbstractBusComponen
 		String replyMessage = "Message recieved by comm device: " + getName() + "\n " + message.getMessage();
 		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
 	}
-	
-	
+
 	@Override
-	public void tick() {
+	public void tick(double dt) {
 	}
 
 }

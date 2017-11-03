@@ -67,7 +67,7 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 	public BusRequirement callVector(EngineVector engineVector) {
 		this.requestedEngineVector = engineVector;
 		double requiredPower = getCurrentPower(Unit.MW);
-		double requiredCPUThroughput = getCurrentCPUThroughput(Unit.MFLOP);
+		double requiredCPUThroughput = getCurrentCPUThroughput(Unit.MFLOPs);
 		return new BusRequirement(requiredPower, requiredCPUThroughput);
 	}
 
@@ -106,7 +106,7 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 	@Override
 	public String describe() {
 		String description = " -- Simple Ion Engine -- \n" +
-						"Mass: " + getMass(Unit.kg) + " Kg, Volume: " + getVolume(Unit.m3) + " m3, Power: <thrust dep.> GJ/s, CPU: " + getNominalCPUThroughput(Unit.MFLOP) + " GFLOPS";
+						"Mass: " + getMass(Unit.kg) + " Kg, Volume: " + getVolume(Unit.m3) + " m3, Power: <thrust dep.> GJ/s, CPU: " + getNominalCPUThroughput(Unit.MFLOPs) + " GFLOPS";
 		description += "\n";
 		description += "   ---------------------------------------------";
 		return description;

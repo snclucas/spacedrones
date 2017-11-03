@@ -4,28 +4,25 @@ package org.spacedrones.game;
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.propulsion.thrust.ThrustingEngine;
 import org.spacedrones.physics.Unit;
-import org.spacedrones.spacecraft.AbstractSpacecraft;
-import org.spacedrones.spacecraft.Bus;
-import org.spacedrones.spacecraft.Spacecraft;
+import org.spacedrones.spacecraft.*;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.dataprovider.SpacecraftDataProvider;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
-public final class SpacecraftManager implements Manager {
+public final class SpacecraftRunManager implements SpacecraftManager, RunManager {
 
   private SpacecraftDataProvider spacecraftDataProvider;
 
   private Bus bus;
 
-  public SpacecraftManager(SpacecraftDataProvider spacecraftDataProvider) {
+  SpacecraftRunManager(SpacecraftDataProvider spacecraftDataProvider) {
     this.spacecraftDataProvider = spacecraftDataProvider;
 
   }
 
-  public void receiveHandle(AbstractSpacecraft.Handle handle) {
+  public void receiveManagerHandle(AbstractSpacecraft.Handle handle) {
     this.bus = handle.getBus();
   }
 
@@ -34,23 +31,22 @@ public final class SpacecraftManager implements Manager {
   }
 
   private void moveAllSpacecraft(double dt) {
-    for (Map.Entry<String, Spacecraft> spacecraft : spacecraftDataProvider.getAllSpacecraft().entrySet()) {
-      Spacecraft sc = spacecraft.getValue();
-      double[] velocity = spacecraftDataProvider.getSpacecraftVelocity(sc.getId());
-      Coordinates scLocation = spacecraftDataProvider.getSpacecraftLocation(sc.getId());
+    for (Spacecraft spacecraft : spacecraftDataProvider.getAllSpacecraft()) {
+      double[] velocity = spacecraftDataProvider.getSpacecraftVelocity(spacecraft.getId());
+      Coordinates scLocation = spacecraftDataProvider.getSpacecraftLocation(spacecraft.getId());
       double[] distance = distanceTraveledInDt(velocity, dt);
       scLocation.addDistance(new BigDecimal[]{new BigDecimal(distance[0]), new BigDecimal(distance[1]), new BigDecimal(distance[2])});
     }
 
     //Move the spacecraft
-    for (Spacecraft spacecraft : spacecraftDataProvider.getAllSpacecraft().values()) {
-      spacecraft.tick();
+    for (Spacecraft spacecraft : spacecraftDataProvider.getAllSpacecraft()) {
+      spacecraft.tick(dt);
       Coordinates currentLocation = spacecraftDataProvider.getSpacecraftLocation(spacecraft.getId());
       double[] currentVelocity = spacecraftDataProvider.getSpacecraftVelocity(spacecraft.getId());
 
       //System.out.println("Current velocity: " + currentVelocity[0] + " " + currentVelocity[1] + " " + currentVelocity[2]);
 
-      spacecraft.giveHandleTo(this);
+      spacecraft.giveManagerHandleTo(this);
 
       double[] dV = new double[]{0.0, 0.0, 0.0};
       List<SpacecraftBusComponent> components = bus.findComponentByType(ThrustingEngine.type);

@@ -31,7 +31,7 @@ public class SpacecraftFirmwareTest {
 		assertEquals("Number of engines should be 0", 0, engines.size());
 
 		// Register a system computer
-    SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.type);
+    SystemComputer systemComputer = ComputerFactory.getSystemComputer(BasicSystemComputer.type);
     spacecraftBus.register(systemComputer);
 
     computers = SpacecraftFirmware.getComputers(spacecraftBus);

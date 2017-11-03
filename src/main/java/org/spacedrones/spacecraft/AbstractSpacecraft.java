@@ -1,14 +1,10 @@
 package org.spacedrones.spacecraft;
 
-import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.components.computers.SystemData;
-import org.spacedrones.game.Manager;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.status.SystemStatus;
 import org.spacedrones.structures.hulls.Hull;
-
-import java.util.List;
 
 
 public abstract class AbstractSpacecraft implements Spacecraft {
@@ -65,9 +61,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 				systemsOnline = true;
 				online = true;
 				SystemData data = new SystemData("spaceraft-ident", getId());
-				
 				bus.getSystemComputer().getStorageDevice().saveData(data);
-				
 			}
 		}
 		return status;
@@ -80,16 +74,6 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	@Override
 	public Hull getHull() {
 		return hull;
-	}
-
-	//@Override
-	void addComponent(SpacecraftBusComponent component) {
-		bus.register(component);
-		component.registerBus(bus);
-	}
-
-	public List<SpacecraftBusComponent> getComponents() {
-		return bus.getComponents();
 	}
 
 	//Hull delegate methods
@@ -182,18 +166,18 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	}
 
 	@Override
-	public void tick() {
-		getComponents().forEach(c-> c.tick());
+	public void tick(double dt) {
+		bus.getComponents().forEach(c-> c.tick(dt));
 	}
 
-  public void giveHandleTo(Manager other) {
-    other.receiveHandle(new Handle());
+  public void giveManagerHandleTo(SpacecraftManager other) {
+    other.receiveManagerHandle(new Handle());
   }
 
   public class Handle {
     public Bus getBus() { return bus; }
+		public Hull getHull() { return hull; }
     private Handle() { }
   }
-
 
 }

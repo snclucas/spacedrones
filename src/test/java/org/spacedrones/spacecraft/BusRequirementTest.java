@@ -16,7 +16,7 @@ public class BusRequirementTest {
 		BusRequirement busRequirement = new BusRequirement(powerRequirement, cpuThroughputRequirement);
 		
 		assertEquals("Power from bus requirement DAO incorrect",powerRequirement, busRequirement.getPowerRequirement(Unit.W), 0.001);
-		assertEquals("CPU throughput from bus requirement DAO incorrect",cpuThroughputRequirement, busRequirement.getCPUThroughputRequirement(Unit.MFLOP), 0.001);
+		assertEquals("CPU throughput from bus requirement DAO incorrect",cpuThroughputRequirement, busRequirement.getCPUThroughputRequirement(Unit.MFLOPs), 0.001);
 		
 		
 		

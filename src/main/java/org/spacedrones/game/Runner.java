@@ -1,14 +1,16 @@
 package org.spacedrones.game;
 
 
+import org.spacedrones.spacecraft.RunManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Runner {
 
-  List<Manager> managers = new ArrayList<>();
+  List<RunManager> managers = new ArrayList<>();
 
-  public void addManager(Manager manager) {
+  public void addManager(RunManager manager) {
     managers.add(manager);
   }
 

@@ -27,10 +27,10 @@ public class EngineTest {
 	double mass = 100 * Unit.kg.value();
 	double volume = 1.0 * Unit.m3.value();
 	double nominalPower = 1 * Unit.kW.value();
-	double nominalCPU = 1 * Unit.kFLOP.value();
+	double nominalCPU = 1 * Unit.kFLOPs.value();
 
 	double maxPower = 1000 * Unit.kW.value();
-	double maxCPU = 1 * Unit.kFLOP.value();
+	double maxCPU = 1 * Unit.kFLOPs.value();
 
 	double maximumThrust = 1.04523 * Unit.kN.value(); // N
 
@@ -45,7 +45,7 @@ public class EngineTest {
 
 		//Check the engine set up
 		assertEquals("Engine power not set correctly", nominalPower, engine.getNominalPower(Unit.W), 0.001);
-		assertEquals("Engine CPU not set correctly", nominalCPU, engine.getNominalCPUThroughput(Unit.MFLOP), 0.001);
+		assertEquals("Engine CPU not set correctly", nominalCPU, engine.getNominalCPUThroughput(Unit.MFLOPs), 0.001);
 		assertEquals("Engine mass not set correctly", mass, engine.getMass(Unit.kg), 0.001);
 		assertEquals("Engine volume not set correctly", volume, engine.getVolume(Unit.m3), 0.001);
 		assertEquals("Engine power level not set correctly", 0.0, engine.getPowerLevel(), 0.001);

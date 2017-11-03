@@ -4,7 +4,6 @@ import org.spacedrones.components.BusCommunicator;
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.software.Software;
-import org.spacedrones.spacecraft.Bus;
 import org.spacedrones.status.SystemStatusMessage;
 
 public interface Computer extends SpacecraftBusComponent, BusCommunicator  {
@@ -23,7 +22,4 @@ public interface Computer extends SpacecraftBusComponent, BusCommunicator  {
 	SystemStatusMessage loadSoftware(Software software);
 
 	double getMaxCPUThroughput();
-
-	void registerSpacecraftBus(Bus bus);
-
 }

@@ -29,9 +29,8 @@ public class SensorArrayTest {
 		assertEquals("Sensor category incorrect", Sensor.category, linearSensor.category());
 		assertEquals("Sensor type " + linearSensor.describe() + " incorrect", LinearSensorArray.type, linearSensor.type());
 		assertEquals("Sensor gain incorrect (linear array)", gainPerElement*numberOfSensorElements, linearSensor.getSensorGain(), 0.0001);
-		assertEquals("Sensor detection threshol incorrect (linear array)", signalDetectionThreshold, linearSensor.getSensorThreshold(), 0.0001);
-		
-		
+		assertEquals("Sensor detection threshold incorrect (linear array)", signalDetectionThreshold, linearSensor.getSensorThreshold(), 0.0001);
+
 		assertEquals("Sensor mass incorrect (linear array)", data.getBusComponentSpecification().getMass(Unit.kg)*numberOfSensorElements, linearSensor.getMass(Unit.kg), 0.0001);
 		assertEquals("Sensor volume incorrect (linear array)", data.getBusComponentSpecification().getVolume(Unit.m3)*numberOfSensorElements, linearSensor.getVolume(Unit.m3), 0.0001);
 	}
@@ -53,7 +52,7 @@ public class SensorArrayTest {
     assertEquals("Sensor type " + fractalSensor.describe() + " incorrect", FractalSensorArray.type, fractalSensor.type());
 
 		assertEquals("Sensor gain incorrect (fractal array)", gainPerElement*numberOfSensorElements, fractalSensor.getSensorGain(), 0.0001);
-		assertEquals("Sensor detection threshol incorrect (fractal array)", signalDetectionThreshold, fractalSensor.getSensorThreshold(), 0.0001);
+		assertEquals("Sensor detection threshold incorrect (fractal array)", signalDetectionThreshold, fractalSensor.getSensorThreshold(), 0.0001);
 		
 		
 		assertEquals("Sensor mass incorrect (fractal array)", data.getBusComponentSpecification().getMass(Unit.kg)*numberOfSensorElements, fractalSensor.getMass(Unit.kg), 0.0001);

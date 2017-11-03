@@ -9,7 +9,6 @@ import org.spacedrones.components.computers.ComputerFactory;
 import org.spacedrones.components.computers.SystemComputer;
 import org.spacedrones.components.energygeneration.PowerGenerationFactory;
 import org.spacedrones.components.energygeneration.PowerGenerator;
-import org.spacedrones.components.energygeneration.SimpleSolarArray;
 import org.spacedrones.components.energygeneration.SubspacePowerExtractor;
 import org.spacedrones.components.propulsion.EngineFactory;
 import org.spacedrones.components.propulsion.thrust.FuelConsumingEngine;
@@ -45,21 +44,20 @@ public class SpacecraftFactory {
 		switch (spacecraftType) {
 			
 		case SHUTTLE:
-			Hull hull = HullFactory.getHull(SHUTTLE);
+			Hull hull = HullFactory.getHull("Shuttle");
+			SpacecraftBuildManager spacecraftBuildManager = new SpacecraftBuildManager(SHUTTLE, hull);
 			
-			Spacecraft spacecraft = new SimpleSpacecraft(SHUTTLE, Configuration.getUUID(), hull, spacecraftBus);
-			
-			SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.type);
-			SpacecraftBuildManager.addComponent(spacecraft, systemComputer);
+			SystemComputer systemComputer = ComputerFactory.getSystemComputer(BasicSystemComputer.type);
+			spacecraftBuildManager.addComponent(systemComputer);
 			
 			//PropulsionManagementSoftware engineManagementSoftware = new PropulsionManagementSoftware("Test EngineManagementSoftware", systemComputer);
 			//systemComputer.loadSoftware(engineManagementSoftware);
 			
 			PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.type);
-			SpacecraftBuildManager.addComponent(spacecraft, powerGenerator);
+      spacecraftBuildManager.addComponent(powerGenerator);
 			
 			Sensor sensor = SensorFactory.getSensor(LinearSensorArray.type, SensorType.RADAR, 1);
-			SpacecraftBuildManager.addComponent(spacecraft, sensor);
+      spacecraftBuildManager.addComponent(sensor);
 			
 			
 			double tankCapacity = 100 * Unit.l.value();
@@ -70,29 +68,18 @@ public class SpacecraftFactory {
 			FuelSubSystem fuelDeliverySystem = FuelSubSystemFactory.getFuelSubsystem(
 					FuelSubSystem.BASIC_FUEL_SUBSYSTEM, FuelSubSystem.PROPULSION_FUEL_SUBSYSTEM);
 			fuelDeliverySystem.addFuelTank(tank);
-			SpacecraftBuildManager.addComponent(spacecraft, fuelDeliverySystem);
-			SpacecraftBuildManager.addComponent(spacecraft, tank);
+      spacecraftBuildManager.addComponent(fuelDeliverySystem);
+      spacecraftBuildManager.addComponent(tank);
 			
 			FuelConsumingEngine engine = (FuelConsumingEngine)EngineFactory.getEngine(SimpleThruster.type, false);
 			engine.setFuelSubSystem(fuelDeliverySystem);
-			SpacecraftBuildManager.addComponent(spacecraft, engine);
+      spacecraftBuildManager.addComponent(engine);
 			
 			CommunicationComponent commDevice = CommunicatorDeviceFactory.getCommunicator(RadioCommunicator.type);
-			SpacecraftBuildManager.addComponent(spacecraft, commDevice);
+      spacecraftBuildManager.addComponent(commDevice);
 			
-			return spacecraft;
-		case SIMPLE_SATELITE:
-			Hull satHull = HullFactory.getHull("SimpleSatelite");
-			
-			Spacecraft sat = new SimpleSpacecraft("SimpleSatelite", Configuration.getUUID(), satHull, spacecraftBus);
-			
-			SystemComputer satSystemComputer = ComputerFactory.getComputer(BasicSystemComputer.type);
-			SpacecraftBuildManager.addComponent(sat, satSystemComputer);
-			
-			PowerGenerator simpleSolarCell = PowerGenerationFactory.getPowerGenerator(SimpleSolarArray.type);
-			SpacecraftBuildManager.addComponent(sat, simpleSolarCell);
-			
-			return sat;
+			return spacecraftBuildManager.getSpacecraft();
+
 		default:
 			throw new InvalidParameterException("No such spacecraft.");
 			

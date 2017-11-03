@@ -86,7 +86,7 @@ public abstract class AbstractThrustingEngine extends AbstractEngine implements 
 	
 	@Override
 	public SystemStatus runDiagnostics(int level) {
-		return thrustProfile.runDiagnostics(level);
+		return null;
 	}
 
 }

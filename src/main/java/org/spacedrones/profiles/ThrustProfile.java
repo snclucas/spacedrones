@@ -1,10 +1,9 @@
 package org.spacedrones.profiles;
 
-import org.spacedrones.components.Diagnosable;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.status.StatusProvider;
 
-public interface ThrustProfile extends Diagnosable, StatusProvider {
+public interface ThrustProfile extends StatusProvider {
 	TypeInfo category = new TypeInfo("ThrustProfile");
 	TypeInfo type = category;
 

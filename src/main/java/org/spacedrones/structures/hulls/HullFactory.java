@@ -14,7 +14,7 @@ public class HullFactory {
 	public static Hull getHull(String hullType){
 		if(hullType.equalsIgnoreCase("Shuttle")){			
 			double nominalPower = 1 * Unit.kW.value();
-			double nominalCPUThroughput = 1 * Unit.kFLOP.value();
+			double nominalCPUThroughput = 1 * Unit.kFLOPs.value();
 
 			double length = 10 * Unit.m.value();
 			double width = 6 * Unit.m.value();
@@ -34,7 +34,7 @@ public class HullFactory {
 		}
 		if(hullType.equalsIgnoreCase("SimpleSatelite")){			
 			double nominalPower = 0 * Unit.kW.value();
-			double nominalCPUThroughput = 0 * Unit.kFLOP.value();
+			double nominalCPUThroughput = 0 * Unit.kFLOPs.value();
 
 			double length = 10 * Unit.m.value();
 			double width = 5 * Unit.m.value();

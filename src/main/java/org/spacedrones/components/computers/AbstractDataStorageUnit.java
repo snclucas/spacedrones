@@ -34,6 +34,7 @@ public abstract class AbstractDataStorageUnit extends AbstractBusComponent imple
 
 
 	@Override
-	public void tick() {
+	public void tick(double dt) {
 	}
+
 }

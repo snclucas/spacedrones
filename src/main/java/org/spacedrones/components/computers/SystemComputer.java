@@ -8,6 +8,7 @@ import org.spacedrones.components.propulsion.Engine;
 import org.spacedrones.exceptions.ComponentConfigurationException;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.software.MessageMediator;
+import org.spacedrones.spacecraft.Bus;
 import org.spacedrones.spacecraft.BusRequirement;
 import org.spacedrones.status.SystemStatusMessage;
 
@@ -19,7 +20,7 @@ public interface SystemComputer extends Computer {
 
 	double getUniversalTime();
 
-	void registerComponent(SpacecraftBusComponent component);
+	void registerBus(Bus bus);
 
 	SystemStatusMessage requestOperation(SpacecraftBusComponent component, BusRequirement busRequirement);
 
@@ -46,4 +47,5 @@ public interface SystemComputer extends Computer {
 	List<SystemComputer> getComputers();
 	List<CommunicationComponent> getCommunicationDevices();
 
+	String getVesselIdent();
 }

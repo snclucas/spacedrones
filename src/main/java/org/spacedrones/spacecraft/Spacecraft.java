@@ -1,16 +1,14 @@
 package org.spacedrones.spacecraft;
 
-import org.spacedrones.components.Diagnosable;
 import org.spacedrones.components.Identifiable;
 import org.spacedrones.components.Onlineable;
 import org.spacedrones.components.Tickable;
-import org.spacedrones.game.Manager;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.status.StatusProvider;
 import org.spacedrones.structures.hulls.Hull;
 
 
-public interface Spacecraft extends StatusProvider, Onlineable, Diagnosable, Tickable, Identifiable {
+public interface Spacecraft extends StatusProvider, Onlineable, Tickable, Identifiable {
 
 	double getMass(Unit unit);
 	double getLength(Unit unit);
@@ -20,6 +18,6 @@ public interface Spacecraft extends StatusProvider, Onlineable, Diagnosable, Tic
 
 	Hull getHull();
 
-	void giveHandleTo(Manager manager);
+	void giveManagerHandleTo(SpacecraftManager manager);
 
 }

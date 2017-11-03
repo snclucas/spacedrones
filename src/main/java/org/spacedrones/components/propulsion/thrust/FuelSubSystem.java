@@ -157,8 +157,7 @@ public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBus
 
 
 	@Override
-	public void tick() {
-	
+	public void tick(double dt) {
 	}
 
 }

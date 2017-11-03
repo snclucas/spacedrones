@@ -10,7 +10,7 @@ public class SubSpaceCommunicator extends AbstractCommunicationComponent {
   public static TypeInfo type = new TypeInfo("SubSpaceCommunicator");
 	
 
-	public SubSpaceCommunicator(String name, BusComponentSpecification busResourceSpecification, Model propagationModel) {
+	SubSpaceCommunicator(String name, BusComponentSpecification busResourceSpecification, Model propagationModel) {
 		super(name, busResourceSpecification, propagationModel);
 	}
 

@@ -7,7 +7,7 @@ public class LiquidStorageTank extends AbstractFuelStorageTank {
 	public static TypeInfo type = new TypeInfo("LiquidStorageTank");
 
 
-	public LiquidStorageTank(String name, BusComponentSpecification busResourceSpecification, double capacity) {
+	LiquidStorageTank(String name, BusComponentSpecification busResourceSpecification, double capacity) {
 		super(name, busResourceSpecification, capacity);
 	}
 

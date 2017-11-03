@@ -53,10 +53,10 @@ public class TypeInfoTest {
     assertEquals("", "SystemComputer", BasicSystemComputer.category.toString());
 		assertEquals("", "BasicSystemComputer", BasicSystemComputer.type.toString());
 
-    assertEquals("", "SystemComputer", new BasicSystemComputer("Test", null,
+    assertEquals("", "SystemComputer", new BasicSystemComputer("Test",
 						TestObject.getEmptyBusCompSpec(), 0.0).category().toString());
 
-    assertEquals("", "BasicSystemComputer", new BasicSystemComputer("Test", null,
+    assertEquals("", "BasicSystemComputer", new BasicSystemComputer("Test",
             TestObject.getEmptyBusCompSpec(), 0.0).type().toString());
 
 

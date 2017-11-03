@@ -3,9 +3,7 @@ package org.spacedrones.components.computers;
 import org.spacedrones.components.AbstractBusComponent;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
-import org.spacedrones.exceptions.ComponentConfigurationException;
 import org.spacedrones.software.Software;
-import org.spacedrones.spacecraft.Bus;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
 import org.spacedrones.status.SystemStatusMessage;
@@ -16,7 +14,6 @@ import java.util.Map;
 public abstract class AbstractComputer extends AbstractBusComponent implements Computer {
 
 	private boolean online;
-  private Bus spacecraftBus;
 	private final Map<TypeInfo, Software> loadedSoftware;
 
   private final double maxCPUThroughput;
@@ -38,15 +35,6 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
   public double getMaxCPUThroughput() {
     return maxCPUThroughput;
   }
-
-  @Override
-	public void registerSpacecraftBus(Bus spacecraftBus) {
-		this.spacecraftBus = spacecraftBus;
-	}
-	
-	public SystemComputer getSystemComputer() {
-		return getSpacecraftBus().getSystemComputer();
-	}
 
 	@Override
 	public SystemStatusMessage loadSoftware(Software software) {
@@ -72,19 +60,9 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
     return loadedSoftware.size() > 0;
   }
 
-	//@Override
-	public Bus getSpacecraftBus() {
-	  if(spacecraftBus != null) {
-      return spacecraftBus;
-    }
-    else {
-	    throw new ComponentConfigurationException("Computer " + this.getName() + " is not registreed with the bus");
-    }
-	}
-
-	@Override
-	public void tick() {
-	}
+  @Override
+  public void tick(double dt) {
+  }
 
   @Override
   public boolean isOnline() {
@@ -100,15 +78,12 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
     //SystemStatus systemStatus = super.online();
     SystemStatus systemStatus = new SystemStatus(this);
 
-    if(getSpacecraftBus() == null) {
-      systemStatus.addSystemMessage("No spacecraft bus found.", getUniversalTime(), Status.CRITICAL);
-    }
-
     if(hasSoftware()) {
       systemStatus.addSystemMessage("No interface software loaded", getUniversalTime(), Status.WARNING);
     }
     return systemStatus;
   }
+
 
   // ----- Taxonomy
 

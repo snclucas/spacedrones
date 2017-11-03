@@ -20,9 +20,9 @@ public class SpacecraftComponentDataTest {
 		double length = 1.5 * Unit.m.value();
 		
 		double nominalPower = 1.5 * Unit.W.value();
-		double nominalCPU = 4.5 * Unit.MFLOP.value();		
+		double nominalCPU = 4.5 * Unit.MFLOPs.value();
 		double maxPower = 1.5 * Unit.W.value();
-		double maxCPU = 4.5 * Unit.MFLOP.value();
+		double maxCPU = 4.5 * Unit.MFLOPs.value();
 		
 		double[] values = new double[]{100.34, 34.45};
 		

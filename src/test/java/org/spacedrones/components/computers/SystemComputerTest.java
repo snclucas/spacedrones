@@ -2,7 +2,6 @@ package org.spacedrones.components.computers;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.components.energygeneration.PowerGenerator;
 import org.spacedrones.components.energygeneration.SubspacePowerExtractor;
@@ -19,7 +18,7 @@ public class SystemComputerTest {
 	private double mass = 25.0 * Unit.kg.value();
 	private double volume = 1.0 * Unit.m3.value();
 	private double nominalPower = 1 * Unit.kW.value();
-	private double nominalCPU = 10 * Unit.kFLOP.value();
+	private double nominalCPU = 10 * Unit.kFLOPs.value();
 	private double maximumPower = 1 * Unit.MW.value();
 	private double maximumCPU = nominalCPU;
 	boolean vectored = false;
@@ -37,7 +36,7 @@ public class SystemComputerTest {
 		double arrayArea = 1 * Unit.m.value() * 10 * Unit.m.value();
 		double efficiency = 75 * Unit.percent.value();
 		
-		SystemComputer computer = new BasicSystemComputer("Test computer", spacecraftBus, busSpecs, 10 * Unit.GFLOP.value());
+		SystemComputer computer = new BasicSystemComputer("Test computer", busSpecs, 10 * Unit.GFLOPs.value());
 		spacecraftBus.register(computer);
 		
 		BusComponentSpecification powerGeneratorBusSpecs = new BusComponentSpecification(
@@ -45,7 +44,7 @@ public class SystemComputerTest {
 				new OperationalSpecification(0, nominalCPU, 0, maximumCPU));
 		
 		PowerGenerator powerGenerator = new SubspacePowerExtractor("Test power generator", powerGeneratorBusSpecs, arrayArea, efficiency);
-		spacecraftBus.register((SpacecraftBusComponent)powerGenerator);
+		spacecraftBus.register(powerGenerator);
 	}
 
 	@Test
@@ -59,15 +58,15 @@ public class SystemComputerTest {
 		assertEquals("System computer should have OK status", true, systemStatus.isOK());
 		assertEquals("Computer current power should be " + busSpecs.getNominalPower(Unit.W) + " (online)", busSpecs.getNominalPower(Unit.W), computer.getCurrentPower(Unit.W), 0.00001);
 
-		BusRequirement busRequirement = new BusRequirement(100 * Unit.W.value(), 100 * Unit.MFLOP.value());
+		BusRequirement busRequirement = new BusRequirement(100 * Unit.W.value(), 100 * Unit.MFLOPs.value());
 		SystemStatusMessage message = computer.requestOperation(computer, busRequirement);
 		assertEquals("Should be permitted", Status.PERMITTED, message.getStatus());
 
-		busRequirement = new BusRequirement(1100 * Unit.W.value(), 100 * Unit.MFLOP.value());
+		busRequirement = new BusRequirement(1100 * Unit.W.value(), 100 * Unit.MFLOPs.value());
 		message = computer.requestOperation(computer, busRequirement);
 		assertEquals("Should be NOT_ENOUGH_POWER", Status.NOT_ENOUGH_POWER, message.getStatus());
 		
-		busRequirement = new BusRequirement(110 * Unit.W.value(), 10 * Unit.GFLOP.value());
+		busRequirement = new BusRequirement(110 * Unit.W.value(), 10 * Unit.GFLOPs.value());
 		message = computer.requestOperation(computer, busRequirement);
 		assertEquals("Should be NOT_ENOUGH_GPU", Status.NOT_ENOUGH_CPU, message.getStatus());
 	}
@@ -78,8 +77,8 @@ public class SystemComputerTest {
 	public void testSystemComputer() {
 
 
-		SystemComputer computer = new BasicSystemComputer("Test computer", spacecraftBus, busSpecs,
-				10 * Unit.GFLOP.value());
+		SystemComputer computer = new BasicSystemComputer("Test computer", busSpecs,
+				10 * Unit.GFLOPs.value());
 		computer.registerBus(spacecraftBus);
 
 

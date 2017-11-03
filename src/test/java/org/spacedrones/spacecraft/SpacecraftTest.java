@@ -3,10 +3,6 @@ package org.spacedrones.spacecraft;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.spacedrones.components.computers.BasicSystemComputer;
-import org.spacedrones.components.computers.ComputerFactory;
-import org.spacedrones.components.computers.SystemComputer;
-import org.spacedrones.physics.Unit;
 import org.spacedrones.status.SystemStatus;
 import org.spacedrones.structures.hulls.Hull;
 import org.spacedrones.structures.hulls.HullFactory;
@@ -17,11 +13,12 @@ import static org.junit.Assert.assertEquals;
 
 public class SpacecraftTest {
 	
-	Hull hull = HullFactory.getHull("Shuttle");
-	Spacecraft spacecraft = new SimpleSpacecraft("Test spacecraft", "1", hull, new SpacecraftBus());
+	private Hull hull = HullFactory.getHull("Shuttle");
 
 	@Test
 	public void testSpacecraft() {
+    Spacecraft spacecraft = SpacecraftFactory.getSpacecraft("Shuttle");
+
 		// Should fail to online (Critical status: No system computer found! Aborting spacecraft onlining.)
 		SystemStatus systemStatus = spacecraft.online();
 		
@@ -29,18 +26,7 @@ public class SpacecraftTest {
 		assertEquals(false, systemStatus.isOK());
 		assertEquals(true, systemStatus.hasCriticalMessages());
 		assertEquals(false, systemStatus.hasWarningMessages());
-		
-		SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.type);
-		SpacecraftBuildManager.addComponent(spacecraft, systemComputer);
-		
-		systemStatus = spacecraft.online();
-		
-		assertEquals(true, spacecraft.isOnline());
-		assertEquals(true, systemStatus.isOK());
-		assertEquals(false, systemStatus.hasCriticalMessages());
-		assertEquals(false, systemStatus.hasWarningMessages());
 
-		System.out.println(spacecraft.getMass(Unit.kg));
 
 	}
 	

@@ -38,9 +38,9 @@ public class BusRequirementSpecificationTest {
 		
 		
 		double nominalPower = 1.5 * Unit.W.value();
-		double nominalCPU = 4.5 * Unit.MFLOP.value();		
+		double nominalCPU = 4.5 * Unit.MFLOPs.value();
 		double maxPower = 1.5 * Unit.W.value();
-		double maxCPU = 4.5 * Unit.MFLOP.value();
+		double maxCPU = 4.5 * Unit.MFLOPs.value();
 		
 		OperationalSpecification operationalSpecification = 
 				new OperationalSpecification(nominalPower, nominalCPU, maxPower, maxCPU);
@@ -57,9 +57,9 @@ public class BusRequirementSpecificationTest {
 		assertEquals("Width from physicalSpecification incorrect", width, busComponentSpecification.getWidth(Unit.m), 0.001);
 		
 		assertEquals("Nominal power from operationalSpecification incorrect", nominalPower, busComponentSpecification.getNominalPower(Unit.W), 0.001);
-		assertEquals("Nominal CPU from operationalSpecification incorrect", nominalCPU, busComponentSpecification.getNominalCPUThroughout(Unit.MFLOP), 0.001);
+		assertEquals("Nominal CPU from operationalSpecification incorrect", nominalCPU, busComponentSpecification.getNominalCPUThroughout(Unit.MFLOPs), 0.001);
 		assertEquals("Max power from operationalSpecification incorrect", maxPower, busComponentSpecification.getMaximumOperationalPower(Unit.W), 0.001);
-		assertEquals("Max CPU from operationalSpecification incorrect", maxCPU, busComponentSpecification.getMaximumOperationalCPUThroughput(Unit.MFLOP), 0.001);
+		assertEquals("Max CPU from operationalSpecification incorrect", maxCPU, busComponentSpecification.getMaximumOperationalCPUThroughput(Unit.MFLOPs), 0.001);
 				
 		
 		mass = 10.5 * Unit.kg.value();
@@ -76,9 +76,9 @@ public class BusRequirementSpecificationTest {
 		
 		
 		nominalPower = 10.5 * Unit.W.value();
-		nominalCPU = 40.5 * Unit.MFLOP.value();
+		nominalCPU = 40.5 * Unit.MFLOPs.value();
 		maxPower = 10.5 * Unit.W.value();
-		maxCPU = 40.5 * Unit.MFLOP.value();
+		maxCPU = 40.5 * Unit.MFLOPs.value();
 		
 		busComponentSpecification.setNominalPower(nominalPower);
 		busComponentSpecification.setNominalCPUThroughout(nominalCPU);
@@ -93,10 +93,10 @@ public class BusRequirementSpecificationTest {
 		assertEquals("Width from physicalSpecification incorrect", width, busComponentSpecification.getWidth(Unit.m), 0.001);
 		
 		assertEquals("Nominal power from operationalSpecification incorrect", nominalPower, busComponentSpecification.getNominalPower(Unit.W), 0.001);
-		assertEquals("Nominal CPU from operationalSpecification incorrect", nominalCPU, busComponentSpecification.getNominalCPUThroughout(Unit.MFLOP), 0.001);
+		assertEquals("Nominal CPU from operationalSpecification incorrect", nominalCPU, busComponentSpecification.getNominalCPUThroughout(Unit.MFLOPs), 0.001);
 		assertEquals("Max power from operationalSpecification incorrect", maxPower, busComponentSpecification.getMaximumOperationalPower(Unit.W
 		), 0.001);
-		assertEquals("Max CPU from operationalSpecification incorrect", maxCPU, busComponentSpecification.getMaximumOperationalCPUThroughput(Unit.MFLOP), 0.001);
+		assertEquals("Max CPU from operationalSpecification incorrect", maxCPU, busComponentSpecification.getMaximumOperationalCPUThroughput(Unit.MFLOPs), 0.001);
 	}
 	
 

@@ -22,7 +22,7 @@ public class PowerGenerationFactory extends DataFactory {
 			return solarArray;
 		}
 		else if(powerGenerationType.equals(SubspacePowerExtractor.type)){
-			double arrayArea = 1.0* Unit.m.value() * 15 * Unit.m.value();	
+			double arrayArea = 10.0* Unit.m.value() * 150 * Unit.m.value();
 			double efficiency = 75 * Unit.percent.value();
 			
 			PowerGenerator solarArray = 

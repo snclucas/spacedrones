@@ -2,22 +2,16 @@ package org.spacedrones.components;
 
 import org.spacedrones.components.computers.SystemComputer;
 import org.spacedrones.physics.Unit;
-import org.spacedrones.spacecraft.Bus;
 import org.spacedrones.status.StatusProvider;
+import org.spacedrones.status.SystemStatus;
 import org.spacedrones.status.SystemStatusMessage;
 
-public interface SpacecraftBusComponent extends PhysicalComponent, Tickable, Diagnosable, StatusProvider, Onlineable, BusCommunicator {
-	//TypeInfo category = new TypeInfo("SpacecraftBusComponent");
-	//TypeInfo type = category;
-
-	void registerBus(Bus bus);
+public interface SpacecraftBusComponent extends PhysicalComponent, Tickable, StatusProvider, Onlineable, BusCommunicator {
 
 	double getNominalPower(Unit unit);
-	
 	double getNominalCPUThroughput(Unit unit);
 	
 	double getMaximumOperationalPower(Unit unit);
-
 	double getMaximumOperationalCPUThroughput(Unit unit);
 
 	double getCurrentPower(Unit unit);
@@ -26,8 +20,8 @@ public interface SpacecraftBusComponent extends PhysicalComponent, Tickable, Dia
 	SystemComputer getSystemComputer();
 	
 	SystemStatusMessage registerSystemComputer(SystemComputer systemComputer);
-
-	boolean isOnSpacecraftBus();
 	
 	double getUniversalTime();
+
+	SystemStatus runDiagnostics(int level);
 }

@@ -65,7 +65,7 @@ public class FuelStorageTankTest {
 		
 		
 		assertEquals("Nominal and operating power for fuel tank not equal", testCryoTank.getNominalPower(Unit.MW), testCryoTank.getCurrentPower(Unit.MW), 0.0001);
-		assertEquals("Nominal and operating CPU for fuel tank not equal", testCryoTank.getNominalCPUThroughput(Unit.MFLOP), testCryoTank.getCurrentCPUThroughput(Unit.MFLOP), 0.0001);
+		assertEquals("Nominal and operating CPU for fuel tank not equal", testCryoTank.getNominalCPUThroughput(Unit.MFLOPs), testCryoTank.getCurrentCPUThroughput(Unit.MFLOPs), 0.0001);
 	}
 
 

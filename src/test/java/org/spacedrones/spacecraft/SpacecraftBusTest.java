@@ -33,7 +33,7 @@ public class SpacecraftBusTest {
 		assertEquals("There should be no bus components", 0, spacecraftBus.getComponents().size());
 		assertNull(spacecraftBus.getSystemComputer());
 		
-		SystemComputer computer = ComputerFactory.getComputer(BasicSystemComputer.type);
+		SystemComputer computer = ComputerFactory.getSystemComputer(BasicSystemComputer.type);
 		spacecraftBus.register(computer);
 		assertNotNull(spacecraftBus.getSystemComputer());
 		

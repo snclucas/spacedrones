@@ -25,10 +25,10 @@ public class Unit {
 	
 	
 	//Units for CPU throughput
-	public static Unit kFLOP = new Unit(1.0e-3, Type.CPU, "kFLOP");
-	public static Unit MFLOP = new Unit(1.0, Type.CPU, "MFLOP");
-	public static Unit GFLOP = new Unit(1.0e3, Type.CPU, "GFLOP");
-	public static Unit TFLOP = new Unit(1.0e6, Type.CPU, "TFLOP");
+	public static Unit kFLOPs = new Unit(1.0e-3, Type.CPU, "kFLOPs");
+	public static Unit MFLOPs = new Unit(1.0, Type.CPU, "MFLOPs");
+	public static Unit GFLOPs = new Unit(1.0e3, Type.CPU, "GFLOPs");
+	public static Unit TFLOPs = new Unit(1.0e6, Type.CPU, "TFLOPs");
 	
 	
 	//Units for power

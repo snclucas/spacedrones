@@ -30,9 +30,7 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 	@Override
 	public List<SensorResult> activeScan(double duration, double signalStrength,
 			SignalPropagationModel propagationModel, int sensorType) {
-		
-		String spacecraftIdent = (String)(this.getSystemComputer().getSystemData("spaceraft-ident"));
-		return activeScan(spacecraftIdent, duration, signalStrength, propagationModel, sensorType);
+		return activeScan(getSystemComputer().getVesselIdent(), duration, signalStrength, propagationModel, sensorType);
 	}
 
 	private List<SensorResult> activeScan(String spacecraftIdent, double duration, double signalStrength,
@@ -59,7 +57,7 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 	}
 	
 	@Override
-	public void tick() {
+	public void tick(double dt) {
 	}
 
 	// ----- Taxonomy

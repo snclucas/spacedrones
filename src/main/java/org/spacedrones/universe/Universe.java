@@ -1,6 +1,7 @@
 package org.spacedrones.universe;
 
 import org.spacedrones.Configuration;
+import org.spacedrones.components.Identifiable;
 import org.spacedrones.components.Tickable;
 import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.sensors.SensorProfile;
@@ -14,7 +15,6 @@ import org.spacedrones.universe.dataprovider.UniverseCelestialObjectDataProvider
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Universe implements UniverseCelestialObjectDataProvider,
 		SpacecraftDataProvider, EnvironmentDataProvider, Tickable {
@@ -65,6 +65,10 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 
 	public void addSpacecraft(Spacecraft spacecraft, Coordinates coordinates) {
 		spacecraftDataProvider.addSpacecraft(spacecraft, coordinates);
+	}
+
+	public void addComponent(Identifiable object, Coordinates coordinates) {
+		spacecraftDataProvider.addComponent(object, coordinates);
 	}
 
 
@@ -120,11 +124,9 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 
 
 	@Override
-	public void tick() {
-		List<Spacecraft> allSpacecraft = spacecraftDataProvider.getAllSpacecraft()
-				.entrySet().stream()
-				.map(Map.Entry::getValue).collect(Collectors.toList());
-		allSpacecraft.forEach(Spacecraft::tick);
+	public void tick(double dt) {
+		spacecraftDataProvider.getAllSpacecraft()
+						.forEach(sc -> sc.tick(dt));
 	}
 
 	//Delegate methods
@@ -160,7 +162,7 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 
 
 	@Override
-	public Map<String, Spacecraft> getAllSpacecraft() {
+	public List<Spacecraft> getAllSpacecraft() {
 		return spacecraftDataProvider.getAllSpacecraft();
 	}
 

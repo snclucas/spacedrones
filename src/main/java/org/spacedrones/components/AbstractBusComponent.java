@@ -7,11 +7,12 @@ import org.spacedrones.exceptions.ComponentConfigurationException;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.software.Message;
 import org.spacedrones.software.SystemMessage;
-import org.spacedrones.spacecraft.Bus;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
 import org.spacedrones.status.SystemStatusMessage;
 import org.spacedrones.universe.UniverseAware;
+
+import java.util.Calendar;
 
 
 public abstract class AbstractBusComponent extends UniverseAware implements SpacecraftBusComponent {
@@ -19,7 +20,6 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
   private boolean online = false;
 	private final String name;
 	private final String id;
-	private Bus spacecraftBus;
 	private SystemComputer systemComputer;
 
 	private final BusComponentSpecification busResourceSpecification;
@@ -32,30 +32,19 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 		this.name = name;
 		this.busResourceSpecification = busSpec;
 		this.currentPower = busSpec.getNominalPower(Unit.MW);
-		this.currentCPUThroughput = busSpec.getNominalCPUThroughout(Unit.MFLOP);
+		this.currentCPUThroughput = busSpec.getNominalCPUThroughout(Unit.MFLOPs);
 		this.id = Configuration.getUUID();
 	}
 
-	@Override
-	public final boolean isOnSpacecraftBus() {
-		return spacecraftBus != null;
-	}
-
-	@Override
-	public final void registerBus(Bus bus) {
-		this.spacecraftBus = bus;
-	}
-	
 	@Override
 	public Message recieveBusMessage(Message message) {
 		String replyMessage = "Message recieved by: " + getName() + ":\n " + message.getMessage();
 		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
 	}
 
-	@Override
-	public final SystemStatusMessage registerSystemComputer(SystemComputer systemComputer) {
-		this.systemComputer = systemComputer;
-		return new SystemStatusMessage(this, this.name + " registered with " + systemComputer.getName(), getUniversalTime(), Status.INFO);
+  public final SystemStatusMessage registerSystemComputer(SystemComputer systemComputer) {
+    this.systemComputer = systemComputer;
+    return new SystemStatusMessage(this, this.name + " registered with " + systemComputer.getName(), getUniversalTime(), Status.INFO);
 	}
 
   public BusComponentSpecification getBusResourceSpecification() {
@@ -110,43 +99,26 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 		return busResourceSpecification.getMaximumOperationalCPUThroughput(unit) / unit.value();
 	}
 
-	
-	public void setMaximumOperationalCPUThroughput(double maximumOperationalCPUThroughput) {
-		busResourceSpecification.setMaximumOperationalCPUThroughput(maximumOperationalCPUThroughput);
-	}
-
-
 	@Override
 	public double getCurrentPower(Unit unit) {
 		return currentPower * (online ? 1 : 0) / unit.value();
 	}
-
 
 	@Override
 	public double getCurrentCPUThroughput(Unit unit) {
 		return currentCPUThroughput * (online ? 1 : 0) / unit.value();
 	}
 
-
 	public SystemComputer getSystemComputer() {
 		if(!isRegisteredWithSystemComputer())
 			throw new ComponentConfigurationException(this.name +
               " is not registered with the computer");
-		return spacecraftBus.getSystemComputer();
+		return systemComputer;
 	}
-
-	//@Override
-	//public SystemStatusMessage registerWithSystemComputer(SystemComputer systemComputer) {
-	//	getSystemComputer().registerSpacecraftComponents()
-	//	this.systemComputer = systemComputer;
-	//	return new SystemStatusMessage(this,getName() + " registering with systemcomputer", systemComputer.getUniversalTime(), Status.INFO);
-	//}
 	
-	
-	public boolean isRegisteredWithSystemComputer() {
+	private boolean isRegisteredWithSystemComputer() {
 		return this.systemComputer != null;
 	}
-
 
 	@Override
 	public String toString() {
@@ -168,9 +140,20 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 
 	@Override
 	public double getUniversalTime() {
-		return getSystemComputer().getUniversalTime();
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);
+		int day = cal.get(Calendar.DAY_OF_YEAR);
+		int hour = cal.get(Calendar.HOUR_OF_DAY);
+		int minute = cal.get(Calendar.MINUTE);
+		int second = cal.get(Calendar.SECOND);
+		int millisecond = cal.get(Calendar.MILLISECOND);
+
+		//Change this;
+		return ((year) + day/365.0 +
+						(hour/(365*24.0)) +
+						(minute/(365.0*24.0*60.0)) +
+						(second/(365.0*86400.0)) +
+						(millisecond/(365.0*86400000.0)));
 	}
-
-
 
 }

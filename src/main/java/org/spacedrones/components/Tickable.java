@@ -1,5 +1,5 @@
 package org.spacedrones.components;
 
 public interface Tickable {
-	void tick();
+	void tick(double dt);
 }

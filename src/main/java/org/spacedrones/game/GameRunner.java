@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 
 public class GameRunner {
 
-
 	private boolean gameRunning;
 	private int lastFpsTime;
 	private int fps;
@@ -23,8 +22,6 @@ public class GameRunner {
 
 	public void gameLoop(Universe universe, Runner runner)
 	{
-		 
-		
 		
 		long lastLoopTime = System.nanoTime();
 		final int TARGET_FPS = 1;
@@ -59,7 +56,7 @@ public class GameRunner {
 			    //System.out.println(delta);
 
 			// draw everything
-            universe.tick();
+            universe.tick(delta);
 			runner.tick(delta);
 
 			// we want each frame to take 10 milliseconds, to do this
@@ -78,14 +75,9 @@ public class GameRunner {
 
 			}
 
-
-
 		}
 
 	}
-
-
-
 
 	public static void main(String[] args) {
 		
@@ -96,9 +88,8 @@ public class GameRunner {
 
 		universe.updateSpacecraftVelocity(simpleSpacecraft.getId(), new double[]{1.5e4, 4.2e10, 23.8e2});
 
-
 		Runner runner = new Runner();
-		runner.addManager(new SpacecraftManager(universe));
+		runner.addManager(new SpacecraftRunManager(universe));
 		
 		new GameRunner(universe, runner);
 	}

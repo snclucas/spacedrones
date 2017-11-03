@@ -27,7 +27,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
   class	ObjectMeta {
   	public String id;
   	public String name;
-    public CelestialObject celestialObject;
+    CelestialObject celestialObject;
     ObjectMeta(final String id, final String name, final CelestialObject celestialObject) {
       this.id = id;
       this.name = name;
