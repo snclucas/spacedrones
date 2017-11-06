@@ -55,13 +55,6 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 	}
 
 
-	public Universe() {
-		super();
-	}
-
-
-
-
 
 	public void addSpacecraft(Spacecraft spacecraft, Coordinates coordinates) {
 		spacecraftDataProvider.addSpacecraft(spacecraft, coordinates);
@@ -81,8 +74,12 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 		return spacecraftDataProvider.getSpacecraftLocation(spacecraftIdent);
 	}
 
+  @Override
+  public Coordinates getObjectLocationInUniverse(final String ident) {
+    return spacecraftDataProvider.getObjectLocationInUniverse(ident);
+  }
 
-	public List<CelestialObject> getLocationsByType(TypeInfo type) {
+  public List<CelestialObject> getLocationsByType(TypeInfo type) {
 		return universeLocationDataProvider.getLocationsByType(type);
 	}
 

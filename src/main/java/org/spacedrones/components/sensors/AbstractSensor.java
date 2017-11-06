@@ -42,14 +42,18 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 
 	@Override
 	public final List<SensorResult> passiveScan(double duration, SensorProfile sensorProfile) {
-		String spacecraftIdent = (String)(this.getSystemComputer().getSystemData("spaceraft-ident"));
-		return passiveScan(spacecraftIdent, duration, sensorProfile);
+		return passiveScan(getIdent(), duration, sensorProfile);
 	}
 
 	private List<SensorResult> passiveScan(String spacecraftIdent, double duration, SensorProfile sensorProfile) {
 		SensorResponseMediator sensorResponseMediator = Configuration.getSensorResponseMediator();
 		return sensorResponseMediator.passiveScan(spacecraftIdent, duration, sensorProfile);
 	}
+
+  @Override
+  public String getIdent() {
+    return getSystemComputer().getId();
+  }
 
 	@Override
 	public SensorProfile getSensorProfile() {

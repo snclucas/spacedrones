@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 	
 	private final Map<String,Identifiable> objectsInUniverse = new HashMap<>();
-	private final Map<String,Coordinates> spacecraftLocationInUniverse = new HashMap<>();
-	private final Map<String,Double[]> spacecraftVelocityInUniverse = new HashMap<>();
+	private final Map<String,Coordinates> objectLocationInUniverse = new HashMap<>();
+	private final Map<String,Double[]> objectVelocityInUniverse = new HashMap<>();
 
 
 	public LocalSpacecraftDataProvider() {
@@ -28,21 +28,21 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 	@Override
 	public void addSpacecraft(Spacecraft spacecraft, Coordinates coordinates) {
 		objectsInUniverse.put(spacecraft.getId(), spacecraft);
-		spacecraftLocationInUniverse.put(spacecraft.getId(), coordinates);
-		spacecraftVelocityInUniverse.put(spacecraft.getId(), new Double[]{0.0, 0.0, 0.0});
+		objectLocationInUniverse.put(spacecraft.getId(), coordinates);
+		objectVelocityInUniverse.put(spacecraft.getId(), new Double[]{0.0, 0.0, 0.0});
 	}
 
 	@Override
 	public void addComponent(Identifiable object, Coordinates coordinates) {
 		objectsInUniverse.put(object.getId(), object);
-		spacecraftLocationInUniverse.put(object.getId(), coordinates);
-		spacecraftVelocityInUniverse.put(object.getId(), new Double[]{0.0, 0.0, 0.0});
+		objectLocationInUniverse.put(object.getId(), coordinates);
+		objectVelocityInUniverse.put(object.getId(), new Double[]{0.0, 0.0, 0.0});
 	}
 
 	
 	@Override
 	public void updateSpacecraftLocation(String spacecraftIdent, Coordinates coordinates) {
-		if(spacecraftLocationInUniverse.put(spacecraftIdent, coordinates) == null)
+		if(objectLocationInUniverse.put(spacecraftIdent, coordinates) == null)
 			throw new SpacecraftNotFoundException("Spacecraft [" + spacecraftIdent + "] is not in the Universe");
 	}
 	
@@ -50,24 +50,28 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 	@Override
 	public void updateSpacecraftVelocity(String spacecraftIdent, double[] velocity) {
 		Double[] vel = new Double[]{velocity[0], velocity[1], velocity[2]};
-		if(spacecraftVelocityInUniverse.put(spacecraftIdent, vel) == null)
+		if(objectVelocityInUniverse.put(spacecraftIdent, vel) == null)
 			throw new SpacecraftNotFoundException("Spacecraft [" + spacecraftIdent + "] is not in the Universe");
 	}
 
 	
 	@Override
 	public Coordinates getSpacecraftLocation(String spacecraftIdent) {
-		if(spacecraftLocationInUniverse.get(spacecraftIdent) == null)
+		if(objectLocationInUniverse.get(spacecraftIdent) == null)
 			throw new SpacecraftNotFoundException("Spacecraft [" + spacecraftIdent + "] is not in the Universe");
-		return spacecraftLocationInUniverse.get(spacecraftIdent);
+		return objectLocationInUniverse.get(spacecraftIdent);
 	}
-	
+
+	@Override
+	public Coordinates getObjectLocationInUniverse(final String ident) {
+		return objectLocationInUniverse.get(ident);
+	}
 	
 	@Override
 	public double[] getSpacecraftVelocity(String spacecraftIdent) {
-		if(spacecraftVelocityInUniverse.get(spacecraftIdent) == null)
+		if(objectVelocityInUniverse.get(spacecraftIdent) == null)
 			throw new SpacecraftNotFoundException("Spacecraft [" + spacecraftIdent + "] is not in the Universe");
-		Double[] vel = spacecraftVelocityInUniverse.get(spacecraftIdent);
+		Double[] vel = objectVelocityInUniverse.get(spacecraftIdent);
 		return new double[]{vel[0], vel[1], vel[2]};
 	}
 	
@@ -82,7 +86,7 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 
 	@Override
 	public Map<String,Coordinates> getSpacecraftWithinRangeOfCoordinates(Coordinates coordinates, BigDecimal range) {
-		return spacecraftLocationInUniverse.entrySet().stream()
+		return objectLocationInUniverse.entrySet().stream()
 				.filter(map -> map.getValue().equals(coordinates))
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 	}

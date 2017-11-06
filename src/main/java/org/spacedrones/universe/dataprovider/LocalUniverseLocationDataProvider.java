@@ -22,7 +22,8 @@ import java.util.stream.Collectors;
 public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvider implements UniverseCelestialObjectDataProvider {
 	
 	private final Map<String, ObjectMeta> celestialObjects;
-	private final Map<String, Coordinates> celestialObjectLocations;
+	private final Map<String, Coordinates> locations;
+	private final Map<String, double[]> relativeVelocities;
 
   class	ObjectMeta {
   	public String id;
@@ -52,14 +53,14 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
   }
 
 	public LocalUniverseLocationDataProvider() {
-		super();
 		celestialObjects = new HashMap<>();
-		celestialObjectLocations = new HashMap<>();
+		locations = new HashMap<>();
+		relativeVelocities = new HashMap<>();
 	}
 
 	@Override
 	public void addCelestialObject(String name, CelestialObject celestialObject, Coordinates coordinates) {
-		celestialObjectLocations.put(celestialObject.getId(), coordinates);
+		locations.put(celestialObject.getId(), coordinates);
     ObjectMeta meta = new ObjectMeta(celestialObject.getId(), name, celestialObject);
 		celestialObjects.put(celestialObject.getId(), meta);
 	}
@@ -78,7 +79,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 
 	@Override
 	public Coordinates getCelestialObjectCoordinatesById(String celestialObjectID) {
-		return celestialObjectLocations.get(celestialObjectID);
+		return locations.get(celestialObjectID);
 	}
 	
 
@@ -93,13 +94,27 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 		return null;
 	}
 
+  @Override
+  public void setRelativeVelocity(final String celestialObjectID, final double[] velocity) {
 
-	@Override
+  }
+
+  @Override
+  public double[] getRelativeVelocity(final String celestialObjectID, CelestialObject relativeTo) {
+    return relativeVelocities.get(celestialObjectID);
+  }
+
+  private double[] getRelativeVelocity(final String celestialObjectID) {
+    return relativeVelocities.get(celestialObjectID);
+  }
+
+
+  @Override
 	public Coordinates getCelestialObjectCoordinatesByName(String celestialObjectName) {
     for (Entry<String, ObjectMeta> me : celestialObjects.entrySet()) {
       String name = me.getValue().name;
       if (celestialObjectName.equals(name))
-        return celestialObjectLocations.get(me.getKey());
+        return locations.get(me.getKey());
     }
 		return null;
 	}
@@ -132,7 +147,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
     for (Entry<String, ObjectMeta> me : celestialObjects.entrySet()) {
       CelestialObject celestialObject = me.getValue().celestialObject;
       if (type == (celestialObject.type())) {
-        Coordinates coords = celestialObjectLocations.get(me.getKey());
+        Coordinates coords = this.locations.get(me.getKey());
         if (Utils.distanceToLocation(coords, coordinates, Unit.One).compareTo(distance) <= 0)
           locations.add(celestialObject);
       }
@@ -147,7 +162,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 		List<CelestialObject> locations = new ArrayList<>();
     for (Entry<String, ObjectMeta> me : celestialObjects.entrySet()) {
       CelestialObject celestialObject = me.getValue().celestialObject;
-      Coordinates coords = celestialObjectLocations.get(me.getKey());
+      Coordinates coords = this.locations.get(me.getKey());
       if (Utils.distanceToLocation(coords, coordinates, Unit.One).compareTo(distance) <= 0)
         locations.add(celestialObject);
     }

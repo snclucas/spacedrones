@@ -15,6 +15,7 @@ public interface SpacecraftDataProvider {
 	void addSpacecraft(Spacecraft spacecraft, Coordinates coordinates);
 	void addComponent(Identifiable object, Coordinates coordinates);
 	void updateSpacecraftLocation(String spacecraftIdent, Coordinates coordinates);
+	Coordinates getObjectLocationInUniverse(String spacecraftIdent);
 	Coordinates getSpacecraftLocation(String spacecraftIdent);
 	double[] getSpacecraftVelocity(String spacecraftIdent);
 	void updateSpacecraftVelocity(String spacecraftIdent, double[] velocity);

@@ -10,12 +10,11 @@ import org.spacedrones.software.SystemMessage;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
 import org.spacedrones.status.SystemStatusMessage;
-import org.spacedrones.universe.UniverseAware;
 
 import java.util.Calendar;
 
 
-public abstract class AbstractBusComponent extends UniverseAware implements SpacecraftBusComponent {
+public abstract class AbstractBusComponent implements SpacecraftBusComponent {
 
   private boolean online = false;
 	private final String name;

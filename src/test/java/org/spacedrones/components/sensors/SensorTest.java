@@ -8,6 +8,8 @@ import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.Universe;
 
+import java.util.List;
+
 public class SensorTest {
 
   @Test
@@ -22,10 +24,15 @@ public class SensorTest {
 
     SensorProfile sensorProfile = new SensorProfile(SensorType.OPTICAL, -9, 10);
 
-    Universe.getInstance().addComponent(sensor, new Coordinates());
+    Universe.getInstance().populate();
+    Universe.getInstance().addComponent(sensor,new Coordinates());
 
 
-    sensor.passiveScan(1, sensorProfile);
+    List<SensorResult> ss = sensor.passiveScan(1, sensorProfile);
+
+    ss.stream().forEach(s -> {
+      System.out.println(s.getName());
+    });
 
 
 
