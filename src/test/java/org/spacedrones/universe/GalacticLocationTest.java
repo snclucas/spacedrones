@@ -36,6 +36,16 @@ public class GalacticLocationTest {
 
     System.out.println(results[0] + " " + results[1]);
 
+
+    double res[] = GalacticLocation.convertEquatorialToCartesian(0.00006, 1.089009, Unit.degrees, 219.7802, Unit.Ly);
+    System.out.println(res[0] + " " + res[1] + " " + res[2]);
+
+    double res2[] = GalacticLocation.convertEquatorialToCartesian(0.000283, -19.49884, Unit.degrees, 47.9616, Unit.Ly);
+    System.out.println(res2[0] + " " + res2[1] + " " + res2[2]);
+
+    //results = GalacticLocation.convertGalacticToEquatorial(228.81250000, 87.45000000, Unit.degrees);
+    //assertEquals("", 190.12099977, results[0], 0.0001);
+    //assertEquals("", 26.40401856, results[1], 0.0001);
 	  //gLoc.convertGalacticToEquatorial();
 
 
