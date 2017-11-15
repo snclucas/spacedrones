@@ -1,10 +1,10 @@
 package org.spacedrones.utils.math;
 
+import org.spacedrones.Configuration;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-
-import org.spacedrones.Configuration;
 
 public class DistanceSolver {
 
@@ -189,7 +189,7 @@ public class DistanceSolver {
 
 
 
-	public static double[][] invert(double a[][]) {
+	public static double[][] invert(final double a[][]) {
 		int n = a.length;
 		double x[][] = new double[n][n];
 		double b[][] = new double[n][n];

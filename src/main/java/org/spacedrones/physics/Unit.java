@@ -2,7 +2,7 @@ package org.spacedrones.physics;
 
 public class Unit {
 	
-	public enum Type {DIMENTIONLESS, LENGTH, MASS, AREA, VOLUME, TIME, FORCE, POWER, CPU}
+	public enum Type {ANGLE, DIMENTIONLESS, LENGTH, MASS, AREA, VOLUME, TIME, FORCE, POWER, CPU}
 	
 	//Units for mass
 	public static Unit g = new Unit(1.0e-3, Type.MASS, "g");
@@ -64,7 +64,9 @@ public class Unit {
 	public static Unit year = new Unit(365 * 86400.0, Type.TIME, "year");
 	
 	public static Unit percent = new Unit(1.0e-2, Type.DIMENTIONLESS, "%");
-	
+
+	public static Unit degrees = new Unit(Math.PI / 180.0, Type.ANGLE, "deg");
+	public static Unit radians = new Unit(1.0, Type.ANGLE, "rad");
 	
 	private double value;
 	private Type type;

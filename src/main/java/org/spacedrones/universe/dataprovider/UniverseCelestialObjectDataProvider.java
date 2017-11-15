@@ -13,8 +13,8 @@ public interface UniverseCelestialObjectDataProvider {
 	CelestialObject getCelestialObjectById(String celestialObjectID);
 	CelestialObject getCelestialObjectByName(String celestialObjectName);
 
-	void setRelativeVelocity(String celestialObjectID, double[] velocity);
-  double[] getRelativeVelocity(String celestialObjectID);
+	//void setRelativeVelocity(String celestialObjectID, double[] velocity, CelestialObject relativeTo);
+ // double[] getRelativeVelocity(String celestialObjectID);
 
 	Coordinates getCelestialObjectCoordinatesById(String celestialObjectID);
 	Coordinates getCelestialObjectCoordinatesByName(String celestialObjectName);

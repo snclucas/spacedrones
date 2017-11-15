@@ -24,6 +24,13 @@ public class Coordinates {
 		this.location = coords;
 	}
 
+	public Coordinates(double ... coords) {
+		if(coords.length != 3)
+			throw new IllegalArgumentException("Need 3 coordinates");
+		this.location = new BigDecimal[]{new BigDecimal(coords[0]), new BigDecimal(coords[1]), new BigDecimal(coords[2])};
+	}
+
+
 	public BigDecimal[] getCoordinates() {
 		return location;
 	}

@@ -94,15 +94,15 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 		return null;
 	}
 
-  @Override
-  public void setRelativeVelocity(final String celestialObjectID, final double[] velocity) {
+  //@Override
+  //public void setRelativeVelocity(final String celestialObjectID, final double[] velocity, CelestialObject relativeTo) {
+//
+  //}
 
-  }
-
-  @Override
-  public double[] getRelativeVelocity(final String celestialObjectID, CelestialObject relativeTo) {
-    return relativeVelocities.get(celestialObjectID);
-  }
+ // @Override
+  //public double[] getRelativeVelocity(final String celestialObjectID, CelestialObject relativeTo) {
+ //   return relativeVelocities.get(celestialObjectID);
+ // }
 
   private double[] getRelativeVelocity(final String celestialObjectID) {
     return relativeVelocities.get(celestialObjectID);
