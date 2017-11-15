@@ -103,8 +103,6 @@ public class GalacticLocation extends AbstractLocation {
     return convert(l, b, iA_G_2000, unit);
   }
 
-
-
   public static double[] convertEquatorialToGalactic(double ra, double de, Unit unit) {
     return convert(ra, de, A_G_2000, unit);
   }

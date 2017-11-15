@@ -27,7 +27,7 @@ public class GalacticLocationTest {
 
     double dec2 = 4 + 41.0/60.0 + 36.0 / 3600.0;
 
-    double RA = (17 + 57.0/60.0 + 48.515 / 3600.0)*15.0;
+    double RA = Convert.RAInHoursToDegrees(17, 57, 48.515);
 
     System.out.println(RA);
 		System.out.println(dec + " " + dec2);

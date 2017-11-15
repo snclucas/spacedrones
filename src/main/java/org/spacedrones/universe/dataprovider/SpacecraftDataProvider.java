@@ -10,10 +10,12 @@ import java.util.List;
 import java.util.Map;
 
 public interface SpacecraftDataProvider {
-	List<Spacecraft> getAllSpacecraft();
-	Spacecraft getSpacecraftByIdent(String ident);
 	void addSpacecraft(Spacecraft spacecraft, Coordinates coordinates);
 	void addComponent(Identifiable object, Coordinates coordinates);
+
+	List<Spacecraft> getAllSpacecraft();
+	Spacecraft getSpacecraftByIdent(String ident);
+
 	void updateSpacecraftLocation(String spacecraftIdent, Coordinates coordinates);
 	Coordinates getObjectLocationInUniverse(String spacecraftIdent);
 	Coordinates getSpacecraftLocation(String spacecraftIdent);

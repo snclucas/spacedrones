@@ -2,6 +2,9 @@ package org.spacedrones.utils.math;
 
 public class Convert {
 
+  public static double RAInHoursToDegrees(int ra_h, int ra_m, double ra_s) {
+    return (ra_h + ra_m/60.0 + ra_s / 3600.0)*15.0;
+  }
 
   public static double hhmmssToDecimal(String hhmmss){
     String[] tokens = hhmmss.split(":");
