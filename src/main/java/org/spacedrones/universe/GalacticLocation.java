@@ -1,7 +1,6 @@
 package org.spacedrones.universe;
 
 import org.spacedrones.components.TypeInfo;
-import org.spacedrones.physics.Unit;
 
 import java.math.BigDecimal;
 
@@ -79,9 +78,9 @@ public class GalacticLocation extends AbstractLocation {
 
 
 
-  private static double[] convert(double a, double b, double[][] rotMatrix, Unit unit) {
-    a = a*unit.value();
-    b = b*unit.value();
+  private static double[] convert(double a, double b, double[][] rotMatrix) {
+    a = a * Math.PI / 180.0;
+    b = b * Math.PI / 180.0;
 
     double sb = Math.sin(b);
     double cb = Math.cos(b);
@@ -95,66 +94,59 @@ public class GalacticLocation extends AbstractLocation {
     double r2 = Math.asin(aux2) * 180. / Math.PI;
     double r1 = Math.atan2(aux1, aux0) * 180. / Math.PI;
 
-
     return new double[]{r1, r2};
   }
 
-  public static double[] convertGalacticToEquatorial(double l, double b, Unit unit) {
-    return convert(l, b, iA_G_2000, unit);
+  public static double[] convertGalacticToEquatorial(double l, double b) {
+    return convert(l, b, iA_G_2000);
   }
 
-  public static double[] convertEquatorialToGalactic(double ra, double de, Unit unit) {
-    return convert(ra, de, A_G_2000, unit);
+  public static double[] convertEquatorialToGalactic(double ra, double de) {
+    return convert(ra, de, A_G_2000);
   }
 
-  public static double[] convertHMSEquatorialToGalactic(int ra_h, int ra_m, double ra_s, double de, Unit unit) {
-    return convertDMSEquatorialToGalactic(ra_h*15.0, ra_m, ra_s, de, unit);
+  public static double[] convertHMSEquatorialToGalactic(int ra_h, int ra_m, double ra_s, double de) {
+    return convertDMSEquatorialToGalactic(ra_h*15.0, ra_m, ra_s, de);
   }
 
-  public static double[] convertHoursEquatorialToGalactic(double ra_h, double de, Unit unit) {
-    return convertEquatorialToGalactic(ra_h*15.0, de, unit);
+  public static double[] convertHoursEquatorialToGalactic(double ra_h, double de) {
+    return convertEquatorialToGalactic(ra_h*15.0, de);
   }
 
-  public static double[] convertDMSEquatorialToGalactic(double ra_d, double ra_m, double ra_s, double de, Unit unit) {
+  public static double[] convertDMSEquatorialToGalactic(double ra_d, double ra_m, double ra_s, double de) {
     double ra = ra_d + ra_m / 60.0 + ra_s / 3600.0;
-    return convert(ra, de, A_G_2000, unit);
+    return convert(ra, de, A_G_2000);
   }
 
-  public static double[] convertEquatorialToCartesian(double ra, double de, Unit angleUnit, double distance, Unit distanceUnit) {
-    ra = ra*angleUnit.value();
-    de = de*angleUnit.value();
+  public static double[] convertEquatorialToCartesian(double ra, double de, double distance) {
+    ra = ra * Math.PI / 180.0;
+    de = de * Math.PI / 180.0;
     double X = distance*Math.cos(de)*Math.cos(ra);
     double Y = distance*Math.cos(de)*Math.sin(ra);
     double Z = distance*Math.sin(de);
     return new double[]{X, Y, Z};
   }
 
-  public static double[] convertHMSEquatorialToCartesian(double ra_h, double ra_m, double ra_s, double de, Unit angleUnit, double distance, Unit distanceUnit) {
-    return convertDMSEquatorialToCartesian(ra_h*15.0, ra_m, ra_s, de, angleUnit, distance, distanceUnit);
+  public static double[] convertHMSEquatorialToCartesian(double ra_h, double ra_m, double ra_s, double de, double distance) {
+    return convertDMSEquatorialToCartesian(ra_h*15.0, ra_m, ra_s, de, distance);
   }
 
-  public static double[] convertHoursEquatorialToCartesian(double ra_h, double de, Unit angleUnit, double distance, Unit distanceUnit) {
-    return convertEquatorialToCartesian(ra_h*15.0, de, angleUnit, distance, distanceUnit);
+  public static double[] convertHoursEquatorialToCartesian(double ra_h, double de, double distance) {
+    return convertEquatorialToCartesian(ra_h*15.0, de, distance);
   }
 
-  public static double[] convertDMSEquatorialToCartesian(double ra_d, double ra_m, double ra_s, double de, Unit angleUnit, double distance, Unit distanceUnit) {
+  public static double[] convertDMSEquatorialToCartesian(double ra_d, double ra_m, double ra_s, double de, double distance) {
     double ra = ra_d + ra_m / 60.0 + ra_s / 3600.0;
-    double X = distance*distanceUnit.value()*Math.cos(de)*Math.cos(ra);
-    double Y = distance*distanceUnit.value()*Math.cos(de)*Math.sin(ra);
-    double Z = distance*distanceUnit.value()*Math.sin(de);
-    return new double[]{X, Y, Z};
+    return convertEquatorialToCartesian(ra, de, distance);
   }
 
-  public static double[] convertGalacticToCartesian(double l, double b, Unit angleUnit, double distance, Unit distanceUnit) {
-    l = l*angleUnit.value();
-    b = b*angleUnit.value();
-    double[] equatorialCoords = convertGalacticToEquatorial(l, b, angleUnit);
+  public static double[] convertGalacticToCartesian(double l, double b, double distance) {
+    l = l * Math.PI / 180.0;
+    b = b * Math.PI / 180.0;
+    double[] equatorialCoords = convertGalacticToEquatorial(l, b);
     double ra = equatorialCoords[0];
     double de = equatorialCoords[1];
-    double X = distance*distanceUnit.value()*Math.cos(de)*Math.cos(ra);
-    double Y = distance*distanceUnit.value()*Math.cos(de)*Math.sin(ra);
-    double Z = distance*distanceUnit.value()*Math.sin(de);
-    return new double[]{X, Y, Z};
+    return convertEquatorialToCartesian(ra, de, distance);
   }
 
 
@@ -171,12 +163,12 @@ public class GalacticLocation extends AbstractLocation {
   }
 
   public static GalacticLocation fromGalacticCoordinates(String name, double l, double b, double distance) {
-    double[] galCartesianCoords = convertGalacticToCartesian(l, b, Unit.degrees, distance, Unit.Ly);
+    double[] galCartesianCoords = convertGalacticToCartesian(l, b, distance);
     return new GalacticLocation(name, new Coordinates(galCartesianCoords));
   }
 
   public static GalacticLocation fromEquatorialCoordinates(String name, double ra, double de, double distance) {
-    double[] galCartesianCoords = convertEquatorialToCartesian(ra, de, Unit.degrees, distance, Unit.Ly);
+    double[] galCartesianCoords = convertEquatorialToCartesian(ra, de, distance);
     return new GalacticLocation(name, new Coordinates(galCartesianCoords));
   }
 
@@ -195,10 +187,10 @@ public class GalacticLocation extends AbstractLocation {
 
     //l=120.57, b=-51.508 -> alpha=11.360173, delta=11.336656
 
-    result = convertGalacticToEquatorial(120.57, -51.508, Unit.degrees);
+    result = convertGalacticToEquatorial(120.57, -51.508);
     System.out.println(result[0] + " " + result[1]);
 
-    result = convertEquatorialToGalactic(result[0], result[1], Unit.degrees);
+    result = convertEquatorialToGalactic(result[0], result[1]);
     System.out.println(result[0] + " " + result[1]);
 
 
@@ -209,7 +201,7 @@ public class GalacticLocation extends AbstractLocation {
 //x = -0.472 parsecs
 //y = -0.361 parsecs
 //z= -1.151 parsecs
-    result = convertHoursEquatorialToCartesian(14.4966, -62.681, Unit.degrees, 1.29, Unit.Pc );
+    result = convertHoursEquatorialToCartesian(14.4966, -62.681, 1.29);
     System.out.println(result[0] + " " + result[1] + " " + result[2]);
   }
 
