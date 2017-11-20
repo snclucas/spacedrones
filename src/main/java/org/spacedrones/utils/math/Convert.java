@@ -11,11 +11,11 @@ public class Convert {
     int hours = Integer.parseInt(tokens[0]);
     int minutes = Integer.parseInt(tokens[1]);
     double seconds = Double.parseDouble(tokens[2]);
-    return hhmmssToDecimal(hours, minutes, seconds);
+    return ddmmssToDecimal(hours, minutes, seconds);
   }
 
-  public static double hhmmssToDecimal(double hh, double mm, double ss){
-    return hh + mm/60.0 + ss/3600.0;
+  public static double ddmmssToDecimal(int dd, int mm, double ss){
+    return dd + mm/60.0 + ss/3600.0;
   }
 
   public static String decimalTohhmmss(double decimalTime){

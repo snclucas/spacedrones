@@ -1,12 +1,12 @@
 package org.spacedrones.universe;
 
-import org.spacedrones.components.TypeInfo;
+
+import org.spacedrones.physics.Unit;
+import org.spacedrones.utils.math.Convert;
 
 import java.math.BigDecimal;
 
 public class GalacticLocation extends AbstractLocation {
-  public static TypeInfo type = new TypeInfo("SimpleLocation");
-
   enum Epoch {
     J2000,
     B1950
@@ -60,13 +60,6 @@ public class GalacticLocation extends AbstractLocation {
                   {-0.0548755604, +0.4941094279, -0.8676661490},
                   {-0.8734370902, -0.4448296300, -0.1980763734},
                   {-0.4838350155, +0.7469822445, +0.4559837762}
-          };
-
-  private static double[][] A_G_2000_2 = new double[][]
-          {
-                  {-0.0548755604, -0.8734370902, -0.4838350155},
-                  {+0.4941094279, -0.4448296300, +0.7469822445},
-                  {-0.8676661490, +0.1980763734, +0.4559837762}
           };
 
   private static double[][] iA_G_2000 = new double[][]
@@ -127,8 +120,15 @@ public class GalacticLocation extends AbstractLocation {
     return new double[]{X, Y, Z};
   }
 
-  public static double[] convertHMSEquatorialToCartesian(double ra_h, double ra_m, double ra_s, double de, double distance) {
-    return convertDMSEquatorialToCartesian(ra_h*15.0, ra_m, ra_s, de, distance);
+  public static double[] convertHMSEquatorialToCartesian(int ra_h, int ra_m, double ra_s, double de, double distance) {
+    double ra_dec = 15.0* Convert.RAInHoursToDegrees(ra_h, ra_m, ra_s);
+    return convertEquatorialToCartesian(ra_dec, de, distance);
+  }
+
+  public static double[] convertHMSEquatorialToCartesian(int ra_h, int ra_m, double ra_s, int de_d, int de_m, double de_s, double distance) {
+    double ra_dec = 15.0* Convert.RAInHoursToDegrees(ra_h, ra_m, ra_s);
+    double de_dec = Convert.ddmmssToDecimal(de_d, de_m, de_s);
+    return convertEquatorialToCartesian(ra_dec, de_dec, distance);
   }
 
   public static double[] convertHoursEquatorialToCartesian(double ra_h, double de, double distance) {
@@ -150,7 +150,7 @@ public class GalacticLocation extends AbstractLocation {
   }
 
 
-  GalacticLocation(String name, Coordinates coordinates) {
+  public GalacticLocation(String name, Coordinates coordinates) {
     super(name, coordinates);
   }
 
@@ -192,6 +192,12 @@ public class GalacticLocation extends AbstractLocation {
 
     result = convertEquatorialToGalactic(result[0], result[1]);
     System.out.println(result[0] + " " + result[1]);
+
+
+//17h 45m 40.04s, −29° 00′ 28.1
+    result = convertHMSEquatorialToCartesian(17, 45, 40.04, -29, 0, 28.1, 25);
+   // result = convertEquatorialToGalactic(result[0], result[1]);
+    System.out.println(result[0] + " " + result[1] + " " + result[2]);
 
 
 //    \alpha = 14.4966 hours

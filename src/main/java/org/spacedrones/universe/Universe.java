@@ -84,8 +84,8 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 	}
 
 
-	public void addCelestialObject(String name, CelestialObject celestialObject, Coordinates coordinates) {
-		universeLocationDataProvider.addCelestialObject(name, celestialObject, coordinates);
+	public void addCelestialObject(String name, CelestialObject celestialObject, GalacticLocation location) {
+		universeLocationDataProvider.addCelestialObject(name, celestialObject, location);
 	}
 
 	public CelestialObject getCelestialObjectById(String locationID) {
@@ -97,13 +97,13 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 	}
 
   @Override
-  public Coordinates getCelestialObjectCoordinatesById(String celestialObjectID) {
-    return universeLocationDataProvider.getCelestialObjectCoordinatesById(celestialObjectID);
+  public GalacticLocation getCelestialObjectLocationById(String celestialObjectID) {
+    return universeLocationDataProvider.getCelestialObjectLocationById(celestialObjectID);
   }
 
   @Override
-  public Coordinates getCelestialObjectCoordinatesByName(String celestialObjectName) {
-    return universeLocationDataProvider.getCelestialObjectCoordinatesByName(celestialObjectName);
+  public GalacticLocation getCelestialObjectLocationByName(String celestialObjectName) {
+    return universeLocationDataProvider.getCelestialObjectLocationByName(celestialObjectName);
   }
 
 
@@ -141,8 +141,8 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 
 
 	@Override
-	public List<CelestialObject> getCelestialObjectByTypeCloserThan(TypeInfo type, Coordinates coordinates, BigDecimal distance) {
-		return universeLocationDataProvider.getCelestialObjectByTypeCloserThan(type, coordinates, distance);
+	public List<CelestialObject> getCelestialObjectByTypeCloserThan(TypeInfo type, GalacticLocation localtion, BigDecimal distance) {
+		return universeLocationDataProvider.getCelestialObjectByTypeCloserThan(type, localtion, distance);
 	}
 
 

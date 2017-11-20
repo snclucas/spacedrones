@@ -6,6 +6,7 @@ import org.spacedrones.components.sensors.SensorType;
 import org.spacedrones.physics.Constants;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.universe.Coordinates;
+import org.spacedrones.universe.GalacticLocation;
 import org.spacedrones.universe.celestialobjects.*;
 import org.spacedrones.universe.structures.SubspaceBeacon;
 import org.spacedrones.utils.Utils;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvider implements UniverseCelestialObjectDataProvider {
 	
 	private final Map<String, ObjectMeta> celestialObjects;
-	private final Map<String, Coordinates> locations;
+	private final Map<String, GalacticLocation> locations;
 	private final Map<String, double[]> relativeVelocities;
 
   class	ObjectMeta {
@@ -59,8 +60,8 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 	}
 
 	@Override
-	public void addCelestialObject(String name, CelestialObject celestialObject, Coordinates coordinates) {
-		locations.put(celestialObject.getId(), coordinates);
+	public void addCelestialObject(String name, CelestialObject celestialObject, GalacticLocation location) {
+		locations.put(celestialObject.getId(), location);
     ObjectMeta meta = new ObjectMeta(celestialObject.getId(), name, celestialObject);
 		celestialObjects.put(celestialObject.getId(), meta);
 	}
@@ -78,7 +79,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 
 
 	@Override
-	public Coordinates getCelestialObjectCoordinatesById(String celestialObjectID) {
+	public GalacticLocation getCelestialObjectLocationById(String celestialObjectID) {
 		return locations.get(celestialObjectID);
 	}
 	
@@ -110,7 +111,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 
 
   @Override
-	public Coordinates getCelestialObjectCoordinatesByName(String celestialObjectName) {
+	public GalacticLocation getCelestialObjectLocationByName(String celestialObjectName) {
     for (Entry<String, ObjectMeta> me : celestialObjects.entrySet()) {
       String name = me.getValue().name;
       if (celestialObjectName.equals(name))
@@ -141,14 +142,14 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 	
 	
 	@Override
-	public List<CelestialObject> getCelestialObjectByTypeCloserThan(TypeInfo type, Coordinates coordinates, BigDecimal distance) {
+	public List<CelestialObject> getCelestialObjectByTypeCloserThan(TypeInfo type, GalacticLocation location, BigDecimal distance) {
 		List<CelestialObject> locations = new ArrayList<>();
 
     for (Entry<String, ObjectMeta> me : celestialObjects.entrySet()) {
       CelestialObject celestialObject = me.getValue().celestialObject;
       if (type == (celestialObject.type())) {
-        Coordinates coords = this.locations.get(me.getKey());
-        if (Utils.distanceToLocation(coords, coordinates, Unit.One).compareTo(distance) <= 0)
+        Coordinates coords = this.locations.get(me.getKey()).getCoordinates();
+        if (Utils.distanceToLocation(coords, location.getCoordinates(), Unit.One).compareTo(distance) <= 0)
           locations.add(celestialObject);
       }
     }
@@ -162,7 +163,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 		List<CelestialObject> locations = new ArrayList<>();
     for (Entry<String, ObjectMeta> me : celestialObjects.entrySet()) {
       CelestialObject celestialObject = me.getValue().celestialObject;
-      Coordinates coords = this.locations.get(me.getKey());
+      Coordinates coords = this.locations.get(me.getKey()).getCoordinates();
       if (Utils.distanceToLocation(coords, coordinates, Unit.One).compareTo(distance) <= 0)
         locations.add(celestialObject);
     }
@@ -176,15 +177,16 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
     Coordinates galacticCenterCoordinates = new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value()));
     CelestialObject galacticCenter
             = new Region(new SensorSignalResponseProfile(1000.0, 1000.0, 1000.0, 1000.0, 1000.0), 10.0 * Unit.Pc.value());
-
-    addCelestialObject("Galactic center", galacticCenter, galacticCenterCoordinates);
+		GalacticLocation location = new GalacticLocation("Galactic center", galacticCenterCoordinates);
+    addCelestialObject("Galactic center", galacticCenter, location);
 
 
     Coordinates solCoordinates = new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value()));
 		Star sol = new Star(StarClass.G,
 				SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.G));
+		GalacticLocation solLocation = new GalacticLocation("Sol", solCoordinates);
 
-		addCelestialObject("Sol", sol, solCoordinates);
+		addCelestialObject("Sol", sol, solLocation);
 
 		Coordinates alphaCenturiCoordinates =
             new Coordinates(
@@ -194,28 +196,33 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 
 		Star alphaCenturi = new Star(StarClass.G,
 				SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.O));
+		GalacticLocation alphaLocation = new GalacticLocation("Sol", alphaCenturiCoordinates);
 
-		addCelestialObject("Alpha centuri", alphaCenturi, alphaCenturiCoordinates);
+		addCelestialObject("Alpha centuri", alphaCenturi, alphaLocation);
 		
 
 		//Setup subspace beacons
 		Coordinates c1 = solCoordinates.add(new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1e8*Unit.Km.value())));
+		GalacticLocation c1Location = new GalacticLocation("SolBeacon", c1);
+
 		//Above Sol north pole, 1e8 Km
 		addCelestialObject("SolBeacon",
 						new SubspaceBeacon(
 						        SensorSignalResponseLibrary
                             .getStandardSignalResponseProfileForObjectType(
-                                    SensorSignalResponseLibrary.SUBSPACE_BEACON)), c1);
+                                    SensorSignalResponseLibrary.SUBSPACE_BEACON)), c1Location);
 
 		Coordinates c2 = alphaCenturiCoordinates.add(
 		        new Coordinates(
 		                new BigDecimal(0.0),
                     new BigDecimal(0.0),
                     new BigDecimal(1e8*Unit.Km.value())));
+		GalacticLocation c2Location = new GalacticLocation("ACBeacon", c2);
+
 		addCelestialObject("ACBeacon",
             new SubspaceBeacon(SensorSignalResponseLibrary
                     .getStandardSignalResponseProfileForObjectType(
-                            SensorSignalResponseLibrary.SUBSPACE_BEACON)), c2);
+                            SensorSignalResponseLibrary.SUBSPACE_BEACON)), c2Location);
 	}
 
 
