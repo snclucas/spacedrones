@@ -1,7 +1,6 @@
 package org.spacedrones.universe;
 
 
-import org.spacedrones.physics.Unit;
 import org.spacedrones.utils.math.Convert;
 
 import java.math.BigDecimal;
@@ -185,30 +184,10 @@ public class GalacticLocation extends AbstractLocation {
   public static void main(String[] args) {
     double[] result;
 
-    //l=120.57, b=-51.508 -> alpha=11.360173, delta=11.336656
+    result = convertEquatorialToGalactic(30.97466667, 42.32986111);
 
-    result = convertGalacticToEquatorial(120.57, -51.508);
     System.out.println(result[0] + " " + result[1]);
 
-    result = convertEquatorialToGalactic(result[0], result[1]);
-    System.out.println(result[0] + " " + result[1]);
-
-
-//17h 45m 40.04s, −29° 00′ 28.1
-    result = convertHMSEquatorialToCartesian(17, 45, 40.04, -29, 0, 28.1, 25);
-   // result = convertEquatorialToGalactic(result[0], result[1]);
-    System.out.println(result[0] + " " + result[1] + " " + result[2]);
-
-
-//    \alpha = 14.4966 hours
-//    \delta = -62.681 degrees
-//     d = 1.29 parsecs
-
-//x = -0.472 parsecs
-//y = -0.361 parsecs
-//z= -1.151 parsecs
-    result = convertHoursEquatorialToCartesian(14.4966, -62.681, 1.29);
-    System.out.println(result[0] + " " + result[1] + " " + result[2]);
   }
 
 }

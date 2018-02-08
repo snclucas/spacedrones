@@ -24,6 +24,8 @@ public class SensorTest {
 
     SensorProfile sensorProfile = new SensorProfile(SensorType.OPTICAL, -9, 10);
 
+
+
     Universe.getInstance().populate();
     Universe.getInstance().addComponent(sensor,new Coordinates());
 
