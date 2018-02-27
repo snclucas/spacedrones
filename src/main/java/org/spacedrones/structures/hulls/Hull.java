@@ -2,12 +2,9 @@ package org.spacedrones.structures.hulls;
 
 import org.spacedrones.components.BusCommunicator;
 import org.spacedrones.components.PhysicalComponent;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.physics.Unit;
 
 public interface Hull extends PhysicalComponent, BusCommunicator {
-	TypeInfo category = new TypeInfo("Hull");
-	TypeInfo type = category;
 
 	enum Type {
     RECTANGULAR("RECTANGULAR"),

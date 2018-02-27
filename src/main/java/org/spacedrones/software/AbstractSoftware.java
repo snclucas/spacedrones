@@ -1,7 +1,6 @@
 package org.spacedrones.software;
 
 import org.spacedrones.Configuration;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.computers.Computer;
 import org.spacedrones.components.computers.SystemComputer;
 
@@ -17,15 +16,8 @@ public abstract class AbstractSoftware implements Software {
 		this.ident = Configuration.getUUID();
 	}
 
-	
 	@Override
-	public final TypeInfo category() {
-		return new TypeInfo(Software.class.getName());
-	}
-
-
-	@Override
-	public String getId() {
+	public String id() {
 		return ident;
 	}
 	
@@ -36,7 +28,7 @@ public abstract class AbstractSoftware implements Software {
 
 
 	@Override
-	public String getName() {
+	public String name() {
 		return this.name;
 	}
 
@@ -49,7 +41,5 @@ public abstract class AbstractSoftware implements Software {
 	public SystemComputer getSystemComputer() {
 		return computer.getSystemComputer();
 	}
-	
-	
 
 }

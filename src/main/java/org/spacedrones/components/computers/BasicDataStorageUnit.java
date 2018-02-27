@@ -1,7 +1,6 @@
 package org.spacedrones.components.computers;
 
 import org.spacedrones.components.Identifiable;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
@@ -10,20 +9,13 @@ import java.util.*;
 
 
 public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
-	public static TypeInfo type = new TypeInfo("BasicDataStorageUnit");
-
 
 	BasicDataStorageUnit(String name,
 			BusComponentSpecification busResourceSpecification) {
 		super(name, busResourceSpecification);
 	}
 
-	private final Map<TypeInfo, Archive> dataArchives = new HashMap<>();
-
-
-	public TypeInfo type() {
-		return type;
-	}
+	private final Map<String, Archive> dataArchives = new HashMap<>();
 
 	@Override
 	public void saveData(DataRecord data) {
@@ -77,19 +69,19 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 	public SystemStatus runDiagnostics(int level) {
 		//Nothing really to diagnose with this simple hull
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage("Diagnostic [" + getName() +"] OK", Status.OK);
+		systemStatus.addSystemMessage("Diagnostic [" + name() +"] OK", Status.OK);
 		return systemStatus;
 	}
 
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage(getName() + " online.", Status.OK);
+		systemStatus.addSystemMessage(name() + " online.", Status.OK);
 		return systemStatus;
 	}
 
 	@Override
-	public String describe() {
+	public String description() {
 		return toString();
 	}
 
@@ -108,7 +100,7 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 	@Override
 	public void saveData(List<? extends Identifiable> data) {
 		for(Identifiable d : data) {
-			DataRecord record = new DataRecord(d.getId(), d);
+			DataRecord record = new DataRecord(d.id(), d);
 			saveData(record);
 		}
 	}

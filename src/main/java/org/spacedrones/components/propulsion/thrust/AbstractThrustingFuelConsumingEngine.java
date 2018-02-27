@@ -1,7 +1,6 @@
 package org.spacedrones.components.propulsion.thrust;
 
 import org.spacedrones.components.SpacecraftBusComponent;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.components.propulsion.EngineVector;
 import org.spacedrones.profiles.FuelConsumptionProfile;
@@ -33,20 +32,11 @@ public abstract class AbstractThrustingFuelConsumingEngine extends AbstractThrus
 		this.fuelConsumptionProfile = new SimpleLinearFuelConsumptionProfile("Linear model");
 	}
 
-	public TypeInfo type() {
-		return type;
-	}
-
-	@Override
-	public TypeInfo category() {
-		return category;
-	}
-
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = super.online();
 
-		List<SpacecraftBusComponent> busComponents = getSystemComputer().findComponentByType(FuelSubSystem.typeID);
+		List<SpacecraftBusComponent> busComponents = getSystemComputer().findComponentByType(FuelSubSystem.class);
 
 		if(busComponents.size() > 0) {
 			for(SpacecraftBusComponent component : busComponents) {
@@ -65,7 +55,7 @@ public abstract class AbstractThrustingFuelConsumingEngine extends AbstractThrus
 			systemStatus.addSystemMessage("No fuel subsystem found",
 							Status.WARNING);
 		}
-		systemStatus.addSystemMessage(getName() + " online.", Status.OK);
+		systemStatus.addSystemMessage(name() + " online.", Status.OK);
 		return systemStatus;
 	}
 

@@ -2,7 +2,6 @@ package org.spacedrones.components.sensors;
 
 import org.spacedrones.Configuration;
 import org.spacedrones.components.AbstractBusComponent;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 
 import java.util.List;
@@ -52,7 +51,7 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 
   @Override
   public String getIdent() {
-    return getSystemComputer().getId();
+    return getSystemComputer().id();
   }
 
 	@Override
@@ -62,18 +61,6 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 	
 	@Override
 	public void tick(double dt) {
-	}
-
-	// ----- Taxonomy
-
-	@Override
-	public TypeInfo category() {
-		return category;
-	}
-
-	@Override
-	public TypeInfo type() {
-		return new TypeInfo(this.getClass().getSimpleName());
 	}
 
 }

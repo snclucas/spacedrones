@@ -1,7 +1,6 @@
 package org.spacedrones.components.storage.energy;
 
 import org.spacedrones.components.AbstractBusComponent;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 
 public abstract class AbstractEnergyStorageDevice extends AbstractBusComponent implements EnergyStorageDevice {
@@ -17,16 +16,6 @@ public abstract class AbstractEnergyStorageDevice extends AbstractBusComponent i
 		this.storageCapacity = storageCapacity;
 		this.chargeRate = chargeRate;
 		this.dischargeRate = dischargeRate;
-	}
-
-	@Override
-	public TypeInfo type() {
-		return new TypeInfo(this.getClass().getSimpleName());
-	}
-
-	@Override
-	public TypeInfo category() {
-		return category;
 	}
 
 	public double getStorageCapacity() {

@@ -13,7 +13,7 @@ public abstract class AbstractProfile implements Identifiable {
 		this.ident = Configuration.getUUID();
 	}
 
-	public String getName() {
+	public String name() {
 		return name;
 	}
 	
@@ -22,7 +22,7 @@ public abstract class AbstractProfile implements Identifiable {
 	}
 	
 	@Override
-	public String getId() {
+	public String id() {
 		return this.ident;
 	}
 	

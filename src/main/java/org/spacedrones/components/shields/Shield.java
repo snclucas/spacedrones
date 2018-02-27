@@ -1,17 +1,14 @@
 package org.spacedrones.components.shields;
 
 import org.spacedrones.components.SpacecraftBusComponent;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.spacecraft.BusRequirement;
 
 public interface Shield extends SpacecraftBusComponent {
-	TypeInfo category = new TypeInfo("Shield");
-	TypeInfo type = category;
-	
-	TypeInfo IMPACT_SHIELD = new TypeInfo("IMPACT_SHIELD");
-	TypeInfo EM_SHIELD = new TypeInfo("EM_SHIELD");
-	TypeInfo THERMAL_SHIELD = new TypeInfo("THERMAL_SHIELD");
-	TypeInfo RADIATION_SHIELD = new TypeInfo("RADIATION_SHIELD");
+
+	String IMPACT_SHIELD = "IMPACT_SHIELD";
+	String EM_SHIELD = "EM_SHIELD";
+	String THERMAL_SHIELD = "THERMAL_SHIELD";
+	String RADIATION_SHIELD = "RADIATION_SHIELD";
 	
 	/* Get the various resistances */
 	double getImpactResistance();

@@ -67,23 +67,23 @@ public class SensorSignalResponseProfile {
 				0.0);
 	}
 
-	private double getOpticalResponse() {
+	public double getOpticalResponse() {
 		return opticalResponse;
 	}
 
-	private double getRadarResponse() {
+	public double getRadarResponse() {
 		return radarResponse;
 	}
 
-	private double getGravimetricResponse() {
+	public double getGravimetricResponse() {
 		return gravimetricResponse;
 	}
 
-	private double getMagnetometricResponse() {
+	public double getMagnetometricResponse() {
 		return magnetometricResponse;
 	}
 
-	private double getSubspaceResonanceResponse() {
+	public double getSubspaceResonanceResponse() {
 		return subspaceResonanceResponse;
 	}
 

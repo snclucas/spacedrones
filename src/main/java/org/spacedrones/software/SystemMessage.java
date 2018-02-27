@@ -22,12 +22,12 @@ public class SystemMessage implements Message {
 
 	@Override
 	public String getRecieverId() {
-		return reciever.getId();
+		return reciever.id();
 	}
 
 	@Override
 	public String getSenderId() {
-		return sender.getId();
+		return sender.id();
 	}
 
 	@Override

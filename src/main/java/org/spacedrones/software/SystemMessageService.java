@@ -1,25 +1,17 @@
 package org.spacedrones.software;
 
+import org.spacedrones.components.SpacecraftBusComponent;
+import org.spacedrones.components.comms.Status;
+import org.spacedrones.status.SystemStatusMessage;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.spacedrones.components.SpacecraftBusComponent;
-import org.spacedrones.components.TypeInfo;
-import org.spacedrones.components.comms.Status;
-import org.spacedrones.status.SystemStatusMessage;
-
 public class SystemMessageService extends AbstractSoftware implements MessageMediator {
 
-	public static TypeInfo typeID = new TypeInfo("MessageMediatorSoftware");
-
 	private List<SpacecraftBusComponent> registeredComponents;
-
-	@Override
-	public TypeInfo type() {
-		return typeID;
-	}
 
 	@Override
 	public String getDescription() {
@@ -33,7 +25,7 @@ public class SystemMessageService extends AbstractSoftware implements MessageMed
 
 	@Override
 	public SystemStatusMessage addComponent(SpacecraftBusComponent component) {
-		SystemStatusMessage message = new SystemStatusMessage(this, component.getName() +
+		SystemStatusMessage message = new SystemStatusMessage(this, component.name() +
 				" registered with the messaging system", Status.INFO);
 		registeredComponents.add(component);
 		return message;
@@ -55,14 +47,14 @@ public class SystemMessageService extends AbstractSoftware implements MessageMed
 	public Map<String, Message> broadcastMessage(Message message) {
 		Map<String, Message> replies = new HashMap<String, Message>();
 		for(SpacecraftBusComponent component : registeredComponents) {
-			replies.put(component.getId(), component.recieveBusMessage(message));
+			replies.put(component.id(), component.recieveBusMessage(message));
 		}
 		return replies;
 	}
 
 
 	@Override
-	public String describe() {
+	public String description() {
 		return "A system service to handle sytem messaging.";
 	}
 

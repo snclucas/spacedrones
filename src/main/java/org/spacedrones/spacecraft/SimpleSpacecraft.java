@@ -9,7 +9,7 @@ public class SimpleSpacecraft extends AbstractSpacecraft {
 	}
 
 	@Override
-	public String describe() {
+	public String description() {
 		return "Simple spacecraft";
 	}
 

@@ -1,6 +1,5 @@
 package org.spacedrones.components.energygeneration;
 
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.software.Message;
@@ -9,7 +8,6 @@ import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
 
 public class SubspacePowerExtractor extends AbstractPowerGenerator {
-	public static TypeInfo type = new TypeInfo("SubspacePowerExtractor");
 
 	private final double arrayArea;
 	private final double efficiency;
@@ -39,7 +37,7 @@ public class SubspacePowerExtractor extends AbstractPowerGenerator {
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage(getName() + " online.", Status.OK);
+		systemStatus.addSystemMessage(name() + " online.", Status.OK);
 		return systemStatus;
 	}
 
@@ -54,18 +52,18 @@ public class SubspacePowerExtractor extends AbstractPowerGenerator {
 	public SystemStatus runDiagnostics(int level) {
 		//Nothing really to diagnose with this simple hull
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage("Diagnostic [" + getName() +"] OK", Status.OK);
+		systemStatus.addSystemMessage("Diagnostic [" + name() +"] OK", Status.OK);
 		return systemStatus;
 	}
 
 	@Override
 	public Message recieveBusMessage(Message message) {
-		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
+		String replyMessage = "Message recieved by: " + name() + "\n " + message.getMessage();
 		return new SystemMessage(null, this, replyMessage);
 	}
 
 	@Override
-	public String describe() {
+	public String description() {
 		return toString();
 	}
 

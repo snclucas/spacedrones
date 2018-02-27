@@ -1,7 +1,5 @@
 package org.spacedrones.components.comms;
 
-import org.spacedrones.components.TypeInfo;
-
 public class Status extends TypeInfo {
 	
 	public Status(String typeId) {

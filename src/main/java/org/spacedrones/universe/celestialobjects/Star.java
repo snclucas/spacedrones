@@ -1,12 +1,9 @@
 package org.spacedrones.universe.celestialobjects;
 
-import org.spacedrones.components.TypeInfo;
-
 import java.util.List;
 
 
 public class Star extends AbstractCelestialObject {
-  public static TypeInfo type = new TypeInfo("Star");
 
 	protected List<Asteroid> asteroids;
 	protected List<Planet> planets;
@@ -18,24 +15,9 @@ public class Star extends AbstractCelestialObject {
 		this.classification = classification;
 	}
 
+
 	StarClass getClassification() {
 		return classification;
 	}
 
-  @Override
-  public String describe() {
-    return "Star";
-  }
-
-	// ----- Taxonomy
-
-	@Override
-	public TypeInfo category() {
-		return category;
-	}
-
-	@Override
-	public TypeInfo type() {
-		return new TypeInfo("Star");
-	}
 }

@@ -48,7 +48,7 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 				universeDataProvider.getLocationsCloserThan(spacecraftLocation, maximumDistanceScanned);
 
 		for(CelestialObject object : objectsWithinDistance) {
-			Coordinates coordinates = universe.getCelestialObjectLocationById(object.getId()).getCoordinates();
+			Coordinates coordinates = universe.getCelestialObjectLocationById(object.id()).getCoordinates();
 			BigDecimal distance = Utils.distanceToLocation(coordinates, spacecraftLocation, Unit.One);
 			
 			SignalResponse returnedSignalResponse = object.getSignalResponse(sensorProfile.getSensorType(), distance);

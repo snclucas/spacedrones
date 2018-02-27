@@ -1,7 +1,6 @@
 package org.spacedrones.components.energygeneration;
 
 import org.spacedrones.Configuration;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.data.EnvironmentDataProvider;
 import org.spacedrones.physics.Unit;
@@ -13,7 +12,6 @@ import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.Universe;
 
 public class SimpleSolarArray extends AbstractPowerGenerator {
-	public static TypeInfo type = new TypeInfo("SimpleSolarArray");
 
 	private EnvironmentDataProvider environmentDataProvider = Configuration.getEnvironmentDataProvider();
 
@@ -38,7 +36,7 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage(getName() + " online.", Status.OK);
+		systemStatus.addSystemMessage(name() + " online.", Status.OK);
 		return systemStatus;
 	}
 
@@ -65,18 +63,18 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 	public SystemStatus runDiagnostics(int level) {
 		//Nothing really to diagnose with this simple hull
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage("Diagnostic [" + getName() +"] OK", Status.OK);
+		systemStatus.addSystemMessage("Diagnostic [" + name() +"] OK", Status.OK);
 		return systemStatus;
 	}
 
 	@Override
 	public Message recieveBusMessage(Message message) {
-		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
+		String replyMessage = "Message recieved by: " + name() + "\n " + message.getMessage();
 		return new SystemMessage(null, this, replyMessage);
 	}
 
 	@Override
-	public String describe() {
+	public String description() {
 		return toString();
 	}
 
@@ -96,11 +94,6 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 		Coordinates coordinates = Universe.getInstance()
 				.getSpacecraftLocation(spacecraftIdent);
 		return environmentDataProvider.getEnvironmentData(coordinates).getSolarFlux();
-	}
-
-	@Override
-	public TypeInfo type() {
-		return type;
 	}
 
 }

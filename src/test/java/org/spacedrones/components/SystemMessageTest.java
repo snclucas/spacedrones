@@ -17,8 +17,8 @@ public class SystemMessageTest {
 
 		SystemMessage systemMessage = new SystemMessage(reciever, sender, "This is a test message");
 
-		assertEquals("Reciever ID incorrect", reciever.getId(), systemMessage.getRecieverId());
-		assertEquals("Sender ID incorrect", sender.getId(), systemMessage.getSenderId());
+		assertEquals("Reciever ID incorrect", reciever.id(), systemMessage.getRecieverId());
+		assertEquals("Sender ID incorrect", sender.id(), systemMessage.getSenderId());
 		assertEquals("Message incorrect", "This is a test message", systemMessage.getMessage());
 		assertEquals("Universal date incorrect", 1273, systemMessage.getUniversalDate(), 0.001);
 	}
@@ -42,19 +42,19 @@ class MockIdentifiableObject implements Identifiable {
 	}
 
 	@Override
-	public String getName() {
+	public String name() {
 		return name;
 	}
 
 
 	@Override
-	public String getId() {
+	public String id() {
 		return ident;
 	}
 
 
 	@Override
-	public String describe() {
+	public String description() {
 		return "Mock";
 	}
 

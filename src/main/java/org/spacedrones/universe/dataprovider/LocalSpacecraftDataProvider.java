@@ -27,16 +27,16 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 
 	@Override
 	public void addSpacecraft(Spacecraft spacecraft, Coordinates coordinates) {
-		objectsInUniverse.put(spacecraft.getId(), spacecraft);
-		objectLocationInUniverse.put(spacecraft.getId(), coordinates);
-		objectVelocityInUniverse.put(spacecraft.getId(), new Double[]{0.0, 0.0, 0.0});
+		objectsInUniverse.put(spacecraft.id(), spacecraft);
+		objectLocationInUniverse.put(spacecraft.id(), coordinates);
+		objectVelocityInUniverse.put(spacecraft.id(), new Double[]{0.0, 0.0, 0.0});
 	}
 
 	@Override
 	public void addComponent(Identifiable object, Coordinates coordinates) {
-		objectsInUniverse.put(object.getId(), object);
-		objectLocationInUniverse.put(object.getId(), coordinates);
-		objectVelocityInUniverse.put(object.getId(), new Double[]{0.0, 0.0, 0.0});
+		objectsInUniverse.put(object.id(), object);
+		objectLocationInUniverse.put(object.id(), coordinates);
+		objectVelocityInUniverse.put(object.id(), new Double[]{0.0, 0.0, 0.0});
 	}
 
 	

@@ -1,7 +1,5 @@
 package org.spacedrones.profiles;
 
-import org.spacedrones.components.TypeInfo;
-
 public class SimpleLinearFuelConsumptionProfile extends AbstractProfile implements FuelConsumptionProfile {
 	
 	public static TypeInfo type = new TypeInfo("SimpleLinearFuelConsumptionProfile");
@@ -29,7 +27,7 @@ public class SimpleLinearFuelConsumptionProfile extends AbstractProfile implemen
 	}
 
 	@Override
-	public String describe() {
+	public String description() {
 		return "Simple linear fuel consumption profile.";
 	}
 	

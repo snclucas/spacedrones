@@ -1,13 +1,12 @@
 package org.spacedrones.data;
 
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.materials.CompositeMaterial;
 import org.spacedrones.materials.Element;
 import org.spacedrones.materials.Material;
 
 public class LocalMaterialDataProvider implements MaterialDataProvider {
 
-	public Material getMaterial(TypeInfo materialType) {
+	public Material getMaterial(String materialType) {
 
 		if(materialType == ALUMINUM) 
 			return new CompositeMaterial(

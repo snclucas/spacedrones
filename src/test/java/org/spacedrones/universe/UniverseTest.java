@@ -36,7 +36,7 @@ public class UniverseTest {
 		//Coordinates spacecraftLocation = new Coordinates(new BigDecimal(8*Unit.kPc.value() + 149600000 * Unit.Km.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value()));
 		//universe.updateSpacecraftLocation(spacecraft.getIdent(), spacecraftLocation);
 
-		EnvironmentData data = universe.getEnvironmentData(universe.getSpacecraftLocation(spacecraft.getId()));
+		EnvironmentData data = universe.getEnvironmentData(universe.getSpacecraftLocation(spacecraft.id()));
 		
 	//	System.out.println(SpacecraftFirmware.getTotalPowerAvailable(spacecraft.getSpacecraftBus()));
 		

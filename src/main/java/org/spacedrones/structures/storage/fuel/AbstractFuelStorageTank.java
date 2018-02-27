@@ -1,7 +1,6 @@
 package org.spacedrones.structures.storage.fuel;
 
 import org.spacedrones.components.AbstractBusComponent;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.consumables.Fuel;
 import org.spacedrones.exceptions.NoFuelInTankException;
 import org.spacedrones.physics.Unit;
@@ -9,8 +8,6 @@ import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
 
 public abstract class AbstractFuelStorageTank extends AbstractBusComponent implements FuelStorageTank {
-	public static TypeInfo category = new TypeInfo("FuelStorageTank");
-
 	private double amountOfFuelInTank;
 	private double capacity;
 	private double fuelLevel;
@@ -23,13 +20,6 @@ public abstract class AbstractFuelStorageTank extends AbstractBusComponent imple
 		setCapacity(capacity);
 		this.fuelLevel = 0.0;
 	}
-
-
-	@Override
-	public TypeInfo category() {
-		return category;
-	}
-
 
 	@Override
 	public double getMass(Unit unit) {
@@ -44,7 +34,7 @@ public abstract class AbstractFuelStorageTank extends AbstractBusComponent imple
 		if(fuel != null)
 			return fuel;
 		else 
-			throw new NoFuelInTankException("No fuel in tank [" + getName() + "]");
+			throw new NoFuelInTankException("No fuel in tank [" + name() + "]");
 	}
 
 

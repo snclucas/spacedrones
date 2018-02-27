@@ -1,6 +1,5 @@
 package org.spacedrones.universe.dataprovider;
 
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.sensors.SensorProfile;
 import org.spacedrones.components.sensors.SensorType;
 import org.spacedrones.physics.Constants;
@@ -61,9 +60,9 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 
 	@Override
 	public void addCelestialObject(String name, CelestialObject celestialObject, GalacticLocation location) {
-		locations.put(celestialObject.getId(), location);
-    ObjectMeta meta = new ObjectMeta(celestialObject.getId(), name, celestialObject);
-		celestialObjects.put(celestialObject.getId(), meta);
+		locations.put(celestialObject.id(), location);
+    ObjectMeta meta = new ObjectMeta(celestialObject.id(), name, celestialObject);
+		celestialObjects.put(celestialObject.id(), meta);
 	}
 
 

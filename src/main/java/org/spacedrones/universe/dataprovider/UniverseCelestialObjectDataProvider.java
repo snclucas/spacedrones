@@ -1,6 +1,5 @@
 package org.spacedrones.universe.dataprovider;
 
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.sensors.SensorProfile;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.GalacticLocation;

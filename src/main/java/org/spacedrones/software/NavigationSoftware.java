@@ -2,7 +2,6 @@ package org.spacedrones.software;
 
 import org.spacedrones.Configuration;
 import org.spacedrones.components.SpacecraftBusComponent;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.computers.Computer;
 import org.spacedrones.components.computers.DataStore;
 import org.spacedrones.components.sensors.PositioningSensor;
@@ -20,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 public class NavigationSoftware extends AbstractSoftware implements Software, NavigationInterface {
-  public static TypeInfo type = new TypeInfo("NavigationSoftware");
 
 	private static MathContext mc = new MathContext(Configuration.precision, RoundingMode.HALF_UP);
 	
@@ -39,21 +37,12 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 		populateSensors();
 		this.dataStore = getSystemComputer().getStorageDevice();
 	}
-	
-	
-	@Override
-	public TypeInfo type() {
-		return type;
-	}
-
 
 	private void populateSensors() {
 		List<Sensor> sensorList = getSensors();
 		for(Sensor sensor : sensorList)
-			sensors.put(sensor.getId(), sensor);
+			sensors.put(sensor.id(), sensor);
 	}
-
-
 
 	@Override
 	public String getDescription() {
@@ -69,7 +58,7 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 	public List<SensorResult> scanAll(){
 		List<Sensor> sensors = getSensors();
 		for(Sensor sensor : sensors) 
-			sensorResults.addAll(scan(sensor.getId()));
+			sensorResults.addAll(scan(sensor.id()));
 		dataStore.saveData(sensorResults);
 		return sensorResults;
 	}
@@ -86,7 +75,7 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 
 	private List<Sensor> getSensors() {
 		List<SpacecraftBusComponent> components = getSystemComputer()
-				.findComponentByCategory(Sensor.category);
+				.findComponentByType(Sensor.class);
 		List<Sensor> sensors = new ArrayList<Sensor>();
 		for(SpacecraftBusComponent sensor : components)
 			sensors.add((Sensor)sensor);
@@ -138,7 +127,7 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 	}
 
 	@Override
-	public String describe() {
+	public String description() {
 		return "Software to perform navigation functions.";
 	}
 

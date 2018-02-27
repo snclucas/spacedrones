@@ -1,7 +1,6 @@
 package org.spacedrones.components.sensors;
 
 import org.spacedrones.Configuration;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.navigation.BeaconSignal;
 import org.spacedrones.physics.Physics;
 import org.spacedrones.physics.Unit;
@@ -21,8 +20,6 @@ import java.util.List;
 
 public class SubspaceBeaconTransceiver extends AbstractSensor implements PositioningSensor {
 
-	public static TypeInfo typeID = new TypeInfo("SubspaceBeaconTransceiver");
-
 	private static MathContext context = new MathContext(120, RoundingMode.HALF_UP);
 
 	private final List<BeaconSignal> beaconSignals;
@@ -35,16 +32,6 @@ public class SubspaceBeaconTransceiver extends AbstractSensor implements Positio
 
 		this.beaconSignals = new ArrayList<>();
     this.sensorResponseMediator = Configuration.getSensorResponseMediator();
-	}
-
-	@Override
-	public TypeInfo type() {
-		return typeID;
-	}
-
-	@Override
-	public TypeInfo category() {
-		return Sensor.category;
 	}
 
 	@Override
@@ -134,13 +121,13 @@ public class SubspaceBeaconTransceiver extends AbstractSensor implements Positio
 
 	}
 
-	public String describe() {
+	public String description() {
 		return "Subspace beacon transciever: A device capable of detecting subspace harmonic distortions usually created by subspace beacons.";
 	}
 
 	@Override
 	public Message recieveBusMessage(Message message) {
-		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
+		String replyMessage = "Message recieved by: " + name() + "\n " + message.getMessage();
 		return new SystemMessage(null, this, replyMessage);
 	}
 

@@ -2,7 +2,6 @@ package org.spacedrones.spacecraft;
 
 import org.spacedrones.Configuration;
 import org.spacedrones.components.SpacecraftBusComponent;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.*;
 import org.spacedrones.components.computers.SystemComputer;
 import org.spacedrones.software.Message;
@@ -29,13 +28,8 @@ public class SpacecraftBus implements Bus {
 	}
 
 	@Override
-	public List<SpacecraftBusComponent> findComponentByType(TypeInfo componentType) {
-		return SpacecraftFirmware.findBusComponentByType(this, componentType);
-	}
-
-	@Override
-	public List<SpacecraftBusComponent> findComponentByCategory(TypeInfo componentCategory) {
-		return SpacecraftFirmware.findBusComponentByCategory(this, componentCategory);
+	public List<SpacecraftBusComponent> findComponentByType(Class<? extends SpacecraftBusComponent> component) {
+		return SpacecraftFirmware.findBusComponentByType(this, component);
 	}
 
 	@Override
@@ -51,41 +45,29 @@ public class SpacecraftBus implements Bus {
 
 	public void register(SpacecraftBusComponent component) {
 		if(component instanceof SystemComputer)
-			findComponentByType(SystemComputer.type).clear();
+			findComponentByType(SystemComputer.class).clear();
 		component.registerSystemComputer(systemComputer);
 		this.components.add(component);
 	}
 
 	public SystemComputer getSystemComputer() {
-		List<SpacecraftBusComponent> components = findComponentByCategory(SystemComputer.type);
+		List<SpacecraftBusComponent> components = findComponentByType(SystemComputer.class);
 		if(components.size() == 0) {
       return null;
     }
 		return (SystemComputer)components.get(0);
 	}
 
-  public String getName() {
+  public String name() {
 	  return name;
   }
 
-  public String getId(){
+  public String id(){
     return id;
   }
 
-  public String describe(){
+  public String description(){
     return "SpacecraftBus";
   }
-
-	@Override
-	public TypeInfo category() {
-		return category;
-	}
-
-	@Override
-	public TypeInfo type() {
-		return type;
-	}
-
-
 
 }

@@ -2,7 +2,6 @@ package org.spacedrones.components.comms;
 
 import org.spacedrones.algorithm.Model;
 import org.spacedrones.algorithm.SimpleRadioFrequencyPropagationModel;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.data.DataFactory;
 import org.spacedrones.data.SpacecraftComponentData;
 import org.spacedrones.physics.Physics;
@@ -11,7 +10,7 @@ import org.spacedrones.physics.Unit;
 
 public class CommunicatorDeviceFactory extends DataFactory {
 
-	public static CommunicationComponent getCommunicator(TypeInfo commType){
+	public static CommunicationComponent getCommunicator(String commType){
 		SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(commType);
 		
 		if(commType.equals(RadioCommunicator.type)) {

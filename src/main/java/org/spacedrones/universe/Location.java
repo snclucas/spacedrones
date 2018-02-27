@@ -1,7 +1,5 @@
 package org.spacedrones.universe;
 
-import org.spacedrones.components.Taxonomic;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.physics.Unit;
 
 import java.math.BigDecimal;

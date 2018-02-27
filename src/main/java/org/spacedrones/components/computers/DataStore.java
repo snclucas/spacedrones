@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.spacedrones.components.Identifiable;
-import org.spacedrones.components.TypeInfo;
 
 public interface DataStore {
 	TypeInfo categoryID = new TypeInfo("DataStore");

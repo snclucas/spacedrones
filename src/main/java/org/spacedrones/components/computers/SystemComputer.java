@@ -1,11 +1,9 @@
 package org.spacedrones.components.computers;
 
 import org.spacedrones.components.SpacecraftBusComponent;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.CommunicationComponent;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.components.propulsion.Engine;
-import org.spacedrones.exceptions.ComponentConfigurationException;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.software.MessageMediator;
 import org.spacedrones.spacecraft.Bus;
@@ -15,8 +13,6 @@ import org.spacedrones.status.SystemStatusMessage;
 import java.util.List;
 
 public interface SystemComputer extends Computer {
-	TypeInfo category = new TypeInfo("SystemComputer");
-	TypeInfo type = category;
 
 	void registerBus(Bus bus);
 
@@ -32,8 +28,7 @@ public interface SystemComputer extends Computer {
 
 	List<SystemStatusMessage> checkSystems();
 
-	List<SpacecraftBusComponent> findComponentByType(TypeInfo componentType) throws ComponentConfigurationException;
-	List<SpacecraftBusComponent> findComponentByCategory(TypeInfo componentCategory) throws ComponentConfigurationException;
+	List<SpacecraftBusComponent> findComponentByType(Class<? extends SpacecraftBusComponent> component);
 
 	double getTotalCPUThroughputAvailable(Unit unit);
 	double getTotalPowerAvailable(Unit unit);

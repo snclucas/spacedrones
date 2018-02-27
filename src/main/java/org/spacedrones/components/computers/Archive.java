@@ -5,8 +5,6 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import org.spacedrones.components.TypeInfo;
-
 public class Archive  extends HashMap<String, DataRecord> {
 	private static final long serialVersionUID = 925935940538264787L;
 	

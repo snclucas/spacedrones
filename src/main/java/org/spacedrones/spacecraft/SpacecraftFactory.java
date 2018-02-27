@@ -3,19 +3,14 @@ package org.spacedrones.spacecraft;
 import org.spacedrones.Configuration;
 import org.spacedrones.components.comms.CommunicationComponent;
 import org.spacedrones.components.comms.CommunicatorDeviceFactory;
-import org.spacedrones.components.comms.RadioCommunicator;
-import org.spacedrones.components.computers.BasicSystemComputer;
 import org.spacedrones.components.computers.ComputerFactory;
 import org.spacedrones.components.computers.SystemComputer;
 import org.spacedrones.components.energygeneration.PowerGenerationFactory;
 import org.spacedrones.components.energygeneration.PowerGenerator;
-import org.spacedrones.components.energygeneration.SubspacePowerExtractor;
 import org.spacedrones.components.propulsion.EngineFactory;
 import org.spacedrones.components.propulsion.thrust.FuelConsumingEngine;
 import org.spacedrones.components.propulsion.thrust.FuelSubSystem;
 import org.spacedrones.components.propulsion.thrust.FuelSubSystemFactory;
-import org.spacedrones.components.propulsion.thrust.SimpleThruster;
-import org.spacedrones.components.sensors.LinearSensorArray;
 import org.spacedrones.components.sensors.Sensor;
 import org.spacedrones.components.sensors.SensorFactory;
 import org.spacedrones.components.sensors.SensorType;
@@ -24,7 +19,6 @@ import org.spacedrones.data.SpacecraftDataProvider;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.structures.hulls.Hull;
 import org.spacedrones.structures.hulls.HullFactory;
-import org.spacedrones.structures.storage.fuel.CryogenicLiquidStorageTank;
 import org.spacedrones.structures.storage.fuel.FuelStorageTank;
 import org.spacedrones.structures.storage.fuel.FuelStorageTankFactory;
 
@@ -38,7 +32,7 @@ public class SpacecraftFactory {
 
 	public static Spacecraft getSpacecraft(String spacecraftType) throws InvalidParameterException{
 		SpacecraftDataProvider spacecraftDataProvider = Configuration.getSpacecraftDataProvider();
-		SystemComputer systemComputer = ComputerFactory.getSystemComputer(SystemComputer.type);
+		SystemComputer systemComputer = ComputerFactory.getSystemComputer("SystemComputer");
 		Bus spacecraftBus = new SpacecraftBus(systemComputer);
 
 		switch (spacecraftType) {
@@ -50,16 +44,16 @@ public class SpacecraftFactory {
 			//PropulsionManagementSoftware engineManagementSoftware = new PropulsionManagementSoftware("Test EngineManagementSoftware", systemComputer);
 			//systemComputer.loadSoftware(engineManagementSoftware);
 
-			PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.type);
+			PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator("SubspacePowerExtractor");
       spacecraftBuildManager.addComponent(powerGenerator);
 
-			Sensor sensor = SensorFactory.getSensor(LinearSensorArray.type, SensorType.RADAR, 1);
+			Sensor sensor = SensorFactory.getSensor("LinearSensorArray", SensorType.RADAR, 1);
       spacecraftBuildManager.addComponent(sensor);
 
 
 			double tankCapacity = 100 * Unit.l.value();
 			Fuel fuel = spacecraftDataProvider.getFuel(Fuel.HYDRAZINE);
-			FuelStorageTank tank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.type, tankCapacity);
+			FuelStorageTank tank = FuelStorageTankFactory.getFuelStorageTank("CryogenicLiquidStorageTank", tankCapacity);
 			tank.setFuel(fuel, tankCapacity);
 
 			FuelSubSystem fuelDeliverySystem = FuelSubSystemFactory.getFuelSubsystem(
@@ -68,11 +62,11 @@ public class SpacecraftFactory {
       spacecraftBuildManager.addComponent(fuelDeliverySystem);
       spacecraftBuildManager.addComponent(tank);
 
-			FuelConsumingEngine engine = (FuelConsumingEngine)EngineFactory.getEngine(SimpleThruster.type, false);
+			FuelConsumingEngine engine = (FuelConsumingEngine)EngineFactory.getEngine("SimpleThruster", false);
 			engine.setFuelSubSystem(fuelDeliverySystem);
       spacecraftBuildManager.addComponent(engine);
 
-			CommunicationComponent commDevice = CommunicatorDeviceFactory.getCommunicator(RadioCommunicator.type);
+			CommunicationComponent commDevice = CommunicatorDeviceFactory.getCommunicator("RadioCommunicator");
       spacecraftBuildManager.addComponent(commDevice);
 
 			return spacecraftBuildManager.getSpacecraft();

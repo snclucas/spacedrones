@@ -16,6 +16,7 @@ public interface SpacecraftDataProvider {
 	List<Spacecraft> getAllSpacecraft();
 	Spacecraft getSpacecraftByIdent(String ident);
 
+
 	void updateSpacecraftLocation(String spacecraftIdent, Coordinates coordinates);
 	Coordinates getObjectLocationInUniverse(String spacecraftIdent);
 	Coordinates getSpacecraftLocation(String spacecraftIdent);

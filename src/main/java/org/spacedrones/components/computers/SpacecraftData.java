@@ -1,7 +1,6 @@
 package org.spacedrones.components.computers;
 
 import org.spacedrones.Configuration;
-import org.spacedrones.components.TypeInfo;
 
 public class SpacecraftData implements ArchivableData {
 	private TypeInfo type = new TypeInfo("SpacecraftData");
@@ -26,17 +25,17 @@ public class SpacecraftData implements ArchivableData {
 	}
 
 	@Override
-	public String getName() {
+	public String name() {
 		return this.dataName;
 	}
 
 	@Override
-	public String getId() {
+	public String id() {
 		return this.id;
 	}
 
 	@Override
-	public String describe() {
+	public String description() {
 		return "Data record to hold spacecraft data.";
 	}
 

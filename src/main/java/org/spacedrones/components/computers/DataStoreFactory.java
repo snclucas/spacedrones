@@ -17,7 +17,7 @@ public class DataStoreFactory {
 		case BASIC_DATASTORE:
 
 			DataStore dataStore = new BasicDataStorageUnit("Data store", 
-					spacecraftDataProvider.getComponentParameters(BasicDataStorageUnit.type).getBusComponentSpecification());
+					spacecraftDataProvider.getComponentParameters("BasicDataStorageUnit").getBusComponentSpecification());
 
 
 			return dataStore;

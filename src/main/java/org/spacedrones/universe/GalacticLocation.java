@@ -173,10 +173,10 @@ public class GalacticLocation extends AbstractLocation {
 
   @Override
   public String toString() {
-    return getName() + ": [" + getCoordinates().toString() + "]";
+    return name() + ": [" + getCoordinates().toString() + "]";
   }
 
-  public String describe() {
+  public String description() {
     return "SimpleLocation";
   }
 

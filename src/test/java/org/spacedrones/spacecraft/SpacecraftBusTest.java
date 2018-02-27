@@ -29,7 +29,7 @@ public class SpacecraftBusTest {
 
 	@Test
 	public void testSpacecraftBus() {
-		assertEquals("Category for bus incorrect", Bus.category, spacecraftBus.category());
+		//assertEquals("Category for bus incorrect", Bus.category, spacecraftBus.category());
 
 		assertEquals("There should be no bus components", 0, spacecraftBus.getComponents().size());
 		assertNull(spacecraftBus.getSystemComputer());
@@ -42,12 +42,12 @@ public class SpacecraftBusTest {
 
 		assertEquals("There should be 2 bus components", 2, spacecraftBus.getComponents().size());
 
-		assertEquals("There should be 1 Sensor.category component", 1, spacecraftBus.findComponentByCategory(Sensor.category).size());
-		assertEquals("There should be 1 FractalSensorArray.type component", 1, spacecraftBus.findComponentByType(FractalSensorArray.type).size());
-		assertEquals("There should be 1 FractalSensorArray.category component", 1, spacecraftBus.findComponentByCategory(FractalSensorArray.category).size());
-		assertEquals("There should be 1 LinearSensorArray.type component", 0, spacecraftBus.findComponentByType(LinearSensorArray.type).size());
-		assertEquals("There should be 1 SystemComputer.category component", 1, spacecraftBus.findComponentByCategory(SystemComputer.category).size());
-		assertEquals("There should be 1 BasicSystemComputer.type component", 1, spacecraftBus.findComponentByType(BasicSystemComputer.type).size());
+		assertEquals("There should be 1 Sensor.category component", 1, spacecraftBus.findComponentByType(Sensor.class).size());
+		assertEquals("There should be 1 FractalSensorArray.type component", 1, spacecraftBus.findComponentByType(FractalSensorArray.class).size());
+		assertEquals("There should be 1 FractalSensorArray.category component", 1, spacecraftBus.findComponentByType(FractalSensorArray.class).size());
+		assertEquals("There should be 1 LinearSensorArray.type component", 0, spacecraftBus.findComponentByType(LinearSensorArray.class).size());
+		assertEquals("There should be 1 SystemComputer.category component", 1, spacecraftBus.findComponentByType(SystemComputer.class).size());
+		assertEquals("There should be 1 BasicSystemComputer.type component", 1, spacecraftBus.findComponentByType(BasicSystemComputer.class).size());
 	}
 
 	@Rule

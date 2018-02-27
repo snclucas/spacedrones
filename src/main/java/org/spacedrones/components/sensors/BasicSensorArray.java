@@ -1,14 +1,11 @@
 package org.spacedrones.components.sensors;
 
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
 
 public abstract class BasicSensorArray extends AbstractSensor {
-	public static TypeInfo type = new TypeInfo("BasicSensorArray");
-
 	final private int numberOfSensorElements;
 
 	BasicSensorArray(String name, BusComponentSpecification busResourceSpecification,
@@ -45,7 +42,7 @@ public abstract class BasicSensorArray extends AbstractSensor {
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage(getName() + " online.", Status.OK);
+		systemStatus.addSystemMessage(name() + " online.", Status.OK);
 		return systemStatus;
 	}
 

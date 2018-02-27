@@ -32,16 +32,16 @@ public class NavigationEntry implements Identifiable {
   }
 
   @Override
-  public String getName() {
+  public String name() {
     return "NavigationEntry";
   }
 
   @Override
-  public String getId() {
+  public String id() {
     return ident;
   }
 
-  public String describe() {
+  public String description() {
     return "NavigationEntry";
   }
 }

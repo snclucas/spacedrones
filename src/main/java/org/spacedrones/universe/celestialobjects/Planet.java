@@ -1,10 +1,7 @@
 package org.spacedrones.universe.celestialobjects;
 
 
-import org.spacedrones.components.TypeInfo;
-
 public class Planet extends AbstractCelestialObject {
-	public static TypeInfo type = new TypeInfo("Planet");
 
 	private final double radius;
 	private final PlanetClass habitatClass;
@@ -22,11 +19,6 @@ public class Planet extends AbstractCelestialObject {
 
 	public PlanetClass getHabitatClass() {
 		return habitatClass;
-	}
-
-  @Override
-	public String describe() {
-		return "Planet";
 	}
 
 }

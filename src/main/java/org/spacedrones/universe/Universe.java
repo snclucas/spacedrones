@@ -3,7 +3,6 @@ package org.spacedrones.universe;
 import org.spacedrones.Configuration;
 import org.spacedrones.components.Identifiable;
 import org.spacedrones.components.Tickable;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.sensors.SensorProfile;
 import org.spacedrones.data.EnvironmentDataProvider;
 import org.spacedrones.physics.Unit;

@@ -1,13 +1,12 @@
 package org.spacedrones.components.sensors;
 
 import org.spacedrones.Configuration;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.data.SpacecraftComponentData;
 import org.spacedrones.data.SpacecraftDataProvider;
 
 public class SensorFactory {
 
-	public static Sensor getSensor(TypeInfo sensorType, SensorType sensorSensingType, int numberOfSensorElements){
+	public static Sensor getSensor(String sensorType, SensorType sensorSensingType, int numberOfSensorElements){
 		SpacecraftDataProvider spacecraftDataProvider =  Configuration.getSpacecraftDataProvider();
 		
 		if(sensorType.equals(LinearSensorArray.type)){

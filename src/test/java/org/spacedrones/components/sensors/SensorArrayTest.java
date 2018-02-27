@@ -27,7 +27,7 @@ public class SensorArrayTest {
 				LinearSensorArray.type.toString(), data.getBusComponentSpecification(), sensorProfile, numberOfSensorElements);
 		
 		assertEquals("Sensor category incorrect", Sensor.category, linearSensor.category());
-		assertEquals("Sensor type " + linearSensor.describe() + " incorrect", LinearSensorArray.type, linearSensor.type());
+		assertEquals("Sensor type " + linearSensor.description() + " incorrect", LinearSensorArray.type, linearSensor.type());
 		assertEquals("Sensor gain incorrect (linear array)", gainPerElement*numberOfSensorElements, linearSensor.getSensorGain(), 0.0001);
 		assertEquals("Sensor detection threshold incorrect (linear array)", signalDetectionThreshold, linearSensor.getSensorThreshold(), 0.0001);
 
@@ -48,8 +48,8 @@ public class SensorArrayTest {
     Sensor fractalSensor = SensorFactory.getSensor(FractalSensorArray.type, SensorType.OPTICAL, numberOfSensorElements);
 		
 		assertEquals("Sensor category incorrect", Sensor.category, FractalSensorArray.category);
-		assertEquals("Sensor type " + fractalSensor.describe() + " incorrect", FractalSensorArray.type, fractalSensor.type());
-    assertEquals("Sensor type " + fractalSensor.describe() + " incorrect", FractalSensorArray.type, fractalSensor.type());
+		assertEquals("Sensor type " + fractalSensor.description() + " incorrect", FractalSensorArray.type, fractalSensor.type());
+    assertEquals("Sensor type " + fractalSensor.description() + " incorrect", FractalSensorArray.type, fractalSensor.type());
 
 		assertEquals("Sensor gain incorrect (fractal array)", gainPerElement*numberOfSensorElements, fractalSensor.getSensorGain(), 0.0001);
 		assertEquals("Sensor detection threshold incorrect (fractal array)", signalDetectionThreshold, fractalSensor.getSensorThreshold(), 0.0001);

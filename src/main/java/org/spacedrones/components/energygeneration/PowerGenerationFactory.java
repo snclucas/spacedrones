@@ -1,13 +1,12 @@
 package org.spacedrones.components.energygeneration;
 
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.data.DataFactory;
 import org.spacedrones.data.SpacecraftComponentData;
 import org.spacedrones.physics.Unit;
 
 public class PowerGenerationFactory extends DataFactory {
 
-	public static PowerGenerator getPowerGenerator(TypeInfo powerGenerationType){
+	public static PowerGenerator getPowerGenerator(String powerGenerationType){
 		SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(powerGenerationType);
 		
 		if(powerGenerationType.equals(SimpleSolarArray.type)){

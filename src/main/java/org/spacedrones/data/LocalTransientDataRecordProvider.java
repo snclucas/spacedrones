@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.computers.DataRecord;
 
 public class LocalTransientDataRecordProvider implements DataRecordProvider {

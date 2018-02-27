@@ -1,7 +1,6 @@
 package org.spacedrones.universe;
 
 import org.spacedrones.Configuration;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.utils.Utils;
 
@@ -28,12 +27,12 @@ public abstract class AbstractLocation implements Location {
 	}
 	
 	@Override
-	public String getId() {
+	public String id() {
 		return id;
 	}
 
 	@Override
-	public String getName() {
+	public String name() {
 		return name;
 	}
 	

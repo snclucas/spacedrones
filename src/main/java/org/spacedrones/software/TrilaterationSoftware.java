@@ -1,6 +1,5 @@
 package org.spacedrones.software;
 
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.computers.DataRecord;
 import org.spacedrones.components.computers.DataStore;
 import org.spacedrones.universe.Coordinates;
@@ -13,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 public class TrilaterationSoftware extends AbstractSoftware implements Software {
-  public static TypeInfo type = new TypeInfo("TrilaterationSoftware");
 
 	public TrilaterationSoftware(String name) {
 		super(name);
@@ -21,7 +19,7 @@ public class TrilaterationSoftware extends AbstractSoftware implements Software 
 
 
 	@Override
-	public String describe() {
+	public String description() {
 		return "Software to perform trilateration.";
 	}
 
@@ -35,12 +33,6 @@ public class TrilaterationSoftware extends AbstractSoftware implements Software 
 	@Override
 	public String toString() {
 		return getDescription() + " software";
-	}
-
-
-	@Override
-	public TypeInfo type() {
-		return type;
 	}
 
 	private Coordinates calculatePosition() {

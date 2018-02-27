@@ -1,6 +1,5 @@
 package org.spacedrones.data;
 
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.materials.Material;
 
 public interface MaterialDataProvider {

@@ -1,6 +1,5 @@
 package org.spacedrones.components.propulsion;
 
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.propulsion.thrust.SimpleIonEngine;
 import org.spacedrones.components.propulsion.thrust.SimpleThruster;
 import org.spacedrones.components.propulsion.thrust.ThrustingEngine;
@@ -14,7 +13,7 @@ import org.spacedrones.profiles.ThrustProfileFactory;
 
 public class EngineFactory extends DataFactory {
 
-	public static ThrustingEngine getEngine(TypeInfo engineType, boolean vectored){
+	public static ThrustingEngine getEngine(String engineType, boolean vectored){
 		SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(engineType);
 
 		if(engineType.equals(SimpleIonEngine.type)){

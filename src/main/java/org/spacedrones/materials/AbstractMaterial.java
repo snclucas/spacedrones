@@ -1,7 +1,5 @@
 package org.spacedrones.materials;
 
-import org.spacedrones.components.TypeInfo;
-
 public abstract class AbstractMaterial implements Material {
 	
 	TypeInfo DENSITY = new TypeInfo("DENSITY");

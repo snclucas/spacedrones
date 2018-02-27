@@ -1,7 +1,5 @@
 package org.spacedrones.profiles;
 
-import org.spacedrones.components.TypeInfo;
-
 public class SimpleLinearThrustProfile extends AbstractProfile implements ThrustProfile {
 	
 	public static TypeInfo type = new TypeInfo("SimpleLinearThrustProfile");
@@ -48,7 +46,7 @@ public class SimpleLinearThrustProfile extends AbstractProfile implements Thrust
 
 
 	@Override
-	public String describe() {
+	public String description() {
 		return "Simple linear thrust profile.";
 	}
 	

@@ -1,10 +1,8 @@
 package org.spacedrones.components.sensors;
 
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 
 public class LinearSensorArray extends BasicSensorArray {
-  public static TypeInfo type = new TypeInfo("LinearSensorArray");
 
 	LinearSensorArray(String name,
 										BusComponentSpecification busResourceSpecification,
@@ -13,13 +11,8 @@ public class LinearSensorArray extends BasicSensorArray {
 				numberOfSensorElements);
 	}
 
-	@Override
-	public final TypeInfo type() {
-		return new TypeInfo("LinearSensorArray");
-	}
-
   @Override
-  public String describe() {
+  public String description() {
     return "LinearSensorArray";
   }
 }

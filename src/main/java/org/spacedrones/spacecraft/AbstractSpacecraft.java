@@ -10,9 +10,7 @@ import org.spacedrones.structures.hulls.Hull;
 public abstract class AbstractSpacecraft implements Spacecraft {
 
 	private final String name;
-
   private final String id;
-
   private final Hull hull;
 
 	private boolean online = false;
@@ -32,7 +30,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	}
 
 	@Override
-	public String getName() {
+	public String name() {
 		return this.name;
 	}
 
@@ -60,7 +58,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 			if(status.isOK()) {
 				systemsOnline = true;
 				online = true;
-				SystemData data = new SystemData("spaceraft-ident", getId());
+				SystemData data = new SystemData("spaceraft-ident", id());
 				bus.getSystemComputer().getStorageDevice().saveData(data);
 			}
 		}
@@ -71,7 +69,6 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 		return systemsOnline;
 	}
 
-	@Override
 	public Hull getHull() {
 		return hull;
 	}
@@ -161,7 +158,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 
 
 	@Override
-	public String getId() {
+	public String id() {
 		return id;
 	}
 

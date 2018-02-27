@@ -3,7 +3,6 @@ package org.spacedrones.components.propulsion.thrust;
 import org.spacedrones.components.AbstractBusComponent;
 import org.spacedrones.components.BusCommunicator;
 import org.spacedrones.components.SpacecraftBusComponent;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.software.Message;
@@ -18,8 +17,6 @@ import java.util.List;
 
 
 public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBusComponent, BusCommunicator {
-	public static TypeInfo typeID = new TypeInfo("FuelSubSystem");
-	public static TypeInfo categoryID = new TypeInfo("FuelSubSystem");
 
 	public static int PROPULSION_FUEL_SUBSYSTEM = 1;
 	public static int REACTOR_FUEL_SUBSYSTEM = 2;
@@ -31,18 +28,6 @@ public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBus
 	private List<FuelStorageTank> fuelTanks;
 
 	private int fuelSubsystemType;
-
-
-	@Override
-	public final TypeInfo category() {
-		return categoryID;
-	}
-
-	@Override
-	public TypeInfo type() {
-		return typeID;
-	}
-
 
 	FuelSubSystem(String name, BusComponentSpecification busResourceSpecification, int fuelSubsystemType) {
 		super(name, busResourceSpecification);
@@ -133,21 +118,21 @@ public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBus
 
 	@Override
 	public Message recieveBusMessage(Message message) {
-		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
+		String replyMessage = "Message recieved by: " + name() + "\n " + message.getMessage();
 		return new SystemMessage(null, this, replyMessage);
 	}
 
 
 	@Override
-	public String describe() {
-		return this.getName();
+	public String description() {
+		return this.name();
 	}
 
 
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage(getName() + " online.", Status.OK);
+		systemStatus.addSystemMessage(name() + " online.", Status.OK);
 
 		for(FuelStorageTank tank : fuelTanks)
 			tank.online();

@@ -1,7 +1,7 @@
 package org.spacedrones.universe.celestialobjects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.spacedrones.Configuration;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.sensors.SensorType;
 import org.spacedrones.components.sensors.SignalResponse;
 
@@ -29,11 +29,12 @@ public abstract class AbstractCelestialObject implements CelestialObject {
 		generateSigniatures();
 	}
 
-	public String getId() {
+	public String id() {
 		return id;
 	}
 
-  public String getName() {
+	@JsonIgnore
+  public String name() {
     return "CelestialObject";
   }
 	
@@ -81,18 +82,6 @@ public abstract class AbstractCelestialObject implements CelestialObject {
 
 	public List<CelestialObject> getCelestialObjects() {
 		return celestialObjects;
-	}
-
-  // ----- Taxonomy
-
-	@Override
-	public TypeInfo category() {
-		return category;
-	}
-
-	@Override
-	public TypeInfo type() {
-		return type;
 	}
 
 }

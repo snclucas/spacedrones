@@ -36,7 +36,7 @@ public class SystemMessageTest {
 			System.out.println(msg.getMessage());
 		}
 
-		List<SpacecraftBusComponent> components = systemComputer.findComponentByCategory(Engine.category);
+		List<SpacecraftBusComponent> components = systemComputer.findComponentByType(Engine.class);
 
 		Message targetedMessage = new SystemMessage(null, null,"Test targeted message");
 		Message mess = systemComputer.getMessagingSystem().sendMessageTo(targetedMessage, components.get(0));

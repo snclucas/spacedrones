@@ -45,7 +45,7 @@ public class SystemStatusMessage {
 	@Override
 	public String toString() {
 		DecimalFormat format = new DecimalFormat("0000.0000000000000");
-		return format.format(universalDate) + " : " + statusProvider.getName() +": [message=" + message + " status=" + status + "]";
+		return format.format(universalDate) + " : " + statusProvider.name() +": [message=" + message + " status=" + status + "]";
 	}
 
 }

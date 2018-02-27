@@ -6,8 +6,6 @@ import org.spacedrones.utils.math.function.expressionParser.Evaluator;
 
 public class TestDoubleFunctionExpression extends TestDoubleFunction {
 
-  //private int argNumber;
-
   private String expression;
   private String[] variables;
   private Evaluator E = new Evaluator();
@@ -52,21 +50,18 @@ public class TestDoubleFunctionExpression extends TestDoubleFunction {
   public boolean eval(double[] values) {
     checkArgNumber(values.length);
     setVariableValues(values);
-    boolean bool = (((Double)(E.getValue())).doubleValue()>0.5) ? (true) : (false);
-    return bool;
+    return (Double) (E.getValue()) > 0.5;
   }
 
   public boolean eval(double value) {
     checkArgNumber(1);
     setVariableValues(value);
-    boolean bool = (((Double)(E.getValue())).doubleValue()>0.5) ? (true) : (false);
-    return bool;
+    return (Double) (E.getValue()) > 0.5;
   }
 
   public boolean eval(Matrix values) {
     checkArgNumber(values.getRowDimension());
     setVariableValues(values);
-    boolean bool = (((Double)(E.getValue())).doubleValue()>0.5) ? (true) : (false);
-    return bool;
+    return (Double) (E.getValue()) > 0.5;
   }
 }

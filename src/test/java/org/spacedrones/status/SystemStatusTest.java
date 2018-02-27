@@ -65,17 +65,17 @@ public class SystemStatusTest {
 class MockStatusProvider implements StatusProvider{
 
 	@Override
-	public String getName() {
+	public String name() {
 		return "Mock Status Provider";
 	}
 
 	@Override
-	public String getId() {
+	public String id() {
 		return "100";
 	}
 
 	@Override
-	public String describe() {
+	public String description() {
 		return"MockStatusProvider";
 	}
 

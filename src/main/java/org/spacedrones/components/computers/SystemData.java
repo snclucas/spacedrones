@@ -15,17 +15,17 @@ public class SystemData implements Identifiable {
 	}
 
 	@Override
-	public String getName() {
+	public String name() {
 		return "SystemData";
 	}
 
 	@Override
-	public String getId() {
+	public String id() {
 		return Configuration.getUUID();
 	}
 
 	@Override
-	public String describe() {
+	public String description() {
 		return "SystemData";
 	}
 

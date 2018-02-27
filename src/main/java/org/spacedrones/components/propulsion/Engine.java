@@ -2,12 +2,9 @@ package org.spacedrones.components.propulsion;
 
 import org.spacedrones.components.Executable;
 import org.spacedrones.components.SpacecraftBusComponent;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.physics.Unit;
 
 public interface Engine extends SpacecraftBusComponent, Executable {
-	TypeInfo category = new TypeInfo("Engine");
-
 	EngineVector getEngineVector();
 
 	boolean isVectored();

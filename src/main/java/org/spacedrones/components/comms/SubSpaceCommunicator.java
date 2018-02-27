@@ -1,27 +1,24 @@
 package org.spacedrones.components.comms;
 
 import org.spacedrones.algorithm.Model;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
 
 public class SubSpaceCommunicator extends AbstractCommunicationComponent {
-  public static TypeInfo type = new TypeInfo("SubSpaceCommunicator");
-
 
 	SubSpaceCommunicator(String name, BusComponentSpecification busResourceSpecification, Model propagationModel) {
 		super(name, busResourceSpecification, propagationModel);
 	}
 
-	public String describe() {
+	public String description() {
 		return "Sub-space communication device";
 	}
 
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage(getName() + " online.", Status.OK);
+		systemStatus.addSystemMessage(name() + " online.", Status.OK);
 		return systemStatus;
 	}
 

@@ -6,12 +6,8 @@ import org.spacedrones.status.*;
 
 import java.util.List;
 
-public interface Bus extends BusCommunicator, Taxonomic, StatusProvider {
-  TypeInfo category = new TypeInfo("Bus");
-  TypeInfo type = category;
-
-  List<SpacecraftBusComponent> findComponentByType(TypeInfo componentType);
-  List<SpacecraftBusComponent> findComponentByCategory(TypeInfo componentCategory);
+public interface Bus extends BusCommunicator, StatusProvider {
+  List<SpacecraftBusComponent> findComponentByType(Class<? extends SpacecraftBusComponent> component);
   List<SpacecraftBusComponent> getComponents();
 
   void register(SpacecraftBusComponent spacecraftBusComponent);

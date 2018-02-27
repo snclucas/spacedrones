@@ -1,7 +1,6 @@
 package org.spacedrones.structures.hulls;
 
 import org.spacedrones.components.AbstractBusComponent;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.materials.Material;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.software.Message;
@@ -24,17 +23,6 @@ public abstract class AbstractHull extends AbstractBusComponent implements Hull 
 
     hullSpecification.getBusResourceSpecification().setVolume(calculateVolume(hullSpecification.getWidth(Unit.m), hullSpecification.getLength(Unit.m), hullSpecification.getHeight(Unit.m)));
 		this.hullSkinVolume = calculateVolumeOfHullOuter(hullSpecification.getWidth(Unit.m), hullSpecification.getLength(Unit.m), hullSpecification.getHeight(Unit.m), hullSpecification.getThickness(Unit.m));
-	}
-
-
-	@Override
-	public TypeInfo category() {
-		return category;
-	}
-
-	@Override
-	public TypeInfo type() {
-		return type;
 	}
 
 	private double calculateVolume(double width, double length, double height) {
@@ -83,7 +71,7 @@ public abstract class AbstractHull extends AbstractBusComponent implements Hull 
 
 	@Override
 	public Message recieveBusMessage(Message message) {
-		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
+		String replyMessage = "Message recieved by: " + name() + "\n " + message.getMessage();
 		return new SystemMessage(null, this, replyMessage);
 	}
 
@@ -128,7 +116,7 @@ public abstract class AbstractHull extends AbstractBusComponent implements Hull 
 
 	@Override
 	public void tick(double dt) {
-		System.out.println(this.getName() + " tick!");
+		System.out.println(this.name() + " tick!");
 	}
 
 }

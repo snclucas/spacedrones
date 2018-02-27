@@ -83,7 +83,7 @@ public class SystemComputerTest {
 
 
 		assertEquals("Computer category incorrect", SystemComputer.category, computer.category());
-		assertEquals("Computer type ["+ computer.describe() +"] incorrect", BasicSystemComputer.type, computer.type());
+		assertEquals("Computer type ["+ computer.description() +"] incorrect", BasicSystemComputer.type, computer.type());
 
 
 		//assertEquals("Incorrect spacecraft bus", spacecraftBus, computer.getSpacecraftBus());

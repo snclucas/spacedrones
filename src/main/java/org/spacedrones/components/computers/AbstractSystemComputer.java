@@ -1,7 +1,6 @@
 package org.spacedrones.components.computers;
 
 import org.spacedrones.components.SpacecraftBusComponent;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.CommunicationComponent;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.components.propulsion.Engine;
@@ -44,7 +43,7 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
   }
 
   public String getVesselIdent() {
-	  return getId();
+	  return id();
   }
 
   private List<SystemStatusMessage> scanSpacecraftBusForComponents() {
@@ -85,7 +84,7 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
       // Register the component with the messaging system
       systemStatusMessages.add(getMessagingSystem().addComponent(component));
 
-      System.out.println(component.getName() + " " + component.getCurrentPower(Unit.kW));
+      System.out.println(component.name() + " " + component.getCurrentPower(Unit.kW));
     }
 
     return systemStatusMessages;
@@ -129,17 +128,17 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 
 
     if(status.hasCriticalMessages()) {
-      status.addSystemMessage(addSystemMessage(this, this.getName() +
+      status.addSystemMessage(addSystemMessage(this, this.name() +
               " cannot be onlined. Critical errors.", Status.CRITICAL));
       setOnline(false);
     }
     else if(status.hasWarningMessages()) {
-      status.addSystemMessage(addSystemMessage(this, this.getName() +
+      status.addSystemMessage(addSystemMessage(this, this.name() +
               " online but with warnings.", Status.WARNING));
       setOnline(true);
     }
     else if(status.isOK()) {
-      status.addSystemMessage(addSystemMessage(this, this.getName() +
+      status.addSystemMessage(addSystemMessage(this, this.name() +
               " online, no warnings or critical errors.", Status.INFO));
       setOnline(true);
     }
@@ -152,13 +151,8 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 	}
 
 	@Override
-	public List<SpacecraftBusComponent> findComponentByType(TypeInfo componentType) throws ComponentConfigurationException {
-		return spacecraftBus.findComponentByType(componentType);
-	}
-
-	@Override
-	public List<SpacecraftBusComponent> findComponentByCategory(TypeInfo componentCategory) throws ComponentConfigurationException {
-		return spacecraftBus.findComponentByCategory(componentCategory);
+	public List<SpacecraftBusComponent> findComponentByType(Class<? extends SpacecraftBusComponent> component) throws ComponentConfigurationException {
+		return spacecraftBus.findComponentByType(component);
 	}
 
 	@Override
@@ -184,7 +178,7 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 
 	@Override
 	public Message recieveBusMessage(Message message) {
-		String replyMessage = "Message recieved by computer: " + getName() + "\n " + message.getMessage();
+		String replyMessage = "Message recieved by computer: " + name() + "\n " + message.getMessage();
 		return new SystemMessage(null, this, replyMessage);
 	}
 
@@ -234,18 +228,5 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 	public double getTotalCurrentCPUThroughput(Unit unit) {
 		return SpacecraftFirmware.getTotalCurrentCPUThroughput(spacecraftBus, unit);
 	}
-
-
-  // ----- Taxonomy
-
-  @Override
-  public TypeInfo type() {
-    return new TypeInfo("SystemComputer");
-  }
-
-  @Override
-  public TypeInfo category() {
-    return type();
-  }
 
 }

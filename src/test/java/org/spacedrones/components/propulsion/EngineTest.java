@@ -41,7 +41,7 @@ public class EngineTest {
 		engine.callVector(new EngineVector(0.3,0.1, 0.5));
 
 		assertEquals("Engine category incorrect", Engine.category, engine.category());
-		assertEquals("Engine type ["+ engine.describe() +"] incorrect", SimpleThruster.type, engine.type());
+		assertEquals("Engine type ["+ engine.description() +"] incorrect", SimpleThruster.type, engine.type());
 
 		//Check the engine set up
 		assertEquals("Engine power not set correctly", nominalPower, engine.getNominalPower(Unit.W), 0.001);

@@ -1,6 +1,5 @@
 package org.spacedrones.components.computers;
 
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.data.DataFactory;
 import org.spacedrones.data.SpacecraftComponentData;
 import org.spacedrones.exceptions.ItemNotFoundException;
@@ -12,10 +11,10 @@ import org.spacedrones.software.SystemMessageService;
 
 public class ComputerFactory extends DataFactory {
 
-	public static SystemComputer getSystemComputer(TypeInfo computerType){
+	public static SystemComputer getSystemComputer(String computerType){
 		
-		if(computerType.equals(BasicSystemComputer.type)){
-			SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(Computer.type);
+		if(computerType.equals("BasicSystemComputer")){
+			SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters("Computer");
 
 			double maxCPUThroughput = 1000 * Unit.GFLOPs.value(); //GFLOPs
 			
@@ -33,9 +32,9 @@ public class ComputerFactory extends DataFactory {
 	}
 
 
-  public static Computer getComputer(TypeInfo computerType){
-    if(computerType.equals(AuxiliaryComputer.type)){
-      SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(Computer.type);
+  public static Computer getComputer(String computerType){
+    if(computerType.equals("AuxiliaryComputer")){
+      SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters("Computer");
 
       double maxCPUThroughput = 1000 * Unit.GFLOPs.value(); //GFLOPs
 

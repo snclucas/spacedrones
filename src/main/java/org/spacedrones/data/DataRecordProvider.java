@@ -2,7 +2,6 @@ package org.spacedrones.data;
 
 import java.util.List;
 
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.computers.DataRecord;
 
 public interface DataRecordProvider {

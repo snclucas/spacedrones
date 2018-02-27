@@ -10,7 +10,7 @@ public class ThrustProfileTest {
 		
 		ThrustProfile profile = ThrustProfileFactory.getThrustAlgorithm(ThrustProfileFactory.SIMPLE_LINEAR);
 		
-		profile.getName();
+		profile.name();
 		
 		profile.getNormalizedCPU(0);
 		

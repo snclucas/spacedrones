@@ -1,7 +1,6 @@
 package org.spacedrones.software;
 
 import org.spacedrones.components.SpacecraftBusComponent;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.components.propulsion.Engine;
 import org.spacedrones.components.propulsion.EngineVector;
@@ -14,20 +13,13 @@ import java.util.List;
 
 public class PropulsionManagementSoftware extends AbstractSoftware implements Software, ThrustDriveInterface {
 
-	public static TypeInfo type = new TypeInfo("EngineManagementSoftware");
-
 	public PropulsionManagementSoftware(String name) {
 		super(name);
 	}
 
-	@Override
-	public TypeInfo type() {
-		return type;
-	}
-
 	public SystemStatusMessage callDrive(double powerLevel) {
 		SystemStatusMessage message = null;
-		List<SpacecraftBusComponent> engines = getSystemComputer().getSystemComputer().findComponentByCategory(Engine.category);
+		List<SpacecraftBusComponent> engines = getSystemComputer().getSystemComputer().findComponentByType(Engine.class);
 		for(SpacecraftBusComponent engine : engines)
 			if(engine instanceof ThrustingEngine) {
 				message =    ((ThrustDriveInterface) engine).callDrive(powerLevel);
@@ -47,7 +39,7 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 		if(operationPermittedMessage.getStatus() == Status.PERMITTED) {
 			engine.execute();
 			return new SystemStatusMessage(
-					engine, "Engine [ident:"+engine.getId() + "], power level set to " + powerLevel, Status.SUCCESS);
+					engine, "Engine [ident:"+engine.id() + "], power level set to " + powerLevel, Status.SUCCESS);
 		}
 		else
 			return operationPermittedMessage;
@@ -73,11 +65,11 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 			if(engine.isVectored()) {
 				engine.execute();
 				return new SystemStatusMessage(
-						engine, "Engine [ident:"+engine.getId() + "], engine vector set to " + engineVector, Status.SUCCESS);
+						engine, "Engine [ident:"+engine.id() + "], engine vector set to " + engineVector, Status.SUCCESS);
 			}
 			else {
 				return new SystemStatusMessage(
-						engine, "Engine [ident:"+engine.getId() + "], cannot be vectored",
+						engine, "Engine [ident:"+engine.id() + "], cannot be vectored",
                 Status.NOT_PERMITTED);
 			}
 		}
@@ -96,17 +88,17 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 	}
 
 	private ThrustingEngine findEngineByIdent(String ident) {
-		List<SpacecraftBusComponent> engines = getSystemComputer().getSystemComputer().findComponentByCategory(Engine.category);
+		List<SpacecraftBusComponent> engines = getSystemComputer().getSystemComputer().findComponentByType(Engine.class);
 		//TODO LOOK at thisif(engines != null)
 			for(SpacecraftBusComponent engine : engines) {
-				if(engine.getId() == ident)
+				if(engine.id() == ident)
 					return (ThrustingEngine) engine;
 			}
 		return null;
 	}
 
 	@Override
-	public String describe() {
+	public String description() {
 		return "Software to manage and control the propulsion systems.";
 	}
 

@@ -15,13 +15,13 @@ public class Driver {
     Hull hull = HullFactory.getHull("Shuttle");
 		SpacecraftBuildManager sbm = new SpacecraftBuildManager("Test", hull);
 
-    SystemComputer systemComputer = ComputerFactory.getSystemComputer(BasicSystemComputer.type);
+    SystemComputer systemComputer = ComputerFactory.getSystemComputer("BasicSystemComputer");
     sbm.addComponent(systemComputer);
 
-    Computer auxComputer = ComputerFactory.getComputer(AuxiliaryComputer.type);
+    Computer auxComputer = ComputerFactory.getComputer("AuxiliaryComputer");
     sbm.addComponent(auxComputer);
 
-    PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.type);
+    PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator("SubspacePowerExtractor");
     sbm.addComponent(powerGenerator);
 
     try {
@@ -29,7 +29,7 @@ public class Driver {
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-    Sensor sensor = SensorFactory.getSensor(LinearSensorArray.type, SensorType.RADAR, 1);
+    Sensor sensor = SensorFactory.getSensor("LinearSensorArray", SensorType.RADAR, 1);
     sbm.addComponent(sensor);
 
     Spacecraft spacecraft = sbm.getSpacecraft();
@@ -37,8 +37,6 @@ public class Driver {
     SystemStatus sysStatus = spacecraft.online();
 
     sysStatus.getMessages().forEach(m-> System.out.println(m.getUniversalDate() + " " + m.getMessage()));
-
-
 	}
 
 	public static void main(String args[]) {

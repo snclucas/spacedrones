@@ -1,13 +1,13 @@
 package org.spacedrones.components.energygeneration;
 
-import java.util.List;
-
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.components.propulsion.FuelConsumer;
 import org.spacedrones.components.propulsion.thrust.FuelSubSystem;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
+
+import java.util.List;
 
 public abstract class AbstractReactor extends AbstractPowerGenerator implements FuelConsumer  {
 
@@ -30,7 +30,7 @@ public abstract class AbstractReactor extends AbstractPowerGenerator implements 
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
 
-		List<SpacecraftBusComponent> busComponents = getSystemComputer().findComponentByCategory(FuelSubSystem.categoryID);
+		List<SpacecraftBusComponent> busComponents = getSystemComputer().findComponentByType(FuelSubSystem.class);
 
 		if(busComponents.size() > 0) {
 			for(SpacecraftBusComponent component : busComponents) {
@@ -49,7 +49,7 @@ public abstract class AbstractReactor extends AbstractPowerGenerator implements 
 			systemStatus.addSystemMessage("No fuel subsystem found",
 							Status.WARNING);
 		}
-		systemStatus.addSystemMessage(getName() + " online.", Status.OK);
+		systemStatus.addSystemMessage(name() + " online.", Status.OK);
 		return systemStatus;
 	}
 

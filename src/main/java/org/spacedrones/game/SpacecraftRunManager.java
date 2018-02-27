@@ -32,8 +32,8 @@ public final class SpacecraftRunManager implements SpacecraftManager, RunManager
 
   private void moveAllSpacecraft(double dt) {
     for (Spacecraft spacecraft : spacecraftDataProvider.getAllSpacecraft()) {
-      double[] velocity = spacecraftDataProvider.getSpacecraftVelocity(spacecraft.getId());
-      Coordinates scLocation = spacecraftDataProvider.getSpacecraftLocation(spacecraft.getId());
+      double[] velocity = spacecraftDataProvider.getSpacecraftVelocity(spacecraft.id());
+      Coordinates scLocation = spacecraftDataProvider.getSpacecraftLocation(spacecraft.id());
       double[] distance = distanceTraveledInDt(velocity, dt);
       scLocation.addDistance(new BigDecimal[]{new BigDecimal(distance[0]), new BigDecimal(distance[1]), new BigDecimal(distance[2])});
     }
@@ -41,15 +41,15 @@ public final class SpacecraftRunManager implements SpacecraftManager, RunManager
     //Move the spacecraft
     for (Spacecraft spacecraft : spacecraftDataProvider.getAllSpacecraft()) {
       spacecraft.tick(dt);
-      Coordinates currentLocation = spacecraftDataProvider.getSpacecraftLocation(spacecraft.getId());
-      double[] currentVelocity = spacecraftDataProvider.getSpacecraftVelocity(spacecraft.getId());
+      Coordinates currentLocation = spacecraftDataProvider.getSpacecraftLocation(spacecraft.id());
+      double[] currentVelocity = spacecraftDataProvider.getSpacecraftVelocity(spacecraft.id());
 
       //System.out.println("Current velocity: " + currentVelocity[0] + " " + currentVelocity[1] + " " + currentVelocity[2]);
 
       spacecraft.giveManagerHandleTo(this);
 
       double[] dV = new double[]{0.0, 0.0, 0.0};
-      List<SpacecraftBusComponent> components = bus.findComponentByType(ThrustingEngine.type);
+      List<SpacecraftBusComponent> components = bus.findComponentByType(ThrustingEngine.class);
       for (SpacecraftBusComponent component : components) {
         double[] thrust = ((ThrustingEngine) component).getThrust(currentVelocity);
         dV[0] += thrust[0] / spacecraft.getMass(Unit.kg) * 1 * Unit.s.value();
@@ -74,8 +74,8 @@ public final class SpacecraftRunManager implements SpacecraftManager, RunManager
               new BigDecimal(translation[2])
       });
 
-      spacecraftDataProvider.updateSpacecraftLocation(spacecraft.getId(), currentLocation);
-      spacecraftDataProvider.updateSpacecraftVelocity(spacecraft.getId(), newVelocity);
+      spacecraftDataProvider.updateSpacecraftLocation(spacecraft.id(), currentLocation);
+      spacecraftDataProvider.updateSpacecraftVelocity(spacecraft.id(), newVelocity);
 
 
       System.out.println("Current location: " + currentLocation);

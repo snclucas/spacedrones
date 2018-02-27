@@ -24,7 +24,6 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent {
 	private double currentPower;
 	private double currentCPUThroughput;
 
-
 	public AbstractBusComponent(String name, BusComponentSpecification busSpec) {
 		this.name = name;
 		this.busResourceSpecification = busSpec;
@@ -35,13 +34,13 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent {
 
 	@Override
 	public Message recieveBusMessage(Message message) {
-		String replyMessage = "Message recieved by: " + getName() + ":\n " + message.getMessage();
+		String replyMessage = "Message recieved by: " + name() + ":\n " + message.getMessage();
 		return new SystemMessage(null, this, replyMessage);
 	}
 
   public final SystemStatusMessage registerSystemComputer(SystemComputer systemComputer) {
     this.systemComputer = systemComputer;
-    return new SystemStatusMessage(this, this.name + " registered with " + systemComputer.getName(), Status.INFO);
+    return new SystemStatusMessage(this, this.name + " registered with " + systemComputer.name(), Status.INFO);
 	}
 
   public BusComponentSpecification getBusResourceSpecification() {
@@ -49,7 +48,7 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent {
   }
 
   @Override
-	public final String getId() {
+	public final String id() {
 		return this.id;
 	}
 
@@ -59,7 +58,7 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent {
 	}
 
 	@Override
-	public String getName() {
+	public String name() {
 		return this.name;
 	}
 
@@ -119,7 +118,7 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent {
 
 	@Override
 	public String toString() {
-		return getName();
+		return name();
 	}
 
 	@Override
@@ -127,10 +126,10 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent {
 		SystemStatus systemStatus = new SystemStatus(this);
     online = this.isRegisteredWithSystemComputer();
     if(online) {
-      systemStatus.addSystemMessage(getName() + " online.", Status.OK);
+      systemStatus.addSystemMessage(name() + " online.", Status.OK);
     }
 		else {
-      systemStatus.addSystemMessage(getName() + " not registered with system computer.", Status.CRITICAL);
+      systemStatus.addSystemMessage(name() + " not registered with system computer.", Status.CRITICAL);
     }
 			return systemStatus;
 	}

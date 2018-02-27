@@ -43,17 +43,17 @@ public class SensorResult implements Identifiable {
 	}
 
 	@Override
-	public String getName() {
-		return "SensorResult" + "-" ;//+ celestialObject.getName();
+	public String name() {
+		return "SensorResult" + "-" ;//+ celestialObject.name();
 	}
 
 	@Override
-	public String getId() {
+	public String id() {
 		return id;
 	}
 
 	@Override
-	public String describe() {
+	public String description() {
 		return "SensorResult";
 	}
 

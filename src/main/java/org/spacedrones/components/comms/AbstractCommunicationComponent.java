@@ -5,7 +5,6 @@ import org.spacedrones.algorithm.ModelInputs;
 import org.spacedrones.algorithm.ModelResult;
 import org.spacedrones.algorithm.SimpleRadioFrequencyPropagationModel;
 import org.spacedrones.components.AbstractBusComponent;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.physics.Physics;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.software.Message;
@@ -34,16 +33,6 @@ public abstract class AbstractCommunicationComponent extends AbstractBusComponen
 	AbstractCommunicationComponent(String name, BusComponentSpecification busResourceSpecification, Model propagationModel) {
 		super(name, busResourceSpecification);
 		this.propagationModel = propagationModel;
-	}
-
-	@Override
-	public TypeInfo category() {
-		return category;
-	}
-
-	@Override
-	public TypeInfo type() {
-		return new TypeInfo(this.getClass().getSimpleName());
 	}
 
 	@Override
@@ -141,7 +130,7 @@ public abstract class AbstractCommunicationComponent extends AbstractBusComponen
 
 	@Override
 	public Message recieveBusMessage(Message message) {
-		String replyMessage = "Message recieved by comm device: " + getName() + "\n " + message.getMessage();
+		String replyMessage = "Message recieved by comm device: " + name() + "\n " + message.getMessage();
 		return new SystemMessage(null, this, replyMessage);
 	}
 

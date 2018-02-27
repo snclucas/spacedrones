@@ -86,7 +86,7 @@ public class PropulsionManagementSoftwareTest {
 		spacecraftBuildManager.addComponent(computer);
 
 		//for(SpacecraftBusComponent component : computer.getSpacecraftBus().getComponents()) {
-		//	System.out.println(component.getName() + " " +  component.getNominalPower(Unit.MW) + " " + component.getNominalCPUThroughput(Unit.MFLOPs));
+		//	System.out.println(component.name() + " " +  component.getNominalPower(Unit.MW) + " " + component.getNominalCPUThroughput(Unit.MFLOPs));
 		//}
 
 
@@ -102,25 +102,25 @@ public class PropulsionManagementSoftwareTest {
     spacecraftBuildManager.addComponent(engine);
 
 		double powerLevel = 34.45 * Unit.percent.value();
-		SystemStatusMessage systemMsg4 = engineManagementSoftware.callDrive(powerLevel, engine.getId());
+		SystemStatusMessage systemMsg4 = engineManagementSoftware.callDrive(powerLevel, engine.id());
 		assertEquals("Critical error status returned for drive", Status.SUCCESS, systemMsg4.getStatus());
 		assertEquals("Engine power level incorrect", powerLevel, engine.getPowerLevel(), 0.0001);
 
 		System.out.println("Drive [" + engine.getPowerLevel() +  "] " + computer.getCurrentPower(Unit.MW) + " " + computer.getTotalPowerAvailable(Unit.MW));
 
-		SystemStatusMessage systemMsg5 = engineManagementSoftware.callStop(engine.getId());
+		SystemStatusMessage systemMsg5 = engineManagementSoftware.callStop(engine.id());
 		assertEquals("Critical error status returned for stop", Status.SUCCESS, systemMsg5.getStatus());
 		assertEquals("Engine power level incorrect", 0.0, engine.getPowerLevel(), 0.0001);
 
 		System.out.println("Stop [" + engine.getPowerLevel() +  "] " + computer.getCurrentPower(Unit.MW) + " " + computer.getTotalPowerAvailable(Unit.MW));
 
-		SystemStatusMessage systemMsg6 = engineManagementSoftware.callVector(new EngineVector(new double[]{0,0,0}), engine.getId());
+		SystemStatusMessage systemMsg6 = engineManagementSoftware.callVector(new EngineVector(new double[]{0,0,0}), engine.id());
 		assertEquals("Critical error status returned for vector", Status.NOT_PERMITTED, systemMsg6.getStatus()); // passed false to engine factory
 
 		FuelConsumingEngine engine2 = (FuelConsumingEngine)EngineFactory.getEngine(SimpleThruster.type, true);
     spacecraftBuildManager.addComponent(engine2);
 
-		SystemStatusMessage systemMsg7 = engineManagementSoftware.callVector(new EngineVector(new double[]{0,0,0}), engine2.getId());
+		SystemStatusMessage systemMsg7 = engineManagementSoftware.callVector(new EngineVector(new double[]{0,0,0}), engine2.id());
 		assertEquals("Critical error status returned for vector", Status.SUCCESS, systemMsg7.getStatus()); // passed true to engine factory
 
 	}

@@ -1,7 +1,6 @@
 package org.spacedrones.spacecraft;
 
 import org.spacedrones.components.SpacecraftBusComponent;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.CommunicationComponent;
 import org.spacedrones.components.computers.Computer;
 import org.spacedrones.components.computers.SystemComputer;
@@ -12,9 +11,12 @@ import org.spacedrones.status.SystemStatusMessage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
 public class SpacecraftFirmware {
+
+	private static BiPredicate<SpacecraftBusComponent, Class<? extends SpacecraftBusComponent>> dd = new IsComponentOfType();
 
 	static boolean bootstrapSystemComputer(Bus bus) {
 		int systemComputerIndex = findSystemComputerIndex(bus);
@@ -26,25 +28,12 @@ public class SpacecraftFirmware {
 		return hasSystemComputer;
 	}
 
-	static List<SpacecraftBusComponent> findBusComponentByCategory(Bus bus, TypeInfo componentCategory) {
+	static List<SpacecraftBusComponent> findBusComponentByType(Bus bus, Class<? extends SpacecraftBusComponent> component) {
 		return bus.getComponents().stream()
-				 .filter(x->x.category().toString().equals(componentCategory.toString()))
+				 .filter(c -> dd.test(c, component))
 				 .collect(Collectors.toList());
 	}
 
-	static List<SpacecraftBusComponent> findBusComponentByType(Bus bus, TypeInfo componentType) {
-		return bus.getComponents().stream()
-				 .filter(x->x.type().toString().equals(componentType.toString()))
-				 .collect(Collectors.toList());
-	}
-
-	static List<SpacecraftBusComponent> findBusComponent(Bus bus, TypeInfo componentCategoryOrType) {
-		return bus.getComponents().stream()
-						.filter(x->x.type().toString().equals(componentCategoryOrType.toString()) ||
-                    x.category().toString().equals(componentCategoryOrType.toString()))
-						.collect(Collectors.toList());
-	}
-	
 	private static int findSystemComputerIndex(Bus bus) {
 		List<SpacecraftBusComponent> components = bus.getComponents();
 		for(int i = 0; i<components.size();i++ ) {

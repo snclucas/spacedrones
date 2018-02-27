@@ -20,7 +20,7 @@ public final class SpacecraftBuildManager implements SpacecraftManager {
   private double hullVolumeRemaining;
 
   public SpacecraftBuildManager(String name, Hull hull) {
-    SystemComputer systemComputer = ComputerFactory.getSystemComputer(BasicSystemComputer.type);
+    SystemComputer systemComputer = ComputerFactory.getSystemComputer("BasicSystemComputer");
     String ident = Configuration.getUUID();
     Bus spacecraftBus = new SpacecraftBus(systemComputer);
     spacecraft = new SimpleSpacecraft(name, ident, hull, spacecraftBus);

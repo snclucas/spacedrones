@@ -31,11 +31,11 @@ public class LocalEnvironmentDataProvider implements EnvironmentDataProvider {
 		for(CelestialObject celestial : nearByStars) {
 			if(celestial instanceof Star) {
 				Star star = ((Star)celestial);
-				BigDecimal d = Utils.distanceToLocation(coordinates, Universe.getInstance().getCelestialObjectLocationById(star.getId()).getCoordinates(), Unit.One);
+				BigDecimal d = Utils.distanceToLocation(coordinates, Universe.getInstance().getCelestialObjectLocationById(star.id()).getCoordinates(), Unit.One);
 				SignalResponse response = star.getSensorSignalResponse().getSignalResponse(SensorType.OPTICAL, BigDecimal.ZERO);
 				d = d.max(new BigDecimal(CelestialConstants.G_STAR_RADIUS));
 				luminosity += response.getSignalStrength() / (4*Math.PI* (d.pow(2)).doubleValue() );
-				System.out.println(star.getId() + " " + response.getSignalStrength() / (4*Math.PI* (d.pow(2)).doubleValue() ));
+				System.out.println(star.id() + " " + response.getSignalStrength() / (4*Math.PI* (d.pow(2)).doubleValue() ));
 			}
 		} 
 		return new EnvironmentData(luminosity, 0.0, subspaceNoise);

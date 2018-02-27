@@ -56,7 +56,7 @@ public class SystemStatus {
 
 	@Override
 	public String toString() {
-		return "SystemStatus//"+ statusProvider.getName() + "// [messages=" + messages
+		return "SystemStatus//"+ statusProvider.name() + "// [messages=" + messages
 				+ "]";
 	}
 

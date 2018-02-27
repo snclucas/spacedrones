@@ -38,7 +38,7 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 			systemStatus.addSystemMessage("No engine management software loaded", Status.PROBLEM);
 		else
 			systemStatus.addSystemMessage("Engine management software loaded", Status.OK);
-		systemStatus.addSystemMessage(getName() + " online.", Status.OK);
+		systemStatus.addSystemMessage(name() + " online.", Status.OK);
 		return systemStatus;
 	}
 
@@ -74,7 +74,7 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 
 	@Override
 	public Message recieveBusMessage(Message message) {
-		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
+		String replyMessage = "Message recieved by: " + name() + "\n " + message.getMessage();
 		return new SystemMessage(null, this, replyMessage);
 	}
 
@@ -104,7 +104,7 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 
 
 	@Override
-	public String describe() {
+	public String description() {
 		String description = " -- Simple Ion Engine -- \n" +
 						"Mass: " + getMass(Unit.kg) + " Kg, Volume: " + getVolume(Unit.m3) + " m3, Power: <thrust dep.> GJ/s, CPU: " + getNominalCPUThroughput(Unit.MFLOPs) + " GFLOPS";
 		description += "\n";

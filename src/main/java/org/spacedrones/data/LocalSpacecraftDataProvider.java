@@ -1,6 +1,5 @@
 package org.spacedrones.data;
 
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.RadioCommunicator;
 import org.spacedrones.components.comms.SubSpaceCommunicator;
 import org.spacedrones.components.computers.BasicDataStorageUnit;
@@ -22,7 +21,7 @@ import org.spacedrones.structures.storage.fuel.LiquidStorageTank;
 public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 
 	@Override
-	public SpacecraftComponentData getComponentParameters(TypeInfo componentType) {
+	public SpacecraftComponentData getComponentParameters(String componentType) {
 
 		// mass volume power cpu 
 

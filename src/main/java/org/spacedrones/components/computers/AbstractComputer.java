@@ -1,7 +1,6 @@
 package org.spacedrones.components.computers;
 
 import org.spacedrones.components.AbstractBusComponent;
-import org.spacedrones.components.TypeInfo;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.software.Software;
 import org.spacedrones.spacecraft.BusComponentSpecification;
@@ -14,7 +13,7 @@ import java.util.Map;
 public abstract class AbstractComputer extends AbstractBusComponent implements Computer {
 
 	private boolean online;
-	private final Map<TypeInfo, Software> loadedSoftware;
+	private final Map<String, Software> loadedSoftware;
 
   private final double maxCPUThroughput;
 
@@ -46,12 +45,12 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
 	}
 
 	@Override
-	public Software getSoftware(TypeInfo softwareType) {
+	public Software getSoftware(String softwareType) {
 		return loadedSoftware.get(softwareType);
 	}
 
 	@Override
-	public boolean hasSoftwareType(TypeInfo softwareType) {
+	public boolean hasSoftwareType(String softwareType) {
 		return loadedSoftware.get(softwareType) != null;
 	}
 
@@ -82,19 +81,6 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
       systemStatus.addSystemMessage("No interface software loaded", Status.WARNING);
     }
     return systemStatus;
-  }
-
-
-  // ----- Taxonomy
-
-  @Override
-  public TypeInfo type() {
-    return new TypeInfo(this.getClass().getSimpleName());
-  }
-
-  @Override
-  public TypeInfo category() {
-    return type();
   }
 
 }
