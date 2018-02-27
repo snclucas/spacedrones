@@ -44,6 +44,151 @@ public class Evaluator
 		setExpression(s);
 	}
 
+    private static Object evaluate(Node n)
+    {
+        if ( n.hasOperator() && n.hasChild() )
+        {
+            if ( n.getOperator().getType() == 1 )
+                n.setValue ( evaluateExpression1( n.getOperator(), evaluate( n.getLeft() )) );
+            else if ( n.getOperator().getType() == 2 )
+                n.setValue( evaluateExpression2( n.getOperator(), evaluate( n.getLeft() ), evaluate( n.getRight() ) ) );
+        }
+        return (n.getValue());
+    }
+
+    private static Object evaluateExpression1(Operator o, Object o1)
+    {
+
+        String op 	= o.getOperator();
+        Object res 	= null;
+
+        boolean o1isMatrix;
+        boolean o2isMatrix;
+
+        try {
+          Matrix m1 = (Matrix)o1;
+          o1isMatrix = true;
+        } catch (Exception e) {
+          o1isMatrix = false;
+        }
+
+        if (o1isMatrix) {
+          Matrix f1 = (Matrix)o1;
+
+            if       ( "t".equals(op) )  	    res = f1.transpose();
+            else if  ( "inv".equals(op) )  	  res = f1.inverse();
+            else if  ( "diag".equals(op) )  	res = f1.diag();
+            else if  ( "det".equals(op) )  	  res = (f1.det());
+            else if  ( "trace".equals(op) )  	res = (f1.trace());
+            else if  ( "rank".equals(op) )  	res = (double) (f1.rank());
+            else if  ( "sum".equals(op) )  	  res = f1.sum();
+            else if  ( "prod".equals(op) )  	res = f1.prod();
+            else if  ( "min".equals(op) )  	  res = f1.min();
+            else if  ( "max".equals(op) )  	  res = f1.max();
+            else if  ( "mean".equals(op) )  	res = (((RandomMatrix)(f1)).mean()) ;
+            else if  ( "cov".equals(op) )  	  res = ((RandomMatrix)(f1)).cov();
+            else if  ( "var".equals(op) )  	  res = ((RandomMatrix)(f1)).var();
+            else if  ( "cor".equals(op) )  	  res = ((RandomMatrix)(f1)).cor();
+
+        } else {
+          double f1 = (Double) o1;
+
+            if       ( "cos".equals(op) )  	  res = Math.cos(f1) ;
+            else if  ( "sin".equals(op) )  	  res = Math.sin(f1) ;
+            else if  ( "tan".equals(op) )  	  res = Math.tan(f1) ;
+            else if  ( "acos".equals(op) )    res = Math.acos(f1) ;
+            else if  ( "asin".equals(op) )    res = Math.asin(f1) ;
+            else if  ( "atan".equals(op) )    res = Math.atan(f1) ;
+            else if  ( "sqrt".equals(op) )    res = Math.sqrt(f1) ;
+            else if  ( "log".equals(op) )  	  res = Math.log(f1) ;
+            else if  ( "exp".equals(op) )  	  res = Math.exp(f1) ;
+            else if  ( "floor".equals(op) )   res = Math.floor(f1) ;
+            else if  ( "ceil".equals(op) )    res = Math.ceil(f1) ;
+            else if  ( "abs".equals(op) )  	  res = Math.abs(f1) ;
+        }
+
+        return res;
+    }
+
+    private static Object evaluateExpression2(Operator o, Object o1, Object o2)
+    {
+
+        String op 	= o.getOperator();
+        Object res 	= null;
+
+        boolean o1isMatrix;
+        boolean o2isMatrix;
+
+        try {
+          Matrix m1 = (Matrix)o1;
+          o1isMatrix = true;
+        } catch (Exception e) {
+          o1isMatrix = false;
+        }
+
+        try {
+          Matrix m2 = (Matrix)o2;
+          o2isMatrix = true;
+        } catch (Exception e) {
+          o2isMatrix = false;
+        }
+
+        if (o1isMatrix) {
+          Matrix f1 = (Matrix)o1;
+          if (o2isMatrix) {
+            Matrix f2 = (Matrix)o2;
+
+            if       ( "+".equals(op) ) 	    res = (Object)(f1.plus(f2)) ;
+            else if  ( "-".equals(op) ) 	    res = (Object)(f1.minus(f2)) ;
+            else if  ( "*".equals(op) ) 	    res = (Object)(f1.times(f2)) ;
+            else if  ( "/".equals(op) )  	    res = (Object)(f1.divide(f2)) ;
+
+          } else {
+            double f2 = ((Double)o2).doubleValue();
+
+            if       ( "*".equals(op) ) 	    res = (Object)(f1.times(f2)) ;
+            else if  ( "/".equals(op) )  	    res = (Object)(f1.divide(f2)) ;
+
+            else if  ( "sort".equals(op) )  	res = (Object)(f1.sort(Math.round((float)f2))) ;
+            else if  ( "find".equals(op) )  	res = (Object)(f1.find(f2)) ;
+          }
+
+        } else {
+          double f1 = ((Double)o1).doubleValue();
+          if (o2isMatrix) {
+            Matrix f2 = (Matrix)o2;
+
+            if       ( "*".equals(op) ) 	    res = (Object)(f2.times(f1)) ;
+
+          } else {
+            double f2 = ((Double)o2).doubleValue();
+
+            if     	 ( "+".equals(op) ) 	    res = (Object)(new Double(f1 + f2)) ;
+            else if  ( "-".equals(op) ) 	    res = (Object)(new Double(f1 - f2)) ;
+            else if  ( "*".equals(op) ) 	    res = (Object)(new Double(f1 * f2)) ;
+            else if  ( "/".equals(op) )  	    res = (Object)(new Double(f1 / f2)) ;
+
+            else if  ( "^".equals(op) )  	    res = (Object)(new Double(Math.pow(f1,f2))) ;
+            else if  ( "%".equals(op) )  	    res = (Object)(new Double(f1 % f2)) ;
+            else if  ( "min".equals(op) )  	  res = (Object)(new Double(Math.min(f1,f2))) ;
+            else if  ( "max".equals(op) )  	  res = (Object)(new Double(Math.max(f1,f2))) ;
+            else if  ( "&".equals(op) )  	    res = (Object)(new Double(((f1>0)&&(f2>0)) ? (1) : (0))) ;
+            else if  ( "|".equals(op) )  	    res = (Object)(new Double(((f1>0)||(f2>0)) ? (1) : (0))) ;
+            else if  ( "<".equals(op) )  	    res = (Object)(new Double((f1<f2) ? (1) : (0))) ;
+            else if  ( ">".equals(op) )  	    res = (Object)(new Double((f1>f2) ? (1) : (0))) ;
+            else if  ( "=".equals(op) )  	  res = (Object)(new Double((f1==f2) ? (1) : (0))) ;
+
+          }
+        }
+
+        return res;
+    }
+
+    protected static void _D(String s)
+    {
+    	System.err.println(s);
+	}
+
     private void init()
     {
        	if ( operators == null ) initializeOperators();
@@ -124,146 +269,6 @@ public class Evaluator
         	e.printStackTrace();
             return null;
         }
-    }
-
-    private static Object evaluate(Node n)
-    {
-        if ( n.hasOperator() && n.hasChild() )
-        {
-            if ( n.getOperator().getType() == 1 )
-                n.setValue ( evaluateExpression1( n.getOperator(), evaluate( n.getLeft() )) );
-            else if ( n.getOperator().getType() == 2 )
-                n.setValue( evaluateExpression2( n.getOperator(), evaluate( n.getLeft() ), evaluate( n.getRight() ) ) );
-        }
-        return (n.getValue());
-    }
-
-    private static Object evaluateExpression1(Operator o, Object o1)
-    {
-
-        String op 	= o.getOperator();
-        Object res 	= null;
-
-        boolean o1isMatrix;
-        boolean o2isMatrix;
-
-        try {
-          Matrix m1 = (Matrix)o1;
-          o1isMatrix = true;
-        } catch (Exception e) {
-          o1isMatrix = false;
-        }
-
-        if (o1isMatrix) {
-          Matrix f1 = (Matrix)o1;
-
-            if       ( "t".equals(op) )  	    res = (Object)(f1.transpose()) ;
-            else if  ( "inv".equals(op) )  	  res = (Object)(f1.inverse()) ;
-            else if  ( "diag".equals(op) )  	res = (Object)(f1.diag()) ;
-            else if  ( "det".equals(op) )  	  res = (Object)(new Double((double)(f1.det()))) ;
-            else if  ( "trace".equals(op) )  	res = (Object)(new Double((double)(f1.trace()))) ;
-            else if  ( "rank".equals(op) )  	res = (Object)(new Double((double)(f1.rank()))) ;
-            else if  ( "sum".equals(op) )  	  res = (Object)(f1.sum()) ;
-            else if  ( "prod".equals(op) )  	res = (Object)(f1.prod()) ;
-            else if  ( "min".equals(op) )  	  res = (Object)(f1.min()) ;
-            else if  ( "max".equals(op) )  	  res = (Object)(f1.max()) ;
-            else if  ( "mean".equals(op) )  	res = (Object)(((RandomMatrix)(f1)).mean()) ;
-            else if  ( "cov".equals(op) )  	  res = (Object)(((RandomMatrix)(f1)).cov()) ;
-            else if  ( "var".equals(op) )  	  res = (Object)(((RandomMatrix)(f1)).var()) ;
-            else if  ( "cor".equals(op) )  	  res = (Object)(((RandomMatrix)(f1)).cor()) ;
-
-        } else {
-          double f1 = ((Double)o1).doubleValue();
-
-            if       ( "cos".equals(op) )  	  res = (Object)(new Double(Math.cos(f1))) ;
-            else if  ( "sin".equals(op) )  	  res = (Object)(new Double(Math.sin(f1))) ;
-            else if  ( "tan".equals(op) )  	  res = (Object)(new Double(Math.tan(f1))) ;
-            else if  ( "acos".equals(op) )    res = (Object)(new Double(Math.acos(f1))) ;
-            else if  ( "asin".equals(op) )    res = (Object)(new Double(Math.asin(f1))) ;
-            else if  ( "atan".equals(op) )    res = (Object)(new Double(Math.atan(f1))) ;
-            else if  ( "sqrt".equals(op) )    res = (Object)(new Double(Math.sqrt(f1))) ;
-            else if  ( "log".equals(op) )  	  res = (Object)(new Double(Math.log(f1))) ;
-            else if  ( "exp".equals(op) )  	  res = (Object)(new Double(Math.exp(f1))) ;
-            else if  ( "floor".equals(op) )   res = (Object)(new Double(Math.floor(f1))) ;
-            else if  ( "ceil".equals(op) )    res = (Object)(new Double(Math.ceil(f1))) ;
-            else if  ( "abs".equals(op) )  	  res = (Object)(new Double(Math.abs(f1))) ;
-        }
-
-        return res;
-    }
-
-    private static Object evaluateExpression2(Operator o, Object o1, Object o2)
-    {
-
-        String op 	= o.getOperator();
-        Object res 	= null;
-
-        boolean o1isMatrix;
-        boolean o2isMatrix;
-
-        try {
-          Matrix m1 = (Matrix)o1;
-          o1isMatrix = true;
-        } catch (Exception e) {
-          o1isMatrix = false;
-        }
-
-        try {
-          Matrix m2 = (Matrix)o2;
-          o2isMatrix = true;
-        } catch (Exception e) {
-          o2isMatrix = false;
-        }
-
-        if (o1isMatrix) {
-          Matrix f1 = (Matrix)o1;
-          if (o2isMatrix) {
-            Matrix f2 = (Matrix)o2;
-
-            if       ( "+".equals(op) ) 	    res = (Object)(f1.plus(f2)) ;
-            else if  ( "-".equals(op) ) 	    res = (Object)(f1.minus(f2)) ;
-            else if  ( "*".equals(op) ) 	    res = (Object)(f1.times(f2)) ;
-            else if  ( "/".equals(op) )  	    res = (Object)(f1.divide(f2)) ;
-
-          } else {
-            double f2 = ((Double)o2).doubleValue();
-
-            if       ( "*".equals(op) ) 	    res = (Object)(f1.times(f2)) ;
-            else if  ( "/".equals(op) )  	    res = (Object)(f1.divide(f2)) ;
-
-            else if  ( "sort".equals(op) )  	res = (Object)(f1.sort(Math.round((float)f2))) ;
-            else if  ( "find".equals(op) )  	res = (Object)(f1.find(f2)) ;
-          }
-
-        } else {
-          double f1 = ((Double)o1).doubleValue();
-          if (o2isMatrix) {
-            Matrix f2 = (Matrix)o2;
-
-            if       ( "*".equals(op) ) 	    res = (Object)(f2.times(f1)) ;
-
-          } else {
-            double f2 = ((Double)o2).doubleValue();
-
-            if     	 ( "+".equals(op) ) 	    res = (Object)(new Double(f1 + f2)) ;
-            else if  ( "-".equals(op) ) 	    res = (Object)(new Double(f1 - f2)) ;
-            else if  ( "*".equals(op) ) 	    res = (Object)(new Double(f1 * f2)) ;
-            else if  ( "/".equals(op) )  	    res = (Object)(new Double(f1 / f2)) ;
-
-            else if  ( "^".equals(op) )  	    res = (Object)(new Double(Math.pow(f1,f2))) ;
-            else if  ( "%".equals(op) )  	    res = (Object)(new Double(f1 % f2)) ;
-            else if  ( "min".equals(op) )  	  res = (Object)(new Double(Math.min(f1,f2))) ;
-            else if  ( "max".equals(op) )  	  res = (Object)(new Double(Math.max(f1,f2))) ;
-            else if  ( "&".equals(op) )  	    res = (Object)(new Double(((f1>0)&&(f2>0)) ? (1) : (0))) ;
-            else if  ( "|".equals(op) )  	    res = (Object)(new Double(((f1>0)||(f2>0)) ? (1) : (0))) ;
-            else if  ( "<".equals(op) )  	    res = (Object)(new Double((f1<f2) ? (1) : (0))) ;
-            else if  ( ">".equals(op) )  	    res = (Object)(new Double((f1>f2) ? (1) : (0))) ;
-            else if  ( "=".equals(op) )  	  res = (Object)(new Double((f1==f2) ? (1) : (0))) ;
-
-          }
-        }
-
-        return res;
     }
 
     private void initializeOperators()
@@ -642,9 +647,4 @@ public class Evaluator
             System.out.println(nbSpaces + "|" + s);
         }
     }
-
-    protected static void _D(String s)
-    {
-    	System.err.println(s);
-	}
 }
