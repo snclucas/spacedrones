@@ -2,6 +2,7 @@ package org.spacedrones.spacecraft;
 
 import org.spacedrones.Configuration;
 import org.spacedrones.components.SpacecraftBusComponent;
+import org.spacedrones.components.computers.*;
 import org.spacedrones.exceptions.ComponentConfigurationException;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.structures.hulls.Hull;
@@ -19,8 +20,9 @@ public final class SpacecraftBuildManager implements SpacecraftManager {
   private double hullVolumeRemaining;
 
   public SpacecraftBuildManager(String name, Hull hull) {
+    SystemComputer systemComputer = ComputerFactory.getSystemComputer(BasicSystemComputer.type);
     String ident = Configuration.getUUID();
-    Bus spacecraftBus = new SpacecraftBus();
+    Bus spacecraftBus = new SpacecraftBus(systemComputer);
     spacecraft = new SimpleSpacecraft(name, ident, hull, spacecraftBus);
     spacecraft.giveManagerHandleTo(this);
 

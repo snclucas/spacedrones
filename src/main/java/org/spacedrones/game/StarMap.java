@@ -207,8 +207,8 @@ abstract class Java3dApplet extends Applet {
     try {
       File file = new File(System.getProperty("user.dir"));
       System.out.println("Running as Application:");
-      System.out.println("   " + file.toURL());
-      return file.toURL();
+      System.out.println("   " + file.toURI().toURL());
+      return file.toURI().toURL();
     } catch (Exception e) {
     }
 

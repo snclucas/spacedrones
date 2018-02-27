@@ -38,7 +38,7 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 
   @Override
   public SystemStatusMessage addSystemMessage(SpacecraftBusComponent component, String message, Status status) {
-    SystemStatusMessage systemStatusMessage = new SystemStatusMessage(component, message, getUniversalTime(), status);
+    SystemStatusMessage systemStatusMessage = new SystemStatusMessage(component, message, status);
     this.systemMessages.add(systemStatusMessage);
     return systemStatusMessage;
   }
@@ -49,7 +49,7 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 
   private List<SystemStatusMessage> scanSpacecraftBusForComponents() {
     List<SystemStatusMessage> systemStatusMessages = new ArrayList<>();
-    systemStatusMessages.add(new SystemStatusMessage(this, "Scanning spacecraft bus for components.", getUniversalTime(), Status.INFO));
+    systemStatusMessages.add(new SystemStatusMessage(this, "Scanning spacecraft bus for components.", Status.INFO));
     List<SystemStatusMessage> registerMessages = registerSpacecraftComponents(spacecraftBus.getComponents());
     systemStatusMessages.addAll(registerMessages);
     return systemStatusMessages;
@@ -96,17 +96,17 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
     List<SystemStatusMessage> systemStatusMessages = new ArrayList<>();
 
     systemStatusMessages.add(
-            new SystemStatusMessage(this, "Available power: " + getTotalPowerAvailable(Unit.MW) + " " + Unit.MW.symbol(), getUniversalTime(), Status.INFO));
+            new SystemStatusMessage(this, "Available power: " + getTotalPowerAvailable(Unit.MW) + " " + Unit.MW.symbol(), Status.INFO));
     systemStatusMessages.add(
-            new SystemStatusMessage(this, "Required power: " + getTotalCurrentPower(Unit.MW) + " " + Unit.MW.symbol(), getUniversalTime(), Status.INFO));
+            new SystemStatusMessage(this, "Required power: " + getTotalCurrentPower(Unit.MW) + " " + Unit.MW.symbol(), Status.INFO));
 
     systemStatusMessages.add(
-            new SystemStatusMessage(this, "Available CPU throughput: " + getTotalCPUThroughputAvailable(Unit.GFLOPs) + " " + Unit.GFLOPs.symbol(), getUniversalTime(), Status.INFO));
+            new SystemStatusMessage(this, "Available CPU throughput: " + getTotalCPUThroughputAvailable(Unit.GFLOPs) + " " + Unit.GFLOPs.symbol(), Status.INFO));
     systemStatusMessages.add(
-            new SystemStatusMessage(this, "Required CPU throughput: " + getTotalCurrentCPUThroughput(Unit.GFLOPs) + " " + Unit.GFLOPs.symbol(), getUniversalTime(), Status.INFO));
+            new SystemStatusMessage(this, "Required CPU throughput: " + getTotalCurrentCPUThroughput(Unit.GFLOPs) + " " + Unit.GFLOPs.symbol(), Status.INFO));
 
     if(getTotalCPUThroughputAvailable(Unit.MW) < getCurrentCPUThroughput(Unit.MW))
-      systemStatusMessages.add(new SystemStatusMessage(this, "Not enough CPU", getUniversalTime(), Status.PROBLEM));
+      systemStatusMessages.add(new SystemStatusMessage(this, "Not enough CPU", Status.PROBLEM));
 
     return systemStatusMessages;
   }
@@ -173,21 +173,21 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 		if((newBusPowerRequirement > getTotalPowerAvailable(Unit.MW)))
 			return new SystemStatusMessage(this, "Not enough bus power to perform operation, " +
 		newBusPowerRequirement + " needed, " + getTotalPowerAvailable(Unit.MW) + " available",
-		getUniversalTime(), Status.NOT_ENOUGH_POWER);
+              Status.NOT_ENOUGH_POWER);
 
 		else if((newBusCPUThroughputRequirement > getTotalCPUThroughputAvailable(Unit.MFLOPs)))
 			return new SystemStatusMessage(this, "Not enough bus CPU throughput to perform operation, " +
-					newBusCPUThroughputRequirement + " needed, " + getTotalCPUThroughputAvailable(Unit.MFLOPs) + " available", getUniversalTime(), Status.NOT_ENOUGH_CPU);
+					newBusCPUThroughputRequirement + " needed, " + getTotalCPUThroughputAvailable(Unit.MFLOPs) + " available", Status.NOT_ENOUGH_CPU);
 		else
-			return new SystemStatusMessage(this, "Operation permitted", getUniversalTime(), Status.PERMITTED);
+			return new SystemStatusMessage(this, "Operation permitted", Status.PERMITTED);
 	}
 
 	@Override
 	public Message recieveBusMessage(Message message) {
 		String replyMessage = "Message recieved by computer: " + getName() + "\n " + message.getMessage();
-		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
+		return new SystemMessage(null, this, replyMessage);
 	}
-	
+
 	@Override
 	public List<CommunicationComponent> getCommunicationDevices() {
 		return SpacecraftFirmware.getCommunicationDevices(spacecraftBus);

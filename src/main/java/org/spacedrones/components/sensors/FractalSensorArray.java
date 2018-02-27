@@ -18,7 +18,7 @@ public class FractalSensorArray extends BasicSensorArray {
 	@Override
 	public Message recieveBusMessage(Message message) {
 		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
-		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
+		return new SystemMessage(null, this, replyMessage);
 	}
 
   @Override

@@ -16,56 +16,56 @@ public abstract class AbstractThrustingFuelConsumingEngine extends AbstractThrus
 
 	private final FuelConsumptionProfile fuelConsumptionProfile;
 	private FuelSubSystem fuelSubSystem;
-	
+
 	AbstractThrustingFuelConsumingEngine(String name, BusComponentSpecification busResourceSpecification,
 			double maximumThrust, ThrustProfile thrustModel, FuelConsumptionProfile fuelConsumptionModel,
 			EngineVector engineVector, boolean vectored) {
-		super(name, busResourceSpecification, maximumThrust, thrustModel, 
-				engineVector, vectored);	
+		super(name, busResourceSpecification, maximumThrust, thrustModel,
+				engineVector, vectored);
 		this.fuelConsumptionProfile = fuelConsumptionModel;
 	}
-	
+
 
 	AbstractThrustingFuelConsumingEngine(String name, BusComponentSpecification busResourceSpecification,
 			double maximumThrust, EngineVector engineVector, boolean vectored) {
 		super(name, busResourceSpecification, maximumThrust,
-				engineVector, vectored);	
+				engineVector, vectored);
 		this.fuelConsumptionProfile = new SimpleLinearFuelConsumptionProfile("Linear model");
 	}
 
 	public TypeInfo type() {
 		return type;
 	}
-	
+
 	@Override
 	public TypeInfo category() {
 		return category;
 	}
-	
+
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = super.online();
-		
+
 		List<SpacecraftBusComponent> busComponents = getSystemComputer().findComponentByType(FuelSubSystem.typeID);
 
 		if(busComponents.size() > 0) {
-			for(SpacecraftBusComponent component : busComponents) {	
+			for(SpacecraftBusComponent component : busComponents) {
 				if( ((FuelSubSystem)component).getFuelSubsystemType() == FuelSubSystem.PROPULSION_FUEL_SUBSYSTEM) {
-					systemStatus.addSystemMessage("Propulsion fuel subsystem found", getSystemComputer().getUniversalTime(), Status.OK);
+					systemStatus.addSystemMessage("Propulsion fuel subsystem found", Status.OK);
 					FuelSubSystem fuelSubSystem = (FuelSubSystem)busComponents.get(0);
 					if(fuelSubSystem.hasFuelTanks() == false)
-						systemStatus.addSystemMessage("No fuel storage tanks found", 
-								getSystemComputer().getUniversalTime(), Status.WARNING);
+						systemStatus.addSystemMessage("No fuel storage tanks found",
+										Status.WARNING);
 					else
-						systemStatus.addSystemMessage(fuelSubSystem.getFuelTanks().size() +  " fuel tank(s) found", getUniversalTime(), Status.OK);
+						systemStatus.addSystemMessage(fuelSubSystem.getFuelTanks().size() +  " fuel tank(s) found", Status.OK);
 				}
 			}
 		}
 		else {
-			systemStatus.addSystemMessage("No fuel subsystem found", 
-					getSystemComputer().getUniversalTime(), Status.WARNING);
+			systemStatus.addSystemMessage("No fuel subsystem found",
+							Status.WARNING);
 		}
-		systemStatus.addSystemMessage(getName() + " online.", getSystemComputer().getUniversalTime(), Status.OK);
+		systemStatus.addSystemMessage(getName() + " online.", Status.OK);
 		return systemStatus;
 	}
 
@@ -83,7 +83,7 @@ public abstract class AbstractThrustingFuelConsumingEngine extends AbstractThrus
 	public void setFuelSubSystem(FuelSubSystem fuelSubSystem) {
 		this.fuelSubSystem = fuelSubSystem;
 	}
-	
+
 	@Override
 	public FuelConsumptionProfile getFuelConsumptionProfile() {
 		return this.fuelConsumptionProfile;

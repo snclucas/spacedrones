@@ -40,9 +40,9 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
 	public SystemStatusMessage loadSoftware(Software software) {
 		software.setComputer(this);
 		if(loadedSoftware.put(software.type(), software) != null)
-			return new SystemStatusMessage(this, software.getDescription() + " software loaded", getUniversalTime(), Status.OK);
-		else 
-			return new SystemStatusMessage(this, software.getDescription() + " software replaced exisiting software", getUniversalTime(), Status.OK);
+			return new SystemStatusMessage(this, software.getDescription() + " software loaded", Status.OK);
+		else
+			return new SystemStatusMessage(this, software.getDescription() + " software replaced exisiting software", Status.OK);
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
     SystemStatus systemStatus = new SystemStatus(this);
 
     if(hasSoftware()) {
-      systemStatus.addSystemMessage("No interface software loaded", getUniversalTime(), Status.WARNING);
+      systemStatus.addSystemMessage("No interface software loaded", Status.WARNING);
     }
     return systemStatus;
   }

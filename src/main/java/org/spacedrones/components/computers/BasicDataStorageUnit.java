@@ -20,7 +20,7 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 
 	private final Map<TypeInfo, Archive> dataArchives = new HashMap<>();
 
-	
+
 	public TypeInfo type() {
 		return type;
 	}
@@ -58,7 +58,7 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 			return new Archive();
 		}
 	}
-	
+
 	@Override
 	public Map<String,DataRecord> getData(TypeInfo category, TypeInfo ... subTypes) {
 		Map<String,DataRecord> results = new HashMap<>();
@@ -68,7 +68,7 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 					results.put(a.getKey(), a.getValue());
 				}
 			}
-			
+
 		}
 		return results;
 	}
@@ -77,15 +77,15 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 	public SystemStatus runDiagnostics(int level) {
 		//Nothing really to diagnose with this simple hull
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage("Diagnostic [" + getName() +"] OK", -1, Status.OK);
+		systemStatus.addSystemMessage("Diagnostic [" + getName() +"] OK", Status.OK);
 		return systemStatus;
 	}
 
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage(getName() + " online.", getUniversalTime(), Status.OK);
-		return systemStatus; 
+		systemStatus.addSystemMessage(getName() + " online.", Status.OK);
+		return systemStatus;
 	}
 
 	@Override
@@ -103,8 +103,8 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 		List<Identifiable> list = new ArrayList<>(Arrays.asList(data));
 		saveData(list);
 	}
-	
-	
+
+
 	@Override
 	public void saveData(List<? extends Identifiable> data) {
 		for(Identifiable d : data) {

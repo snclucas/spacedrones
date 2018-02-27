@@ -18,7 +18,7 @@ public class BasicSystemComputer extends AbstractSystemComputer implements Syste
 	public SystemStatus runDiagnostics(int level) {
 		//XXX Add something here
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage("Diagnostic [" + getName() +"] OK", -1, Status.OK);
+		systemStatus.addSystemMessage("Diagnostic [" + getName() +"] OK", Status.OK);
 		return systemStatus;
 	}
 
@@ -39,5 +39,6 @@ public class BasicSystemComputer extends AbstractSystemComputer implements Syste
   public TypeInfo category() {
     return new TypeInfo("SystemComputer");
   }
+
 
 }

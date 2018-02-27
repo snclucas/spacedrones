@@ -13,8 +13,7 @@ import org.spacedrones.universe.dataprovider.SpacecraftDataProvider;
 import org.spacedrones.universe.dataprovider.UniverseCelestialObjectDataProvider;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Universe implements UniverseCelestialObjectDataProvider,
 		SpacecraftDataProvider, EnvironmentDataProvider, Tickable {
@@ -23,10 +22,10 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 	private SpacecraftDataProvider spacecraftDataProvider = Configuration.getUniverseSpacecraftLocationDataProvider();
 	private EnvironmentDataProvider universeEnvironmentDataProvider = Configuration.getEnvironmentDataProvider();
 
-	
+
 	private static volatile Universe instance, emptyInstance;
-	
-	
+
+
 	public static Universe getInstance() {
 		Universe localInstance = instance;
 		if(localInstance == null) {
@@ -40,7 +39,7 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 		}
 		return localInstance;
 	}
-	
+
 	public static Universe getEmptyInstance() {
 		Universe localEmptyInstance = emptyInstance;
 		if(localEmptyInstance == null) {
@@ -111,14 +110,6 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 	public Spacecraft getSpacecraftByIdent(String ident) {
 		return spacecraftDataProvider.getSpacecraftByIdent(ident);
 	}
-
-	public long getUniversalTime() {
-		return System.currentTimeMillis();
-	}
-
-
-
-
 
 	@Override
 	public void tick(double dt) {
@@ -197,6 +188,23 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 	@Override
 	public double getSubspaceNoise(Coordinates coordinates) {
 		return universeEnvironmentDataProvider.getSubspaceNoise(coordinates);
+	}
+
+	public static double getUniversalTime() {
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);
+		int day = cal.get(Calendar.DAY_OF_YEAR);
+		int hour = cal.get(Calendar.HOUR_OF_DAY);
+		int minute = cal.get(Calendar.MINUTE);
+		int second = cal.get(Calendar.SECOND);
+		int millisecond = cal.get(Calendar.MILLISECOND);
+
+		//Change this;
+		return ((year) + day/365.0 +
+						(hour/(365*24.0)) +
+						(minute/(365.0*24.0*60.0)) +
+						(second/(365.0*86400.0)) +
+						(millisecond/(365.0*86400000.0)));
 	}
 
 }

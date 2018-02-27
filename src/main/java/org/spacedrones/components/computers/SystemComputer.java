@@ -18,8 +18,6 @@ public interface SystemComputer extends Computer {
 	TypeInfo category = new TypeInfo("SystemComputer");
 	TypeInfo type = category;
 
-	double getUniversalTime();
-
 	void registerBus(Bus bus);
 
 	SystemStatusMessage requestOperation(SpacecraftBusComponent component, BusRequirement busRequirement);

@@ -9,7 +9,7 @@ import org.spacedrones.status.SystemStatus;
 
 public class SimpleMonocoqueHull extends AbstractHull {
 	public static TypeInfo type = new TypeInfo("SimpleMonocoqueHull");
-	
+
 	public SimpleMonocoqueHull(String name, HullSpecification hullSpecification, Hull.Type hullType) {
 		super(name, hullSpecification, hullType);
 	}
@@ -18,7 +18,7 @@ public class SimpleMonocoqueHull extends AbstractHull {
 	public String describe() {
 		return "Simple Monocoque Hull ["+ hullSpecification.getName() +"]";
 	}
-	
+
 	@Override
 	public double getCurrentPower(Unit unit) {
 		// Nominal and operation power are the same for this hull
@@ -35,21 +35,21 @@ public class SimpleMonocoqueHull extends AbstractHull {
 	public SystemStatus runDiagnostics(int level) {
 		//Nothing really to diagnose with this simple hull
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage("Diagnostic [" + getName() +"] OK", -1, Status.OK);
+		systemStatus.addSystemMessage("Diagnostic [" + getName() +"] OK", Status.OK);
 		return systemStatus;
 	}
 
 	@Override
 	public Message recieveBusMessage(Message message) {
 		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
-		return new SystemMessage(null, this, replyMessage, getUniversalTime());
+		return new SystemMessage(null, this, replyMessage);
 	}
 
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage(getName() + " online.", getUniversalTime(), Status.OK);
-		return systemStatus; 
+		systemStatus.addSystemMessage(getName() + " online.", Status.OK);
+		return systemStatus;
 	}
 
 }

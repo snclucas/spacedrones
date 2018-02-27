@@ -22,7 +22,7 @@ import java.util.List;
 public class SubspaceBeaconTransceiver extends AbstractSensor implements PositioningSensor {
 
 	public static TypeInfo typeID = new TypeInfo("SubspaceBeaconTransceiver");
-	
+
 	private static MathContext context = new MathContext(120, RoundingMode.HALF_UP);
 
 	private final List<BeaconSignal> beaconSignals;
@@ -68,9 +68,9 @@ public class SubspaceBeaconTransceiver extends AbstractSensor implements Positio
 		return null;
 	}
 
-	@Override 
+	@Override
 	public Coordinates calculatePosition() {
-		
+
 	//	sensorResponseMediator.passiveScan(66, 2, 1, Sensor.SUBSPACE_RESONANCE);
 
 		if(beaconSignals.size() < 3 )
@@ -98,14 +98,14 @@ public class SubspaceBeaconTransceiver extends AbstractSensor implements Positio
 
 
 		final BigDecimal R1 = distances[0].abs().divide(new BigDecimal(Unit.Pc.value()), context);
-		final BigDecimal R2 = distances[1].abs().divide(new BigDecimal(Unit.Pc.value()), context);	
+		final BigDecimal R2 = distances[1].abs().divide(new BigDecimal(Unit.Pc.value()), context);
 		final BigDecimal R3 = distances[2].abs().divide(new BigDecimal(Unit.Pc.value()), context);
 
-		double[] pos = DistanceSolver.solve(1e-10, x1.doubleValue(), y1.doubleValue(), z1.doubleValue(), R1.doubleValue(), 
+		double[] pos = DistanceSolver.solve(1e-10, x1.doubleValue(), y1.doubleValue(), z1.doubleValue(), R1.doubleValue(),
 				x2.doubleValue(), y2.doubleValue(), z2.doubleValue(), R2.doubleValue()
 				, x3.doubleValue(), y3.doubleValue(), z3.doubleValue(), R3.doubleValue());
 
-		//	BigDecimal[] posBig = DistanceSolver.solve(new BigDecimal(1e-12), x1, y1, z1, R1, 
+		//	BigDecimal[] posBig = DistanceSolver.solve(new BigDecimal(1e-12), x1, y1, z1, R1,
 		//			x2, y2, z2, R2, x3, y3, z3, R3);
 
 		return new Coordinates(Utils.doubleArrayToBigDecimalArray(pos));
@@ -137,11 +137,11 @@ public class SubspaceBeaconTransceiver extends AbstractSensor implements Positio
 	public String describe() {
 		return "Subspace beacon transciever: A device capable of detecting subspace harmonic distortions usually created by subspace beacons.";
 	}
-	
+
 	@Override
 	public Message recieveBusMessage(Message message) {
 		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
-		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
+		return new SystemMessage(null, this, replyMessage);
 	}
 
 }

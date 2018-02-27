@@ -17,7 +17,7 @@ import java.util.List;
 public abstract class AbstractCommunicationComponent extends AbstractBusComponent implements CommunicationComponent {
 
 	private static double MAX_POWER_LEVEL = 100;
-	
+
 	private double range;
 	protected double powerLevel;
 	private double efficiency = 0.3;
@@ -29,13 +29,13 @@ public abstract class AbstractCommunicationComponent extends AbstractBusComponen
 	private int broadcastMessageQueueSize = 10;
 
 	private Model propagationModel;
-	
+
 
 	AbstractCommunicationComponent(String name, BusComponentSpecification busResourceSpecification, Model propagationModel) {
 		super(name, busResourceSpecification);
 		this.propagationModel = propagationModel;
 	}
-	
+
 	@Override
 	public TypeInfo category() {
 		return category;
@@ -82,13 +82,13 @@ public abstract class AbstractCommunicationComponent extends AbstractBusComponen
 	public void setPowerLevel(double powerLevel) {
 		this.powerLevel = powerLevel;
 	}
-	
-	
+
+
 	public double getRange() {
 		return getRange(this.powerLevel);
 	}
-	
-	
+
+
 	public double getRange(double powerLevel) {
 		ModelInputs inputs = new ModelInputs();
 		inputs.addInput("CALC_TYPE", SimpleRadioFrequencyPropagationModel.RANGE_CALC);
@@ -101,7 +101,7 @@ public abstract class AbstractCommunicationComponent extends AbstractBusComponen
 		ModelResult result = propagationModel.getResult(inputs);
 		return result.getResult("CALCULATED_RANGE");
 	}
-	
+
 
 
 	@Override
@@ -132,7 +132,7 @@ public abstract class AbstractCommunicationComponent extends AbstractBusComponen
 	public void setDeviceNoiseLevel(double recieveThreshold) {
 		this.deviceNoiseLevel = recieveThreshold;
 	}
-	
+
 	@Override
 	public double getDeviceNoiseLevel() {
 		return this.deviceNoiseLevel;
@@ -142,7 +142,7 @@ public abstract class AbstractCommunicationComponent extends AbstractBusComponen
 	@Override
 	public Message recieveBusMessage(Message message) {
 		String replyMessage = "Message recieved by comm device: " + getName() + "\n " + message.getMessage();
-		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
+		return new SystemMessage(null, this, replyMessage);
 	}
 
 	@Override

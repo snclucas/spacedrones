@@ -20,58 +20,58 @@ import java.util.List;
 public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBusComponent, BusCommunicator {
 	public static TypeInfo typeID = new TypeInfo("FuelSubSystem");
 	public static TypeInfo categoryID = new TypeInfo("FuelSubSystem");
-	
+
 	public static int PROPULSION_FUEL_SUBSYSTEM = 1;
 	public static int REACTOR_FUEL_SUBSYSTEM = 2;
-	
-	
-	
+
+
+
 	public final static String BASIC_FUEL_SUBSYSTEM = "Basic fuel subsystem";
 
 	private List<FuelStorageTank> fuelTanks;
-	
+
 	private int fuelSubsystemType;
-	
-	
+
+
 	@Override
 	public final TypeInfo category() {
 		return categoryID;
 	}
-	
+
 	@Override
 	public TypeInfo type() {
 		return typeID;
 	}
-	
-	
+
+
 	FuelSubSystem(String name, BusComponentSpecification busResourceSpecification, int fuelSubsystemType) {
-		super(name, busResourceSpecification);	
+		super(name, busResourceSpecification);
 		this.fuelTanks = new ArrayList<>();
 		this.fuelSubsystemType = fuelSubsystemType;
 	}
-	
-	
-	public FuelSubSystem(String name, BusComponentSpecification busResourceSpecification, 
+
+
+	public FuelSubSystem(String name, BusComponentSpecification busResourceSpecification,
 			List<FuelStorageTank> fuelTanks, int fuelSubsystemType) {
 		super(name, busResourceSpecification);
-		
+
 		this.fuelTanks = fuelTanks;
 		this.fuelSubsystemType = fuelSubsystemType;
 	}
-	
-	
+
+
 	public int getFuelSubsystemType() {
 		return fuelSubsystemType;
 	}
-	
-	
+
+
 //	public SystemStatusMessage registerSystemComputer(SystemComputer systemComputer) {
 //		SystemStatusMessage systemStatusMessage = super.registerSystemComputer(systemComputer);
 //		for(FuelStorageTank tank : fuelTanks)
 //			tank.registerSystemComputer(systemComputer);
 //		return systemStatusMessage;
 //	}
-	
+
 
 
 	@Override
@@ -81,8 +81,8 @@ public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBus
 			totalMassOfFuelTanks += tank.getMass(unit);
 		return super.getMass(unit) + totalMassOfFuelTanks;
 	}
-	
-	
+
+
 	@Override
 	public double getVolume(Unit unit) {
 		double totalVolumeOfFuelTanks = 0.0;
@@ -95,13 +95,13 @@ public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBus
 	public List<FuelStorageTank> getFuelTanks() {
 		return Collections.unmodifiableList(fuelTanks);
 	}
-	
-	
+
+
 	public boolean hasFuelTanks() {
 		return fuelTanks.size() > 0;
 	}
-	
-	
+
+
 	public void addFuelTank(FuelStorageTank fuelTank) {
 		fuelTanks.add(fuelTank);
 	}
@@ -134,7 +134,7 @@ public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBus
 	@Override
 	public Message recieveBusMessage(Message message) {
 		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
-		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
+		return new SystemMessage(null, this, replyMessage);
 	}
 
 
@@ -147,12 +147,12 @@ public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBus
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage(getName() + " online.", getUniversalTime(), Status.OK);
-		
+		systemStatus.addSystemMessage(getName() + " online.", Status.OK);
+
 		for(FuelStorageTank tank : fuelTanks)
 			tank.online();
-		
-		return systemStatus; 
+
+		return systemStatus;
 	}
 
 

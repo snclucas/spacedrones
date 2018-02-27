@@ -16,32 +16,32 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 	public static TypeInfo type = new TypeInfo("SimpleSolarArray");
 
 	private EnvironmentDataProvider environmentDataProvider = Configuration.getEnvironmentDataProvider();
-	
+
 	private double arrayArea;
 	private final double efficiency;
-	
-	public SimpleSolarArray(String name, BusComponentSpecification busResourceSpecification, 
+
+	public SimpleSolarArray(String name, BusComponentSpecification busResourceSpecification,
 			double arrayArea, double efficiency) {
 		super(name, busResourceSpecification);
 		this.arrayArea = arrayArea;
 		this.efficiency = efficiency;
 		setMaxPower(arrayArea*efficiency*10.0*Unit.kW.value());
 	}
-	
+
 
 	@Override
 	public double getCurrentPower(Unit unit) {
 		// Nominal and operation power are the same for this hull
 		return getNominalPower(unit);
 	}
-	
+
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage(getName() + " online.", getUniversalTime(), Status.OK);
-		return systemStatus; 
+		systemStatus.addSystemMessage(getName() + " online.", Status.OK);
+		return systemStatus;
 	}
-	
+
 
 	@Override
 	public double getCurrentCPUThroughput(Unit unit) {
@@ -58,21 +58,21 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 	public double getEfficiency() {
 		return efficiency;
 	}
-	
-	
+
+
 
 	@Override
 	public SystemStatus runDiagnostics(int level) {
 		//Nothing really to diagnose with this simple hull
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage("Diagnostic [" + getName() +"] OK", -1, Status.OK);
+		systemStatus.addSystemMessage("Diagnostic [" + getName() +"] OK", Status.OK);
 		return systemStatus;
 	}
 
 	@Override
 	public Message recieveBusMessage(Message message) {
 		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
-		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
+		return new SystemMessage(null, this, replyMessage);
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 				.getSpacecraftLocation(spacecraftIdent);
 		return environmentDataProvider.getEnvironmentData(coordinates).getSolarFlux();
 	}
-	
+
 	@Override
 	public TypeInfo type() {
 		return type;

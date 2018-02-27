@@ -16,31 +16,31 @@ public class SystemStatus {
 		this.statusProvider = statusProvider;
 		this.messages = new ArrayList<SystemStatusMessage>();
 	}
-	
+
 	public SystemStatus mergeSystemStatus(SystemStatus systemStatus) {
 		//Merge all messages
 		this.messages.addAll(systemStatus.getMessages());
 		return this;
 	}
-	
+
 	public void addSystemMessage(SystemStatusMessage systemStatusMessage) {
 		this.messages.add(systemStatusMessage);
 	}
-	
+
 	public void mergeSystemMessages(List<SystemStatusMessage> systemStatusMessages) {
 		this.messages.addAll(systemStatusMessages);
 	}
-	
-	public void addSystemMessage(String message, double universalDateTime, Status status) {
-		this.messages.add(new SystemStatusMessage(statusProvider, message, universalDateTime, status));
-	}
-	
 
-	
+	public void addSystemMessage(String message, Status status) {
+		this.messages.add(new SystemStatusMessage(statusProvider, message, status));
+	}
+
+
+
 	public boolean hasCriticalMessages() {
 		return checkForSystemStatusMessages(Status.CRITICAL).size() > 0;
 	}
-	
+
 	public boolean hasWarningMessages() {
 		return checkForSystemStatusMessages(Status.WARNING).size() > 0;
 	}
@@ -59,14 +59,14 @@ public class SystemStatus {
 		return "SystemStatus//"+ statusProvider.getName() + "// [messages=" + messages
 				+ "]";
 	}
-	
-	
+
+
 	public int getNumberOfMessages() {
 		return messages.size();
 	}
-	
+
 	// -- Private methods -- //
-	
+
 	private List<SystemStatusMessage> checkForSystemStatusMessages(Status ... systemStatusMessageTypes) {
 		List<SystemStatusMessage> filteredMessages = new ArrayList<SystemStatusMessage>();
 		for(SystemStatusMessage message : messages)
@@ -75,7 +75,7 @@ public class SystemStatus {
 					filteredMessages.add(message);
 		return filteredMessages;
 	}
-	
-	
+
+
 
 }

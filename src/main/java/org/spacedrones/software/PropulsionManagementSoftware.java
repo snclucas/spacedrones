@@ -38,8 +38,8 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 	public SystemStatusMessage callDrive(double powerLevel, String engineIdent) {
 		ThrustingEngine engine = findEngineByIdent(engineIdent);
 		if(engine == null)
-			return new SystemStatusMessage(this, "No engine found with ident:"+engineIdent, 
-					getSystemComputer().getUniversalTime(), Status.CRITICAL);
+			return new SystemStatusMessage(this, "No engine found with ident:"+engineIdent,
+              Status.CRITICAL);
 
 		BusRequirement busRequirement = engine.callDrive(powerLevel);
 		SystemStatusMessage operationPermittedMessage = getSystemComputer().getSystemComputer().requestOperation(engine, busRequirement);
@@ -47,7 +47,7 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 		if(operationPermittedMessage.getStatus() == Status.PERMITTED) {
 			engine.execute();
 			return new SystemStatusMessage(
-					engine, "Engine [ident:"+engine.getId() + "], power level set to " + powerLevel, getSystemComputer().getUniversalTime(), Status.SUCCESS);
+					engine, "Engine [ident:"+engine.getId() + "], power level set to " + powerLevel, Status.SUCCESS);
 		}
 		else
 			return operationPermittedMessage;
@@ -56,15 +56,15 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 	public SystemStatusMessage callStop(String engineIdent) {
 		return callDrive(0, engineIdent);
 	}
-	
+
 	public SystemStatusMessage callStop() {
 		return callDrive(0);
 	}
-	
+
 	public SystemStatusMessage callVector(EngineVector engineVector, String engineIdent) {
 		ThrustingEngine engine = findEngineByIdent(engineIdent);
 		if(engine == null)
-			return new SystemStatusMessage(null, "No engine found with id: "+engineIdent, getSystemComputer().getUniversalTime(), Status.CRITICAL);
+			return new SystemStatusMessage(null, "No engine found with id: "+engineIdent, Status.CRITICAL);
 
 		BusRequirement busRequirement = engine.callVector(engineVector);
 		SystemStatusMessage operationPermittedMessage = getSystemComputer().getSystemComputer().requestOperation(engine, busRequirement);
@@ -73,12 +73,12 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 			if(engine.isVectored()) {
 				engine.execute();
 				return new SystemStatusMessage(
-						engine, "Engine [ident:"+engine.getId() + "], engine vector set to " + engineVector, getSystemComputer().getUniversalTime(), Status.SUCCESS);
+						engine, "Engine [ident:"+engine.getId() + "], engine vector set to " + engineVector, Status.SUCCESS);
 			}
 			else {
 				return new SystemStatusMessage(
 						engine, "Engine [ident:"+engine.getId() + "], cannot be vectored",
-						getSystemComputer().getUniversalTime(), Status.NOT_PERMITTED);
+                Status.NOT_PERMITTED);
 			}
 		}
 		else

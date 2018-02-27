@@ -41,15 +41,15 @@ public class PropulsionManagementSoftwareTest {
 		// Simple computer
 		SystemComputer computer = new BasicSystemComputer("Simple System Computer", data.getBusComponentSpecification(), 1000 * Unit.GFLOPs.value());
     spacecraftBuildManager.addComponent(computer);
-		
-		
-		PropulsionManagementSoftware engineManagementSoftware = 
+
+
+		PropulsionManagementSoftware engineManagementSoftware =
 				new PropulsionManagementSoftware("Test EngineManagementSoftware");
-		
+
 		computer.loadSoftware(engineManagementSoftware);
 
-		
-		
+
+
 		assertEquals("Engine Management Software category incorrect", PropulsionManagementSoftware.category, engineManagementSoftware.category());
 		assertEquals("Engine Management Software type incorrect", PropulsionManagementSoftware.type, engineManagementSoftware.type());
 
@@ -76,23 +76,24 @@ public class PropulsionManagementSoftwareTest {
 
 		// Setup spacecraft bus
 		Hull hull = HullFactory.getHull("Shuttle");
-		Spacecraft spacecraft = new SimpleSpacecraft("Shuttle", "1", hull, new SpacecraftBus());
+		SystemComputer computer = new BasicSystemComputer("Simple System Computer", data.getBusComponentSpecification(), 1000 * Unit.GFLOPs.value());
+
+		Spacecraft spacecraft = new SimpleSpacecraft("Shuttle", "1", hull, new SpacecraftBus(computer));
 		PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.type);
     spacecraftBuildManager.addComponent(powerGenerator);
 
 		// Simple computer
-		SystemComputer computer = new BasicSystemComputer("Simple System Computer", data.getBusComponentSpecification(), 1000 * Unit.GFLOPs.value());
-    spacecraftBuildManager.addComponent(computer);
-		
+		spacecraftBuildManager.addComponent(computer);
+
 		//for(SpacecraftBusComponent component : computer.getSpacecraftBus().getComponents()) {
 		//	System.out.println(component.getName() + " " +  component.getNominalPower(Unit.MW) + " " + component.getNominalCPUThroughput(Unit.MFLOPs));
 		//}
-		
-		
+
+
 		System.out.println("No drive " + computer.getTotalCurrentPower(Unit.MW) + " " + computer.getTotalPowerAvailable(Unit.MW)
 			+ " : "	+ computer.getCurrentCPUThroughput(Unit.MFLOPs) + " " + computer.getTotalCPUThroughputAvailable(Unit.MFLOPs));
 
-		PropulsionManagementSoftware engineManagementSoftware = 
+		PropulsionManagementSoftware engineManagementSoftware =
 				new PropulsionManagementSoftware("Test EngineManagementSoftware");
 
 		computer.loadSoftware(engineManagementSoftware);
@@ -104,13 +105,13 @@ public class PropulsionManagementSoftwareTest {
 		SystemStatusMessage systemMsg4 = engineManagementSoftware.callDrive(powerLevel, engine.getId());
 		assertEquals("Critical error status returned for drive", Status.SUCCESS, systemMsg4.getStatus());
 		assertEquals("Engine power level incorrect", powerLevel, engine.getPowerLevel(), 0.0001);
-		
+
 		System.out.println("Drive [" + engine.getPowerLevel() +  "] " + computer.getCurrentPower(Unit.MW) + " " + computer.getTotalPowerAvailable(Unit.MW));
 
 		SystemStatusMessage systemMsg5 = engineManagementSoftware.callStop(engine.getId());
 		assertEquals("Critical error status returned for stop", Status.SUCCESS, systemMsg5.getStatus());
 		assertEquals("Engine power level incorrect", 0.0, engine.getPowerLevel(), 0.0001);
-		
+
 		System.out.println("Stop [" + engine.getPowerLevel() +  "] " + computer.getCurrentPower(Unit.MW) + " " + computer.getTotalPowerAvailable(Unit.MW));
 
 		SystemStatusMessage systemMsg6 = engineManagementSoftware.callVector(new EngineVector(new double[]{0,0,0}), engine.getId());

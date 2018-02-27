@@ -8,29 +8,29 @@ import java.util.Arrays;
 import org.spacedrones.Configuration;
 
 
-public class Matrix {
+public class Matrix2 {
 
 	private static MathContext mc = new MathContext(Configuration.precision, RoundingMode.HALF_UP);
-	
-	
-	
+
+
+
 	public static double norm(double[] x) {
 		double norm = 0.0;
 		for(Double d : x)
 			norm += d*d;
 		return  Math.sqrt(norm);
 	}
-	
-	
+
+
 	public static BigDecimal norm(BigDecimal[] x) {
 		BigDecimal norm = new BigDecimal(0.0).setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP);
 		for(BigDecimal d : x)
 			norm = norm.add(d.multiply(d, mc), mc);
 		return  BigDecimalMath.sqrt(norm);
 	}
-	
-	
-	
+
+
+
 
 	// return a random m-by-n matrix with values between 0 and 1
 	public static double[][] random(int m, int n) {
@@ -90,9 +90,9 @@ public class Matrix {
 				C[i][j] = A[i][j] - B[i][j];
 		return C;
 	}
-	
-	
-	
+
+
+
 	public static double[] subtract(double[] A, double[] B) {
 		int m = A.length;
 		double[] C = new double[m];
@@ -100,8 +100,8 @@ public class Matrix {
 				C[i] = A[i] - B[i];
 		return C;
 	}
-	
-	
+
+
 	public static BigDecimal[] subtract(BigDecimal[] A, BigDecimal[] B) {
 		int m = A.length;
 		BigDecimal[] C = new BigDecimal[m];
@@ -114,7 +114,7 @@ public class Matrix {
 		return C;
 	}
 
-	
+
 	// return C = A * B
 	public static double[][] multiply(double[][] A, double[][] B) {
 		int mA = A.length;
@@ -129,8 +129,8 @@ public class Matrix {
 					C[i][j] += A[i][k] * B[k][j];
 		return C;
 	}
-	
-	
+
+
 
 	// matrix-vector multiplication (y = A * x)
 	public static double[] multiply(double[][] A, double[] x) {

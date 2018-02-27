@@ -8,7 +8,7 @@ import org.spacedrones.status.SystemStatus;
 
 public class SubSpaceCommunicator extends AbstractCommunicationComponent {
   public static TypeInfo type = new TypeInfo("SubSpaceCommunicator");
-	
+
 
 	SubSpaceCommunicator(String name, BusComponentSpecification busResourceSpecification, Model propagationModel) {
 		super(name, busResourceSpecification, propagationModel);
@@ -17,19 +17,19 @@ public class SubSpaceCommunicator extends AbstractCommunicationComponent {
 	public String describe() {
 		return "Sub-space communication device";
 	}
-	
+
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage(getName() + " online.", getUniversalTime(), Status.OK);
-		return systemStatus; 
+		systemStatus.addSystemMessage(getName() + " online.", Status.OK);
+		return systemStatus;
 	}
 
 	@Override
 	public double getCurrentPower(Unit unit) {
 		return getNominalPower(unit);
 	}
-	
+
 	@Override
 	public double getCurrentCPUThroughput(Unit unit) {
 		// Nominal and operation CPU are the same for this XX change
@@ -39,14 +39,14 @@ public class SubSpaceCommunicator extends AbstractCommunicationComponent {
 	@Override
 	public SystemStatus runDiagnostics(int level) {
 		SystemStatus systemStatus = new SystemStatus(this);
-		
+
 		if("propagationModel" == null)
 			systemStatus.addSystemMessage(
-					"Level " + level + "diagnostics : Problem. No propagation model.", getUniversalTime(), Status.PROBLEM);
-		else 
+					"Level " + level + "diagnostics : Problem. No propagation model.", Status.PROBLEM);
+		else
 			systemStatus.addSystemMessage(
-					"Running diagnostics [level " + level + "].", getUniversalTime(), Status.OK);
-		
+					"Running diagnostics [level " + level + "].", Status.OK);
+
 		return systemStatus;
 	}
 

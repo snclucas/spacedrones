@@ -11,12 +11,12 @@ public abstract class AbstractHull extends AbstractBusComponent implements Hull 
 
 	final HullSpecification hullSpecification;
 	final Hull.Type hullType;
-	
+
 	double usedVolume;
-	
+
 	double hullSkinVolume;
 
-	
+
 	public AbstractHull(String name, HullSpecification hullSpecification, Hull.Type hullType) {
 		super(name, hullSpecification.getBusResourceSpecification());
 		this.hullSpecification = hullSpecification;
@@ -25,8 +25,8 @@ public abstract class AbstractHull extends AbstractBusComponent implements Hull 
     hullSpecification.getBusResourceSpecification().setVolume(calculateVolume(hullSpecification.getWidth(Unit.m), hullSpecification.getLength(Unit.m), hullSpecification.getHeight(Unit.m)));
 		this.hullSkinVolume = calculateVolumeOfHullOuter(hullSpecification.getWidth(Unit.m), hullSpecification.getLength(Unit.m), hullSpecification.getHeight(Unit.m), hullSpecification.getThickness(Unit.m));
 	}
-	
-	
+
+
 	@Override
 	public TypeInfo category() {
 		return category;
@@ -36,21 +36,21 @@ public abstract class AbstractHull extends AbstractBusComponent implements Hull 
 	public TypeInfo type() {
 		return type;
 	}
-	
+
 	private double calculateVolume(double width, double length, double height) {
 		if(hullType == Hull.Type.SPHEROID)
 			return (4.0*Math.PI/3.0)*width*width*length;
-		else 
+		else
 			return width*length*height;
 	}
-	
-	
+
+
 	private double calculateVolumeOfHullOuter(double width, double length, double height, double thickness) {
 		double innerVolume = calculateVolume(width, length, height);
 		double outerVolume = calculateVolume(width+2*thickness, length+2*thickness, height+2*thickness);
-		return outerVolume - innerVolume;	
+		return outerVolume - innerVolume;
 	}
-	
+
 	@Override
 	public double getThickness(Unit unit) {
 		return hullSpecification.getThickness(unit);
@@ -66,7 +66,7 @@ public abstract class AbstractHull extends AbstractBusComponent implements Hull 
 	public Material getMaterial() {
 		return hullSpecification.getMaterial();
 	}
-	
+
 
 	public double getLength(Unit unit) {
 		return hullSpecification.getLength(unit);
@@ -84,12 +84,12 @@ public abstract class AbstractHull extends AbstractBusComponent implements Hull 
 	@Override
 	public Message recieveBusMessage(Message message) {
 		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
-		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
+		return new SystemMessage(null, this, replyMessage);
 	}
-	
-	
+
+
 	//Delegate methods to get the hull resistances
-	
+
 	public double getImpactResistance() {
 		return hullSpecification.getMaterial().getImpactResistance() * getImpactResistanceModifier();
 	}
@@ -105,8 +105,8 @@ public abstract class AbstractHull extends AbstractBusComponent implements Hull 
 	public double getThermalResistance() {
 		return hullSpecification.getMaterial().getThermalResistance() * getThermalResistanceModifier();
 	}
-	
-	
+
+
 	public double getImpactResistanceModifier() {
 		return hullSpecification.getImpactResistanceModifier();
 	}
@@ -125,7 +125,7 @@ public abstract class AbstractHull extends AbstractBusComponent implements Hull 
 	public double getRadiationResistanceModifier() {
 		return hullSpecification.getRadiationResistanceModifier();
 	}
-	
+
 	@Override
 	public void tick(double dt) {
 		System.out.println(this.getName() + " tick!");

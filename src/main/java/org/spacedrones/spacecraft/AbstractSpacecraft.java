@@ -8,7 +8,7 @@ import org.spacedrones.structures.hulls.Hull;
 
 
 public abstract class AbstractSpacecraft implements Spacecraft {
-	
+
 	private final String name;
 
   private final String id;
@@ -16,10 +16,10 @@ public abstract class AbstractSpacecraft implements Spacecraft {
   private final Hull hull;
 
 	private boolean online = false;
-	
+
 	private double spacecraftBusComponentsVolumeRequirement;
 	private double spacecraftBusComponentsMass;
-	
+
 	private boolean systemsOnline;
 
 	private final Bus bus;
@@ -44,11 +44,11 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	@Override
 	public SystemStatus online() {
 		SystemStatus status = new SystemStatus(this);
-		
+
 		SpacecraftFirmware.scanSpacecraftComponents(bus);
-		
+
 		if(!SpacecraftFirmware.bootstrapSystemComputer(bus)) {
-			status.addSystemMessage("No system computer found! Aborting spacecraft onlining.", 11, Status.CRITICAL);
+			status.addSystemMessage("No system computer found! Aborting spacecraft onlining.", Status.CRITICAL);
 			systemsOnline = false;
 			online = false;
 			return status;
@@ -70,7 +70,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	protected boolean isSystemsOnline() {
 		return systemsOnline;
 	}
-	
+
 	@Override
 	public Hull getHull() {
 		return hull;
@@ -158,8 +158,8 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 			return false;
 		return true;
 	}
-	
-	
+
+
 	@Override
 	public String getId() {
 		return id;

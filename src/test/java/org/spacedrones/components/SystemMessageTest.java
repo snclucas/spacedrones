@@ -11,12 +11,12 @@ public class SystemMessageTest {
 
 	@Test
 	public void testSystemMessage() {
-		
+
 		MockIdentifiableObject reciever = new MockIdentifiableObject("12", "Test reciever", RadioCommunicator.category, RadioCommunicator.type);
 		MockIdentifiableObject sender = new MockIdentifiableObject("123", "Test sender", SimpleIonEngine.category, SimpleIonEngine.type);
-	
-		SystemMessage systemMessage = new SystemMessage(reciever, sender, "This is a test message", 1273);
-		
+
+		SystemMessage systemMessage = new SystemMessage(reciever, sender, "This is a test message");
+
 		assertEquals("Reciever ID incorrect", reciever.getId(), systemMessage.getRecieverId());
 		assertEquals("Sender ID incorrect", sender.getId(), systemMessage.getSenderId());
 		assertEquals("Message incorrect", "This is a test message", systemMessage.getMessage());
@@ -26,13 +26,13 @@ public class SystemMessageTest {
 }
 
 class MockIdentifiableObject implements Identifiable {
-	
+
 	String ident;
 	String name;
 	TypeInfo category;
 	TypeInfo type;
-	
-	
+
+
 	MockIdentifiableObject(String ident, String name, TypeInfo category, TypeInfo type) {
 		super();
 		this.ident = ident;
@@ -45,7 +45,7 @@ class MockIdentifiableObject implements Identifiable {
 	public String getName() {
 		return name;
 	}
-	
+
 
 	@Override
 	public String getId() {
@@ -57,5 +57,5 @@ class MockIdentifiableObject implements Identifiable {
 	public String describe() {
 		return "Mock";
 	}
-	
+
 }

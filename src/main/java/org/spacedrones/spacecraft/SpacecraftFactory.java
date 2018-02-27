@@ -31,61 +31,58 @@ import org.spacedrones.structures.storage.fuel.FuelStorageTankFactory;
 import java.security.InvalidParameterException;
 
 public class SpacecraftFactory {
-	
-	public final static String SHUTTLE="Shuttle"; 
+
+	public final static String SHUTTLE="Shuttle";
 	public final static String SIMPLE_SATELITE="Simple satelite";
 
 
 	public static Spacecraft getSpacecraft(String spacecraftType) throws InvalidParameterException{
 		SpacecraftDataProvider spacecraftDataProvider = Configuration.getSpacecraftDataProvider();
-
-		Bus spacecraftBus = new SpacecraftBus();
+		SystemComputer systemComputer = ComputerFactory.getSystemComputer(SystemComputer.type);
+		Bus spacecraftBus = new SpacecraftBus(systemComputer);
 
 		switch (spacecraftType) {
-			
+
 		case SHUTTLE:
 			Hull hull = HullFactory.getHull("Shuttle");
 			SpacecraftBuildManager spacecraftBuildManager = new SpacecraftBuildManager(SHUTTLE, hull);
-			
-			SystemComputer systemComputer = ComputerFactory.getSystemComputer(BasicSystemComputer.type);
-			spacecraftBuildManager.addComponent(systemComputer);
-			
+
 			//PropulsionManagementSoftware engineManagementSoftware = new PropulsionManagementSoftware("Test EngineManagementSoftware", systemComputer);
 			//systemComputer.loadSoftware(engineManagementSoftware);
-			
+
 			PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.type);
       spacecraftBuildManager.addComponent(powerGenerator);
-			
+
 			Sensor sensor = SensorFactory.getSensor(LinearSensorArray.type, SensorType.RADAR, 1);
       spacecraftBuildManager.addComponent(sensor);
-			
-			
+
+
 			double tankCapacity = 100 * Unit.l.value();
 			Fuel fuel = spacecraftDataProvider.getFuel(Fuel.HYDRAZINE);
 			FuelStorageTank tank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.type, tankCapacity);
 			tank.setFuel(fuel, tankCapacity);
-			
+
 			FuelSubSystem fuelDeliverySystem = FuelSubSystemFactory.getFuelSubsystem(
 					FuelSubSystem.BASIC_FUEL_SUBSYSTEM, FuelSubSystem.PROPULSION_FUEL_SUBSYSTEM);
 			fuelDeliverySystem.addFuelTank(tank);
       spacecraftBuildManager.addComponent(fuelDeliverySystem);
       spacecraftBuildManager.addComponent(tank);
-			
+
 			FuelConsumingEngine engine = (FuelConsumingEngine)EngineFactory.getEngine(SimpleThruster.type, false);
 			engine.setFuelSubSystem(fuelDeliverySystem);
       spacecraftBuildManager.addComponent(engine);
-			
+
 			CommunicationComponent commDevice = CommunicatorDeviceFactory.getCommunicator(RadioCommunicator.type);
       spacecraftBuildManager.addComponent(commDevice);
-			
+
 			return spacecraftBuildManager.getSpacecraft();
 
 		default:
 			throw new InvalidParameterException("No such spacecraft.");
-			
+
 		}
-		
-		
+
+
 	}
 
 }

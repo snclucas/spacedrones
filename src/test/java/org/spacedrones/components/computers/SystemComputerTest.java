@@ -22,10 +22,10 @@ public class SystemComputerTest {
 	private double maximumPower = 1 * Unit.MW.value();
 	private double maximumCPU = nominalCPU;
 	boolean vectored = false;
-	
-	private Bus spacecraftBus = new SpacecraftBus();
 
-	
+	private Bus spacecraftBus = null;
+
+
 	private BusComponentSpecification busSpecs = new BusComponentSpecification(
 			new PhysicalSpecification(mass, volume),
 			new OperationalSpecification(nominalPower, nominalCPU, maximumPower, maximumCPU));
@@ -35,14 +35,14 @@ public class SystemComputerTest {
 	public void setUp() {
 		double arrayArea = 1 * Unit.m.value() * 10 * Unit.m.value();
 		double efficiency = 75 * Unit.percent.value();
-		
+
 		SystemComputer computer = new BasicSystemComputer("Test computer", busSpecs, 10 * Unit.GFLOPs.value());
-		spacecraftBus.register(computer);
-		
+    spacecraftBus = new SpacecraftBus(computer);
+
 		BusComponentSpecification powerGeneratorBusSpecs = new BusComponentSpecification(
 				new PhysicalSpecification(mass, volume),
 				new OperationalSpecification(0, nominalCPU, 0, maximumCPU));
-		
+
 		PowerGenerator powerGenerator = new SubspacePowerExtractor("Test power generator", powerGeneratorBusSpecs, arrayArea, efficiency);
 		spacecraftBus.register(powerGenerator);
 	}
@@ -50,7 +50,7 @@ public class SystemComputerTest {
 	@Test
 	public void testRequestOperation() {
 		SystemComputer computer = spacecraftBus.getSystemComputer();
-		
+
 		// Computer is not online so current power should be 0
 		assertEquals("Computer current power should be (not online)", 0.0, computer.getCurrentPower(Unit.kW), 0.00001);
 		SystemStatus systemStatus = computer.online();
@@ -65,7 +65,7 @@ public class SystemComputerTest {
 		busRequirement = new BusRequirement(1100 * Unit.W.value(), 100 * Unit.MFLOPs.value());
 		message = computer.requestOperation(computer, busRequirement);
 		assertEquals("Should be NOT_ENOUGH_POWER", Status.NOT_ENOUGH_POWER, message.getStatus());
-		
+
 		busRequirement = new BusRequirement(110 * Unit.W.value(), 10 * Unit.GFLOPs.value());
 		message = computer.requestOperation(computer, busRequirement);
 		assertEquals("Should be NOT_ENOUGH_GPU", Status.NOT_ENOUGH_CPU, message.getStatus());

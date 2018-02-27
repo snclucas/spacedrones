@@ -3,22 +3,24 @@ package org.spacedrones.spacecraft;
 import org.spacedrones.Configuration;
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.TypeInfo;
+import org.spacedrones.components.comms.*;
 import org.spacedrones.components.computers.SystemComputer;
 import org.spacedrones.software.Message;
-import org.spacedrones.status.SystemStatusMessage;
+import org.spacedrones.status.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class SpacecraftBus implements Bus {
 
   private final String name;
   private final String id;
 	private final List<SpacecraftBusComponent> components = new ArrayList<>();
+	private SystemComputer systemComputer;
 
-	public SpacecraftBus() {
+	public SpacecraftBus(SystemComputer systemComputer) {
     this.name = "SpacecraftBus";
     this.id = Configuration.getUUID();
+    this.systemComputer = systemComputer;
   }
 
 	@Override
@@ -43,13 +45,14 @@ public class SpacecraftBus implements Bus {
 
 	@Override
 	public SystemStatusMessage registerSystemComputer(SystemComputer computer) {
-		// TODO Auto-generated method stub
-		return null;
+		this.systemComputer = computer;
+		return new SystemStatusMessage(this, "System computer registered with bus", Status.INFO);
 	}
 
 	public void register(SpacecraftBusComponent component) {
 		if(component instanceof SystemComputer)
 			findComponentByType(SystemComputer.type).clear();
+		component.registerSystemComputer(systemComputer);
 		this.components.add(component);
 	}
 
@@ -82,5 +85,7 @@ public class SpacecraftBus implements Bus {
 	public TypeInfo type() {
 		return type;
 	}
+
+
 
 }

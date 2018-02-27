@@ -12,14 +12,14 @@ import org.spacedrones.status.SystemStatus;
 
 public abstract class AbstractEngine extends AbstractBusComponent implements Engine {
 
-	
+
 	protected double powerLevel;
 	protected EngineVector engineVector;
 	protected boolean vectored;
 	protected double requestedPowerLevel;
 	private EngineVector requestedEngineVector;
 
-	public AbstractEngine(String name, BusComponentSpecification busResourceSpecification, 
+	public AbstractEngine(String name, BusComponentSpecification busResourceSpecification,
 			EngineVector engineVector, boolean vectored) {
 		super(name, busResourceSpecification);
 
@@ -35,11 +35,11 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
 		if(!getSystemComputer().hasSoftwareType(PropulsionManagementSoftware.type))
-			systemStatus.addSystemMessage("No engine management software loaded", getUniversalTime(), Status.PROBLEM);
+			systemStatus.addSystemMessage("No engine management software loaded", Status.PROBLEM);
 		else
-			systemStatus.addSystemMessage("Engine management software loaded", getUniversalTime(), Status.OK);
-		systemStatus.addSystemMessage(getName() + " online.", getUniversalTime(), Status.OK);
-		return systemStatus;	
+			systemStatus.addSystemMessage("Engine management software loaded", Status.OK);
+		systemStatus.addSystemMessage(getName() + " online.", Status.OK);
+		return systemStatus;
 	}
 
 
@@ -48,15 +48,15 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 		this.powerLevel = this.requestedPowerLevel;
 		this.engineVector = this.requestedEngineVector;
 	}
-	
-	
+
+
 	@Override
 	public void setPowerLevel(double powerLevel) {
 		if(powerLevel < 0 || powerLevel > 100)
 			throw new IllegalArgumentException("Power level must be btween 0 and 100");
 		this.powerLevel = powerLevel;
 	}
-	
+
 
 	@Override
 	public double getPowerLevel() {
@@ -75,7 +75,7 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 	@Override
 	public Message recieveBusMessage(Message message) {
 		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
-		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
+		return new SystemMessage(null, this, replyMessage);
 	}
 
 
@@ -83,7 +83,7 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 	public EngineVector getEngineVector() {
 		return engineVector;
 	}
-	
+
 
 	@Override
 	public boolean isVectored() {

@@ -13,10 +13,11 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class SpacecraftFirmwareTest {
-	
+
 	@Test
 	public void testSpacecraftFirmware() {
-    SpacecraftBus spacecraftBus = new SpacecraftBus();
+		SystemComputer systemComputer = ComputerFactory.getSystemComputer(SystemComputer.type);
+    SpacecraftBus spacecraftBus = new SpacecraftBus(systemComputer);
 
 		boolean hasComputer = SpacecraftFirmware.bootstrapSystemComputer(spacecraftBus);
 		assertEquals(false, hasComputer);
@@ -29,10 +30,6 @@ public class SpacecraftFirmwareTest {
 
 		List<Engine> engines = SpacecraftFirmware.getEngines(spacecraftBus);
 		assertEquals("Number of engines should be 0", 0, engines.size());
-
-		// Register a system computer
-    SystemComputer systemComputer = ComputerFactory.getSystemComputer(BasicSystemComputer.type);
-    spacecraftBus.register(systemComputer);
 
     computers = SpacecraftFirmware.getComputers(spacecraftBus);
     assertEquals("Number of computers should be 1", 1, computers.size());

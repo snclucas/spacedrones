@@ -56,9 +56,9 @@ public class TrilaterationSoftware extends AbstractSoftware implements Software 
 //			Location loc = new SimpleLocation(entry.getKey(), ((CelestialObject)entry.getValue()).getCoordinates()   );
 //			subspaceBeaconsLocations.add(loc);
 //		}
-		
+
 		if(subspaceBeacons.size() < 3) {
-			SystemMessage message = new SystemMessage(null, this, "Not enough beacons to triangulate.", getSystemComputer().getUniversalTime());
+			SystemMessage message = new SystemMessage(null, this, "Not enough beacons to triangulate.");
 			//getSystemComputer().addSystemMessage(message);
 		}
 		else {
@@ -66,7 +66,7 @@ public class TrilaterationSoftware extends AbstractSoftware implements Software 
 		//	Collections.sort(subspaceBeaconsLocations, (Location loc1, Location loc2) -> loc1..compareTo(p2.firstName));
 
 
-			
+
 		//	DistanceSolver.solve(precision, x1, y1, z1, d1, x2, y2, z2, d2, x3, y3, z3, d3);
 		}
 

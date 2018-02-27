@@ -10,18 +10,16 @@ public interface SpacecraftBusComponent extends PhysicalComponent, Tickable, Sta
 
 	double getNominalPower(Unit unit);
 	double getNominalCPUThroughput(Unit unit);
-	
+
 	double getMaximumOperationalPower(Unit unit);
 	double getMaximumOperationalCPUThroughput(Unit unit);
 
 	double getCurrentPower(Unit unit);
 	double getCurrentCPUThroughput(Unit unit);
-	
+
 	SystemComputer getSystemComputer();
-	
+
 	SystemStatusMessage registerSystemComputer(SystemComputer systemComputer);
-	
-	double getUniversalTime();
 
 	SystemStatus runDiagnostics(int level);
 }

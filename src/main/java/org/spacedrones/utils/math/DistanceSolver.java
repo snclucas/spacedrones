@@ -11,14 +11,14 @@ public class DistanceSolver {
 	private static MathContext mc = new MathContext(Configuration.precision, RoundingMode.HALF_UP);
 
 	public static double[] solve(double precision, double x1, double y1, double z1, double d1, double x2, double y2, double z2, double d2, double x3, double y3, double z3, double d3) {
-		double[] rn  = new double[]{1.0, 1.0, 1.0};	
+		double[] rn  = new double[]{1.0, 1.0, 1.0};
 
 		for(;;) {
 			double[] func = function(rn, x1,  y1,  z1,  x2,  y2,  z2,  x3,  y3,  z3, d1, d2, d3);
 			double[][] invJ2 = invert(jacobian(rn, x1,  y1,  z1,  x2,  y2,  z2,  x3,  y3,  z3, d1, d2, d3)) ;
-			rn = Matrix.subtract(rn, Matrix.multiply(invJ2, func));
+			rn = Matrix2.subtract(rn, Matrix2.multiply(invJ2, func));
 
-			if(Matrix.norm(func) <= precision)
+			if(Matrix2.norm(func) <= precision)
 				break;
 		}
 		return rn;
@@ -26,21 +26,21 @@ public class DistanceSolver {
 
 
 	public static BigDecimal[] solve(BigDecimal precision, BigDecimal x1, BigDecimal y1, BigDecimal z1, BigDecimal d1, BigDecimal x2, BigDecimal y2, BigDecimal z2, BigDecimal d2, BigDecimal x3, BigDecimal y3, BigDecimal z3, BigDecimal d3) {
-		BigDecimal[] rn  = new BigDecimal[]{new BigDecimal(1.0).setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP), new BigDecimal(1.0).setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP), new BigDecimal(1.0).setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP)};	
+		BigDecimal[] rn  = new BigDecimal[]{new BigDecimal(1.0).setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP), new BigDecimal(1.0).setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP), new BigDecimal(1.0).setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP)};
 		precision = precision.setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP);
 		for(;;) {
 			BigDecimal[] func = function(rn, x1,  y1,  z1,  x2,  y2,  z2,  x3,  y3,  z3, d1, d2, d3);
 			BigDecimal[][] invJ2 = invert(jacobian(rn, x1,  y1,  z1,  x2,  y2,  z2,  x3,  y3,  z3, d1, d2, d3)) ;
-			rn = Matrix.subtract(rn, Matrix.multiply(invJ2, func));
+			rn = Matrix2.subtract(rn, Matrix2.multiply(invJ2, func));
 
-			if(Matrix.norm(func).compareTo(precision) < 0)
+			if(Matrix2.norm(func).compareTo(precision) < 0)
 				break;
 		}
 		return rn;
 	}
 
 
-	private static double[] function(double[] XYZ, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3, double d1, double d2, double d3) {	
+	private static double[] function(double[] XYZ, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3, double d1, double d2, double d3) {
 		double f1 = Math.sqrt(Math.pow((XYZ[0]-x1),2.0) + Math.pow((XYZ[1]-y1),2.0) + Math.pow((XYZ[2]-z1),2.0))-d1;
 		double f2 = Math.sqrt(Math.pow((XYZ[0]-x2),2.0) + Math.pow((XYZ[1]-y2),2.0) + Math.pow((XYZ[2]-z2),2.0))-d2;
 		double f3 = Math.sqrt(Math.pow((XYZ[0]-x3),2.0) + Math.pow((XYZ[1]-y3),2.0) + Math.pow((XYZ[2]-z3),2.0))-d3;
@@ -48,7 +48,7 @@ public class DistanceSolver {
 	}
 
 
-	private static BigDecimal[] function(BigDecimal[] XYZ, BigDecimal x1, BigDecimal y1, BigDecimal z1, BigDecimal x2, BigDecimal y2, BigDecimal z2, BigDecimal x3, BigDecimal y3, BigDecimal z3, BigDecimal d1, BigDecimal d2, BigDecimal d3) {	
+	private static BigDecimal[] function(BigDecimal[] XYZ, BigDecimal x1, BigDecimal y1, BigDecimal z1, BigDecimal x2, BigDecimal y2, BigDecimal z2, BigDecimal x3, BigDecimal y3, BigDecimal z3, BigDecimal d1, BigDecimal d2, BigDecimal d3) {
 		BigDecimal two = new BigDecimal(2.0).setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP);
 		BigDecimal f1 = BigDecimalMath.sqrt(BigDecimalMath.pow((XYZ[0].subtract(x1, mc).abs(mc)), two) .add( BigDecimalMath.pow((XYZ[1].subtract(y1, mc).abs(mc)), two), mc) .add( BigDecimalMath.pow((XYZ[2].subtract(z1, mc).abs(mc)), two), mc)).subtract(d1, mc);
 		BigDecimal f2 = BigDecimalMath.sqrt(BigDecimalMath.pow((XYZ[0].subtract(x2, mc).abs(mc)), two) .add( BigDecimalMath.pow((XYZ[1].subtract(y2, mc).abs(mc)), two), mc) .add( BigDecimalMath.pow((XYZ[2].subtract(z2, mc).abs(mc)), two), mc)).subtract(d2, mc);
