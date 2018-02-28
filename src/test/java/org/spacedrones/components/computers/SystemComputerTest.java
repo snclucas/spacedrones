@@ -3,15 +3,13 @@ package org.spacedrones.components.computers;
 import org.junit.Before;
 import org.junit.Test;
 import org.spacedrones.components.comms.Status;
-import org.spacedrones.components.energygeneration.PowerGenerator;
-import org.spacedrones.components.energygeneration.SubspacePowerExtractor;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.*;
 import org.spacedrones.status.SystemStatus;
 import org.spacedrones.status.SystemStatusMessage;
 
 import static org.junit.Assert.assertEquals;
-
+import static org.junit.Assert.assertNotEquals;
 
 public class SystemComputerTest {
 
@@ -25,8 +23,9 @@ public class SystemComputerTest {
 
 	private Bus spacecraftBus = null;
 
+  private SystemComputer computer = null;
 
-	private BusComponentSpecification busSpecs = new BusComponentSpecification(
+  private BusComponentSpecification busSpecs = new BusComponentSpecification(
 			new PhysicalSpecification(mass, volume),
 			new OperationalSpecification(nominalPower, nominalCPU, maximumPower, maximumCPU));
 
@@ -36,20 +35,19 @@ public class SystemComputerTest {
 		double arrayArea = 1 * Unit.m.value() * 10 * Unit.m.value();
 		double efficiency = 75 * Unit.percent.value();
 
-		SystemComputer computer = new BasicSystemComputer("Test computer", busSpecs, 10 * Unit.GFLOPs.value());
-    spacecraftBus = new SpacecraftBus(computer);
+		computer = new BasicSystemComputer("Test computer", busSpecs, 10 * Unit.GFLOPs.value());
+    spacecraftBus = new SpacecraftBus();
 
-		BusComponentSpecification powerGeneratorBusSpecs = new BusComponentSpecification(
-				new PhysicalSpecification(mass, volume),
-				new OperationalSpecification(0, nominalCPU, 0, maximumCPU));
+		//BusComponentSpecification powerGeneratorBusSpecs = new BusComponentSpecification(
+		//		new PhysicalSpecification(mass, volume),
+		//		new OperationalSpecification(0, nominalCPU, 0, maximumCPU));
 
-		PowerGenerator powerGenerator = new SubspacePowerExtractor("Test power generator", powerGeneratorBusSpecs, arrayArea, efficiency);
-		spacecraftBus.register(powerGenerator);
+		//PowerGenerator powerGenerator = new SubspacePowerExtractor("Test power generator", powerGeneratorBusSpecs, arrayArea, efficiency);
+		//spacecraftBus.register(powerGenerator);
 	}
 
 	@Test
 	public void testRequestOperation() {
-		SystemComputer computer = spacecraftBus.getSystemComputer();
 
 		// Computer is not online so current power should be 0
 		assertEquals("Computer current power should be (not online)", 0.0, computer.getCurrentPower(Unit.kW), 0.00001);
@@ -76,10 +74,6 @@ public class SystemComputerTest {
 
 	@Test
 	public void testSystemComputer() {
-		SystemComputer computer = new BasicSystemComputer("Test computer", busSpecs,
-				10 * Unit.GFLOPs.value());
-
-    computer.getSoftware();
 
 		assertEquals("Should be 0 computers", 0, computer.getComputers().size());
     assertEquals("Should be 0 engines", 0, computer.getEngines().size());
@@ -95,9 +89,19 @@ public class SystemComputerTest {
 
     SystemStatus systemStatus = computer.online();
 
+    assertEquals("Should not be online (after onlining)", false, computer.isOnline());
 
+    assertNotEquals("Should have some messages", 0, systemStatus.getMessages().size());
+
+    computer.getMaxCPUThroughput();
 
 		computer.registerBus(spacecraftBus);
+
+    systemStatus = computer.online();
+
+    assertEquals("Should be online (after onlining)", true, computer.isOnline());
+
+    String g = "";
 	}
 
 

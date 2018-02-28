@@ -19,6 +19,27 @@ linear equations.  This will fail if isNonsingular() returns false.
 
 public class LUDecomposition implements java.io.Serializable {
 
+
+   static void doShit() {
+      Matrix A = new Matrix(new double[][]{{1,2,2},{2,1,1},{1,1,1}});
+
+     // System.out.println(A.invert());
+
+      LUDecomposition lu = new LUDecomposition(A);
+
+      lu.solve(new Matrix(new double[][]{{1},{1},{1}}));
+
+      //VectorN b = new VectorN(new double[]{1,1,1});
+
+      //Householder h = new Householder(A, new double[]{0,0,0});
+      // Arrays.stream(h.compute(A, new double[]{0, 0, 0})).forEach(System.out::println);
+
+   }
+
+   public static void main(String[] args) {
+      doShit();
+   }
+
 /* ------------------------
 Class variables
 * ------------------------ */

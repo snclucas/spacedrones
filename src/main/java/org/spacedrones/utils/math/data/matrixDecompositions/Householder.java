@@ -23,14 +23,7 @@ package org.spacedrones.utils.math.data.matrixDecompositions;
 
 import org.spacedrones.utils.math.data.Matrix;
 
-/**
- * <P>
- * The Householder Class provides the solution to the equation y = Hx, where we are solving for x,
- * a double array by using a Householder decomposition.
- *
- * @author <a href="mailto:dgaylor@users.sourceforge.net">Dave Gaylor
- * @version 1.0
- */
+
 public class Householder
 // Householder
 {
@@ -39,6 +32,9 @@ public class Householder
 	public Matrix P;
 	int n;
 	int m;
+
+
+
 
 	public Householder(Matrix H, double [] y)
 	{

@@ -264,4 +264,17 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 		return SpacecraftFirmware.getTotalCurrentCPUThroughput(spacecraftBus, unit);
 	}
 
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    final AbstractSystemComputer that = (AbstractSystemComputer) o;
+    return id().equals(that.id());
+  }
+
+  @Override
+  public int hashCode() {
+    return id().hashCode();
+  }
 }
