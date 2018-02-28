@@ -10,21 +10,7 @@ import org.spacedrones.universe.Universe;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-
 public class SensorTest {
-
-  @Test
-  public void testType() {
-    Sensor sensor = SensorFactory.getSensor(LinearSensorArray.type, SensorType.OPTICAL, 1);
-    assertEquals("Sensor type not correct", new TypeInfo("LinearSensorArray"),sensor.type());
-  }
-
-  @Test
-  public void testCategory() {
-    Sensor sensor = SensorFactory.getSensor(LinearSensorArray.type, SensorType.OPTICAL, 1);
-    assertEquals("Sensor type not correct", new TypeInfo("Sensor"),sensor.category());
-  }
 
   @Test
   public void testLinearSensorArray() {
@@ -33,7 +19,7 @@ public class SensorTest {
 
 
 
-    Sensor sensor = SensorFactory.getSensor(LinearSensorArray.type, SensorType.OPTICAL, 1);
+    Sensor sensor = SensorFactory.getSensor(LinearSensorArray.class.getSimpleName(), SensorType.OPTICAL, 1);
     sensor.registerSystemComputer(new BasicSystemComputer("Test computer", new BusComponentSpecification(), 10* Unit.GFLOPs.value()));
 
     SensorProfile sensorProfile = new SensorProfile(SensorType.OPTICAL, -9, 10);
@@ -46,9 +32,9 @@ public class SensorTest {
 
     List<SensorResult> ss = sensor.passiveScan(1, sensorProfile);
 
-    ss.stream().forEach(s -> {
-      System.out.println(s.name());
-    });
+    //ss.stream().forEach(s -> {
+    //  System.out.println(s.name());
+    //});
 
 
 

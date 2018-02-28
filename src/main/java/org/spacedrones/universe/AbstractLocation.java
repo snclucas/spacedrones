@@ -73,9 +73,7 @@ public abstract class AbstractLocation implements Location {
 
     final AbstractLocation that = (AbstractLocation) o;
 
-    return name.equals(that.name) &&
-            id.equals(that.id) &&
-            coordinates.equals(that.coordinates);
+    return coordinates.equals(that.coordinates);
   }
 
 }

@@ -3,6 +3,7 @@ package org.spacedrones.data;
 import org.spacedrones.components.comms.RadioCommunicator;
 import org.spacedrones.components.comms.SubSpaceCommunicator;
 import org.spacedrones.components.computers.BasicDataStorageUnit;
+import org.spacedrones.components.computers.BasicSystemComputer;
 import org.spacedrones.components.computers.Computer;
 import org.spacedrones.components.energygeneration.SimpleSolarArray;
 import org.spacedrones.components.energygeneration.SubspacePowerExtractor;
@@ -30,6 +31,10 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 		if(componentType.equals(Computer.class.getSimpleName()))
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg.value(), 20 * Unit.m3.value()), new OperationalSpecification(10 * Unit.kW.value(), 0 * Unit.MFLOPs.value())));
+
+		if(componentType.equals(BasicSystemComputer.class.getSimpleName()))
+			return new SpacecraftComponentData(new BusComponentSpecification(
+							new PhysicalSpecification(100 * Unit.kg.value(), 20 * Unit.m3.value()), new OperationalSpecification(10 * Unit.kW.value(), 0 * Unit.MFLOPs.value())));
 
 
 		if(componentType.equals(LiquidStorageTank.class.getSimpleName()))

@@ -33,9 +33,9 @@ public class PropulsionManagementSoftwareTest {
 
 		SpacecraftBuildManager spacecraftBuildManager = new SpacecraftBuildManager("Test", hull);
 
-		SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(BasicSystemComputer.type);
+		SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(BasicSystemComputer.class.getSimpleName());
 
-		PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.type);
+		PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.class.getSimpleName());
     spacecraftBuildManager.addComponent(powerGenerator);
 
 		// Simple computer
@@ -47,11 +47,6 @@ public class PropulsionManagementSoftwareTest {
 				new PropulsionManagementSoftware("Test EngineManagementSoftware");
 
 		computer.loadSoftware(engineManagementSoftware);
-
-
-
-		assertEquals("Engine Management Software category incorrect", PropulsionManagementSoftware.category, engineManagementSoftware.category());
-		assertEquals("Engine Management Software type incorrect", PropulsionManagementSoftware.type, engineManagementSoftware.type());
 
 		SystemStatusMessage systemMsg = engineManagementSoftware.callDrive(34, "23");
 		assertEquals("No critical error status returned for drive", Status.CRITICAL, systemMsg.getStatus());
@@ -70,7 +65,7 @@ public class PropulsionManagementSoftwareTest {
 	public void testEngineManagementSoftware() {
     SpacecraftBuildManager spacecraftBuildManager = new SpacecraftBuildManager("Test", hull);
 
-		SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(BasicSystemComputer.type);
+		SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(BasicSystemComputer.class.getSimpleName());
 
 
 
@@ -79,7 +74,7 @@ public class PropulsionManagementSoftwareTest {
 		SystemComputer computer = new BasicSystemComputer("Simple System Computer", data.getBusComponentSpecification(), 1000 * Unit.GFLOPs.value());
 
 		Spacecraft spacecraft = new SimpleSpacecraft("Shuttle", "1", hull, new SpacecraftBus(computer));
-		PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.type);
+		PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.class.getSimpleName());
     spacecraftBuildManager.addComponent(powerGenerator);
 
 		// Simple computer
@@ -98,7 +93,7 @@ public class PropulsionManagementSoftwareTest {
 
 		computer.loadSoftware(engineManagementSoftware);
 
-		FuelConsumingEngine engine = (FuelConsumingEngine)EngineFactory.getEngine(SimpleThruster.type, false);
+		FuelConsumingEngine engine = (FuelConsumingEngine)EngineFactory.getEngine(SimpleThruster.class.getSimpleName(), false);
     spacecraftBuildManager.addComponent(engine);
 
 		double powerLevel = 34.45 * Unit.percent.value();
@@ -117,7 +112,7 @@ public class PropulsionManagementSoftwareTest {
 		SystemStatusMessage systemMsg6 = engineManagementSoftware.callVector(new EngineVector(new double[]{0,0,0}), engine.id());
 		assertEquals("Critical error status returned for vector", Status.NOT_PERMITTED, systemMsg6.getStatus()); // passed false to engine factory
 
-		FuelConsumingEngine engine2 = (FuelConsumingEngine)EngineFactory.getEngine(SimpleThruster.type, true);
+		FuelConsumingEngine engine2 = (FuelConsumingEngine)EngineFactory.getEngine(SimpleThruster.class.getSimpleName(), true);
     spacecraftBuildManager.addComponent(engine2);
 
 		SystemStatusMessage systemMsg7 = engineManagementSoftware.callVector(new EngineVector(new double[]{0,0,0}), engine2.id());

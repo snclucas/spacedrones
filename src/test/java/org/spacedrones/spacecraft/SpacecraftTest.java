@@ -3,11 +3,10 @@ package org.spacedrones.spacecraft;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.spacedrones.exceptions.ItemNotFoundException;
 import org.spacedrones.status.SystemStatus;
 import org.spacedrones.structures.hulls.Hull;
 import org.spacedrones.structures.hulls.HullFactory;
-
-import java.security.InvalidParameterException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -40,9 +39,9 @@ public class SpacecraftTest {
 	
 	
 	@Rule
-	public ExpectedException  thrown= ExpectedException .none();
+	public ExpectedException thrown = ExpectedException.none();
 
-	@Test(expected=InvalidParameterException.class)
+	@Test(expected=ItemNotFoundException.class)
 	public void testNoSuchSpacecraft() {
 		SpacecraftFactory.getSpacecraft("NoSuchSpacecraft");
 	}

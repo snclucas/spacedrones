@@ -22,7 +22,7 @@ public class UniverseTest {
 	public void testEnvronmentalData() {
 		Universe universe = Universe.getInstance();
 		
-		Spacecraft spacecraft = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SIMPLE_SATELITE);
+		Spacecraft spacecraft = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SHUTTLE);
 
 		Coordinates solCoords =  new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value()));
 

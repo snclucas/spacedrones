@@ -20,7 +20,7 @@ public class SubspaceBeaconTest {
 						.getStandardSignalResponseProfileForObjectType(SensorSignalResponseLibrary.SUBSPACE_BEACON);
 		SubspaceBeacon subspaceBeacon1 = new SubspaceBeacon(sensorSignalResponseProfile);
 		
-		assertEquals("Subspace beacon type incorrect", SubspaceBeacon.type, subspaceBeacon1.type());
+		assertEquals("Subspace beacon type incorrect", SubspaceBeacon.class.getSimpleName(), subspaceBeacon1.getClass().getSimpleName());
 				
 		subspaceBeacon1.getSensorSignalResponse();
 		subspaceBeacon1.getSensorSignalResponseProfile();

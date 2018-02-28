@@ -22,7 +22,7 @@ public final class SpacecraftBuildManager implements SpacecraftManager {
   public SpacecraftBuildManager(String name, Hull hull) {
     SystemComputer systemComputer = ComputerFactory.getSystemComputer("BasicSystemComputer");
     String ident = Configuration.getUUID();
-    Bus spacecraftBus = new SpacecraftBus(systemComputer);
+    Bus spacecraftBus = new SpacecraftBus();
     spacecraft = new SimpleSpacecraft(name, ident, hull, spacecraftBus);
     spacecraft.giveManagerHandleTo(this);
 

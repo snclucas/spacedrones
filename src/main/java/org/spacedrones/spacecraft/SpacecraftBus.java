@@ -2,12 +2,11 @@ package org.spacedrones.spacecraft;
 
 import org.spacedrones.Configuration;
 import org.spacedrones.components.SpacecraftBusComponent;
-import org.spacedrones.components.comms.*;
 import org.spacedrones.components.computers.SystemComputer;
 import org.spacedrones.software.Message;
-import org.spacedrones.status.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SpacecraftBus implements Bus {
 
@@ -16,10 +15,15 @@ public class SpacecraftBus implements Bus {
 	private final List<SpacecraftBusComponent> components = new ArrayList<>();
 	private SystemComputer systemComputer;
 
-	public SpacecraftBus(SystemComputer systemComputer) {
+	public SpacecraftBus() {
     this.name = "SpacecraftBus";
     this.id = Configuration.getUUID();
-    this.systemComputer = systemComputer;
+  }
+
+  public SpacecraftBus(SystemComputer systemComputer) {
+    this.name = "SpacecraftBus";
+    this.id = Configuration.getUUID();
+    register(systemComputer);
   }
 
 	@Override
@@ -37,16 +41,11 @@ public class SpacecraftBus implements Bus {
 		return components;
 	}
 
-	@Override
-	public SystemStatusMessage registerSystemComputer(SystemComputer computer) {
-		this.systemComputer = computer;
-		return new SystemStatusMessage(this, "System computer registered with bus", Status.INFO);
-	}
-
 	public void register(SpacecraftBusComponent component) {
-		if(component instanceof SystemComputer)
-			findComponentByType(SystemComputer.class).clear();
-		component.registerSystemComputer(systemComputer);
+		if(component instanceof SystemComputer) {
+      findComponentByType(SystemComputer.class).clear();
+      ((SystemComputer)component).registerBus(this);
+    }
 		this.components.add(component);
 	}
 

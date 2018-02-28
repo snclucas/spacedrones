@@ -1,9 +1,10 @@
 package org.spacedrones.status;
 
+import org.spacedrones.components.comms.Status;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.spacedrones.components.comms.Status;
+import java.util.Objects;
 
 public class SystemStatus {
 
@@ -31,7 +32,7 @@ public class SystemStatus {
 		this.messages.addAll(systemStatusMessages);
 	}
 
-	public void addSystemMessage(String message, Status status) {
+	public void addSystemMessage(String message, String status) {
 		this.messages.add(new SystemStatusMessage(statusProvider, message, status));
 	}
 
@@ -67,11 +68,11 @@ public class SystemStatus {
 
 	// -- Private methods -- //
 
-	private List<SystemStatusMessage> checkForSystemStatusMessages(Status ... systemStatusMessageTypes) {
+	private List<SystemStatusMessage> checkForSystemStatusMessages(String ... systemStatusMessageTypes) {
 		List<SystemStatusMessage> filteredMessages = new ArrayList<SystemStatusMessage>();
 		for(SystemStatusMessage message : messages)
-			for(Status status : systemStatusMessageTypes)
-				if(message.getStatus() == status)
+			for(String status : systemStatusMessageTypes)
+				if(Objects.equals(message.getStatus(), status))
 					filteredMessages.add(message);
 		return filteredMessages;
 	}

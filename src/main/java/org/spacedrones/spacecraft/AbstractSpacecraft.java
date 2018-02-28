@@ -58,7 +58,8 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 			if(status.isOK()) {
 				systemsOnline = true;
 				online = true;
-				DataRecord<String> data = new DataRecord<>(id(), String.class, "spaceraft-ident");
+				SystemData systemData = new SystemData("spaceraft-ident", "");
+				DataRecord<SystemData> data = new DataRecord<>(systemData.getId(), SystemData.class.getSimpleName(), systemData);
 				bus.getSystemComputer().getStorageDevice().saveData(data);
 			}
 		}

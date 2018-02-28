@@ -23,7 +23,6 @@ public class SpacecraftFirmware {
 		boolean hasSystemComputer = systemComputerIndex >= 0;
 		if(hasSystemComputer) {
 			SystemComputer systemComputer = (SystemComputer) bus.getComponents().get(systemComputerIndex);
-			systemComputer.registerBus(bus);
 		}
 		return hasSystemComputer;
 	}

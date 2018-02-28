@@ -23,7 +23,7 @@ public class SimpleSolarArrayTest {
 	@Test
 	public void testSimpleSolarArray() {
 		SpacecraftDataProvider spacecraftDataProvider =  Configuration.getSpacecraftDataProvider();
-		SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(SimpleSolarArray.type);
+		SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(SimpleSolarArray.class.getSimpleName());
 		
 		double arrayArea = 10.0* Unit.m2.value();
 		double efficiency = 75 * Unit.percent.value();
@@ -32,9 +32,6 @@ public class SimpleSolarArrayTest {
 				data.getBusComponentSpecification(), arrayArea, efficiency);
 		assertEquals("Array area of simple solar array incorrect", arrayArea, simpleSolarArray.getArrayArea(), 0.001);
 		assertEquals("Efficiency of simple solar array incorrect", efficiency, simpleSolarArray.getEfficiency(), 0.001);
-		
-		assertEquals("SimpleSolarArray category incorrect", SimpleSolarArray.category, simpleSolarArray.category());
-		assertEquals("SimpleSolarArray type incorrect", SimpleSolarArray.type, simpleSolarArray.type());
 	}
 	
 	

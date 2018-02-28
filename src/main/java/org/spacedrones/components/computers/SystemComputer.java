@@ -2,7 +2,6 @@ package org.spacedrones.components.computers;
 
 import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.comms.CommunicationComponent;
-import org.spacedrones.components.comms.Status;
 import org.spacedrones.components.propulsion.Engine;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.software.MessageMediator;
@@ -22,7 +21,7 @@ public interface SystemComputer extends Computer {
 	void setMessagingSystem(MessageMediator messagingSystem);
 	Object getSystemData(String id);
 
-	SystemStatusMessage addSystemMessage(SpacecraftBusComponent component, String message, Status status);
+	SystemStatusMessage addSystemMessage(SpacecraftBusComponent component, String message, String status);
 
 	List<SystemStatusMessage> getSystemMessages();
 

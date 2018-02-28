@@ -6,14 +6,19 @@ public class Status {
 
 	}
 
-	public static Status CRITICAL = new Status("CRITICAL");
-	public static Status NOT_PERMITTED = new Status("NOT_PERMITTED");
-	public static Status NOT_ENOUGH_POWER = new Status("NOT_ENOUGH_POWER");
-	public static Status NOT_ENOUGH_CPU = new Status("NOT_ENOUGH_CPU");
-	public static Status PROBLEM = new Status("PROBLEM");
-	public static Status WARNING = new Status("WARNING");
-	public static Status INFO = new Status("INFO");
-	public static Status OK = new Status("OK");
-	public static Status PERMITTED = new Status("PERMITTED");
-	public static Status SUCCESS = new Status("SUCCESS");
+	public static String CRITICAL = "CRITICAL";
+	public static String NOT_PERMITTED = "NOT_PERMITTED";
+	public static String NOT_ENOUGH_POWER = "NOT_ENOUGH_POWER";
+	public static String NOT_ENOUGH_CPU = "NOT_ENOUGH_CPU";
+	public static String PROBLEM = "PROBLEM";
+	public static String WARNING = "WARNING";
+	public static String INFO = "INFO";
+	public static String OK = "OK";
+	public static String PERMITTED = "PERMITTED";
+	public static String SUCCESS = "SUCCESS";
+
+  @Override
+  public String toString() {
+    return "Status{}";
+  }
 }

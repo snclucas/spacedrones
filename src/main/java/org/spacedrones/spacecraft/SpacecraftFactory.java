@@ -16,6 +16,7 @@ import org.spacedrones.components.sensors.SensorFactory;
 import org.spacedrones.components.sensors.SensorType;
 import org.spacedrones.consumables.Fuel;
 import org.spacedrones.data.SpacecraftDataProvider;
+import org.spacedrones.exceptions.ItemNotFoundException;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.structures.hulls.Hull;
 import org.spacedrones.structures.hulls.HullFactory;
@@ -32,8 +33,8 @@ public class SpacecraftFactory {
 
 	public static Spacecraft getSpacecraft(String spacecraftType) throws InvalidParameterException{
 		SpacecraftDataProvider spacecraftDataProvider = Configuration.getSpacecraftDataProvider();
-		SystemComputer systemComputer = ComputerFactory.getSystemComputer("SystemComputer");
-		Bus spacecraftBus = new SpacecraftBus(systemComputer);
+		SystemComputer systemComputer = ComputerFactory.getSystemComputer("BasicSystemComputer");
+		Bus spacecraftBus = new SpacecraftBus();
 
 		switch (spacecraftType) {
 
@@ -72,7 +73,7 @@ public class SpacecraftFactory {
 			return spacecraftBuildManager.getSpacecraft();
 
 		default:
-			throw new InvalidParameterException("No such spacecraft.");
+			throw new ItemNotFoundException("No such spacecraft.");
 
 		}
 

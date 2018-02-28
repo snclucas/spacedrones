@@ -1,19 +1,18 @@
 package org.spacedrones.status;
 
-import java.text.DecimalFormat;
+import org.spacedrones.universe.Universe;
 
-import org.spacedrones.components.comms.Status;
-import org.spacedrones.universe.*;
+import java.text.DecimalFormat;
 
 public class SystemStatusMessage {
 
 	private StatusProvider statusProvider;
 	private String message;
 	private double universalDate;
-	private Status status;
+	private String status;
 
 
-	public SystemStatusMessage(StatusProvider statusProvider, String message, Status status) {
+	public SystemStatusMessage(StatusProvider statusProvider, String message, String status) {
 		super();
 		this.statusProvider = statusProvider;
 		this.message = message;
@@ -37,7 +36,7 @@ public class SystemStatusMessage {
 	}
 
 
-	public Status getStatus() {
+	public String getStatus() {
 		return status;
 	}
 

@@ -8,10 +8,9 @@ import org.spacedrones.components.computers.BasicSystemComputer;
 import org.spacedrones.components.computers.ComputerFactory;
 import org.spacedrones.components.computers.SystemComputer;
 import org.spacedrones.components.sensors.*;
+import org.spacedrones.exceptions.ItemNotFoundException;
 import org.spacedrones.structures.hulls.Hull;
 import org.spacedrones.structures.hulls.HullFactory;
-
-import java.security.InvalidParameterException;
 
 import static org.junit.Assert.*;
 
@@ -19,11 +18,10 @@ public class SpacecraftBusTest {
 
 	private Hull hull = HullFactory.getHull("Shuttle");
 	private Bus spacecraftBus = null;
-	Spacecraft spacecraft = null;
+	private SystemComputer computer = ComputerFactory.getSystemComputer(BasicSystemComputer.class.getSimpleName());
 
 	@Before
 	public void setUp() {
-		SystemComputer computer = ComputerFactory.getSystemComputer(BasicSystemComputer.type);
 		spacecraftBus = new SpacecraftBus(computer);
 	}
 
@@ -31,12 +29,12 @@ public class SpacecraftBusTest {
 	public void testSpacecraftBus() {
 		//assertEquals("Category for bus incorrect", Bus.category, spacecraftBus.category());
 
-		assertEquals("There should be no bus components", 0, spacecraftBus.getComponents().size());
-		assertNull(spacecraftBus.getSystemComputer());
+		assertEquals("There should be 1 bus component (the system computer)", 1, spacecraftBus.getComponents().size());
+		assertEquals(computer, spacecraftBus.getSystemComputer());
 
-		assertNotNull(spacecraftBus.getSystemComputer());
+		//assertNotNull(spacecraftBus.getSystemComputer());
 
-		Sensor fractalSensor = SensorFactory.getSensor(FractalSensorArray.type, SensorType.OPTICAL, 1);
+		Sensor fractalSensor = SensorFactory.getSensor(FractalSensorArray.class.getSimpleName(), SensorType.OPTICAL, 1);
 		spacecraftBus.register(fractalSensor);
 
 
@@ -53,7 +51,7 @@ public class SpacecraftBusTest {
 	@Rule
 	public ExpectedException  thrown= ExpectedException .none();
 
-	@Test(expected=InvalidParameterException.class)
+	@Test(expected=ItemNotFoundException.class)
 	public void testNoSuchSpacecraft() {
 		SpacecraftFactory.getSpacecraft("NoSuchSpacecraft");
 	}

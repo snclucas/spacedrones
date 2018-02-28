@@ -10,6 +10,7 @@ import org.spacedrones.spacecraft.BusRequirement;
 import org.spacedrones.status.SystemStatusMessage;
 
 import java.util.List;
+import java.util.Objects;
 
 public class PropulsionManagementSoftware extends AbstractSoftware implements Software, ThrustDriveInterface {
 
@@ -91,7 +92,7 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 		List<SpacecraftBusComponent> engines = getSystemComputer().getSystemComputer().findComponentByType(Engine.class);
 		//TODO LOOK at thisif(engines != null)
 			for(SpacecraftBusComponent engine : engines) {
-				if(engine.id() == ident)
+				if(Objects.equals(engine.id(), ident))
 					return (ThrustingEngine) engine;
 			}
 		return null;

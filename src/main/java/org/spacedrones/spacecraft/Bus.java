@@ -9,10 +9,6 @@ import java.util.List;
 public interface Bus extends BusCommunicator, StatusProvider {
   List<SpacecraftBusComponent> findComponentByType(Class<? extends SpacecraftBusComponent> component);
   List<SpacecraftBusComponent> getComponents();
-
   void register(SpacecraftBusComponent spacecraftBusComponent);
-
-  SystemStatusMessage registerSystemComputer(SystemComputer computer);
-
   SystemComputer getSystemComputer();
 }

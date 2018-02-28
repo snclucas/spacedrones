@@ -9,7 +9,7 @@ import org.spacedrones.physics.Unit;
 import org.spacedrones.software.Message;
 import org.spacedrones.software.MessageMediator;
 import org.spacedrones.software.SystemMessage;
-import org.spacedrones.software.SystemMessageService;
+import org.spacedrones.software.SystemMessageServiceSoftware;
 import org.spacedrones.spacecraft.Bus;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.spacecraft.BusRequirement;
@@ -18,6 +18,7 @@ import org.spacedrones.status.SystemStatus;
 import org.spacedrones.status.SystemStatusMessage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractSystemComputer extends AbstractComputer implements SystemComputer {
@@ -32,14 +33,19 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 	AbstractSystemComputer(String name, BusComponentSpecification busResourceSpecification, double maxCPUThroughput) {
 		super(name, busResourceSpecification, maxCPUThroughput);
     systemMessages = new ArrayList<>();
-		setMessagingSystem(new SystemMessageService("Default messaging system"));
+		setMessagingSystem(new SystemMessageServiceSoftware("Default messaging system"));
 	}
 
   @Override
-  public SystemStatusMessage addSystemMessage(SpacecraftBusComponent component, String message, Status status) {
+  public SystemStatusMessage addSystemMessage(SpacecraftBusComponent component, String message, String status) {
     SystemStatusMessage systemStatusMessage = new SystemStatusMessage(component, message, status);
     this.systemMessages.add(systemStatusMessage);
     return systemStatusMessage;
+  }
+
+  @Override
+  public void registerBus(final Bus bus) {
+    this.spacecraftBus = bus;
   }
 
   public String getVesselIdent() {
@@ -47,6 +53,10 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
   }
 
   private List<SystemStatusMessage> scanSpacecraftBusForComponents() {
+	  if(spacecraftBus == null) {
+	    return Collections.singletonList(
+	            new SystemStatusMessage(this, "No system computer registered with bus.", Status.CRITICAL));
+    }
     List<SystemStatusMessage> systemStatusMessages = new ArrayList<>();
     systemStatusMessages.add(new SystemStatusMessage(this, "Scanning spacecraft bus for components.", Status.INFO));
     List<SystemStatusMessage> registerMessages = registerSpacecraftComponents(spacecraftBus.getComponents());
@@ -62,18 +72,13 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 
   @Override
   public MessageMediator getMessagingSystem() {
-    return (MessageMediator)getSoftware(SystemMessageService.class.getSimpleName());
+    return (MessageMediator)getSoftware(SystemMessageServiceSoftware.class.getSimpleName());
   }
 
   @Override
   public void setMessagingSystem(MessageMediator messagingSystem) {
     loadSoftware(messagingSystem);
   }
-
-	@Override
-	public final void registerBus(Bus bus) {
-		this.spacecraftBus = bus;
-	}
 
   private List<SystemStatusMessage> registerSpacecraftComponents(List<SpacecraftBusComponent> components) {
     List<SystemStatusMessage> systemStatusMessages = new ArrayList<>();
@@ -117,6 +122,12 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
     // Check all systems
     status.mergeSystemMessages(checkSystems());
 
+    if(spacecraftBus == null) {
+      status.addSystemMessage(addSystemMessage(this, "No bus registered, halting onlining", Status.WARNING));
+      setOnline(false);
+      return status;
+    }
+
     status.addSystemMessage(addSystemMessage(this, "Onlining spacecraft components", Status.OK));
     for(SpacecraftBusComponent component : spacecraftBus.getComponents()) {
       if(component != this) { // Ignore this computer
@@ -147,12 +158,15 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 
 	@Override
 	public Object getSystemData(String id) {
-		return getStorageDevice().getData(id, SpacecraftData.class).get().getData();
+		return getStorageDevice().getData(id, SpacecraftData.class.getSimpleName()).get().getData();
 	}
 
 	@Override
 	public List<SpacecraftBusComponent> findComponentByType(Class<? extends SpacecraftBusComponent> component) throws ComponentConfigurationException {
-		return spacecraftBus.findComponentByType(component);
+    if(spacecraftBus == null) {
+      return Collections.emptyList();
+    }
+	  return spacecraftBus.findComponentByType(component);
 	}
 
 	@Override
@@ -184,21 +198,33 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 
 	@Override
 	public List<CommunicationComponent> getCommunicationDevices() {
+    if(spacecraftBus == null) {
+      return Collections.emptyList();
+    }
 		return SpacecraftFirmware.getCommunicationDevices(spacecraftBus);
 	}
 
 	@Override
 	public List<Engine> getEngines() {
+    if(spacecraftBus == null) {
+      return Collections.emptyList();
+    }
 		return SpacecraftFirmware.getEngines(spacecraftBus);
 	}
 
 	@Override
 	public List<SystemComputer> getComputers() {
+    if(spacecraftBus == null) {
+      return Collections.emptyList();
+    }
 		return SpacecraftFirmware.getComputers(spacecraftBus);
 	}
 
   @Override
   public double getTotalCPUThroughputAvailable(Unit unit) {
+    if(spacecraftBus == null) {
+      return 0.0;
+    }
     if(totalCPUThroughputAvailable != Double.NEGATIVE_INFINITY) {
       return totalCPUThroughputAvailable;
     }
@@ -210,6 +236,9 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 
   @Override
   public double getTotalPowerAvailable(Unit unit) {
+	  if(spacecraftBus == null) {
+	    return 0.0;
+    }
     if(totalPowerAvailable != Double.NEGATIVE_INFINITY) {
       return totalPowerAvailable;
     }
@@ -221,11 +250,17 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 
 	@Override
 	public double getTotalCurrentPower(Unit unit) {
+    if(spacecraftBus == null) {
+      return 0.0;
+    }
 		return SpacecraftFirmware.getTotalCurrentPower(spacecraftBus, unit) / unit.value();
 	}
 
 	@Override
 	public double getTotalCurrentCPUThroughput(Unit unit) {
+    if(spacecraftBus == null) {
+      return 0.0;
+    }
 		return SpacecraftFirmware.getTotalCurrentCPUThroughput(spacecraftBus, unit);
 	}
 

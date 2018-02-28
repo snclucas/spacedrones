@@ -15,16 +15,16 @@ public class DataRecordTest {
 		
 		DataStore dataStore = new BasicDataStorageUnit("Test store", new BusComponentSpecification());
 		
-		List<CelestialObject> objects = Universe.getInstance().getLocationsByCategory(CelestialObject.category);
-		
+		List<CelestialObject> objects = Universe.getInstance().getLocationsByType(CelestialObject.class);
+
 		//dataStore.saveData(objects);
 		
-		System.out.println(dataStore.getData(CelestialObject.category).size());
+		System.out.println(dataStore.getData(CelestialObject.class.getSimpleName()).size());
 		
 		
-		dataStore.getData(CelestialObject.category, SubspaceBeacon.type);
+		dataStore.getData(SubspaceBeacon.class.getSimpleName());
 		
-		System.out.println(dataStore.getData(CelestialObject.category, SubspaceBeacon.type).size());
+		System.out.println(dataStore.getData(SubspaceBeacon.class.getSimpleName()).size());
 		
 	}
 	

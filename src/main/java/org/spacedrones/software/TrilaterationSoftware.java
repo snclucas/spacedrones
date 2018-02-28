@@ -4,7 +4,6 @@ import org.spacedrones.components.computers.DataRecord;
 import org.spacedrones.components.computers.DataStore;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.Location;
-import org.spacedrones.universe.celestialobjects.CelestialObject;
 import org.spacedrones.universe.structures.SubspaceBeacon;
 
 import java.util.ArrayList;
@@ -40,7 +39,7 @@ public class TrilaterationSoftware extends AbstractSoftware implements Software 
 		DataStore dataStore = getSystemComputer().getStorageDevice();
 
 		// Look for subspace beacons in navigation archive
-		Map<String,DataRecord> subspaceBeacons = dataStore.getData(SubspaceBeacon.class);
+		Map<String,DataRecord> subspaceBeacons = dataStore.getData(SubspaceBeacon.class.getSimpleName());
 
 		//Convert to locations
 		List<Location> subspaceBeaconsLocations = new ArrayList<>();

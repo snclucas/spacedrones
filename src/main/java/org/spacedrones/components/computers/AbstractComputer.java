@@ -38,16 +38,21 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
 	@Override
 	public SystemStatusMessage loadSoftware(Software software) {
 		software.setComputer(this);
-		if(loadedSoftware.put(software.getClass().getName(), software) != null)
+		if(loadedSoftware.put(software.getClass().getSimpleName(), software) != null)
 			return new SystemStatusMessage(this, software.getDescription() + " software loaded", Status.OK);
 		else
 			return new SystemStatusMessage(this, software.getDescription() + " software replaced exisiting software", Status.OK);
 	}
 
 	@Override
-	public Software getSoftware(String softwareType) {
-		return loadedSoftware.get(softwareType);
-	}
+  public Software getSoftware(String softwareType) {
+    return loadedSoftware.get(softwareType);
+  }
+
+  @Override
+  public Map<String, Software> getSoftware() {
+    return loadedSoftware;
+  }
 
 	@Override
 	public boolean hasSoftwareType(String softwareType) {

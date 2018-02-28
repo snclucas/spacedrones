@@ -54,28 +54,18 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 	}
 
 
-	public List<SensorResult> scanAll(){
-		List<Sensor> sensors = getSensors();
-		for(Sensor sensor : sensors)
-			sensorResults.addAll(scan(sensor.id()));
-		dataStore.saveData(sensorResults);
-		return sensorResults;
-	}
-
-
 	public List<SensorResult> scan(String sensorIdent){
 		Sensor sensor = sensors.get(sensorIdent);
 		List<SensorResult> sensorResults = sensor.passiveScan(10.0, sensor.getSensorProfile());
 		sensorResults.forEach(sr ->
-            dataStore.saveData(new DataRecord<SensorResult>("d", SensorResult.class, sr)));
+            dataStore.saveData(new DataRecord<SensorResult>("d", SensorResult.class.getSimpleName(), sr)));
 		return sensorResults;
 	}
-
 
 	private List<Sensor> getSensors() {
 		List<SpacecraftBusComponent> components = getSystemComputer()
 				.findComponentByType(Sensor.class);
-		List<Sensor> sensors = new ArrayList<Sensor>();
+		List<Sensor> sensors = new ArrayList<>();
 		for(SpacecraftBusComponent sensor : components)
 			sensors.add((Sensor)sensor);
 		return sensors;
@@ -91,7 +81,7 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 	public Coordinates getSpacecraftLocation() {
 		if(hasPositioningSensors() > 0)
 			return new Coordinates();
-		List<Coordinates> coordinates = new ArrayList<Coordinates>();
+		List<Coordinates> coordinates = new ArrayList<>();
 		for(Sensor sensor : getSensors())
 			if(sensor instanceof PositioningSensor)
 				coordinates.add(((PositioningSensor)sensor).calculatePosition());

@@ -1,10 +1,10 @@
 package org.spacedrones.data;
 
+import org.spacedrones.components.SpacecraftBusComponent;
+import org.spacedrones.components.computers.DataRecord;
+
 import java.util.*;
 import java.util.Map.Entry;
-
-import org.spacedrones.components.*;
-import org.spacedrones.components.computers.DataRecord;
 
 public class LocalTransientDataRecordProvider implements DataRecordProvider {
 
@@ -42,7 +42,7 @@ public class LocalTransientDataRecordProvider implements DataRecordProvider {
 		List<DataRecord> records = new ArrayList<>();
     for (Entry<String, DataRecord> stringDataRecordEntry : dataRecords.entrySet()) {
       DataRecord record = stringDataRecordEntry.getValue();
-      if (type == record.getType())
+      if (Objects.equals(type.getSimpleName(), record.getType()))
         records.add(record);
     }
 		return records;

@@ -5,11 +5,14 @@ import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.software.Software;
 import org.spacedrones.status.SystemStatusMessage;
 
+import java.util.Map;
+
 public interface Computer extends SpacecraftBusComponent, BusCommunicator  {
 	SystemComputer getSystemComputer();
 
 	DataStore getStorageDevice();
 
+  Map<String, Software> getSoftware();
 	Software getSoftware(String softwareType);
 
 	boolean hasSoftware();

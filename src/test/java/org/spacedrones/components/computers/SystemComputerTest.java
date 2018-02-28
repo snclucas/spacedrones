@@ -56,7 +56,8 @@ public class SystemComputerTest {
 		SystemStatus systemStatus = computer.online();
 		assertEquals("System computer should not have critical messages", false, systemStatus.hasCriticalMessages());
 		assertEquals("System computer should have OK status", true, systemStatus.isOK());
-		assertEquals("Computer current power should be " + busSpecs.getNominalPower(Unit.W) + " (online)", busSpecs.getNominalPower(Unit.W), computer.getCurrentPower(Unit.W), 0.00001);
+		assertEquals("Computer current power should be " + busSpecs.getNominalPower(Unit.W) +
+						" (online)", busSpecs.getNominalPower(Unit.W), computer.getCurrentPower(Unit.W), 0.00001);
 
 		BusRequirement busRequirement = new BusRequirement(100 * Unit.W.value(), 100 * Unit.MFLOPs.value());
 		SystemStatusMessage message = computer.requestOperation(computer, busRequirement);
@@ -75,21 +76,28 @@ public class SystemComputerTest {
 
 	@Test
 	public void testSystemComputer() {
-
-
 		SystemComputer computer = new BasicSystemComputer("Test computer", busSpecs,
 				10 * Unit.GFLOPs.value());
+
+    computer.getSoftware();
+
+		assertEquals("Should be 0 computers", 0, computer.getComputers().size());
+    assertEquals("Should be 0 engines", 0, computer.getEngines().size());
+    assertEquals("Should be 0 communication devices", 0, computer.getCommunicationDevices().size());
+    assertEquals("Should have 1 software (messaging software)", true, computer.hasSoftware());
+    assertEquals("Should have 1 software (messaging software)", 1, computer.getSoftware().values().size());
+
+    assertEquals("Should have 0 system messages", 0, computer.getSystemMessages().size());
+    computer.addSystemMessage(null, "This is a message", Status.INFO);
+    assertEquals("Should have 1 system messages", 1, computer.getSystemMessages().size());
+
+    assertEquals("Should not be online", false, computer.isOnline());
+
+    SystemStatus systemStatus = computer.online();
+
+
+
 		computer.registerBus(spacecraftBus);
-
-
-		assertEquals("Computer category incorrect", SystemComputer.category, computer.category());
-		assertEquals("Computer type ["+ computer.description() +"] incorrect", BasicSystemComputer.type, computer.type());
-
-
-		//assertEquals("Incorrect spacecraft bus", spacecraftBus, computer.getSpacecraftBus());
-
-		//computer.checkSystems()
-
 	}
 
 

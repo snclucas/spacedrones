@@ -22,7 +22,7 @@ public abstract class AbstractNavigationComputer extends AbstractComputer implem
 		DataStore dataStore = getSystemComputer().getStorageDevice();
 
 		// Look for subspace beacons in navigation archive
-		Map<String,DataRecord> subspaceBeacons = dataStore.getData(SubspaceBeacon.class);
+		Map<String,DataRecord> subspaceBeacons = dataStore.getData(SubspaceBeacon.class.getSimpleName());
 
 		return null;
 	}

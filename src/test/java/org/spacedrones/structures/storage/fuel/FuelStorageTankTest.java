@@ -23,15 +23,9 @@ public class FuelStorageTankTest {
 		
 		
 		
-		FuelStorageTank testLiquidTank = FuelStorageTankFactory.getFuelStorageTank(LiquidStorageTank.type, capacity);
-		assertEquals("LiquidStorageTank category ID incorrect", FuelStorageTank.category, testLiquidTank.category());
-		assertEquals("LiquidStorageTank type ID incorrect", LiquidStorageTank.type, testLiquidTank.type());
-		
-		
-		FuelStorageTank testCryoTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.type, capacity);
-		
-		assertEquals("CryogenicLiquidStorageTank category ID incorrect", FuelStorageTank.category, testCryoTank.category());
-		assertEquals("CryogenicLiquidStorageTank type ID incorrect", CryogenicLiquidStorageTank.type, testCryoTank.type());
+		FuelStorageTank testLiquidTank = FuelStorageTankFactory.getFuelStorageTank(LiquidStorageTank.class.getSimpleName(), capacity);
+
+		FuelStorageTank testCryoTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.class.getSimpleName(), capacity);
 
 		assertEquals("Tank capacity should be 1000L", capacity, testCryoTank.getCapacity(), 0.001);
 		assertEquals("Fuel tank should be empty on creation", 0.0, testCryoTank.getAmountOfFuelInTank(), 0.001);
@@ -75,7 +69,7 @@ public class FuelStorageTankTest {
 	@Test(expected=NoFuelInTankException.class)
 	public void testTankThrowsErrorIfNoFuel() {
 		// Try to get the fuel, should throw NoFuelInTankException
-		FuelStorageTank testTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.type, capacity);
+		FuelStorageTank testTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.class.getSimpleName(), capacity);
 		testTank.getFuel();
 	}
 

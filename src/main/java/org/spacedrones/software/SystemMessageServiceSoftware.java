@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SystemMessageService extends AbstractSoftware implements MessageMediator {
+public class SystemMessageServiceSoftware extends AbstractSoftware implements MessageMediator {
 
 	private List<SpacecraftBusComponent> registeredComponents;
 
@@ -18,7 +18,7 @@ public class SystemMessageService extends AbstractSoftware implements MessageMed
 		return "System message mediator";
 	}
 
-	public SystemMessageService(String name) {
+	public SystemMessageServiceSoftware(String name) {
 		super(name);
 		registeredComponents = new ArrayList<SpacecraftBusComponent>();
 	}

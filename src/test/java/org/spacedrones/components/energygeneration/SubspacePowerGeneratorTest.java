@@ -31,13 +31,6 @@ public class SubspacePowerGeneratorTest {
 				SubspacePowerExtractor("Test sub-ether generator", busSpecs, arrayArea, efficiency);
 		assertEquals("Max output power of sunether generator incorrect", arrayArea*efficiency*10.0*Unit.kW.value(), 
 				subspacePowerGenerator.getMaximumPowerOutput(), 0.001);
-
-		assertEquals("SubspacePowerExtractor category incorrect", 
-				SubspacePowerExtractor.category, subspacePowerGenerator.category());
-
-		assertEquals("SubspacePowerExtractor type incorrect", 
-				SubspacePowerExtractor.type, subspacePowerGenerator.type());
-
 	}
 
 }

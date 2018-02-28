@@ -1,21 +1,20 @@
 package org.spacedrones.components.computers;
 
 
-public class DataRecord<T> {
+public class DataRecord<T extends Savable> {
 
 	private final String id;
 	private final T data;
-	private Class type;
+	private String type;
 
 
-	public DataRecord(String id, Class<T> type, T data) {
-		super();
+	public DataRecord(String id, String type, T data) {
 		this.id = id;
 		this.type = type;
 		this.data = data;
 	}
 
-  public Class getType() {
+  public String getType() {
 		return type;
 	}
 

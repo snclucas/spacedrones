@@ -1,9 +1,6 @@
 package org.spacedrones.components.computers;
 
-import org.spacedrones.Configuration;
-import org.spacedrones.components.Identifiable;
-
-public class SystemData extends DataRecord {
+public class SystemData implements Savable {
 
 	private final String tag;
 	private final String data;
@@ -14,6 +11,12 @@ public class SystemData extends DataRecord {
 		this.data = data;
 	}
 
+	public String getData() {
+		return data;
+	}
 
-
+	@Override
+	public String getId() {
+		return tag;
+	}
 }

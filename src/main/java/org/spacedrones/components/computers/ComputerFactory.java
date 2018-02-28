@@ -7,13 +7,17 @@ import org.spacedrones.physics.Unit;
 import org.spacedrones.software.MessageMediator;
 import org.spacedrones.software.PropulsionManagementSoftware;
 import org.spacedrones.software.Software;
-import org.spacedrones.software.SystemMessageService;
+import org.spacedrones.software.SystemMessageServiceSoftware;
+import org.spacedrones.spacecraft.Bus;
+import org.spacedrones.spacecraft.SpacecraftBus;
 
-import java.util.*;
+import java.util.Objects;
 
 public class ComputerFactory extends DataFactory {
 
 	public static SystemComputer getSystemComputer(String computerType){
+
+		Bus spacecraftBus = new SpacecraftBus();
 
 		if(Objects.equals(computerType, BasicSystemComputer.class.getSimpleName())){
 			SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(Computer.class.getSimpleName());
@@ -26,7 +30,7 @@ public class ComputerFactory extends DataFactory {
 			Software engineSoftware = new PropulsionManagementSoftware("Engine software");
 			computer.loadSoftware(engineSoftware);
 
-			MessageMediator messagingSystem = new SystemMessageService("System message mediator software");
+			MessageMediator messagingSystem = new SystemMessageServiceSoftware("System message mediator software");
 			computer.loadSoftware(messagingSystem);
 			return computer;
 		}
@@ -43,7 +47,7 @@ public class ComputerFactory extends DataFactory {
       // Set spacecraft bus to null
       Computer computer = new AuxiliaryComputer("Aux Computer", data.getBusComponentSpecification(), maxCPUThroughput);
 
-      MessageMediator messagingSystem = new SystemMessageService("System message mediator software");
+      MessageMediator messagingSystem = new SystemMessageServiceSoftware("System message mediator software");
       computer.loadSoftware(messagingSystem);
       return computer;
     }

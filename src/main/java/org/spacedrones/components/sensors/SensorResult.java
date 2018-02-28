@@ -1,12 +1,13 @@
 package org.spacedrones.components.sensors;
 
 import org.spacedrones.Configuration;
+import org.spacedrones.components.computers.Savable;
 import org.spacedrones.universe.NavigationVector;
 import org.spacedrones.universe.celestialobjects.CelestialObject;
 
 import java.math.BigDecimal;
 
-public class SensorResult {
+public class SensorResult implements Savable {
 
 	private final CelestialObject celestialObject;
 	private final BigDecimal distance;
@@ -42,18 +43,7 @@ public class SensorResult {
 	}
 
 	@Override
-	public String name() {
-		return "SensorResult" + "-" ;//+ celestialObject.name();
-	}
-
-	@Override
-	public String id() {
+	public String getId() {
 		return id;
 	}
-
-	@Override
-	public String description() {
-		return "SensorResult";
-	}
-
 }
