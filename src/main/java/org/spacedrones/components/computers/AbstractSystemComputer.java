@@ -62,7 +62,7 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 
   @Override
   public MessageMediator getMessagingSystem() {
-    return (MessageMediator)getSoftware(SystemMessageService.typeID);
+    return (MessageMediator)getSoftware(SystemMessageService.class.getSimpleName());
   }
 
   @Override
@@ -147,7 +147,7 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 
 	@Override
 	public Object getSystemData(String id) {
-		return getStorageDevice().getData(id, SpacecraftData.category).getData();
+		return getStorageDevice().getData(id, SpacecraftData.class).get().getData();
 	}
 
 	@Override

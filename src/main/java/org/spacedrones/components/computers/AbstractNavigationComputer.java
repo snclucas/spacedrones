@@ -3,7 +3,6 @@ package org.spacedrones.components.computers;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatusMessage;
 import org.spacedrones.universe.Coordinates;
-import org.spacedrones.universe.celestialobjects.CelestialObject;
 import org.spacedrones.universe.structures.SubspaceBeacon;
 
 import java.util.Map;
@@ -19,11 +18,11 @@ public abstract class AbstractNavigationComputer extends AbstractComputer implem
 	@Override
 	public SystemStatusMessage updateCurrentLocation() {
 		//Refresh locations of objects using sensor sweeps
-		
+
 		DataStore dataStore = getSystemComputer().getStorageDevice();
-		
+
 		// Look for subspace beacons in navigation archive
-		Map<String,DataRecord> subspaceBeacons = dataStore.getData(CelestialObject.category, SubspaceBeacon.type);
+		Map<String,DataRecord> subspaceBeacons = dataStore.getData(SubspaceBeacon.class);
 
 		return null;
 	}

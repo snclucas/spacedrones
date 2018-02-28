@@ -12,25 +12,23 @@ public class CommunicatorDeviceFactory extends DataFactory {
 
 	public static CommunicationComponent getCommunicator(String commType){
 		SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(commType);
-		
-		if(commType.equals(RadioCommunicator.type)) {
-			
+
+		if(commType.equals("RadioCommunicator")) {
+
 			Model propagationModel = new SimpleRadioFrequencyPropagationModel("RF");
-			CommunicationComponent communicationComponent = 
-					new RadioCommunicator(RadioCommunicator.type.toString(), data.getBusComponentSpecification(), propagationModel);
+			CommunicationComponent communicationComponent =
+					new RadioCommunicator(commType, data.getBusComponentSpecification(), propagationModel);
 			communicationComponent.setDeviceNoiseLevel(Physics.dBm2W(-80)); // -80 dBm
 			communicationComponent.setEfficiency(90 * Unit.percent.value());
 			return communicationComponent;
 		}
-		else if(commType.equals(SubSpaceCommunicator.type)){
-			
+		else if(commType.equals("SubSpaceCommunicator")){
+
 			Model propagationModel = new SimpleRadioFrequencyPropagationModel("SUBSPACE");
-			CommunicationComponent communicationComponent = 
-					new SubSpaceCommunicator(SubSpaceCommunicator.type.toString(), data.getBusComponentSpecification(), propagationModel);
-			return communicationComponent;
+      return new SubSpaceCommunicator(commType, data.getBusComponentSpecification(), propagationModel);
 		}
 		return null;
 	}
-	
+
 
 }

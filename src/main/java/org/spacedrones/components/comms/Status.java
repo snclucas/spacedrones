@@ -1,11 +1,11 @@
 package org.spacedrones.components.comms;
 
-public class Status extends TypeInfo {
-	
+public class Status {
+
 	public Status(String typeId) {
-		super(typeId);
+
 	}
-	
+
 	public static Status CRITICAL = new Status("CRITICAL");
 	public static Status NOT_PERMITTED = new Status("NOT_PERMITTED");
 	public static Status NOT_ENOUGH_POWER = new Status("NOT_ENOUGH_POWER");

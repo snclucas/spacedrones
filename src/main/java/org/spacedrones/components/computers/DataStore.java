@@ -1,19 +1,13 @@
 package org.spacedrones.components.computers;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import org.spacedrones.components.Identifiable;
+import org.spacedrones.components.*;
 
 public interface DataStore {
-	TypeInfo categoryID = new TypeInfo("DataStore");
-	
 	void saveData(DataRecord data);
-	DataRecord getData(String id, TypeInfo typeInfo);
-	Map<String, DataRecord> getData(TypeInfo typeInfo);
-	
-	Map<String,DataRecord> getData(TypeInfo category, TypeInfo... subType);
-	
-	void saveData(Identifiable ... data);
-	void saveData(List<? extends Identifiable> data);
+  Optional<DataRecord> getData(String id, Class type);
+	Map<String, DataRecord> getData(Class type);
+	void saveData(DataRecord ... data);
+	void saveData(List<DataRecord> data);
 }

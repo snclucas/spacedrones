@@ -1,13 +1,14 @@
 package org.spacedrones.data;
 
-import java.util.List;
+import java.util.*;
 
+import org.spacedrones.components.*;
 import org.spacedrones.components.computers.DataRecord;
 
 public interface DataRecordProvider {
-	DataRecord getDataRecordByID(String id);
-	DataRecord addDataRecord(DataRecord dataRecord);
-	DataRecord overwriteDataRecordWithId(String id, DataRecord dataRecord);
-	List<DataRecord> getDataRecordsByType(TypeInfo type);
-	DataRecord deleteDataRecordByID(String id);
+  Optional<DataRecord> getDataRecordByID(String id);
+  Optional<DataRecord> addDataRecord(DataRecord dataRecord);
+  Optional<DataRecord> overwriteDataRecordWithId(String id, DataRecord dataRecord);
+	List<DataRecord> getDataRecordsByType(Class<? extends SpacecraftBusComponent> type);
+  Optional<DataRecord> deleteDataRecordByID(String id);
 }

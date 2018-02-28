@@ -9,21 +9,23 @@ import org.spacedrones.software.PropulsionManagementSoftware;
 import org.spacedrones.software.Software;
 import org.spacedrones.software.SystemMessageService;
 
+import java.util.*;
+
 public class ComputerFactory extends DataFactory {
 
 	public static SystemComputer getSystemComputer(String computerType){
-		
-		if(computerType.equals("BasicSystemComputer")){
-			SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters("Computer");
+
+		if(Objects.equals(computerType, BasicSystemComputer.class.getSimpleName())){
+			SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(Computer.class.getSimpleName());
 
 			double maxCPUThroughput = 1000 * Unit.GFLOPs.value(); //GFLOPs
-			
+
 			// Set spacecraft bus to null
 			SystemComputer computer = new BasicSystemComputer("System Computer", data.getBusComponentSpecification(), maxCPUThroughput);
-			
+
 			Software engineSoftware = new PropulsionManagementSoftware("Engine software");
 			computer.loadSoftware(engineSoftware);
-			
+
 			MessageMediator messagingSystem = new SystemMessageService("System message mediator software");
 			computer.loadSoftware(messagingSystem);
 			return computer;
@@ -34,7 +36,7 @@ public class ComputerFactory extends DataFactory {
 
   public static Computer getComputer(String computerType){
     if(computerType.equals("AuxiliaryComputer")){
-      SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters("Computer");
+      SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(Computer.class.getSimpleName());
 
       double maxCPUThroughput = 1000 * Unit.GFLOPs.value(); //GFLOPs
 

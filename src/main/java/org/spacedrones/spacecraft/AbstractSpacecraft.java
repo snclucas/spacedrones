@@ -1,7 +1,7 @@
 package org.spacedrones.spacecraft;
 
 import org.spacedrones.components.comms.Status;
-import org.spacedrones.components.computers.SystemData;
+import org.spacedrones.components.computers.*;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.status.SystemStatus;
 import org.spacedrones.structures.hulls.Hull;
@@ -58,7 +58,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 			if(status.isOK()) {
 				systemsOnline = true;
 				online = true;
-				SystemData data = new SystemData("spaceraft-ident", id());
+				DataRecord<String> data = new DataRecord<>(id(), String.class, "spaceraft-ident");
 				bus.getSystemComputer().getStorageDevice().saveData(data);
 			}
 		}

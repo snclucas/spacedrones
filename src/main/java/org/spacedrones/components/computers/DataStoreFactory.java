@@ -7,7 +7,7 @@ import java.security.InvalidParameterException;
 
 public class DataStoreFactory {
 
-	public final static String BASIC_DATASTORE="Basic datastore"; 
+	public final static String BASIC_DATASTORE="Basic datastore";
 
 	public static DataStore getDataStore(String dataStoreType) throws InvalidParameterException{
 		SpacecraftDataProvider spacecraftDataProvider = Configuration.getSpacecraftDataProvider();
@@ -15,12 +15,8 @@ public class DataStoreFactory {
 		switch (dataStoreType) {
 
 		case BASIC_DATASTORE:
-
-			DataStore dataStore = new BasicDataStorageUnit("Data store", 
-					spacecraftDataProvider.getComponentParameters("BasicDataStorageUnit").getBusComponentSpecification());
-
-
-			return dataStore;
+      return new BasicDataStorageUnit("Data store",
+          spacecraftDataProvider.getComponentParameters(BasicDataStorageUnit.class.getSimpleName()).getBusComponentSpecification());
 		default:
 			throw new InvalidParameterException("No such data store.");
 

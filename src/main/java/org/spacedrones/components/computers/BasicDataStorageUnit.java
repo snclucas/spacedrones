@@ -19,46 +19,34 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 
 	@Override
 	public void saveData(DataRecord data) {
-		if(dataArchives.containsKey(data.getRecordCategory())) {
-			Archive archive = dataArchives.get(data.getRecordCategory());
+		if(dataArchives.containsKey(data.getType().getSimpleName())) {
+			Archive archive = dataArchives.get(data.getType().getSimpleName());
 			archive.put(data.getRecordID(), data);
 		}
 		else {
 			Archive archive = new Archive();
 			archive.put(data.getRecordID(), data);
-			dataArchives.put(data.getRecordCategory(), archive);
+			dataArchives.put(data.getType().getSimpleName(), archive);
 		}
 	}
 
 	@Override
-	public DataRecord getData(String id, TypeInfo typeInfo) {
-		if(dataArchives.containsKey(typeInfo)) {
-			Archive archive = dataArchives.get(typeInfo);
-			return archive.get(id);
+	public Optional<DataRecord> getData(String id, Class type) {
+		if(dataArchives.containsKey(type.getSimpleName())) {
+			Archive archive = dataArchives.get(type.getSimpleName());
+			return Optional.of(archive.get(id));
 		}
 		else {
-			return new DataRecord();
+			return Optional.empty();
 		}
 	}
 
 	@Override
-	public Map<String, DataRecord> getData(TypeInfo typeInfo) {
-		if(dataArchives.containsKey(typeInfo)) {
-			return dataArchives.get(typeInfo);
-		}
-		else {
-			return new Archive();
-		}
-	}
-
-	@Override
-	public Map<String,DataRecord> getData(TypeInfo category, TypeInfo ... subTypes) {
+	public Map<String,DataRecord> getData(Class type) {
 		Map<String,DataRecord> results = new HashMap<>();
-		if(dataArchives.containsKey(category)) {
-			for(Map.Entry<String,DataRecord>  a : dataArchives.get(category).entrySet()) {
-				if(Arrays.asList(subTypes).contains(a.getValue().getRecordType())) {
-					results.put(a.getKey(), a.getValue());
-				}
+		if(dataArchives.containsKey(type.getSimpleName())) {
+			for(Map.Entry<String,DataRecord>  a : dataArchives.get(type.getSimpleName()).entrySet()) {
+        results.put(a.getKey(), a.getValue());
 			}
 
 		}
@@ -91,17 +79,16 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 	}
 
 	@Override
-	public void saveData(Identifiable... data) {
-		List<Identifiable> list = new ArrayList<>(Arrays.asList(data));
+	public void saveData(DataRecord... data) {
+		List<DataRecord> list = new ArrayList<>(Arrays.asList(data));
 		saveData(list);
 	}
 
 
 	@Override
-	public void saveData(List<? extends Identifiable> data) {
-		for(Identifiable d : data) {
-			DataRecord record = new DataRecord(d.id(), d);
-			saveData(record);
+	public void saveData(List<DataRecord> data) {
+		for(DataRecord d : data) {
+			saveData(d);
 		}
 	}
 

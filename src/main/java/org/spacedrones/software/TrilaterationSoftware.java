@@ -40,7 +40,7 @@ public class TrilaterationSoftware extends AbstractSoftware implements Software 
 		DataStore dataStore = getSystemComputer().getStorageDevice();
 
 		// Look for subspace beacons in navigation archive
-		Map<String,DataRecord> subspaceBeacons = dataStore.getData(CelestialObject.category, SubspaceBeacon.type);
+		Map<String,DataRecord> subspaceBeacons = dataStore.getData(SubspaceBeacon.class);
 
 		//Convert to locations
 		List<Location> subspaceBeaconsLocations = new ArrayList<>();

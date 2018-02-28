@@ -11,17 +11,17 @@ import org.spacedrones.structures.hulls.*;
 public class Driver {
 
 
-	public Driver() {
+	private Driver() {
     Hull hull = HullFactory.getHull("Shuttle");
 		SpacecraftBuildManager sbm = new SpacecraftBuildManager("Test", hull);
 
-    SystemComputer systemComputer = ComputerFactory.getSystemComputer("BasicSystemComputer");
+    SystemComputer systemComputer = ComputerFactory.getSystemComputer(BasicSystemComputer.class.getSimpleName());
     sbm.addComponent(systemComputer);
 
     Computer auxComputer = ComputerFactory.getComputer("AuxiliaryComputer");
     sbm.addComponent(auxComputer);
 
-    PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator("SubspacePowerExtractor");
+    PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.class.getSimpleName());
     sbm.addComponent(powerGenerator);
 
     try {
@@ -29,7 +29,7 @@ public class Driver {
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-    Sensor sensor = SensorFactory.getSensor("LinearSensorArray", SensorType.RADAR, 1);
+    Sensor sensor = SensorFactory.getSensor(LinearSensorArray.class.getSimpleName(), SensorType.RADAR, 1);
     sbm.addComponent(sensor);
 
     Spacecraft spacecraft = sbm.getSpacecraft();

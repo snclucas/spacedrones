@@ -1,13 +1,11 @@
 package org.spacedrones.universe;
 
+import org.spacedrones.*;
 import org.spacedrones.physics.Unit;
 
 import java.math.BigDecimal;
 
 public interface Location extends Taxonomic {
-	TypeInfo category = new TypeInfo("Location");
-	TypeInfo type = category;
-	
 	Coordinates getCoordinates();
 	BigDecimal getCoordinate(int index);
 	NavigationVector vectorToLocation(Location location, boolean normalized);

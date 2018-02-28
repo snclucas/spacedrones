@@ -20,11 +20,11 @@ public class IsComponentOfType implements BiPredicate<SpacecraftBusComponent, Cl
   }
 
   public static void main(String[] args) {
-    SpacecraftBusComponent s1 = SensorFactory.getSensor("LinearSensorArray", SensorType.OPTICAL, 1);
-    Sensor s2 = SensorFactory.getSensor("LinearSensorArray", SensorType.OPTICAL, 1);
-    LinearSensorArray s3 = (LinearSensorArray) SensorFactory.getSensor("LinearSensorArray", SensorType.OPTICAL, 1);
+    SpacecraftBusComponent s1 = SensorFactory.getSensor(LinearSensorArray.class.getSimpleName(), SensorType.OPTICAL, 1);
+    Sensor s2 = SensorFactory.getSensor(LinearSensorArray.class.getSimpleName(), SensorType.OPTICAL, 1);
+    LinearSensorArray s3 = (LinearSensorArray) SensorFactory.getSensor(LinearSensorArray.class.getSimpleName(), SensorType.OPTICAL, 1);
 
-    Sensor s4 = SensorFactory.getSensor("FractalSensorArray", SensorType.OPTICAL, 1);
+    Sensor s4 = SensorFactory.getSensor(FractalSensorArray.class.getSimpleName(), SensorType.OPTICAL, 1);
 
     SpacecraftBusComponent e1 = EngineFactory.getEngine("SimpleIonEngine", false);
 

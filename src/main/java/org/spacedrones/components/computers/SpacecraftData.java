@@ -3,11 +3,10 @@ package org.spacedrones.components.computers;
 import org.spacedrones.Configuration;
 
 public class SpacecraftData implements ArchivableData {
-	private TypeInfo type = new TypeInfo("SpacecraftData");
 	private final String dataName;
 	private final String data;
 	private final String id;
-	
+
 	public SpacecraftData(String dataName, String data) {
 		super();
 		this.dataName = dataName;

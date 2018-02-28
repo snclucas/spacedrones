@@ -1,5 +1,6 @@
 package org.spacedrones.universe.dataprovider;
 
+import org.spacedrones.components.*;
 import org.spacedrones.components.sensors.SensorProfile;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.GalacticLocation;
@@ -19,10 +20,9 @@ public interface UniverseCelestialObjectDataProvider {
 	GalacticLocation getCelestialObjectLocationById(String celestialObjectID);
 	GalacticLocation getCelestialObjectLocationByName(String celestialObjectName);
 
-	List<CelestialObject> getLocationsByType(TypeInfo type);
-	List<CelestialObject> getLocationsByCategory(TypeInfo category);
+	List<CelestialObject> getLocationsByType(Class<? extends CelestialObject> type);
 	List<CelestialObject> getLocationsCloserThan(Coordinates coordinates, BigDecimal distance);
-	List<CelestialObject> getCelestialObjectByTypeCloserThan(TypeInfo type, GalacticLocation localtion, BigDecimal distance);
+	List<CelestialObject> getCelestialObjectByTypeCloserThan(Class<? extends CelestialObject> type, GalacticLocation localtion, BigDecimal distance);
 	double getSignalPropagationSpeed(SensorProfile sensorProfile);
 	void populate();
 }

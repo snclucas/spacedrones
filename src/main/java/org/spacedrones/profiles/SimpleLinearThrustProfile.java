@@ -1,8 +1,6 @@
 package org.spacedrones.profiles;
 
 public class SimpleLinearThrustProfile extends AbstractProfile implements ThrustProfile {
-	
-	public static TypeInfo type = new TypeInfo("SimpleLinearThrustProfile");
 
 	public SimpleLinearThrustProfile(String name) {
 		super(name);
@@ -12,7 +10,7 @@ public class SimpleLinearThrustProfile extends AbstractProfile implements Thrust
 	public double getNormalizedThrust(double powerLevel) {
 		return powerLevel;
 	}
-	
+
 	@Override
 	public double getNormalizedPower(double powerLevel) {
 		return powerLevel;
@@ -22,7 +20,7 @@ public class SimpleLinearThrustProfile extends AbstractProfile implements Thrust
 	public double getNormalizedCPU(double powerLevel) {
 		return powerLevel;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Simple Linear Thrust Model";
@@ -35,7 +33,7 @@ public class SimpleLinearThrustProfile extends AbstractProfile implements Thrust
 			profile[i] =  1.0 / (10-i);
 		return new double[][]{profile};
 	}
-	
+
 	@Override
 	public double[][] getNormalizedPowerProfile() {
 		double[] profile = new double[10];
@@ -49,5 +47,5 @@ public class SimpleLinearThrustProfile extends AbstractProfile implements Thrust
 	public String description() {
 		return "Simple linear thrust profile.";
 	}
-	
+
 }

@@ -7,25 +7,25 @@ import org.spacedrones.utils.Utils;
 import java.math.BigDecimal;
 
 public abstract class AbstractLocation implements Location {
-	
+
 	private final String name;
 	private final String id;
 	private final Coordinates coordinates;
-	
+
 	AbstractLocation(String name, Coordinates coordinates) {
 		this.id = Configuration.getUUID();
 		this.name = name;
 		this.coordinates = coordinates;
 	}
-	
+
 	AbstractLocation(String name, Coordinates coordinates, Location relativeTo) {
 		this(name, coordinates.add(relativeTo.getCoordinates()));
 	}
-	
+
 	AbstractLocation(String name, BigDecimal[] coordComponents) {
 		this(name, new Coordinates(coordComponents));
 	}
-	
+
 	@Override
 	public String id() {
 		return id;
@@ -35,12 +35,12 @@ public abstract class AbstractLocation implements Location {
 	public String name() {
 		return name;
 	}
-	
+
 	@Override
 	public Coordinates getCoordinates() {
 		return coordinates;
 	}
-	
+
 	@Override
 	public BigDecimal getCoordinate(int index) {
 		return this.coordinates.get(index);
@@ -77,15 +77,5 @@ public abstract class AbstractLocation implements Location {
             id.equals(that.id) &&
             coordinates.equals(that.coordinates);
   }
-
-	@Override
-	public TypeInfo category() {
-		return category;
-	}
-
-	@Override
-	public TypeInfo type() {
-		return type;
-	}
 
 }

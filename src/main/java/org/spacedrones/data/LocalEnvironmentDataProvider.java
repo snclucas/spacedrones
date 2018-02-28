@@ -13,15 +13,15 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class LocalEnvironmentDataProvider implements EnvironmentDataProvider {
-	
+
 	public LocalEnvironmentDataProvider () {
 	}
 
 	public EnvironmentData getEnvironmentData(Coordinates coordinates) {
 		final double subspaceNoise = getSubspaceNoise(coordinates);
-		
+
 		final List<CelestialObject> nearByStars =
-				Universe.getInstance().getCelestialObjectByTypeCloserThan(Star.type,
+				Universe.getInstance().getCelestialObjectByTypeCloserThan(Star.class,
 								new GalacticLocation("", coordinates), new BigDecimal(Configuration.distanceForEnvironmentData));
 
 		if(nearByStars.size() == 0)
@@ -37,12 +37,12 @@ public class LocalEnvironmentDataProvider implements EnvironmentDataProvider {
 				luminosity += response.getSignalStrength() / (4*Math.PI* (d.pow(2)).doubleValue() );
 				System.out.println(star.id() + " " + response.getSignalStrength() / (4*Math.PI* (d.pow(2)).doubleValue() ));
 			}
-		} 
+		}
 		return new EnvironmentData(luminosity, 0.0, subspaceNoise);
 	}
 
 	public double getSubspaceNoise(Coordinates coordinates) {
 		return 1.0;
 	}
-	
+
 }

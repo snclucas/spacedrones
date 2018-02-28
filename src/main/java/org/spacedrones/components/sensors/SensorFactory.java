@@ -4,30 +4,32 @@ import org.spacedrones.Configuration;
 import org.spacedrones.data.SpacecraftComponentData;
 import org.spacedrones.data.SpacecraftDataProvider;
 
+import java.util.*;
+
 public class SensorFactory {
 
 	public static Sensor getSensor(String sensorType, SensorType sensorSensingType, int numberOfSensorElements){
 		SpacecraftDataProvider spacecraftDataProvider =  Configuration.getSpacecraftDataProvider();
-		
-		if(sensorType.equals(LinearSensorArray.type)){
+
+		if(Objects.equals(sensorType, LinearSensorArray.class.getSimpleName())){
 			SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(sensorType);
-			
+
 			double gainPerElement = 10.0;
-			double signalDetectionThreshold = -9;	
+			double signalDetectionThreshold = -9;
 			SensorProfile sensorProfile = new SensorProfile(sensorSensingType, signalDetectionThreshold, gainPerElement);
-			
+
 			return new LinearSensorArray(
-					LinearSensorArray.type.toString(), data.getBusComponentSpecification(), sensorProfile, numberOfSensorElements);
+					LinearSensorArray.class.toString(), data.getBusComponentSpecification(), sensorProfile, numberOfSensorElements);
 		}
-		else if(sensorType.equals(FractalSensorArray.type)){
+		else if(Objects.equals(sensorType, FractalSensorArray.class.getSimpleName())){
 			SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(sensorType);
-			
+
 			double gainPerElement = 100.0;
 			double signalDetectionThreshold = -9;
 			SensorProfile sensorProfile = new SensorProfile(sensorSensingType, signalDetectionThreshold, gainPerElement);
 
 			return new FractalSensorArray(
-					FractalSensorArray.type.toString(), data.getBusComponentSpecification(), sensorProfile, numberOfSensorElements);
+					FractalSensorArray.class.toString(), data.getBusComponentSpecification(), sensorProfile, numberOfSensorElements);
 		}
 		return null;
 	}

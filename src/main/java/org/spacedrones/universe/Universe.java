@@ -1,8 +1,7 @@
 package org.spacedrones.universe;
 
 import org.spacedrones.Configuration;
-import org.spacedrones.components.Identifiable;
-import org.spacedrones.components.Tickable;
+import org.spacedrones.components.*;
 import org.spacedrones.components.sensors.SensorProfile;
 import org.spacedrones.data.EnvironmentDataProvider;
 import org.spacedrones.physics.Unit;
@@ -77,7 +76,7 @@ public class Universe implements UniverseCelestialObjectDataProvider,
     return spacecraftDataProvider.getObjectLocationInUniverse(ident);
   }
 
-  public List<CelestialObject> getLocationsByType(TypeInfo type) {
+  public List<CelestialObject> getLocationsByType(Class<? extends CelestialObject> type) {
 		return universeLocationDataProvider.getLocationsByType(type);
 	}
 
@@ -118,11 +117,6 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 
 	//Delegate methods
 
-	@Override
-	public List<CelestialObject> getLocationsByCategory(TypeInfo category) {
-		return universeLocationDataProvider.getLocationsByCategory(category);
-	}
-
 
 	@Override
 	public List<CelestialObject> getLocationsCloserThan(Coordinates coordinates, BigDecimal distance) {
@@ -131,7 +125,7 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 
 
 	@Override
-	public List<CelestialObject> getCelestialObjectByTypeCloserThan(TypeInfo type, GalacticLocation localtion, BigDecimal distance) {
+	public List<CelestialObject> getCelestialObjectByTypeCloserThan(Class<? extends CelestialObject> type, GalacticLocation localtion, BigDecimal distance) {
 		return universeLocationDataProvider.getCelestialObjectByTypeCloserThan(type, localtion, distance);
 	}
 

@@ -1,35 +1,22 @@
 package org.spacedrones.components.computers;
 
-import org.spacedrones.components.Identifiable;
 
-public class DataRecord {
-	
+public class DataRecord<T> {
+
 	private final String id;
-	private final Object data;
-	
-	
-	public DataRecord() {
-		super();
-		this.id = "";
-		this.type = null;
-		this.category = null;
-		this.data = null;
-	}
-	
-	public DataRecord(String id, Identifiable data) {
+	private final T data;
+	private Class type;
+
+
+	public DataRecord(String id, Class<T> type, T data) {
 		super();
 		this.id = id;
-		this.type = new TypeInfo("Fix");//data.type();
-		this.category = new TypeInfo("Fix");// data.category();
+		this.type = type;
 		this.data = data;
 	}
-	
-	public TypeInfo getRecordType() {
+
+  public Class getType() {
 		return type;
-	}
-	
-	public TypeInfo getRecordCategory() {
-		return category;
 	}
 
 	public String getRecordID() {
@@ -39,7 +26,7 @@ public class DataRecord {
 	public Object getData() {
 		return data;
 	}
-	
+
 	public boolean hasData() {
 		return data != null;
 	}

@@ -2,8 +2,7 @@ package org.spacedrones.software;
 
 import org.spacedrones.Configuration;
 import org.spacedrones.components.SpacecraftBusComponent;
-import org.spacedrones.components.computers.Computer;
-import org.spacedrones.components.computers.DataStore;
+import org.spacedrones.components.computers.*;
 import org.spacedrones.components.sensors.PositioningSensor;
 import org.spacedrones.components.sensors.Sensor;
 import org.spacedrones.components.sensors.SensorResult;
@@ -21,12 +20,12 @@ import java.util.Map;
 public class NavigationSoftware extends AbstractSoftware implements Software, NavigationInterface {
 
 	private static MathContext mc = new MathContext(Configuration.precision, RoundingMode.HALF_UP);
-	
+
 	private DataStore dataStore;
 
 	private final Map<String, Sensor> sensors = new HashMap<>();
 	private final List<SensorResult> sensorResults = new ArrayList<>();
-	
+
 	public NavigationSoftware(String name) {
 		super(name);
 		this.dataStore = getSystemComputer().getStorageDevice();
@@ -57,7 +56,7 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 
 	public List<SensorResult> scanAll(){
 		List<Sensor> sensors = getSensors();
-		for(Sensor sensor : sensors) 
+		for(Sensor sensor : sensors)
 			sensorResults.addAll(scan(sensor.id()));
 		dataStore.saveData(sensorResults);
 		return sensorResults;
@@ -67,8 +66,8 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 	public List<SensorResult> scan(String sensorIdent){
 		Sensor sensor = sensors.get(sensorIdent);
 		List<SensorResult> sensorResults = sensor.passiveScan(10.0, sensor.getSensorProfile());
-		sensorResults.addAll(sensorResults);
-		dataStore.saveData(sensorResults);
+		sensorResults.forEach(sr ->
+            dataStore.saveData(new DataRecord<SensorResult>("d", SensorResult.class, sr)));
 		return sensorResults;
 	}
 
@@ -85,7 +84,7 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 	@Override
 	public void getVectorToCoordinates(Coordinates coordinates) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -95,12 +94,12 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 		List<Coordinates> coordinates = new ArrayList<Coordinates>();
 		for(Sensor sensor : getSensors())
 			if(sensor instanceof PositioningSensor)
-				coordinates.add(((PositioningSensor)sensor).calculatePosition());	
+				coordinates.add(((PositioningSensor)sensor).calculatePosition());
 		return processPositioningSensorData(coordinates);
 	}
-	
-	
-	
+
+
+
 	private Coordinates processPositioningSensorData(List<Coordinates> coordinates) {
 		BigDecimal X = BigDecimal.ZERO;
 		BigDecimal Y = BigDecimal.ZERO;
@@ -116,8 +115,8 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 		Z = Z.divide(numberOfPositionsReturned, mc);
 		return new Coordinates(X, Y, Z);
 	}
-	
-	
+
+
 	public int hasPositioningSensors() {
 		int cnt = 0;
 		for(Sensor sensor : getSensors())

@@ -3,7 +3,7 @@ package org.spacedrones.components.computers;
 import org.spacedrones.Configuration;
 import org.spacedrones.components.Identifiable;
 
-public class SystemData implements Identifiable {
+public class SystemData extends DataRecord {
 
 	private final String tag;
 	private final String data;
@@ -14,19 +14,6 @@ public class SystemData implements Identifiable {
 		this.data = data;
 	}
 
-	@Override
-	public String name() {
-		return "SystemData";
-	}
 
-	@Override
-	public String id() {
-		return Configuration.getUUID();
-	}
-
-	@Override
-	public String description() {
-		return "SystemData";
-	}
 
 }

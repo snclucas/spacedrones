@@ -1,28 +1,30 @@
 package org.spacedrones.materials;
 
+import java.util.*;
+
 public abstract class AbstractMaterial implements Material {
-	
-	TypeInfo DENSITY = new TypeInfo("DENSITY");
-	TypeInfo MASS_NUMBER = new TypeInfo("MASS_NUMBER");
-	TypeInfo ATOMIC_NUMBER = new TypeInfo("ATOMIC_NUMBER");
-	
-	TypeInfo THERMAL_RESISTANCE = new TypeInfo("THERMAL_RESISTANCE");
-	TypeInfo RADIATION_RESISTANCE = new TypeInfo("RADIATION_RESISTANCE");
-	TypeInfo EM_RESISTANCE = new TypeInfo("EM_RESISTANCE");
-	TypeInfo IMPACT_RESISTANCE = new TypeInfo("IMPACT_RESISTANCE");
+
+	String DENSITY = "DENSITY";
+  String MASS_NUMBER = "MASS_NUMBER";
+  String ATOMIC_NUMBER = "ATOMIC_NUMBER";
+
+  String THERMAL_RESISTANCE = "THERMAL_RESISTANCE";
+  String RADIATION_RESISTANCE = "RADIATION_RESISTANCE";
+  String EM_RESISTANCE = "EM_RESISTANCE";
+  String IMPACT_RESISTANCE = "IMPACT_RESISTANCE";
 
 	private double thermalResistanceCoefficient;
 	private double radiationResistanceCoefficient;
 	private double emResistanceCoefficient;
 	private double impactResistanceCoefficient;
-	
+
 	private Element[] elements;
 	private double[] fractions;
-	
-	
+
+
 	public AbstractMaterial(
-			Element[] elements, 
-			double[] fractions, 
+			Element[] elements,
+			double[] fractions,
 			double impactResistanceCoefficient,
 			double emResistanceCoefficient,
 			double thermalResistanceCoefficient,
@@ -37,7 +39,7 @@ public abstract class AbstractMaterial implements Material {
 	}
 
 
-	
+
 	@Override
 	public double getEMResistance() {
 		return this.emResistanceCoefficient;
@@ -49,8 +51,8 @@ public abstract class AbstractMaterial implements Material {
 	public double getImpactResistance() {
 		return this.impactResistanceCoefficient;
 	}
-	
-	
+
+
 
 
 	@Override
@@ -83,14 +85,14 @@ public abstract class AbstractMaterial implements Material {
 	public double getDensity() {
 		return calculateFraction(DENSITY);
 	}
-	
-	
-	private double calculateFraction(TypeInfo quantity) {
-		double value = 0.0;		
+
+
+	private double calculateFraction(String quantity) {
+		double value = 0.0;
 		for(int i = 0; i< fractions.length; i++) {
-			if(quantity == DENSITY)
+			if(Objects.equals(quantity, DENSITY))
 				value  += fractions[i]*elements[i].getDensity();
-			else if(quantity == MASS_NUMBER)
+			else if(Objects.equals(quantity, MASS_NUMBER))
 				value  += fractions[i]*elements[i].getMassNumber();
 			else
 				value  += fractions[i]*elements[i].getAtomicNumber();

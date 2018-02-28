@@ -1,5 +1,6 @@
 package org.spacedrones.universe.dataprovider;
 
+import org.spacedrones.components.*;
 import org.spacedrones.components.sensors.SensorProfile;
 import org.spacedrones.components.sensors.SensorType;
 import org.spacedrones.physics.Constants;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 
 
 public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvider implements UniverseCelestialObjectDataProvider {
-	
+
 	private final Map<String, ObjectMeta> celestialObjects;
 	private final Map<String, GalacticLocation> locations;
 	private final Map<String, double[]> relativeVelocities;
@@ -81,7 +82,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 	public GalacticLocation getCelestialObjectLocationById(String celestialObjectID) {
 		return locations.get(celestialObjectID);
 	}
-	
+
 
 	@Override
 	public CelestialObject getCelestialObjectByName(String locationProperName) {
@@ -120,33 +121,24 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 	}
 
 	@Override
-	public List<CelestialObject> getLocationsByType(TypeInfo type) {
+	public List<CelestialObject> getLocationsByType(Class<? extends CelestialObject> type) {
 		List<CelestialObject> locations = new ArrayList<>();
 
     for (Entry<String, ObjectMeta> stringCelestialObjectEntry : celestialObjects.entrySet()) {
       CelestialObject celObj = stringCelestialObjectEntry.getValue().celestialObject;
-      if (type == (celObj.type()))
+      if (type == (celObj.getClass()))
         locations.add(celObj);
     }
 		return locations;
 	}
-	
+
 	@Override
-	public List<CelestialObject> getLocationsByCategory(TypeInfo category) {
-		return celestialObjects.entrySet().stream()
-				.map(e -> e.getValue().celestialObject)
-				.filter(map -> map.category().equals(category))
-				.collect(Collectors.toList());
-	}
-	
-	
-	@Override
-	public List<CelestialObject> getCelestialObjectByTypeCloserThan(TypeInfo type, GalacticLocation location, BigDecimal distance) {
+	public List<CelestialObject> getCelestialObjectByTypeCloserThan(Class<? extends CelestialObject> type, GalacticLocation location, BigDecimal distance) {
 		List<CelestialObject> locations = new ArrayList<>();
 
     for (Entry<String, ObjectMeta> me : celestialObjects.entrySet()) {
       CelestialObject celestialObject = me.getValue().celestialObject;
-      if (type == (celestialObject.type())) {
+      if (type == (celestialObject.getClass())) {
         Coordinates coords = this.locations.get(me.getKey()).getCoordinates();
         if (Utils.distanceToLocation(coords, location.getCoordinates(), Unit.One).compareTo(distance) <= 0)
           locations.add(celestialObject);
@@ -154,8 +146,8 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
     }
 		return locations;
 	}
-	
-	
+
+
 
 	@Override
 	public List<CelestialObject> getLocationsCloserThan(Coordinates coordinates, BigDecimal distance) {
@@ -198,7 +190,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 		GalacticLocation alphaLocation = new GalacticLocation("Sol", alphaCenturiCoordinates);
 
 		addCelestialObject("Alpha centuri", alphaCenturi, alphaLocation);
-		
+
 
 		//Setup subspace beacons
 		Coordinates c1 = solCoordinates.add(new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1e8*Unit.Km.value())));
@@ -225,7 +217,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 	}
 
 
-	
+
 	public double getSignalPropagationSpeed(SensorProfile sensorProfile) {
 		SensorType sensorType = sensorProfile.getSensorType();
 		if(sensorType == SensorType.OPTICAL) {
@@ -249,9 +241,9 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 		else
 			return 0.0;
 	}
-	
-	
-	
-	
+
+
+
+
 
 }
