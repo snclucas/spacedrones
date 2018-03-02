@@ -2,7 +2,7 @@ package org.spacedrones.physics;
 
 public class Unit {
 	
-	public enum Type {ANGLE, DIMENTIONLESS, LENGTH, MASS, AREA, VOLUME, TIME, FORCE, POWER, CPU}
+	public enum Type {ANGLE, DIMENTIONLESS, LENGTH, MASS, AREA, VOLUME, TIME, FORCE, POWER, CPU, ENERGY}
 	
 	//Units for mass
 	public static Unit g = new Unit(1.0e-3, Type.MASS, "g");
@@ -46,7 +46,7 @@ public class Unit {
 	
 	
 	//Units for energy
-	public static double GJ = 1.0e-9;
+	public static Unit GJ = new Unit(1.0e9, Type.ENERGY, "GJ");
 	
 	//Units for length
 	public static Unit cm = new Unit(1.0e-2, Type.LENGTH, "cm");

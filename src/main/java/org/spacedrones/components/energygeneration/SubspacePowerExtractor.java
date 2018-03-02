@@ -34,7 +34,12 @@ public class SubspacePowerExtractor extends AbstractPowerGenerator {
 		return efficiency;
 	}
 
-	@Override
+  @Override
+  public void tick(final double dt) {
+    super.tick(dt);
+  }
+
+  @Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
 		systemStatus.addSystemMessage(name() + " online.", Status.OK);

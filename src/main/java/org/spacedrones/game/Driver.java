@@ -24,11 +24,6 @@ public class Driver {
     PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.class.getSimpleName());
     sbm.addComponent(powerGenerator);
 
-    try {
-      Thread.sleep(1000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
     Sensor sensor = SensorFactory.getSensor(LinearSensorArray.class.getSimpleName(), SensorType.RADAR, 1);
     sbm.addComponent(sensor);
 
@@ -37,6 +32,11 @@ public class Driver {
     SystemStatus sysStatus = spacecraft.online();
 
     sysStatus.getMessages().forEach(m-> System.out.println(m.getUniversalDate() + " " + m.getMessage()));
+
+
+
+
+
 	}
 
 	public static void main(String args[]) {

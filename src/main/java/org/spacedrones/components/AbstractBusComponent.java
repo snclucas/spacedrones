@@ -14,7 +14,7 @@ import org.spacedrones.status.SystemStatusMessage;
 
 public abstract class AbstractBusComponent implements SpacecraftBusComponent {
 
-  private boolean online = false;
+  protected boolean online = false;
 	private final String name;
 	private final String id;
 	private SystemComputer systemComputer;
