@@ -9,13 +9,15 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-public interface SpacecraftDataProvider {
-	void addSpacecraft(Spacecraft spacecraft, Coordinates coordinates);
-	void addComponent(Identifiable object, Coordinates coordinates);
+public interface ObjectLocationDataProvider {
+	void addSpacecraft(Spacecraft spacecraft, Coordinates coordinates, double[] velocity);
+	void addComponent(Identifiable object, Coordinates coordinates, double[] velocity);
 
 	List<Spacecraft> getAllSpacecraft();
 	Spacecraft getSpacecraftByIdent(String ident);
 
+  List<Identifiable> getAllObjectsByType(Class<? extends Identifiable> type);
+  Identifiable getObjectByIdent(String ident);
 
 	void updateSpacecraftLocation(String spacecraftIdent, Coordinates coordinates);
 	Coordinates getObjectLocationInUniverse(String spacecraftIdent);

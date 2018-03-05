@@ -7,17 +7,17 @@ import org.spacedrones.data.EnvironmentDataProvider;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.Spacecraft;
 import org.spacedrones.universe.celestialobjects.CelestialObject;
-import org.spacedrones.universe.dataprovider.SpacecraftDataProvider;
+import org.spacedrones.universe.dataprovider.ObjectLocationDataProvider;
 import org.spacedrones.universe.dataprovider.UniverseCelestialObjectDataProvider;
 
 import java.math.BigDecimal;
 import java.util.*;
 
 public class Universe implements UniverseCelestialObjectDataProvider,
-		SpacecraftDataProvider, EnvironmentDataProvider, Tickable {
+        ObjectLocationDataProvider, EnvironmentDataProvider, Tickable {
 
 	private UniverseCelestialObjectDataProvider universeLocationDataProvider = Configuration.getUniverseLocationDataProvider();
-	private SpacecraftDataProvider spacecraftDataProvider = Configuration.getUniverseSpacecraftLocationDataProvider();
+	private ObjectLocationDataProvider spacecraftDataProvider = Configuration.getUniverseSpacecraftLocationDataProvider();
 	private EnvironmentDataProvider universeEnvironmentDataProvider = Configuration.getEnvironmentDataProvider();
 
 
@@ -109,7 +109,17 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 		return spacecraftDataProvider.getSpacecraftByIdent(ident);
 	}
 
-	@Override
+  @Override
+  public List<Identifiable> getAllObjectsByType(Class<? extends Identifiable> type) {
+    return spacecraftDataProvider.getAllObjectsByType(type);
+  }
+
+  @Override
+  public Identifiable getObjectByIdent(String ident) {
+    return spacecraftDataProvider.getObjectByIdent(ident);
+  }
+
+  @Override
 	public void tick(double dt) {
 		spacecraftDataProvider.getAllSpacecraft()
 						.forEach(sc -> sc.tick(dt));

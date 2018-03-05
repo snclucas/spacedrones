@@ -19,7 +19,7 @@ public class SensorFactory {
 			SensorProfile sensorProfile = new SensorProfile(sensorSensingType, signalDetectionThreshold, gainPerElement);
 
 			return new LinearSensorArray(
-					LinearSensorArray.class.toString(), data.getBusComponentSpecification(), sensorProfile, numberOfSensorElements);
+					LinearSensorArray.class.getSimpleName(), data.getBusComponentSpecification(), sensorProfile, numberOfSensorElements);
 		}
 		else if(Objects.equals(sensorType, FractalSensorArray.class.getSimpleName())){
 			SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(sensorType);

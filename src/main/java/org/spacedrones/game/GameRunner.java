@@ -22,10 +22,10 @@ public class GameRunner {
 
 	public void gameLoop(Universe universe, Runner runner)
 	{
-		
+
 		long lastLoopTime = System.nanoTime();
 		final int TARGET_FPS = 1;
-		final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;   
+		final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
 
 		// keep looping round til the game ends
 		while (gameRunning)
@@ -36,7 +36,7 @@ public class GameRunner {
 			long now = System.nanoTime();
 			long updateLength = now - lastLoopTime;
 			lastLoopTime = now;
-			double delta = updateLength / ((double)OPTIMAL_TIME); 
+			double delta = updateLength / ((double)OPTIMAL_TIME);
 
 			// update the frame counter
 			lastFpsTime += updateLength;
@@ -61,7 +61,7 @@ public class GameRunner {
 
 			// we want each frame to take 10 milliseconds, to do this
 			// we've recorded when we started the frame. We add 10 milliseconds
-			// to this and then factor in the current time to give 
+			// to this and then factor in the current time to give
 			// us our final value to wait for
 			// remember this is in ms, whereas our lastLoopTime etc. vars are in ns.
 
@@ -80,17 +80,17 @@ public class GameRunner {
 	}
 
 	public static void main(String[] args) {
-		
+
 		Universe universe = Universe.getInstance();
 		Spacecraft simpleSpacecraft = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SHUTTLE);
 		Coordinates coords = new Coordinates(BigDecimal.ZERO, new BigDecimal(1* Unit.Ly.value()), BigDecimal.ZERO);
-		universe.addSpacecraft(simpleSpacecraft, coords);
+		universe.addComponent(simpleSpacecraft, coords);
 
 		universe.updateSpacecraftVelocity(simpleSpacecraft.id(), new double[]{1.5e4, 4.2e10, 23.8e2});
 
 		Runner runner = new Runner();
 		runner.addManager(new SpacecraftRunManager(universe));
-		
+
 		new GameRunner(universe, runner);
 	}
 

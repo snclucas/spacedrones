@@ -15,53 +15,53 @@ import org.spacedrones.data.MaterialDataProvider;
 import org.spacedrones.data.PhysicsDataProvider;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.universe.dataprovider.LocalUniverseLocationDataProvider;
-import org.spacedrones.universe.dataprovider.LocalSpacecraftDataProvider;
+import org.spacedrones.universe.dataprovider.LocalObjectLocationDataProvider;
 import org.spacedrones.universe.dataprovider.UniverseCelestialObjectDataProvider;
-import org.spacedrones.universe.dataprovider.SpacecraftDataProvider;
+import org.spacedrones.universe.dataprovider.ObjectLocationDataProvider;
 
 public class Configuration {
 
 	public static int precision = 20;
 	public static int ROUNDING_MODE = BigDecimal.ROUND_HALF_UP;
 	public static MathContext mc = new MathContext(Configuration.precision, RoundingMode.HALF_UP);
-	
+
 	public static double distanceForEnvironmentData = 100.0 * Unit.Ly.value();
 
-	
+
 	public static String getUUID() {
 		return UUID.randomUUID().toString().replaceAll("-", "");
 	}
-	
 
-	
+
+
 	public static UniverseCelestialObjectDataProvider getUniverseLocationDataProvider() {
 		return new LocalUniverseLocationDataProvider();
 	}
-	
-	
-	public static SpacecraftDataProvider getUniverseSpacecraftLocationDataProvider() {
-		return new LocalSpacecraftDataProvider();
+
+
+	public static ObjectLocationDataProvider getUniverseSpacecraftLocationDataProvider() {
+		return new LocalObjectLocationDataProvider();
 	}
-	
-	
+
+
 	public static EnvironmentDataProvider getEnvironmentDataProvider() {
 		return new LocalEnvironmentDataProvider();
 	}
-	
+
 	public static SensorResponseMediator getSensorResponseMediator() {
 		return new LocalSensorResponseMediator();
 	}
-	
-	
+
+
 	public static org.spacedrones.data.SpacecraftDataProvider getSpacecraftDataProvider() {
 		return new org.spacedrones.data.LocalSpacecraftDataProvider();
 	}
-	
-	
+
+
 	public static PhysicsDataProvider getPhysicsDataProvider() {
 		return new LocalPhysicsDataProvider();
 	}
-	
+
 
 	public static MaterialDataProvider getMaterialDataProvider() {
 		return new LocalMaterialDataProvider();

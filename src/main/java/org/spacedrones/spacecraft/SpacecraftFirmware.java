@@ -1,6 +1,6 @@
 package org.spacedrones.spacecraft;
 
-import org.spacedrones.components.SpacecraftBusComponent;
+import org.spacedrones.components.*;
 import org.spacedrones.components.comms.CommunicationComponent;
 import org.spacedrones.components.computers.Computer;
 import org.spacedrones.components.computers.SystemComputer;
@@ -57,7 +57,7 @@ public class SpacecraftFirmware {
 				computers.add((SystemComputer)component);
 		return computers;
 	}
-	
+
 	public static List<PowerGenerator> getPowerGenerators(Bus bus) {
 		List<PowerGenerator> powerGenerators = new ArrayList<>();
 		for(SpacecraftBusComponent component : bus.getComponents())

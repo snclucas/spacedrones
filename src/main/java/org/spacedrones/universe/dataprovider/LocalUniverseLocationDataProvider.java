@@ -1,6 +1,5 @@
 package org.spacedrones.universe.dataprovider;
 
-import org.spacedrones.components.*;
 import org.spacedrones.components.sensors.SensorProfile;
 import org.spacedrones.components.sensors.SensorType;
 import org.spacedrones.physics.Constants;
@@ -17,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 
 public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvider implements UniverseCelestialObjectDataProvider {
@@ -26,34 +24,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 	private final Map<String, GalacticLocation> locations;
 	private final Map<String, double[]> relativeVelocities;
 
-  class	ObjectMeta {
-  	public String id;
-  	public String name;
-    CelestialObject celestialObject;
-    ObjectMeta(final String id, final String name, final CelestialObject celestialObject) {
-      this.id = id;
-      this.name = name;
-      this.celestialObject = celestialObject;
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-
-      final ObjectMeta that = (ObjectMeta) o;
-      return id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-      int result = id.hashCode();
-      result = 31 * result + name.hashCode();
-      return result;
-    }
-  }
-
-	public LocalUniverseLocationDataProvider() {
+  public LocalUniverseLocationDataProvider() {
 		celestialObjects = new HashMap<>();
 		locations = new HashMap<>();
 		relativeVelocities = new HashMap<>();

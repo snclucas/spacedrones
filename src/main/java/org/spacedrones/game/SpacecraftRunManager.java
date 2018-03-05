@@ -6,18 +6,18 @@ import org.spacedrones.components.propulsion.thrust.ThrustingEngine;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.*;
 import org.spacedrones.universe.Coordinates;
-import org.spacedrones.universe.dataprovider.SpacecraftDataProvider;
+import org.spacedrones.universe.dataprovider.ObjectLocationDataProvider;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public final class SpacecraftRunManager implements SpacecraftManager, RunManager {
 
-  private SpacecraftDataProvider spacecraftDataProvider;
+  private ObjectLocationDataProvider spacecraftDataProvider;
 
   private Bus bus;
 
-  SpacecraftRunManager(SpacecraftDataProvider spacecraftDataProvider) {
+  SpacecraftRunManager(ObjectLocationDataProvider spacecraftDataProvider) {
     this.spacecraftDataProvider = spacecraftDataProvider;
 
   }

@@ -1,7 +1,6 @@
-package org.spacedrones.spacecraft;
+package org.spacedrones.components;
 
 
-import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.propulsion.Engine;
 import org.spacedrones.components.propulsion.EngineFactory;
 import org.spacedrones.components.sensors.*;
@@ -11,10 +10,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiPredicate;
 
-public class IsComponentOfType implements BiPredicate<SpacecraftBusComponent, Class<? extends SpacecraftBusComponent>> {
+public class IsComponentOfType <T> implements BiPredicate<T, Class<? extends T>> {
 
   @Override
-  public boolean test(final SpacecraftBusComponent lhs, Class<? extends SpacecraftBusComponent> rhs) {
+  public boolean test(final T lhs, Class<? extends T> rhs) {
     return lhs.getClass() == rhs ||  rhs.isAssignableFrom(lhs.getClass()) ||
             Arrays.stream(lhs.getClass().getInterfaces()).anyMatch(s -> s == rhs);
   }
