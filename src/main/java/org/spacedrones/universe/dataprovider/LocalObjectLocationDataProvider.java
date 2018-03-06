@@ -100,10 +100,12 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
 
 
 	@Override
-	public Map<String,Coordinates> getSpacecraftWithinRangeOfCoordinates(Coordinates coordinates, BigDecimal range) {
+	public List<Spacecraft> getSpacecraftWithinRangeOfCoordinates(Coordinates coordinates, BigDecimal range, Unit unit) {
 		return objectsInUniverse.entrySet().stream()
-				.filter(map -> map.getValue().coordinates.equals(coordinates))
-				.collect(Collectors.toMap(t -> t.getKey());
+            .map(Map.Entry::getValue)
+				.filter(map -> Utils.distanceToLocation(coordinates, map.coordinates, unit).longValue() <= range.longValue())
+            .map(Spacecraft.class::cast)
+            .collect(Collectors.toList());
 	}
 
 
@@ -121,11 +123,11 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
   public List<Identifiable> getAllObjectsByType(Class<? extends Identifiable> type) {
     return objectsInUniverse.values()
             .stream()
-            //.map(Map.Entry::getValue)
-            .filter(map -> dd.test(map.object, type))
+            .map(o -> o.object)
+            .filter(o -> dd.test(o, type))
           //  .collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
           //  .filter(sc -> dd.test(sc, type))
-            //.map(type.getClass()::cast)
+            .map(o -> o.getClass().cast(type))
             .collect(Collectors.toList());
   }
 

@@ -25,5 +25,5 @@ public interface ObjectLocationDataProvider {
 	double[] getSpacecraftVelocity(String spacecraftIdent);
 	void updateSpacecraftVelocity(String spacecraftIdent, double[] velocity);
 	BigDecimal getDistanceBetweenTwoSpacecraft(String spacecraftIdent1, String spacecraftIdent2, Unit unit);
-	Map<String,Coordinates> getSpacecraftWithinRangeOfCoordinates(Coordinates coordinates, BigDecimal range);
+  List<Spacecraft> getSpacecraftWithinRangeOfCoordinates(Coordinates coordinates, BigDecimal range, Unit unit);
 }

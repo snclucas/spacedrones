@@ -18,23 +18,23 @@ import java.math.BigDecimal;
 import static org.junit.Assert.assertEquals;
 
 public class SimpleSolarArrayTest {
-	
+
 	/*  */
 	@Test
 	public void testSimpleSolarArray() {
 		SpacecraftDataProvider spacecraftDataProvider =  Configuration.getSpacecraftDataProvider();
 		SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(SimpleSolarArray.class.getSimpleName());
-		
+
 		double arrayArea = 10.0* Unit.m2.value();
 		double efficiency = 75 * Unit.percent.value();
-		
-		SimpleSolarArray simpleSolarArray = new SimpleSolarArray("Test simple solar aarray", 
+
+		SimpleSolarArray simpleSolarArray = new SimpleSolarArray("Test simple solar aarray",
 				data.getBusComponentSpecification(), arrayArea, efficiency);
 		assertEquals("Array area of simple solar array incorrect", arrayArea, simpleSolarArray.getArrayArea(), 0.001);
 		assertEquals("Efficiency of simple solar array incorrect", efficiency, simpleSolarArray.getEfficiency(), 0.001);
 	}
-	
-	
+
+
 	@Test
 	public void testPowerGeneration() {
 		Universe universe = Universe.getInstance();
@@ -46,13 +46,13 @@ public class SimpleSolarArrayTest {
 
 		Coordinates coords = solCoords.add(
 				new Coordinates(new BigDecimal(10*Unit.AU.value()), BigDecimal.ZERO, BigDecimal.ZERO));
-		universe.addSpacecraft(shuttle, coords);
-		
-		
-		
-		
-		
-		
+		universe.addSpacecraft(shuttle, coords, new double[]{0.0, 0.0, 0.0});
+
+
+
+
+
+
 	}
 
 }

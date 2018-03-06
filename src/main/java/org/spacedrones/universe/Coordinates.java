@@ -10,10 +10,10 @@ import java.util.Arrays;
 public class Coordinates {
 
 	public static BigDecimal[] NOT_KNOWN = new BigDecimal[]{new BigDecimal(-1), new BigDecimal(-1), new BigDecimal(-1)};
-	
+
 	private final BigDecimal[] location;
-	
-	
+
+
 	public Coordinates() {
 		this.location = new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
 	}
@@ -49,13 +49,14 @@ public class Coordinates {
 						this.location[1].add(coordinates.get(1)),
 						this.location[2].add(coordinates.get(2)));
 	}
-	
+
 	public Coordinates addDistance(BigDecimal[] distance) {
 		return new Coordinates(
 						this.location[0].add(distance[0]),
 						this.location[1].add(distance[1]),
 						this.location[2].add(distance[2]));
 	}
+
 
 	@Override
 	public int hashCode() {

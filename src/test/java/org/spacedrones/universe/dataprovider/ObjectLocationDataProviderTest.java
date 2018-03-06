@@ -21,7 +21,7 @@ public class ObjectLocationDataProviderTest {
 
     Coordinates initialCoordinates = new Coordinates(0,0,0);
 
-    objectLocationDataProvider.addSpacecraft(spacecraft, initialCoordinates);
+    objectLocationDataProvider.addSpacecraft(spacecraft, initialCoordinates, new double[]{0.0, 0.0, 0.0});
 
     objectLocationDataProvider.getObjectByIdent(spacecraft.id());
 

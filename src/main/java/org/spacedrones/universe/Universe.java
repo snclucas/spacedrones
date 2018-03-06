@@ -53,12 +53,12 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 
 
 
-	public void addSpacecraft(Spacecraft spacecraft, Coordinates coordinates) {
-		spacecraftDataProvider.addSpacecraft(spacecraft, coordinates);
+	public void addSpacecraft(Spacecraft spacecraft, Coordinates coordinates, double[] velocity) {
+		spacecraftDataProvider.addSpacecraft(spacecraft, coordinates, velocity);
 	}
 
-	public void addComponent(Identifiable object, Coordinates coordinates) {
-		spacecraftDataProvider.addComponent(object, coordinates);
+	public void addComponent(Identifiable object, Coordinates coordinates, double[] velocity) {
+		spacecraftDataProvider.addComponent(object, coordinates, velocity);
 	}
 
 
@@ -177,8 +177,8 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 
 
 	@Override
-	public Map<String, Coordinates> getSpacecraftWithinRangeOfCoordinates(Coordinates coordinates, BigDecimal range) {
-		return spacecraftDataProvider.getSpacecraftWithinRangeOfCoordinates(coordinates, range);
+	public List<Spacecraft> getSpacecraftWithinRangeOfCoordinates(Coordinates coordinates, BigDecimal range, Unit unit) {
+		return spacecraftDataProvider.getSpacecraftWithinRangeOfCoordinates(coordinates, range, unit);
 	}
 
 

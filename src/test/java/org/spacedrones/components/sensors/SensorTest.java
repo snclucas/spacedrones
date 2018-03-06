@@ -27,7 +27,7 @@ public class SensorTest {
 
 
     Universe.getInstance().populate();
-    Universe.getInstance().addComponent(sensor,new Coordinates());
+    Universe.getInstance().addComponent(sensor,new Coordinates(), new double[]{0.0, 0.0, 0.0});
 
 
     List<SensorResult> ss = sensor.passiveScan(1, sensorProfile);

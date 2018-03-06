@@ -21,7 +21,7 @@ public class UniverseTest {
 	@Test
 	public void testEnvronmentalData() {
 		Universe universe = Universe.getInstance();
-		
+
 		Spacecraft spacecraft = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SHUTTLE);
 
 		Coordinates solCoords =  new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value()));
@@ -31,15 +31,15 @@ public class UniverseTest {
 				SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.G));
 		Coordinates coords = solCoords.add(
 				new Coordinates(new BigDecimal(10*Unit.AU.value()), BigDecimal.ZERO, BigDecimal.ZERO));
-		universe.addSpacecraft(spacecraft, coords);
-		
+		universe.addSpacecraft(spacecraft, coords, new double[]{0.0, 0.0, 0.0});
+
 		//Coordinates spacecraftLocation = new Coordinates(new BigDecimal(8*Unit.kPc.value() + 149600000 * Unit.Km.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value()));
 		//universe.updateSpacecraftLocation(spacecraft.getIdent(), spacecraftLocation);
 
 		EnvironmentData data = universe.getEnvironmentData(universe.getSpacecraftLocation(spacecraft.id()));
-		
+
 	//	System.out.println(SpacecraftFirmware.getTotalPowerAvailable(spacecraft.getSpacecraftBus()));
-		
+
 	}
 
 
@@ -87,7 +87,7 @@ public class UniverseTest {
 
 
 
-		BigDecimal expectedDistanceFromSolToNemesis = 
+		BigDecimal expectedDistanceFromSolToNemesis =
 				MathUtils.bigSqrt(dx.multiply(dx).add(dy.multiply(dy)).add(dz.multiply(dz)));
 
 		//BigDecimal distanceFromSolToNemesis = sol.distanceToLocation(nemesis);
@@ -102,7 +102,7 @@ public class UniverseTest {
 
 		//assertEquals("Distance from Sol to Nemesis incorrect", expectedDistanceFromSolToNemesis.doubleValue(), distanceFromSolToNemesis.doubleValue(), 0.001);
 
-		//Star alphaCenturi = new Star(3,"Alpha centuri", 
+		//Star alphaCenturi = new Star(3,"Alpha centuri",
 		//		new Coordinates(8*Unit.kPc + 2.98*Unit.Ly,2.83* Unit.Ly,101.34*Unit.Ly));
 		//universe.addLocation(alphaCenturi);
 
