@@ -40,7 +40,7 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 
 	public List<SensorResult> passiveScan(String ident, double duration, SensorProfile sensorProfile) {
 		List<SensorResult> results = new ArrayList<>();
-		Coordinates spacecraftLocation = universe.getObjectLocationInUniverse(ident);
+		Coordinates spacecraftLocation = universe.getSpacecraftLocation(ident);
 		
 		BigDecimal maximumDistanceScanned = new BigDecimal(1000000 * Unit.Ly.value()); 
 		

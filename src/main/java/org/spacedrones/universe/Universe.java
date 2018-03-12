@@ -71,15 +71,9 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 		return spacecraftDataProvider.getSpacecraftLocation(spacecraftIdent);
 	}
 
-  @Override
-  public Coordinates getObjectLocationInUniverse(final String ident) {
-    return spacecraftDataProvider.getObjectLocationInUniverse(ident);
-  }
-
   public List<CelestialObject> getLocationsByType(Class<? extends CelestialObject> type) {
 		return universeLocationDataProvider.getLocationsByType(type);
 	}
-
 
 	public void addCelestialObject(String name, CelestialObject celestialObject, GalacticLocation location) {
 		universeLocationDataProvider.addCelestialObject(name, celestialObject, location);

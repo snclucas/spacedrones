@@ -1,24 +1,21 @@
 package org.spacedrones.universe.dataprovider;
 
-import org.spacedrones.components.*;
+import org.spacedrones.components.Identifiable;
 import org.spacedrones.exceptions.SpacecraftNotFoundException;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.Spacecraft;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.utils.Utils;
 
-import java.lang.reflect.*;
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.function.*;
+import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
 
 public class LocalObjectLocationDataProvider implements ObjectLocationDataProvider {
 
 	private final Map<String,ObjectLocationMeta> objectsInUniverse = new HashMap<>();
-	//private final Map<String,Coordinates> objectLocationInUniverse = new HashMap<>();
-	//private final Map<String,Double[]> objectVelocityInUniverse = new HashMap<>();
 
   private static BiPredicate<Identifiable, Class<? extends Identifiable>> dd =
           (lhs, rhs)  -> lhs.getClass() == rhs ||
@@ -38,8 +35,6 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
     ObjectLocationMeta<Spacecraft> meta =
             new ObjectLocationMeta<>(spacecraft.id(), spacecraft.name(), coordinates, velocity, spacecraft);
 		objectsInUniverse.put(spacecraft.id(), meta);
-		//objectLocationInUniverse.put(spacecraft.id(), coordinates);
-		//objectVelocityInUniverse.put(spacecraft.id(), velocity);
 	}
 
 	@Override
@@ -47,10 +42,7 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
     ObjectLocationMeta<Identifiable> meta =
             new ObjectLocationMeta<>(object.id(), object.name(), coordinates, velocity, object);
 		objectsInUniverse.put(object.id(), meta);
-		//objectLocationInUniverse.put(object.id(), coordinates);
-		//objectVelocityInUniverse.put(object.id(), new Double[]{0.0, 0.0, 0.0});
 	}
-
 
 	@Override
 	public void updateSpacecraftLocation(String spacecraftIdent, Coordinates coordinates) {
@@ -62,7 +54,6 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
 		if(objectsInUniverse.put(spacecraftIdent, meta) == null)
 			throw new SpacecraftNotFoundException("Spacecraft [" + spacecraftIdent + "] is not in the Universe");
 	}
-
 
 	@Override
 	public void updateSpacecraftVelocity(String spacecraftIdent, double[] velocity) {
@@ -77,42 +68,36 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
 
 	@Override
 	public Coordinates getSpacecraftLocation(String spacecraftIdent) {
-		if(objectsInUniverse.get(spacecraftIdent) == null)
+    ObjectLocationMeta meta = objectsInUniverse.get(spacecraftIdent);
+    if(meta == null || !dd.test(meta.object, Spacecraft.class))
 			throw new SpacecraftNotFoundException("Spacecraft [" + spacecraftIdent + "] is not in the Universe");
-		return objectsInUniverse.get(spacecraftIdent).coordinates;
-	}
-
-	@Override
-	public Coordinates getObjectLocationInUniverse(final String ident) {
-		return objectsInUniverse.get(ident).coordinates;
+		return meta.coordinates;
 	}
 
 	@Override
 	public double[] getSpacecraftVelocity(String spacecraftIdent) {
     ObjectLocationMeta meta = objectsInUniverse.get(spacecraftIdent);
-		if(meta == null || dd.test(meta.object, Spacecraft.class))
+		if(meta == null || !dd.test(meta.object, Spacecraft.class))
 			throw new SpacecraftNotFoundException("Spacecraft [" + spacecraftIdent + "] is not in the Universe");
 		return meta.velocity;
 	}
 
-
 	@Override
 	public BigDecimal getDistanceBetweenTwoSpacecraft(String spacecraftIdent1, String spacecraftIdent2, Unit unit) {
 		Coordinates coordsSpacecraft1 = getSpacecraftLocation(spacecraftIdent1);
-		Coordinates coordsSpacecraft2 = getSpacecraftLocation(spacecraftIdent1);
+		Coordinates coordsSpacecraft2 = getSpacecraftLocation(spacecraftIdent2);
 		return Utils.distanceToLocation(coordsSpacecraft1, coordsSpacecraft2, unit);
 	}
-
 
 	@Override
 	public List<Spacecraft> getSpacecraftWithinRangeOfCoordinates(Coordinates coordinates, BigDecimal range, Unit unit) {
 		return objectsInUniverse.entrySet().stream()
             .map(Map.Entry::getValue)
 				.filter(map -> Utils.distanceToLocation(coordinates, map.coordinates, unit).longValue() <= range.longValue())
+            .map(m -> m.object)
             .map(Spacecraft.class::cast)
             .collect(Collectors.toList());
 	}
-
 
 	@Override
 	public List<Spacecraft> getAllSpacecraft() {
@@ -120,11 +105,11 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
             .stream()
             .map(Map.Entry::getValue)
             .filter(sc -> dd.test(sc.object, Spacecraft.class))
+            .map(m -> m.object)
             .map(Spacecraft.class::cast)
             .collect(Collectors.toList());
 	}
 
-	//ScheduleIntervalContainer.class::cast
 
 	@Override
   @SuppressWarnings("unchecked operation")
@@ -142,9 +127,11 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
   public <T> Optional<T> getObjectById(String ident, Class<? extends Identifiable> type) {
     try {
       Identifiable object = objectsInUniverse.get(ident).object;
-      if(!dd.test(object, type)) return null;
+      if(dd.test(object, type)) {
+				return Optional.of((T)object);
+			}
       else {
-        return Optional.of((T)object);
+				return Optional.empty();
       }
     } catch (Exception e) {
       return Optional.empty();

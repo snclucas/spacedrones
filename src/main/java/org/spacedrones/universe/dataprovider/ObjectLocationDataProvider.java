@@ -20,7 +20,6 @@ public interface ObjectLocationDataProvider {
 
 
 	void updateSpacecraftLocation(String spacecraftIdent, Coordinates coordinates);
-	Coordinates getObjectLocationInUniverse(String spacecraftIdent);
 	Coordinates getSpacecraftLocation(String spacecraftIdent);
 
 	double[] getSpacecraftVelocity(String spacecraftIdent);
