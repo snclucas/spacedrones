@@ -105,18 +105,18 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 
 
   @Override
-	public Spacecraft getSpacecraftByIdent(String ident) {
-		return spacecraftDataProvider.getSpacecraftByIdent(ident);
+	public Optional<Spacecraft> getSpacecraftById(String ident) {
+		return spacecraftDataProvider.getSpacecraftById(ident);
 	}
 
   @Override
-  public List<Identifiable> getAllObjectsByType(Class<? extends Identifiable> type) {
+  public <T extends Identifiable> List<T> getAllObjectsByType(Class<T> type) {
     return spacecraftDataProvider.getAllObjectsByType(type);
   }
 
   @Override
-  public Identifiable getObjectByIdent(String ident) {
-    return spacecraftDataProvider.getObjectByIdent(ident);
+  public <T> Optional<T> getObjectById(String ident, Class<? extends Identifiable> type) {
+    return spacecraftDataProvider.getObjectById(ident, type);
   }
 
   @Override

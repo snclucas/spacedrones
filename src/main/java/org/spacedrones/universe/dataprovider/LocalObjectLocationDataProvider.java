@@ -7,6 +7,7 @@ import org.spacedrones.spacecraft.Spacecraft;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.utils.Utils;
 
+import java.lang.reflect.*;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.function.*;
@@ -24,6 +25,10 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
           rhs.isAssignableFrom(lhs.getClass()) ||
           Arrays.stream(lhs.getClass().getInterfaces()).anyMatch(s -> s == rhs);
 
+  private static BiPredicate<Identifiable, Class> dd2 =
+          (lhs, rhs)  -> lhs.getClass() == rhs ||
+                  rhs.isAssignableFrom(lhs.getClass()) ||
+                  Arrays.stream(lhs.getClass().getInterfaces()).anyMatch(s -> s == rhs);
 
   public LocalObjectLocationDataProvider() {}
 
@@ -119,31 +124,43 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
             .collect(Collectors.toList());
 	}
 
-	@Override
-  public List<Identifiable> getAllObjectsByType(Class<? extends Identifiable> type) {
-    return objectsInUniverse.values()
-            .stream()
-            .map(o -> o.object)
-            .filter(o -> dd.test(o, type))
-          //  .collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
-          //  .filter(sc -> dd.test(sc, type))
-            .map(o -> o.getClass().cast(type))
-            .collect(Collectors.toList());
-  }
-
-  public Identifiable getObjectByIdent(String ident) {
-    return objectsInUniverse.get(ident).object;
-  }
-
+	//ScheduleIntervalContainer.class::cast
 
 	@Override
-	public Spacecraft getSpacecraftByIdent(String ident) {
+  @SuppressWarnings("unchecked operation")
+  public <T extends Identifiable> List<T> getAllObjectsByType(Class<T> type) {
+    List<T> result = new ArrayList<>();
+
+    for (ObjectLocationMeta meta : objectsInUniverse.values()) {
+      if (dd.test(meta.object, type)) {
+        result.add((T) meta.object);
+      }
+    }
+    return result;
+  }
+
+  public <T> Optional<T> getObjectById(String ident, Class<? extends Identifiable> type) {
+    try {
+      Identifiable object = objectsInUniverse.get(ident).object;
+      if(!dd.test(object, type)) return null;
+      else {
+        return Optional.of((T)object);
+      }
+    } catch (Exception e) {
+      return Optional.empty();
+    }
+
+  }
+
+
+	@Override
+	public Optional<Spacecraft> getSpacecraftById(String ident) {
 	  Identifiable possibleSpacecraft = objectsInUniverse.get(ident).object;
-	  if(possibleSpacecraft instanceof Spacecraft) {
-	    return (Spacecraft)possibleSpacecraft;
+	  if(dd.test(possibleSpacecraft, Spacecraft.class)) {
+	    return Optional.of((Spacecraft) possibleSpacecraft);
     }
     else {
-	    return null;
+	    return Optional.empty();
     }
 	}
 

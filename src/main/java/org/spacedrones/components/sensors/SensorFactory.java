@@ -8,10 +8,14 @@ import java.util.*;
 
 public class SensorFactory {
 
+  public final static String LinearSensorArray = LinearSensorArray.class.getSimpleName();
+  public final static String FractalSensorArray = FractalSensorArray.class.getSimpleName();
+
+
 	public static Sensor getSensor(String sensorType, SensorType sensorSensingType, int numberOfSensorElements){
 		SpacecraftDataProvider spacecraftDataProvider =  Configuration.getSpacecraftDataProvider();
 
-		if(Objects.equals(sensorType, LinearSensorArray.class.getSimpleName())){
+		if(Objects.equals(sensorType, LinearSensorArray)){
 			SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(sensorType);
 
 			double gainPerElement = 10.0;
@@ -21,7 +25,7 @@ public class SensorFactory {
 			return new LinearSensorArray(
 					LinearSensorArray.class.getSimpleName(), data.getBusComponentSpecification(), sensorProfile, numberOfSensorElements);
 		}
-		else if(Objects.equals(sensorType, FractalSensorArray.class.getSimpleName())){
+		else if(Objects.equals(sensorType, FractalSensorArray)){
 			SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(sensorType);
 
 			double gainPerElement = 100.0;
@@ -29,9 +33,9 @@ public class SensorFactory {
 			SensorProfile sensorProfile = new SensorProfile(sensorSensingType, signalDetectionThreshold, gainPerElement);
 
 			return new FractalSensorArray(
-					FractalSensorArray.class.toString(), data.getBusComponentSpecification(), sensorProfile, numberOfSensorElements);
+					FractalSensorArray.class.getSimpleName(), data.getBusComponentSpecification(), sensorProfile, numberOfSensorElements);
 		}
-		return null;
+		throw new IllegalArgumentException("Requested thingy now found");
 	}
 
 }

@@ -28,7 +28,7 @@ import java.security.InvalidParameterException;
 public class SpacecraftFactory {
 
 	public final static String SHUTTLE="Shuttle";
-	public final static String SIMPLE_SATELITE="Simple satelite";
+	public final static String SIMPLE_SATELLITE="Simple satelite";
 
 
 	public static Spacecraft getSpacecraft(String spacecraftType) throws InvalidParameterException{
