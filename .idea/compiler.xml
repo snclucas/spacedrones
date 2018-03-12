@@ -2,6 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="hikerverse-rest-api_main" target="1.8" />
+      <module name="hikerverse-rest-api_test" target="1.8" />
       <module name="spacedrones_main" target="1.8" />
       <module name="spacedrones_test" target="1.8" />
     </bytecodeTargetLevel>

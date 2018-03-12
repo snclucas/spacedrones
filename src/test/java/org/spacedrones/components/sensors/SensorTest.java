@@ -1,22 +1,34 @@
 package org.spacedrones.components.sensors;
 
 
+import org.junit.Before;
 import org.junit.Test;
 import org.spacedrones.components.computers.BasicSystemComputer;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.Universe;
+import org.spacedrones.universe.dataprovider.LocalObjectLocationDataProvider;
+import org.spacedrones.universe.dataprovider.LocalUniverseLocationDataProvider;
 
 import java.util.List;
 
 public class SensorTest {
 
+  private LocalUniverseLocationDataProvider localUniverseLocationDataProvider;
+  private LocalObjectLocationDataProvider objectLocationDataProvider;
+
+  @Before
+  public void setUp() throws Exception {
+    localUniverseLocationDataProvider = new LocalUniverseLocationDataProvider();
+    objectLocationDataProvider = new LocalObjectLocationDataProvider();
+  }
+
+
   @Test
   public void testLinearSensorArray() {
 
- //   Configuration.getUniverseSpacecraftLocationDataProvider().addSpacecraft();
-
+    localUniverseLocationDataProvider.populate();
 
 
     Sensor sensor = SensorFactory.getSensor(LinearSensorArray.class.getSimpleName(), SensorType.OPTICAL, 1);
@@ -40,5 +52,8 @@ public class SensorTest {
 
 
   }
+
+
+
 
 }

@@ -1,2 +1,4 @@
 rootProject.name = 'spacedrones'
+include 'hikerverse-rest-api'
+include 'hikerverse-rest-api'
 
