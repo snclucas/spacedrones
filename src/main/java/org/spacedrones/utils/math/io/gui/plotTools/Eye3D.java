@@ -23,8 +23,7 @@ public class Eye3D {
     return phi;
   }
 
-  public Object clone() {
-    Object clone = super.clone();
+  public Object clone() throws CloneNotSupportedException {
     return new Eye3D(theta,phi);
   }
 

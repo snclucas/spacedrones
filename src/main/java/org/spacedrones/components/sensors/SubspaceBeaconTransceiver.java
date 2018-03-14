@@ -31,7 +31,7 @@ public class SubspaceBeaconTransceiver extends AbstractSensor implements Positio
 		super(name, busResourceSpecification, sensorProfile);
 
 		this.beaconSignals = new ArrayList<>();
-    this.sensorResponseMediator = Configuration.getSensorResponseMediator();
+    this.sensorResponseMediator = Configuration.getSensorResponseMediator(id());
 	}
 
 	@Override

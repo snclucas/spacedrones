@@ -84,4 +84,8 @@ public abstract class AbstractCelestialObject implements CelestialObject {
 		return celestialObjects;
 	}
 
+  @Override
+  public String toString() {
+    return this.getClass().getSimpleName();
+  }
 }

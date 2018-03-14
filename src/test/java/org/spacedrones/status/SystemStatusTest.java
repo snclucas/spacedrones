@@ -73,10 +73,4 @@ class MockStatusProvider implements StatusProvider{
 	public String id() {
 		return "100";
 	}
-
-	@Override
-	public String description() {
-		return"MockStatusProvider";
-	}
-
 }

@@ -20,9 +20,9 @@ public class LocalEnvironmentDataProvider implements EnvironmentDataProvider {
 	public EnvironmentData getEnvironmentData(Coordinates coordinates) {
 		final double subspaceNoise = getSubspaceNoise(coordinates);
 
-		final List<CelestialObject> nearByStars =
-				Universe.getInstance().getCelestialObjectByTypeCloserThan(Star.class,
-								new GalacticLocation("", coordinates), new BigDecimal(Configuration.distanceForEnvironmentData));
+		final List<Star> nearByStars =
+				Universe.getInstance().getAllObjectsByTypeCloserThan(Star.class,
+								coordinates, new BigDecimal(Configuration.distanceForEnvironmentData), Unit.Ly);
 
 		if(nearByStars.size() == 0)
 			return new EnvironmentData(0.0, 0.0, subspaceNoise);

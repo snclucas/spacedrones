@@ -5,12 +5,11 @@ import org.junit.*;
 
 public class LocalUniverseLocationDataProviderTest {
 
-  private LocalUniverseLocationDataProvider localUniverseLocationDataProvider;
+  private ObjectLocationDataProvider objectLocationDataProvider;
 
   @Before
   public void setUp() throws Exception {
-    localUniverseLocationDataProvider = new LocalUniverseLocationDataProvider();
-    localUniverseLocationDataProvider.populate();
+    objectLocationDataProvider.populate();
   }
 
   @Test

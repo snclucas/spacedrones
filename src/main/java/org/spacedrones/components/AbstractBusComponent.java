@@ -112,7 +112,7 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent {
 		return systemComputer;
 	}
 
-	private boolean isRegisteredWithSystemComputer() {
+	public boolean isRegisteredWithSystemComputer() {
 		return this.systemComputer != null;
 	}
 

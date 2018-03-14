@@ -53,8 +53,8 @@ public class Universe implements ObjectLocationDataProvider, EnvironmentDataProv
 		spacecraftDataProvider.addSpacecraft(spacecraft, coordinates, velocity);
 	}
 
-	public void addComponent(Taxonomic object, Coordinates coordinates, double[] velocity) {
-		spacecraftDataProvider.addComponent(object, coordinates, velocity);
+	public void addObject(Taxonomic object, Coordinates coordinates, double[] velocity) {
+		spacecraftDataProvider.addObject(object, coordinates, velocity);
 	}
 
 
@@ -68,8 +68,8 @@ public class Universe implements ObjectLocationDataProvider, EnvironmentDataProv
 	}
 
 
-	public void addCelestialObject(String name, CelestialObject celestialObject, GalacticLocation location) {
-    spacecraftDataProvider.addCelestialObject(name, celestialObject, location);
+	public void addCelestialObject(String name, CelestialObject celestialObject, Coordinates coordinates, double[] velocity) {
+    spacecraftDataProvider.addCelestialObject(name, celestialObject, coordinates, velocity);
 	}
 
 	public Optional<CelestialObject> getCelestialObjectById(String locationID) {
@@ -92,8 +92,18 @@ public class Universe implements ObjectLocationDataProvider, EnvironmentDataProv
   }
 
   @Override
-  public <T> Optional<T> getObjectById(String ident, Class<? extends Taxonomic> type) {
-    return spacecraftDataProvider.getObjectById(ident, type);
+  public <T> Optional<T> getObjectByIdAndType(String ident, Class<? extends Taxonomic> type) {
+    return spacecraftDataProvider.getObjectByIdAndType(ident, type);
+  }
+
+  @Override
+  public Optional<Coordinates> getObjectLocationById(final String ident) {
+    return spacecraftDataProvider.getObjectLocationById(ident);
+  }
+
+  @Override
+  public <T> Optional<T> getObjectById(String ident) {
+    return spacecraftDataProvider.getObjectById(ident);
   }
 
   @Override
@@ -104,19 +114,14 @@ public class Universe implements ObjectLocationDataProvider, EnvironmentDataProv
 
 	//Delegate methods
 
-
-
-	@Override
-	public List<CelestialObject> getCelestialObjectByTypeCloserThan(Class<? extends CelestialObject> type, GalacticLocation localtion, BigDecimal distance) {
-		return spacecraftDataProvider.getCelestialObjectByTypeCloserThan(type, localtion, distance);
-	}
-
-
 	@Override
 	public void populate() {
     spacecraftDataProvider.populate();
 	}
 
+  public void list() {
+    spacecraftDataProvider.list();
+  }
 
 	@Override
 	public List<Spacecraft> getAllSpacecraft() {
@@ -145,6 +150,16 @@ public class Universe implements ObjectLocationDataProvider, EnvironmentDataProv
 	@Override
 	public List<Spacecraft> getSpacecraftWithinRangeOfCoordinates(Coordinates coordinates, BigDecimal range, Unit unit) {
 		return spacecraftDataProvider.getSpacecraftWithinRangeOfCoordinates(coordinates, range, unit);
+	}
+
+	@Override
+	public <T extends Taxonomic> List<T> getAllObjectsCloserThan(final Coordinates coordinates, final BigDecimal range, final Unit unit) {
+		return spacecraftDataProvider.getAllObjectsCloserThan(coordinates, range, unit);
+	}
+
+	@Override
+	public <T extends Taxonomic> List<T> getAllObjectsByTypeCloserThan(final Class<T> type, final Coordinates coordinates, final BigDecimal range, final Unit unit) {
+		return spacecraftDataProvider.getAllObjectsByTypeCloserThan(type, coordinates, range, unit);
 	}
 
 

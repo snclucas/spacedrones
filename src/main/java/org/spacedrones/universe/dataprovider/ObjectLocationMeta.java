@@ -3,6 +3,8 @@ package org.spacedrones.universe.dataprovider;
 import org.spacedrones.components.*;
 import org.spacedrones.universe.*;
 
+import java.util.Arrays;
+
 
 public class ObjectLocationMeta<T extends Taxonomic> {
   public final String id;
@@ -27,4 +29,14 @@ public class ObjectLocationMeta<T extends Taxonomic> {
     this.object = object;
   }
 
+  @Override
+  public String toString() {
+    return "ObjectLocationMeta{" +
+            "id='" + id + '\'' +
+            ", name='" + name + '\'' +
+            ", coordinates=" + coordinates +
+            ", velocity=" + Arrays.toString(velocity) +
+            ", object=" + object +
+            '}';
+  }
 }

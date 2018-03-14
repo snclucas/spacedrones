@@ -84,7 +84,7 @@ public class GameRunner {
 		Universe universe = Universe.getInstance();
 		Spacecraft simpleSpacecraft = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SHUTTLE);
 		Coordinates coords = new Coordinates(BigDecimal.ZERO, new BigDecimal(1* Unit.Ly.value()), BigDecimal.ZERO);
-		universe.addComponent(simpleSpacecraft, coords, new double[]{0.0, 0.0, 0.0});
+		universe.addObject(simpleSpacecraft, coords, new double[]{0.0, 0.0, 0.0});
 
 		universe.updateSpacecraftVelocity(simpleSpacecraft.id(), new double[]{1.5e4, 4.2e10, 23.8e2});
 

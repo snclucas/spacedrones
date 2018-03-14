@@ -160,7 +160,7 @@ public class Axe3D {
   }
 
   public Eye3D getEye3D() {
-    return (Eye3D)(eye.clone());
+    return (Eye3D)(eye);
   }
 
   public void draw(Graphics2D comp2D) {

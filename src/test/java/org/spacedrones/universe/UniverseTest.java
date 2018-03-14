@@ -57,7 +57,7 @@ public class UniverseTest {
 
 		Coordinates solCoords = new Coordinates(coord1, coord2, coord3);
 
-		universe.addCelestialObject("Sol", sol, new GalacticLocation("sol", solCoords));
+		universe.addCelestialObject("Sol", sol, solCoords, new double[]{0.0, 0.0, 0.0});
 
 		assertEquals("Sol coord1 incorrectly set", coord1.doubleValue(), solCoords.get(0).doubleValue(), 0.001);
 		assertEquals("Sol coord2 incorrectly set", coord2.doubleValue(), solCoords.get(1).doubleValue(), 0.001);

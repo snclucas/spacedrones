@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 public class LocalObjectLocationDataProvider implements ObjectLocationDataProvider {
 
-  private final Map<String, ObjectLocationMeta> cellestialObjectsInUniverse = new HashMap<>();
 	private final Map<String, ObjectLocationMeta> objectsInUniverse = new HashMap<>();
 
   private static BiPredicate<Taxonomic, Class<? extends Taxonomic>> dd =
@@ -33,13 +32,15 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
   public LocalObjectLocationDataProvider() {}
 
   @Override
-  public void addCelestialObject(String name, CelestialObject celestialObject, GalacticLocation location) {
-
+  public void addCelestialObject(String name, CelestialObject celestialObject, Coordinates coordinates, double[] velocity) {
+    ObjectLocationMeta<CelestialObject> meta =
+            new ObjectLocationMeta<>(celestialObject.id(), celestialObject.name(), coordinates, velocity, celestialObject);
+    objectsInUniverse.put(celestialObject.id(), meta);
   }
 
   @Override
   public Optional<CelestialObject> getCelestialObjectById(String celestialObjectID) {
-    Taxonomic possibleCelestialObject = cellestialObjectsInUniverse.get(celestialObjectID).object;
+    Taxonomic possibleCelestialObject = objectsInUniverse.get(celestialObjectID).object;
     if(dd.test(possibleCelestialObject, CelestialObject.class)) {
       return Optional.of((CelestialObject) possibleCelestialObject);
     }
@@ -50,7 +51,7 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
 
   @Override
   public Optional<Coordinates> getCelestialObjectLocationById(String celestialObjectID) {
-    ObjectLocationMeta possibleCelestialObject = cellestialObjectsInUniverse.get(celestialObjectID);
+    ObjectLocationMeta possibleCelestialObject = objectsInUniverse.get(celestialObjectID);
     if(dd.test(possibleCelestialObject.object, CelestialObject.class)) {
       return Optional.of(possibleCelestialObject.coordinates);
     }
@@ -67,7 +68,7 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
 	}
 
 	@Override
-	public void addComponent(Taxonomic object, Coordinates coordinates, double[] velocity) {
+	public void addObject(Taxonomic object, Coordinates coordinates, double[] velocity) {
     ObjectLocationMeta<Taxonomic> meta =
             new ObjectLocationMeta<>(object.id(), object.name(), coordinates, velocity, object);
 		objectsInUniverse.put(object.id(), meta);
@@ -153,7 +154,31 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
     return result;
   }
 
-  public <T> Optional<T> getObjectById(String ident, Class<? extends Taxonomic> type) {
+  @Override
+  public <T extends Taxonomic> List<T> getAllObjectsCloserThan(Coordinates coordinates, BigDecimal range, Unit unit) {
+    List<T> result = new ArrayList<>();
+
+    for (ObjectLocationMeta meta : objectsInUniverse.values()) {
+      if (Utils.distanceToLocation(meta.coordinates, coordinates, unit).compareTo(range) <= 0) {
+        result.add((T) meta.object);
+      }
+    }
+    return result;
+  }
+
+  @Override
+  public <T extends Taxonomic> List<T> getAllObjectsByTypeCloserThan(Class<T> type, Coordinates coordinates, BigDecimal range, Unit unit) {
+    List<T> result = new ArrayList<>();
+
+    for (ObjectLocationMeta meta : objectsInUniverse.values()) {
+      if (dd.test(meta.object, type) && Utils.distanceToLocation(meta.coordinates, coordinates, unit).compareTo(range) <= 0) {
+        result.add((T) meta.object);
+      }
+    }
+    return result;
+  }
+
+  public <T> Optional<T> getObjectByIdAndType(String ident, Class<? extends Taxonomic> type) {
     try {
       Taxonomic object = objectsInUniverse.get(ident).object;
       if(dd.test(object, type)) {
@@ -161,6 +186,36 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
 			}
       else {
 				return Optional.empty();
+      }
+    } catch (Exception e) {
+      return Optional.empty();
+    }
+
+  }
+
+  public <T> Optional<T> getObjectById(String ident) {
+    try {
+      Taxonomic object = objectsInUniverse.get(ident).object;
+      if(object != null) {
+        return Optional.of((T)object);
+      }
+      else {
+        return Optional.empty();
+      }
+    } catch (Exception e) {
+      return Optional.empty();
+    }
+
+  }
+
+  public Optional<Coordinates> getObjectLocationById(String ident) {
+    try {
+      Coordinates object = objectsInUniverse.get(ident).coordinates;
+      if(object != null) {
+        return Optional.of(object);
+      }
+      else {
+        return Optional.empty();
       }
     } catch (Exception e) {
       return Optional.empty();
@@ -180,44 +235,8 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
     }
 	}
 
-
-  @Override
-  public List<CelestialObject> getLocationsByType(Class<? extends CelestialObject> type) {
-    List<CelestialObject> locations = new ArrayList<>();
-
-    for (Map.Entry<String, ObjectMeta> stringCelestialObjectEntry : celestialObjects.entrySet()) {
-      CelestialObject celObj = stringCelestialObjectEntry.getValue().celestialObject;
-      if (type == (celObj.getClass()))
-        locations.add(celObj);
-    }
-    return locations;
-  }
-
-  @Override
-  public List<CelestialObject> getCelestialObjectByTypeCloserThan(Class<? extends CelestialObject> type, GalacticLocation location, BigDecimal distance) {
-    List<CelestialObject> locations = new ArrayList<>();
-
-    for (Map.Entry<String, ObjectMeta> me : celestialObjects.entrySet()) {
-      CelestialObject celestialObject = me.getValue().celestialObject;
-      if (type == (celestialObject.getClass())) {
-        Coordinates coords = this.locations.get(me.getKey()).getCoordinates();
-        if (Utils.distanceToLocation(coords, location.getCoordinates(), Unit.One).compareTo(distance) <= 0)
-          locations.add(celestialObject);
-      }
-    }
-    return locations;
-  }
-
-  @Override
-  public List<CelestialObject> getLocationsCloserThan(Coordinates coordinates, BigDecimal distance) {
-    List<CelestialObject> locations = new ArrayList<>();
-    for (Map.Entry<String, ObjectMeta> me : celestialObjects.entrySet()) {
-      CelestialObject celestialObject = me.getValue().celestialObject;
-      Coordinates coords = this.locations.get(me.getKey()).getCoordinates();
-      if (Utils.distanceToLocation(coords, coordinates, Unit.One).compareTo(distance) <= 0)
-        locations.add(celestialObject);
-    }
-    return locations;
+  public void list() {
+    objectsInUniverse.values().forEach(o->System.out.println(o.toString()));
   }
 
   public void populate() {
@@ -225,16 +244,14 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
     Coordinates galacticCenterCoordinates = new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value()));
     CelestialObject galacticCenter
             = new Region(new SensorSignalResponseProfile(1000.0, 1000.0, 1000.0, 1000.0, 1000.0), 10.0 * Unit.Pc.value());
-    GalacticLocation location = new GalacticLocation("Galactic center", galacticCenterCoordinates);
-    addCelestialObject("Galactic center", galacticCenter, location);
+    addCelestialObject("Galactic center", galacticCenter, galacticCenterCoordinates, new double[]{0.0, 0.0, 0.0});
 
 
     Coordinates solCoordinates = new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value()));
     Star sol = new Star(StarClass.G,
             SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.G));
-    GalacticLocation solLocation = new GalacticLocation("Sol", solCoordinates);
 
-    addCelestialObject("Sol", sol, solLocation);
+    addCelestialObject("Sol", sol, solCoordinates, new double[]{0.0, 0.0, 0.0});
 
     Coordinates alphaCenturiCoordinates =
             new Coordinates(
@@ -244,9 +261,8 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
 
     Star alphaCenturi = new Star(StarClass.G,
             SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.O));
-    GalacticLocation alphaLocation = new GalacticLocation("Sol", alphaCenturiCoordinates);
 
-    addCelestialObject("Alpha centuri", alphaCenturi, alphaLocation);
+    addCelestialObject("Alpha centuri", alphaCenturi, alphaCenturiCoordinates, new double[]{0.0, 0.0, 0.0});
 
 
     //Setup subspace beacons
@@ -258,7 +274,7 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
             new SubspaceBeacon(
                     SensorSignalResponseLibrary
                             .getStandardSignalResponseProfileForObjectType(
-                                    SensorSignalResponseLibrary.SUBSPACE_BEACON)), c1Location);
+                                    SensorSignalResponseLibrary.SUBSPACE_BEACON)), c1, new double[]{0.0, 0.0, 0.0});
 
     Coordinates c2 = alphaCenturiCoordinates.add(
             new Coordinates(
@@ -270,7 +286,7 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
     addCelestialObject("ACBeacon",
             new SubspaceBeacon(SensorSignalResponseLibrary
                     .getStandardSignalResponseProfileForObjectType(
-                            SensorSignalResponseLibrary.SUBSPACE_BEACON)), c2Location);
+                            SensorSignalResponseLibrary.SUBSPACE_BEACON)), c2, new double[]{0.0, 0.0, 0.0});
   }
 
 

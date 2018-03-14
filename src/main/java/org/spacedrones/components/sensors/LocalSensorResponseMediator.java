@@ -2,12 +2,12 @@ package org.spacedrones.components.sensors;
 
 import org.spacedrones.Configuration;
 import org.spacedrones.data.EnvironmentDataProvider;
-import org.spacedrones.physics.*;
+import org.spacedrones.physics.Constants;
+import org.spacedrones.physics.Unit;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.Universe;
 import org.spacedrones.universe.celestialobjects.CelestialObject;
 import org.spacedrones.universe.celestialobjects.UnknownObject;
-import org.spacedrones.universe.dataprovider.*;
 import org.spacedrones.utils.Utils;
 
 import java.math.BigDecimal;
@@ -15,39 +15,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LocalSensorResponseMediator implements SensorResponseMediator {
+
+	final private String id;
 	private Universe universe = Universe.getInstance();
-  private ObjectLocationDataProvider universeDataProvider = Configuration.getUniverseLocationDataProvider();
 	EnvironmentDataProvider environmentDataProvider = Configuration.getEnvironmentDataProvider();
 
+	public LocalSensorResponseMediator(String id) {
+		this.id = id;
+	}
 
 	@Override
-	public List<SensorResult> activeScan(String spacecraftIdent, double duration,
+	public List<SensorResult> activeScan(double duration,
 			double signalStrength, SignalPropagationModel propagationModel, SensorProfile sensorProfile) {
 
 		double signalPropagationSpeed = getSignalPropagationSpeed(sensorProfile);
 
 		List<SensorResult> results = new ArrayList<>();
-		Coordinates spacecraftLocation = universe.getSpacecraftLocation(spacecraftIdent);
+		Coordinates spacecraftLocation = universe.getSpacecraftLocation(id);
 
 		BigDecimal maximumDistanceScanned = new BigDecimal((duration * signalPropagationSpeed) / 2.0); // There and back
 
 		List<CelestialObject> objects =
-				universeDataProvider.getLocationsCloserThan(spacecraftLocation, maximumDistanceScanned);
+				universe.getAllObjectsCloserThan(spacecraftLocation, maximumDistanceScanned, Unit.Ly);
 
 		return results;
 	}
 
 
-	public List<SensorResult> passiveScan(String ident, double duration, SensorProfile sensorProfile) {
+	public List<SensorResult> passiveScan(double duration, SensorProfile sensorProfile) {
 		List<SensorResult> results = new ArrayList<>();
-		Coordinates spacecraftLocation = universe.getSpacecraftLocation(ident);
+		Coordinates spacecraftLocation = universe.getObjectLocationById(id).get();
 
 		BigDecimal maximumDistanceScanned = new BigDecimal(1000000 * Unit.Ly.value());
 
 		List<CelestialObject> objectsWithinDistance =
-				universeDataProvider.getLocationsCloserThan(spacecraftLocation, maximumDistanceScanned);
+            universe.getAllObjectsCloserThan(spacecraftLocation, maximumDistanceScanned, Unit.Ly);
 
 		for(CelestialObject object : objectsWithinDistance) {
+		  if(id.equals(object.id())) {
+		    continue;
+      }
 			Coordinates coordinates = universe.getCelestialObjectLocationById(object.id()).get();
 			BigDecimal distance = Utils.distanceToLocation(coordinates, spacecraftLocation, Unit.One);
 

@@ -65,26 +65,26 @@ public class ObjectLocationDataProviderTest {
     objectLocationDataProvider.addSpacecraft(spacecraft1, initialCoordinates, initialVelocity);
     objectLocationDataProvider.addSpacecraft(spacecraft2, initialCoordinates, initialVelocity);
 
-    objectLocationDataProvider.addComponent(sensor1, initialCoordinates, new double[]{0.0, 0.0, 0.0});
-    objectLocationDataProvider.addComponent(sensor2, initialCoordinates, new double[]{0.0, 0.0, 0.0});
+    objectLocationDataProvider.addObject(sensor1, initialCoordinates, new double[]{0.0, 0.0, 0.0});
+    objectLocationDataProvider.addObject(sensor2, initialCoordinates, new double[]{0.0, 0.0, 0.0});
 
-    objectLocationDataProvider.addComponent(powerGenerator1, initialCoordinates, new double[]{0.0, 0.0, 0.0});
-    objectLocationDataProvider.addComponent(powerGenerator2, initialCoordinates, new double[]{0.0, 0.0, 0.0});
+    objectLocationDataProvider.addObject(powerGenerator1, initialCoordinates, new double[]{0.0, 0.0, 0.0});
+    objectLocationDataProvider.addObject(powerGenerator2, initialCoordinates, new double[]{0.0, 0.0, 0.0});
 
-    objectLocationDataProvider.addComponent(engine1, initialCoordinates, new double[]{0.0, 0.0, 0.0});
-    objectLocationDataProvider.addComponent(engine2, initialCoordinates, new double[]{0.0, 0.0, 0.0});
+    objectLocationDataProvider.addObject(engine1, initialCoordinates, new double[]{0.0, 0.0, 0.0});
+    objectLocationDataProvider.addObject(engine2, initialCoordinates, new double[]{0.0, 0.0, 0.0});
 
 
     List<Spacecraft> allSpacecraft = objectLocationDataProvider.getAllSpacecraft();
     assertEquals("Not enough spacecraft", 2, allSpacecraft.size());
 
     Optional<Spacecraft> sc1_1 = objectLocationDataProvider.getSpacecraftById(spacecraft1.id());
-    Optional<Spacecraft> sc1_2 = objectLocationDataProvider.getObjectById(spacecraft1.id(), Spacecraft.class);
+    Optional<Spacecraft> sc1_2 = objectLocationDataProvider.getObjectByIdAndType(spacecraft1.id(), Spacecraft.class);
 
     Optional<Spacecraft> sc2_1 = objectLocationDataProvider.getSpacecraftById(spacecraft2.id());
-    Optional<Spacecraft> sc2_2 = objectLocationDataProvider.getObjectById(spacecraft2.id(), Spacecraft.class);
+    Optional<Spacecraft> sc2_2 = objectLocationDataProvider.getObjectByIdAndType(spacecraft2.id(), Spacecraft.class);
 
-    Optional<Spacecraft> sc_wrongid = objectLocationDataProvider.getObjectById("wrong ID", Spacecraft.class);
+    Optional<Spacecraft> sc_wrongid = objectLocationDataProvider.getObjectByIdAndType("wrong ID", Spacecraft.class);
 
     List<Spacecraft> spacecraft = objectLocationDataProvider.getAllObjectsByType(Spacecraft.class);
 
@@ -104,16 +104,16 @@ public class ObjectLocationDataProviderTest {
     assertEquals("Not enough fractalSensorArrays", 1, fractalSensorArrays.size());
 
 
-    Optional<Sensor> sen1 = objectLocationDataProvider.getObjectById(sensor1.id(), Sensor.class);
-    Optional<Sensor> sen2 = objectLocationDataProvider.getObjectById(sensor1.id(), LinearSensorArray.class);
-    Optional<FractalSensorArray> sen3 = objectLocationDataProvider.getObjectById(sensor1.id(), LinearSensorArray.class);
+    Optional<Sensor> sen1 = objectLocationDataProvider.getObjectByIdAndType(sensor1.id(), Sensor.class);
+    Optional<Sensor> sen2 = objectLocationDataProvider.getObjectByIdAndType(sensor1.id(), LinearSensorArray.class);
+    Optional<FractalSensorArray> sen3 = objectLocationDataProvider.getObjectByIdAndType(sensor1.id(), LinearSensorArray.class);
 
     assertEquals("Wrong sensor", sensor1, sen1.orElse(null));
     assertEquals("Wrong sensor", sensor1, sen2.orElse(null));
     assertEquals("Wrong sensor", sensor1, sen3.orElse(null));
 
-    Optional<PowerGenerator> pgen1 = objectLocationDataProvider.getObjectById(powerGenerator1.id(), PowerGenerator.class);
-    Optional<PowerGenerator> pgen2 = objectLocationDataProvider.getObjectById(powerGenerator1.id(), Sensor.class);
+    Optional<PowerGenerator> pgen1 = objectLocationDataProvider.getObjectByIdAndType(powerGenerator1.id(), PowerGenerator.class);
+    Optional<PowerGenerator> pgen2 = objectLocationDataProvider.getObjectByIdAndType(powerGenerator1.id(), Sensor.class);
 
 
 

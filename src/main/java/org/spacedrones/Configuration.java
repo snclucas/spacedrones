@@ -1,21 +1,16 @@
 package org.spacedrones;
 
+import org.spacedrones.components.sensors.LocalSensorResponseMediator;
+import org.spacedrones.components.sensors.SensorResponseMediator;
+import org.spacedrones.data.*;
+import org.spacedrones.physics.Unit;
+import org.spacedrones.universe.dataprovider.LocalObjectLocationDataProvider;
+import org.spacedrones.universe.dataprovider.ObjectLocationDataProvider;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.UUID;
-
-import org.spacedrones.components.sensors.LocalSensorResponseMediator;
-import org.spacedrones.components.sensors.SensorResponseMediator;
-import org.spacedrones.data.EnvironmentDataProvider;
-import org.spacedrones.data.LocalEnvironmentDataProvider;
-import org.spacedrones.data.LocalMaterialDataProvider;
-import org.spacedrones.data.LocalPhysicsDataProvider;
-import org.spacedrones.data.MaterialDataProvider;
-import org.spacedrones.data.PhysicsDataProvider;
-import org.spacedrones.physics.Unit;
-import org.spacedrones.universe.dataprovider.LocalObjectLocationDataProvider;
-import org.spacedrones.universe.dataprovider.ObjectLocationDataProvider;
 
 public class Configuration {
 
@@ -46,8 +41,8 @@ public class Configuration {
 		return new LocalEnvironmentDataProvider();
 	}
 
-	public static SensorResponseMediator getSensorResponseMediator() {
-		return new LocalSensorResponseMediator();
+	public static SensorResponseMediator getSensorResponseMediator(String id) {
+		return new LocalSensorResponseMediator(id);
 	}
 
 
