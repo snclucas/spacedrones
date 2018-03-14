@@ -8,9 +8,4 @@ public class SimpleSpacecraft extends AbstractSpacecraft {
 		super(name, ident, hull, bus);
 	}
 
-	@Override
-	public String description() {
-		return "Simple spacecraft";
-	}
-
 }

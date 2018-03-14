@@ -13,11 +13,6 @@ public class SimpleMonocoqueHull extends AbstractHull {
 	}
 
 	@Override
-	public String description() {
-		return "Simple Monocoque Hull ["+ hullSpecification.getName() +"]";
-	}
-
-	@Override
 	public double getCurrentPower(Unit unit) {
 		// Nominal and operation power are the same for this hull
 		return getNominalPower(unit);

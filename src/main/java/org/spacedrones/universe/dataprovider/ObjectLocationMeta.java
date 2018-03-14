@@ -4,7 +4,7 @@ import org.spacedrones.components.*;
 import org.spacedrones.universe.*;
 
 
-public class ObjectLocationMeta<T extends Identifiable> {
+public class ObjectLocationMeta<T extends Taxonomic> {
   public final String id;
   public final String name;
   public Coordinates coordinates;

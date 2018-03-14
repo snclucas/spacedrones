@@ -1,7 +1,5 @@
 package org.spacedrones.utils;
 
-import static org.junit.Assert.assertEquals;
-
 import java.math.BigDecimal;
 
 import org.junit.Test;
@@ -17,7 +15,7 @@ public class UtilsTest {
 		//−28.92°
 
 		Coordinates coords = Utils.galacticCoordinatesToAbsoluteCoordinates(270, 10, new BigDecimal(1*Unit.kPc.value()));
-		System.out.println(coords.get(0, Unit.Pc.value()).doubleValue() + " " + 
+		System.out.println(coords.get(0, Unit.Pc.value()).doubleValue() + " " +
 				coords.get(1, Unit.Pc.value()).doubleValue() + " " + coords.get(2, Unit.Ly.value()).doubleValue());
 
 

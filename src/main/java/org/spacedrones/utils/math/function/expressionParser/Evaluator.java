@@ -144,7 +144,7 @@ public class Evaluator
             else if  ( "/".equals(op) )  	    res = (Object)(f1.divide(f2)) ;
 
           } else {
-            double f2 = ((Double)o2).doubleValue();
+            double f2 = (Double) o2;
 
             if       ( "*".equals(op) ) 	    res = (Object)(f1.times(f2)) ;
             else if  ( "/".equals(op) )  	    res = (Object)(f1.divide(f2)) ;
@@ -154,7 +154,7 @@ public class Evaluator
           }
 
         } else {
-          double f1 = ((Double)o1).doubleValue();
+          double f1 = (Double) o1;
           if (o2isMatrix) {
             Matrix f2 = (Matrix)o2;
 

@@ -177,9 +177,9 @@ public class Axe2D {
 
  private double Min(double[] list) {
     double temp = list[0];
-    for (int i=0;i<list.length;i++) {
-      temp = Math.min(temp,list[i]);
-    }
+   for (double aList : list) {
+     temp = Math.min(temp, aList);
+   }
     return temp;
   }
 

@@ -24,6 +24,7 @@ public class Eye3D {
   }
 
   public Object clone() {
+    Object clone = super.clone();
     return new Eye3D(theta,phi);
   }
 

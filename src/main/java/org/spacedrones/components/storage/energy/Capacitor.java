@@ -22,10 +22,4 @@ public class Capacitor extends AbstractEnergyStorageDevice {
 		return 0;
 	}
 
-
-	@Override
-	public String description() {
-		return "Capacitor";
-	}
-
 }

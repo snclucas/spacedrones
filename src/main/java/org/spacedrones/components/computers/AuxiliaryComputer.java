@@ -11,11 +11,6 @@ public class AuxiliaryComputer extends AbstractComputer {
   }
 
   @Override
-  public String description() {
-    return "AuxiliaryComputer";
-  }
-
-  @Override
   public SystemStatus runDiagnostics(final int level) {
     return null;
   }

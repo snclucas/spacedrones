@@ -1,7 +1,7 @@
 package org.spacedrones.status;
 
-import org.spacedrones.components.Identifiable;
+import org.spacedrones.components.Taxonomic;
 
-public interface StatusProvider extends Identifiable {
+public interface StatusProvider extends Taxonomic {
 
 }

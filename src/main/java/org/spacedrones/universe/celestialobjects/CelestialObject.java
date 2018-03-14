@@ -1,6 +1,6 @@
 package org.spacedrones.universe.celestialobjects;
 
-import org.spacedrones.Taxonomic;
+import org.spacedrones.components.*;
 import org.spacedrones.components.sensors.SensorType;
 import org.spacedrones.components.sensors.SignalResponse;
 

@@ -52,11 +52,4 @@ public class SystemMessageServiceSoftware extends AbstractSoftware implements Me
 		return replies;
 	}
 
-
-	@Override
-	public String description() {
-		return "A system service to handle sytem messaging.";
-	}
-
-
 }

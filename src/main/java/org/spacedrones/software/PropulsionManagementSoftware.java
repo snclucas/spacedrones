@@ -98,9 +98,4 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 		return null;
 	}
 
-	@Override
-	public String description() {
-		return "Software to manage and control the propulsion systems.";
-	}
-
 }

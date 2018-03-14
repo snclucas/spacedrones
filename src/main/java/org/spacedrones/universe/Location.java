@@ -1,6 +1,6 @@
 package org.spacedrones.universe;
 
-import org.spacedrones.*;
+import org.spacedrones.components.*;
 import org.spacedrones.physics.Unit;
 
 import java.math.BigDecimal;

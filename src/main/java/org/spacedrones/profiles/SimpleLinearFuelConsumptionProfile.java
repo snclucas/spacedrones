@@ -24,9 +24,4 @@ public class SimpleLinearFuelConsumptionProfile extends AbstractProfile implemen
 		return new double[][]{profile};
 	}
 
-	@Override
-	public String description() {
-		return "Simple linear fuel consumption profile.";
-	}
-
 }

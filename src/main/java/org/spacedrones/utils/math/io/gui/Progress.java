@@ -17,7 +17,7 @@ public class Progress extends JFrame {
 
     val = min;
 
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
     pane = new JPanel();
 

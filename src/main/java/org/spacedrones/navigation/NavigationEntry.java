@@ -1,12 +1,12 @@
 package org.spacedrones.navigation;
 
 import org.spacedrones.Configuration;
-import org.spacedrones.components.Identifiable;
+import org.spacedrones.components.Taxonomic;
 import org.spacedrones.universe.celestialobjects.CelestialObject;
 
 import java.math.BigDecimal;
 
-public class NavigationEntry implements Identifiable {
+public class NavigationEntry implements Taxonomic {
 
   private final CelestialObject celestialObject;
   private final BigDecimal distanceToCelestial;

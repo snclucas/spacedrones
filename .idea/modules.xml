@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hikerverse-rest-api/hikerverse-rest-api.iml" filepath="$PROJECT_DIR$/.idea/modules/hikerverse-rest-api/hikerverse-rest-api.iml" group="hikerverse-rest-api" />
+      <module fileurl="file://C:\Users\simon\IdeaProjects\spacedrones-latest\.idea\modules\hikerverse-rest-api\hikerverse-rest-api.iml" filepath="C:\Users\simon\IdeaProjects\spacedrones-latest\.idea\modules\hikerverse-rest-api\hikerverse-rest-api.iml" group="hikerverse-rest-api" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/spacedrones.iml" filepath="$PROJECT_DIR$/.idea/modules/spacedrones.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/spacedrones_main.iml" filepath="$PROJECT_DIR$/.idea/modules/spacedrones_main.iml" group="spacedrones" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/spacedrones_test.iml" filepath="$PROJECT_DIR$/.idea/modules/spacedrones_test.iml" group="spacedrones" />

@@ -8,9 +8,4 @@ public class CryogenicLiquidStorageTank extends LiquidStorageTank {
 		super(name, busResourceSpecification, capacity);
 	}
 
-	@Override
-	public String description() {
-		return "Cryogenic liquid storage tank, suitable for gases liquefied at cryogenic temperatures.";
-	}
-	
 }

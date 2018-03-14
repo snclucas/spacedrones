@@ -1,7 +1,6 @@
 package org.spacedrones.universe;
 
 import org.junit.Test;
-import org.spacedrones.physics.Unit;
 import org.spacedrones.utils.math.Convert;
 
 public class GalacticLocationTest {
@@ -53,8 +52,8 @@ public class GalacticLocationTest {
 
 
 	}
-	
-	
+
+
 
 
 }

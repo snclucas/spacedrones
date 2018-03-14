@@ -9,7 +9,6 @@ import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.Universe;
 import org.spacedrones.universe.dataprovider.LocalObjectLocationDataProvider;
-import org.spacedrones.universe.dataprovider.LocalUniverseLocationDataProvider;
 
 import java.util.List;
 

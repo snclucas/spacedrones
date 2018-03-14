@@ -2,21 +2,17 @@ package org.spacedrones.universe;
 
 import org.spacedrones.Configuration;
 import org.spacedrones.components.*;
-import org.spacedrones.components.sensors.SensorProfile;
 import org.spacedrones.data.EnvironmentDataProvider;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.Spacecraft;
 import org.spacedrones.universe.celestialobjects.CelestialObject;
 import org.spacedrones.universe.dataprovider.ObjectLocationDataProvider;
-import org.spacedrones.universe.dataprovider.UniverseCelestialObjectDataProvider;
 
 import java.math.BigDecimal;
 import java.util.*;
 
-public class Universe implements UniverseCelestialObjectDataProvider,
-        ObjectLocationDataProvider, EnvironmentDataProvider, Tickable {
+public class Universe implements ObjectLocationDataProvider, EnvironmentDataProvider, Tickable {
 
-	private UniverseCelestialObjectDataProvider universeLocationDataProvider = Configuration.getUniverseLocationDataProvider();
 	private ObjectLocationDataProvider spacecraftDataProvider = Configuration.getUniverseSpacecraftLocationDataProvider();
 	private EnvironmentDataProvider universeEnvironmentDataProvider = Configuration.getEnvironmentDataProvider();
 
@@ -57,7 +53,7 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 		spacecraftDataProvider.addSpacecraft(spacecraft, coordinates, velocity);
 	}
 
-	public void addComponent(Identifiable object, Coordinates coordinates, double[] velocity) {
+	public void addComponent(Taxonomic object, Coordinates coordinates, double[] velocity) {
 		spacecraftDataProvider.addComponent(object, coordinates, velocity);
 	}
 
@@ -71,32 +67,19 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 		return spacecraftDataProvider.getSpacecraftLocation(spacecraftIdent);
 	}
 
-  public List<CelestialObject> getLocationsByType(Class<? extends CelestialObject> type) {
-		return universeLocationDataProvider.getLocationsByType(type);
-	}
 
 	public void addCelestialObject(String name, CelestialObject celestialObject, GalacticLocation location) {
-		universeLocationDataProvider.addCelestialObject(name, celestialObject, location);
+    spacecraftDataProvider.addCelestialObject(name, celestialObject, location);
 	}
 
-	public CelestialObject getCelestialObjectById(String locationID) {
-		return universeLocationDataProvider.getCelestialObjectById(locationID);
-	}
-
-	public CelestialObject getCelestialObjectByName(String locationProperName) {
-		return universeLocationDataProvider.getCelestialObjectByName(locationProperName);
+	public Optional<CelestialObject> getCelestialObjectById(String locationID) {
+		return spacecraftDataProvider.getCelestialObjectById(locationID);
 	}
 
   @Override
-  public GalacticLocation getCelestialObjectLocationById(String celestialObjectID) {
-    return universeLocationDataProvider.getCelestialObjectLocationById(celestialObjectID);
+  public Optional<Coordinates> getCelestialObjectLocationById(String celestialObjectID) {
+    return spacecraftDataProvider.getCelestialObjectLocationById(celestialObjectID);
   }
-
-  @Override
-  public GalacticLocation getCelestialObjectLocationByName(String celestialObjectName) {
-    return universeLocationDataProvider.getCelestialObjectLocationByName(celestialObjectName);
-  }
-
 
   @Override
 	public Optional<Spacecraft> getSpacecraftById(String ident) {
@@ -104,12 +87,12 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 	}
 
   @Override
-  public <T extends Identifiable> List<T> getAllObjectsByType(Class<T> type) {
+  public <T extends Taxonomic> List<T> getAllObjectsByType(Class<T> type) {
     return spacecraftDataProvider.getAllObjectsByType(type);
   }
 
   @Override
-  public <T> Optional<T> getObjectById(String ident, Class<? extends Identifiable> type) {
+  public <T> Optional<T> getObjectById(String ident, Class<? extends Taxonomic> type) {
     return spacecraftDataProvider.getObjectById(ident, type);
   }
 
@@ -122,27 +105,16 @@ public class Universe implements UniverseCelestialObjectDataProvider,
 	//Delegate methods
 
 
-	@Override
-	public List<CelestialObject> getLocationsCloserThan(Coordinates coordinates, BigDecimal distance) {
-		return universeLocationDataProvider.getLocationsCloserThan(coordinates, distance);
-	}
-
 
 	@Override
 	public List<CelestialObject> getCelestialObjectByTypeCloserThan(Class<? extends CelestialObject> type, GalacticLocation localtion, BigDecimal distance) {
-		return universeLocationDataProvider.getCelestialObjectByTypeCloserThan(type, localtion, distance);
-	}
-
-
-	@Override
-	public double getSignalPropagationSpeed(SensorProfile sensorProfile) {
-		return universeLocationDataProvider.getSignalPropagationSpeed(sensorProfile);
+		return spacecraftDataProvider.getCelestialObjectByTypeCloserThan(type, localtion, distance);
 	}
 
 
 	@Override
 	public void populate() {
-		universeLocationDataProvider.populate();
+    spacecraftDataProvider.populate();
 	}
 
 

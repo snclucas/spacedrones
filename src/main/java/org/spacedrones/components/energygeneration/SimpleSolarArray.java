@@ -74,11 +74,6 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 	}
 
 	@Override
-	public String description() {
-		return toString();
-	}
-
-	@Override
 	public String toString() {
 		return "SimpleSolarArray [arrayArea=" + arrayArea + ", efficiency="
 				+ efficiency + ", lightFlux=" + getLightFlux() + "]";

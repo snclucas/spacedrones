@@ -19,10 +19,4 @@ public class BasicSystemComputer extends AbstractSystemComputer implements Syste
 		return systemStatus;
 	}
 
-	@Override
-	public String description() {
-		return "System computer";
-	}
-
-
 }

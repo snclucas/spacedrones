@@ -19,9 +19,4 @@ public class FractalSensorArray extends BasicSensorArray {
 		return new SystemMessage(null, this, replyMessage);
 	}
 
-  @Override
-  public String description() {
-    return "Fractal sensor array.";
-  }
-
 }

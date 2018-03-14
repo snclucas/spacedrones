@@ -16,18 +16,10 @@ public class TrilaterationSoftware extends AbstractSoftware implements Software 
 		super(name);
 	}
 
-
-	@Override
-	public String description() {
-		return "Software to perform trilateration.";
-	}
-
-
 	@Override
 	public String getDescription() {
 		return "Trilateration ";
 	}
-
 
 	@Override
 	public String toString() {

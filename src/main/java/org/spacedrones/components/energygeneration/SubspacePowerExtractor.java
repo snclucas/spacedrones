@@ -68,11 +68,6 @@ public class SubspacePowerExtractor extends AbstractPowerGenerator {
 	}
 
 	@Override
-	public String description() {
-		return toString();
-	}
-
-	@Override
 	public String toString() {
 		return "SubEtherPowerGenerator [maximumPowerOutputFromEther="
 				+ getMaximumPowerOutput() + "]";

@@ -1,7 +1,7 @@
 package org.spacedrones.components.computers;
 
-import org.spacedrones.components.Identifiable;
+import org.spacedrones.components.Taxonomic;
 
-public interface ArchivableData extends Identifiable {
+public interface ArchivableData extends Taxonomic {
 	String getData();
 }

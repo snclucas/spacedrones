@@ -42,10 +42,4 @@ public class SimpleLinearThrustProfile extends AbstractProfile implements Thrust
 		return new double[][]{profile};
 	}
 
-
-	@Override
-	public String description() {
-		return "Simple linear thrust profile.";
-	}
-
 }

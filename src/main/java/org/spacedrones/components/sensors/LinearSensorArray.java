@@ -11,8 +11,4 @@ public class LinearSensorArray extends BasicSensorArray {
 				numberOfSensorElements);
 	}
 
-  @Override
-  public String description() {
-    return "LinearSensorArray";
-  }
 }

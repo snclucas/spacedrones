@@ -1,10 +1,12 @@
 package org.spacedrones.universe.dataprovider;
 
-import org.spacedrones.components.Identifiable;
+import org.spacedrones.components.Taxonomic;
 import org.spacedrones.exceptions.SpacecraftNotFoundException;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.Spacecraft;
-import org.spacedrones.universe.Coordinates;
+import org.spacedrones.universe.*;
+import org.spacedrones.universe.celestialobjects.*;
+import org.spacedrones.universe.structures.*;
 import org.spacedrones.utils.Utils;
 
 import java.math.BigDecimal;
@@ -15,20 +17,47 @@ import java.util.stream.Collectors;
 
 public class LocalObjectLocationDataProvider implements ObjectLocationDataProvider {
 
-	private final Map<String,ObjectLocationMeta> objectsInUniverse = new HashMap<>();
+  private final Map<String, ObjectLocationMeta> cellestialObjectsInUniverse = new HashMap<>();
+	private final Map<String, ObjectLocationMeta> objectsInUniverse = new HashMap<>();
 
-  private static BiPredicate<Identifiable, Class<? extends Identifiable>> dd =
+  private static BiPredicate<Taxonomic, Class<? extends Taxonomic>> dd =
           (lhs, rhs)  -> lhs.getClass() == rhs ||
           rhs.isAssignableFrom(lhs.getClass()) ||
           Arrays.stream(lhs.getClass().getInterfaces()).anyMatch(s -> s == rhs);
 
-  private static BiPredicate<Identifiable, Class> dd2 =
+  private static BiPredicate<Taxonomic, Class> dd2 =
           (lhs, rhs)  -> lhs.getClass() == rhs ||
                   rhs.isAssignableFrom(lhs.getClass()) ||
                   Arrays.stream(lhs.getClass().getInterfaces()).anyMatch(s -> s == rhs);
 
   public LocalObjectLocationDataProvider() {}
 
+  @Override
+  public void addCelestialObject(String name, CelestialObject celestialObject, GalacticLocation location) {
+
+  }
+
+  @Override
+  public Optional<CelestialObject> getCelestialObjectById(String celestialObjectID) {
+    Taxonomic possibleCelestialObject = cellestialObjectsInUniverse.get(celestialObjectID).object;
+    if(dd.test(possibleCelestialObject, CelestialObject.class)) {
+      return Optional.of((CelestialObject) possibleCelestialObject);
+    }
+    else {
+      return Optional.empty();
+    }
+  }
+
+  @Override
+  public Optional<Coordinates> getCelestialObjectLocationById(String celestialObjectID) {
+    ObjectLocationMeta possibleCelestialObject = cellestialObjectsInUniverse.get(celestialObjectID);
+    if(dd.test(possibleCelestialObject.object, CelestialObject.class)) {
+      return Optional.of(possibleCelestialObject.coordinates);
+    }
+    else {
+      return Optional.empty();
+    }
+  }
 
 	@Override
 	public void addSpacecraft(Spacecraft spacecraft, Coordinates coordinates, double[] velocity) {
@@ -38,8 +67,8 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
 	}
 
 	@Override
-	public void addComponent(Identifiable object, Coordinates coordinates, double[] velocity) {
-    ObjectLocationMeta<Identifiable> meta =
+	public void addComponent(Taxonomic object, Coordinates coordinates, double[] velocity) {
+    ObjectLocationMeta<Taxonomic> meta =
             new ObjectLocationMeta<>(object.id(), object.name(), coordinates, velocity, object);
 		objectsInUniverse.put(object.id(), meta);
 	}
@@ -113,7 +142,7 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
 
 	@Override
   @SuppressWarnings("unchecked operation")
-  public <T extends Identifiable> List<T> getAllObjectsByType(Class<T> type) {
+  public <T extends Taxonomic> List<T> getAllObjectsByType(Class<T> type) {
     List<T> result = new ArrayList<>();
 
     for (ObjectLocationMeta meta : objectsInUniverse.values()) {
@@ -124,9 +153,9 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
     return result;
   }
 
-  public <T> Optional<T> getObjectById(String ident, Class<? extends Identifiable> type) {
+  public <T> Optional<T> getObjectById(String ident, Class<? extends Taxonomic> type) {
     try {
-      Identifiable object = objectsInUniverse.get(ident).object;
+      Taxonomic object = objectsInUniverse.get(ident).object;
       if(dd.test(object, type)) {
 				return Optional.of((T)object);
 			}
@@ -142,7 +171,7 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
 
 	@Override
 	public Optional<Spacecraft> getSpacecraftById(String ident) {
-	  Identifiable possibleSpacecraft = objectsInUniverse.get(ident).object;
+	  Taxonomic possibleSpacecraft = objectsInUniverse.get(ident).object;
 	  if(dd.test(possibleSpacecraft, Spacecraft.class)) {
 	    return Optional.of((Spacecraft) possibleSpacecraft);
     }
@@ -150,5 +179,99 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
 	    return Optional.empty();
     }
 	}
+
+
+  @Override
+  public List<CelestialObject> getLocationsByType(Class<? extends CelestialObject> type) {
+    List<CelestialObject> locations = new ArrayList<>();
+
+    for (Map.Entry<String, ObjectMeta> stringCelestialObjectEntry : celestialObjects.entrySet()) {
+      CelestialObject celObj = stringCelestialObjectEntry.getValue().celestialObject;
+      if (type == (celObj.getClass()))
+        locations.add(celObj);
+    }
+    return locations;
+  }
+
+  @Override
+  public List<CelestialObject> getCelestialObjectByTypeCloserThan(Class<? extends CelestialObject> type, GalacticLocation location, BigDecimal distance) {
+    List<CelestialObject> locations = new ArrayList<>();
+
+    for (Map.Entry<String, ObjectMeta> me : celestialObjects.entrySet()) {
+      CelestialObject celestialObject = me.getValue().celestialObject;
+      if (type == (celestialObject.getClass())) {
+        Coordinates coords = this.locations.get(me.getKey()).getCoordinates();
+        if (Utils.distanceToLocation(coords, location.getCoordinates(), Unit.One).compareTo(distance) <= 0)
+          locations.add(celestialObject);
+      }
+    }
+    return locations;
+  }
+
+  @Override
+  public List<CelestialObject> getLocationsCloserThan(Coordinates coordinates, BigDecimal distance) {
+    List<CelestialObject> locations = new ArrayList<>();
+    for (Map.Entry<String, ObjectMeta> me : celestialObjects.entrySet()) {
+      CelestialObject celestialObject = me.getValue().celestialObject;
+      Coordinates coords = this.locations.get(me.getKey()).getCoordinates();
+      if (Utils.distanceToLocation(coords, coordinates, Unit.One).compareTo(distance) <= 0)
+        locations.add(celestialObject);
+    }
+    return locations;
+  }
+
+  public void populate() {
+
+    Coordinates galacticCenterCoordinates = new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value()));
+    CelestialObject galacticCenter
+            = new Region(new SensorSignalResponseProfile(1000.0, 1000.0, 1000.0, 1000.0, 1000.0), 10.0 * Unit.Pc.value());
+    GalacticLocation location = new GalacticLocation("Galactic center", galacticCenterCoordinates);
+    addCelestialObject("Galactic center", galacticCenter, location);
+
+
+    Coordinates solCoordinates = new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value()));
+    Star sol = new Star(StarClass.G,
+            SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.G));
+    GalacticLocation solLocation = new GalacticLocation("Sol", solCoordinates);
+
+    addCelestialObject("Sol", sol, solLocation);
+
+    Coordinates alphaCenturiCoordinates =
+            new Coordinates(
+                    new BigDecimal(8*Unit.kPc.value() + 2.98*Unit.Ly.value()),
+                    new BigDecimal(2.83* Unit.Ly.value()),
+                    new BigDecimal(101.34*Unit.Ly.value()));
+
+    Star alphaCenturi = new Star(StarClass.G,
+            SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.O));
+    GalacticLocation alphaLocation = new GalacticLocation("Sol", alphaCenturiCoordinates);
+
+    addCelestialObject("Alpha centuri", alphaCenturi, alphaLocation);
+
+
+    //Setup subspace beacons
+    Coordinates c1 = solCoordinates.add(new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1e8*Unit.Km.value())));
+    GalacticLocation c1Location = new GalacticLocation("SolBeacon", c1);
+
+    //Above Sol north pole, 1e8 Km
+    addCelestialObject("SolBeacon",
+            new SubspaceBeacon(
+                    SensorSignalResponseLibrary
+                            .getStandardSignalResponseProfileForObjectType(
+                                    SensorSignalResponseLibrary.SUBSPACE_BEACON)), c1Location);
+
+    Coordinates c2 = alphaCenturiCoordinates.add(
+            new Coordinates(
+                    new BigDecimal(0.0),
+                    new BigDecimal(0.0),
+                    new BigDecimal(1e8*Unit.Km.value())));
+    GalacticLocation c2Location = new GalacticLocation("ACBeacon", c2);
+
+    addCelestialObject("ACBeacon",
+            new SubspaceBeacon(SensorSignalResponseLibrary
+                    .getStandardSignalResponseProfileForObjectType(
+                            SensorSignalResponseLibrary.SUBSPACE_BEACON)), c2Location);
+  }
+
 
 }

@@ -50,11 +50,6 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 	}
 
 	@Override
-	public String description() {
-		return toString();
-	}
-
-	@Override
 	public String toString() {
 		return "BasicDataStorageUnit";
 	}

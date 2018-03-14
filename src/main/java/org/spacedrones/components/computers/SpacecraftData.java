@@ -33,9 +33,4 @@ public class SpacecraftData implements ArchivableData {
 		return this.id;
 	}
 
-	@Override
-	public String description() {
-		return "Data record to hold spacecraft data.";
-	}
-
 }

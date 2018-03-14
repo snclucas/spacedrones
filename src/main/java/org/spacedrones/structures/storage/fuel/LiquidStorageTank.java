@@ -8,10 +8,4 @@ public class LiquidStorageTank extends AbstractFuelStorageTank {
 		super(name, busResourceSpecification, capacity);
 	}
 
-	@Override
-	public String description() {
-		return "Liquid storage tank, suitable for liquids and pressurised vapors.";
-	}
-	
-	
 }

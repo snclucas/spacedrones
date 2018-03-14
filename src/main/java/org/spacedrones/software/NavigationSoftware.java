@@ -115,10 +115,4 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 		return cnt;
 	}
 
-	@Override
-	public String description() {
-		return "Software to perform navigation functions.";
-	}
-
-
 }

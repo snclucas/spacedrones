@@ -122,13 +122,6 @@ public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBus
 		return new SystemMessage(null, this, replyMessage);
 	}
 
-
-	@Override
-	public String description() {
-		return this.name();
-	}
-
-
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
