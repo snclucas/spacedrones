@@ -33,7 +33,7 @@ public class LocalEnvironmentDataProvider implements EnvironmentDataProvider {
 				Star star = ((Star)celestial);
 				BigDecimal d = Utils.distanceToLocation(coordinates, Universe.getInstance().getCelestialObjectLocationById(star.id()).get(), Unit.One);
 				SignalResponse response = star.getSensorSignalResponse().getSignalResponse(SensorType.OPTICAL, BigDecimal.ZERO);
-				d = d.max(new BigDecimal(CelestialConstants.G_STAR_RADIUS));
+				d = d.max(new BigDecimal(CelestialConstants.G2V_STAR_RADIUS));
 				luminosity += response.getSignalStrength() / (4*Math.PI* (d.pow(2)).doubleValue() );
 				System.out.println(star.id() + " " + response.getSignalStrength() / (4*Math.PI* (d.pow(2)).doubleValue() ));
 			}

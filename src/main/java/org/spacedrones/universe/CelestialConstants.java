@@ -1,5 +1,6 @@
 package org.spacedrones.universe;
 
+import org.spacedrones.physics.Constants;
 import org.spacedrones.physics.Unit;
 
 public class CelestialConstants {
@@ -7,11 +8,89 @@ public class CelestialConstants {
 	public static double B_STAR_RADIUS =  695500 * Unit.Km.value();
 	public static double A_STAR_RADIUS =  695500 * Unit.Km.value();
 	public static double F_STAR_RADIUS =  695500 * Unit.Km.value();
-	public static double G_STAR_RADIUS =  695500 * Unit.Km.value();
+
+	public static double G2V_STAR_RADIUS =  695500 * Unit.Km.value();
+
+
 	public static double K_STAR_RADIUS =  695500 * Unit.Km.value();
 	public static double M_STAR_RADIUS =  695500 * Unit.Km.value();
+
+
+  public static double M0V_STAR_RADIUS = Constants.R0 * 0.62;
+  public static double M1V_STAR_RADIUS = Constants.R0 * 0.49;
+  public static double M2V_STAR_RADIUS = Constants.R0 * 0.44;
+  public static double M3V_STAR_RADIUS = Constants.R0 * 0.39;
+  public static double M4V_STAR_RADIUS = Constants.R0 * 0.26;
+  public static double M5V_STAR_RADIUS = Constants.R0 * 0.20;
+  public static double M6V_STAR_RADIUS = Constants.R0 * 0.15;
+  public static double M7V_STAR_RADIUS = Constants.R0 * 0.12;
+  public static double M8V_STAR_RADIUS = Constants.R0 * 0.11;
+  public static double M9V_STAR_RADIUS = Constants.R0 * 0.08;
+
+
+
+  public static double G0V_STAR_MASS = Constants.M0 * 1.15;
+  public static double G1V_STAR_MASS = Constants.M0 * 1.10;
+  public static double G2V_STAR_MASS = Constants.M0 * 1.07;
+  public static double G3V_STAR_MASS = Constants.M0 * 1.04;
+  public static double G4V_STAR_MASS = Constants.M0 * 1.00;
+  public static double G5V_STAR_MASS = Constants.M0 * 0.98;
+  public static double G6V_STAR_MASS = Constants.M0 * 0.93;
+  public static double G7V_STAR_MASS = Constants.M0 * 0.90;
+  public static double G8V_STAR_MASS = Constants.M0 * 0.87;
+  public static double G9V_STAR_MASS = Constants.M0 * 0.84;
+
+  public static double M0V_STAR_MASS = Constants.M0 * 0.6;
+  public static double M1V_STAR_MASS = Constants.M0 * 0.49;
+  public static double M2V_STAR_MASS = Constants.M0 * 0.44;
+  public static double M3V_STAR_MASS = Constants.M0 * 0.36;
+  public static double M4V_STAR_MASS = Constants.M0 * 0.20;
+  public static double M5V_STAR_MASS = Constants.M0 * 0.14;
+  public static double M6V_STAR_MASS = Constants.M0 * 0.10;
+  public static double M7V_STAR_MASS = Constants.M0 * 0.09;
+  public static double M8V_STAR_MASS = Constants.M0 * 0.08;
+  public static double M9V_STAR_MASS = Constants.M0 * 0.075;
+
+
+
+
+
+  public static double G0V_STAR_TEMP = 5980;
+  public static double G1V_STAR_TEMP = 5900;
+  public static double G2V_STAR_TEMP = 5800;
+  public static double G3V_STAR_TEMP = 5710;
+  public static double G4V_STAR_TEMP = 5690;
+  public static double G5V_STAR_TEMP = 5620;
+  public static double G6V_STAR_TEMP = 5570;
+  public static double G7V_STAR_TEMP = 5500;
+  public static double G8V_STAR_TEMP = 5450;
+  public static double G9V_STAR_TEMP = 5370;
+
+  public static double M0V_STAR_TEMP = 3800;
+  public static double M1V_STAR_TEMP = 3600;
+  public static double M2V_STAR_TEMP = 3400;
+  public static double M3V_STAR_TEMP = 3250;
+  public static double M4V_STAR_TEMP = 3100;
+  public static double M5V_STAR_TEMP = 2800;
+  public static double M6V_STAR_TEMP = 2600;
+  public static double M7V_STAR_TEMP = 2500;
+  public static double M8V_STAR_TEMP = 2400;
+  public static double M9V_STAR_TEMP = 2300;
+
+
 	
-	public static double G_STAR_LUMINOSITY = 3.846E26 * Unit.W.value();
+	public static double G2V_STAR_LUMINOSITY = 3.846E26 * Unit.W.value();
+
+  public static double M0V_STAR_LUMINOSITY = 0.072 * Constants.L0;
+  public static double M1V_STAR_LUMINOSITY = 0.035 * Constants.L0;
+  public static double M2V_STAR_LUMINOSITY = 0.023 * Constants.L0;
+  public static double M3V_STAR_LUMINOSITY = 0.015 * Constants.L0;
+  public static double M4V_STAR_LUMINOSITY = 0.0055 * Constants.L0;
+  public static double M5V_STAR_LUMINOSITY = 0.0022 * Constants.L0;
+  public static double M6V_STAR_LUMINOSITY = 0.0009 * Constants.L0;
+  public static double M7V_STAR_LUMINOSITY = 0.0005 * Constants.L0;
+  public static double M8V_STAR_LUMINOSITY = 0.0003 * Constants.L0;
+  public static double M9V_STAR_LUMINOSITY = 0.00015 * Constants.L0;
 	
 	//SOLAR CONSTANTS
   public static double Lsun = 3.839e33; //erg s-1

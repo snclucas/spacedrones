@@ -1,13 +1,13 @@
 package org.spacedrones.physics;
 
-import static org.junit.Assert.assertEquals;
-
-import java.math.BigDecimal;
-
 import org.junit.Test;
 import org.spacedrones.Configuration;
 import org.spacedrones.data.PhysicsDataProvider;
 import org.spacedrones.universe.CelestialConstants;
+
+import java.math.BigDecimal;
+
+import static org.junit.Assert.assertEquals;
 
 public class PhysicsTest {
 	
@@ -45,7 +45,7 @@ public class PhysicsTest {
 	public void testStellarMagnitudeConversions() {
 		
 		double luminosityOfSolInLg = 1;
-		double luminosityOfSolInW = CelestialConstants.G_STAR_LUMINOSITY;
+		double luminosityOfSolInW = CelestialConstants.G2V_STAR_LUMINOSITY;
 		double absMagOfSol = 4.85;
 		double calculatedAbsMagOfSol = Physics.luminosityInLg2AbsMag(luminosityOfSolInLg);
 		double calculatedAbsMagOfSol2 = Physics.luminosityInW2AbsMag(luminosityOfSolInW);
@@ -56,13 +56,13 @@ public class PhysicsTest {
 		assertEquals("Absolute magnitude to luminosity conversion incorrect for Sol", luminosityOfSolInLg, calculatedLuminosityOfSol, 0.001);
 		
 		
-		double luminosityOfSirrius = 23.988329190194904653173971349271;
+		double luminosityOfSirius = 23.988329190194904653173971349271;
 		double absMagOfSirrius = 1.4;
-		double calculatedAbsMagOfSirrius = Physics.luminosityInLg2AbsMag(luminosityOfSirrius);
+		double calculatedAbsMagOfSirrius = Physics.luminosityInLg2AbsMag(luminosityOfSirius);
 		double calculatedLuminosityOfSirrius = Physics.absMag2LuminosityInLg(absMagOfSirrius);
 		
 		assertEquals("Luminosity to Absolute magnitude conversion incorrect for Sirrius", absMagOfSirrius, calculatedAbsMagOfSirrius, 0.001);
-		assertEquals("Absolute magnitude to luminosity conversion incorrect for Sirrius", luminosityOfSirrius, calculatedLuminosityOfSirrius, 0.001);
+		assertEquals("Absolute magnitude to luminosity conversion incorrect for Sirrius", luminosityOfSirius, calculatedLuminosityOfSirrius, 0.001);
 	}
 	
 	

@@ -33,7 +33,7 @@ public class SensorSignalResponseLibrary {
       case F:
         return new SensorSignalResponseProfile(3.0, responseForSphere(1.3 * CelestialConstants.F_STAR_RADIUS, 1.0), 1000.0, 100.0, 0.0);
       case G: //384.6e24 J/s
-        return new SensorSignalResponseProfile(4.83, responseForSphere(1 * CelestialConstants.G_STAR_RADIUS, 1.0), 1000.0, 100.0, 0.0);
+        return new SensorSignalResponseProfile(4.83, responseForSphere(1 * CelestialConstants.G2V_STAR_RADIUS, 1.0), 1000.0, 100.0, 0.0);
       case K:
         return new SensorSignalResponseProfile(6.5, responseForSphere(0.7 * CelestialConstants.K_STAR_RADIUS, 1.0), 1000.0, 100.0, 0.0);
       case M:

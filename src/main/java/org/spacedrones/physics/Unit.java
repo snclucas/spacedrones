@@ -2,8 +2,12 @@ package org.spacedrones.physics;
 
 public class Unit {
 	
-	public enum Type {ANGLE, DIMENTIONLESS, LENGTH, MASS, AREA, VOLUME, TIME, FORCE, POWER, CPU, ENERGY}
-	
+	public enum Type {ANGLE, DIMENTIONLESS, LENGTH, MASS, AREA, VOLUME, TIME, FORCE, POWER, CPU, ENERGY, TEMPERATURE}
+
+	//Unit of temperature
+	public static Unit K = new Unit(1.0, Type.TEMPERATURE, "K");
+	public static Unit degC = new Unit(1.0, Type.TEMPERATURE, "degC");
+
 	//Units for mass
 	public static Unit g = new Unit(1.0e-3, Type.MASS, "g");
 	public static Unit kg = new Unit(1.0, Type.MASS, "kg");

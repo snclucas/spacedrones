@@ -57,9 +57,9 @@ public class SensorSignalResponseProfileTest {
 		double expectedSignalAt1Ly = 0.0;
 				
 		response = sensorSignalResponseProfile.getSignalResponse(SensorType.OPTICAL, new BigDecimal(0.0)).getSignalStrength();
-		assertEquals("Optical luminosity at 0 distance incorrect", 1.0, CelestialConstants.G_STAR_LUMINOSITY/response, 0.0001);
+		assertEquals("Optical luminosity at 0 distance incorrect", 1.0, CelestialConstants.G2V_STAR_LUMINOSITY /response, 0.0001);
 		response = sensorSignalResponseProfile.getSignalResponse(SensorType.OPTICAL, new BigDecimal(1 * Unit.Ly.value())).getSignalStrength();
-		expectedSignalAt1Ly = CelestialConstants.G_STAR_LUMINOSITY*(1/Math.pow(Unit.Ly.value(),physicsDataProvider.getValue(PhysicsDataProvider.OPTICAL_PROPAGATION_INDEX)));
+		expectedSignalAt1Ly = CelestialConstants.G2V_STAR_LUMINOSITY *(1/Math.pow(Unit.Ly.value(),physicsDataProvider.getValue(PhysicsDataProvider.OPTICAL_PROPAGATION_INDEX)));
 		assertEquals("Optical luminosity at 1Ly distance incorrect", 1.0, expectedSignalAt1Ly/response, 0.0001);
 		
 		

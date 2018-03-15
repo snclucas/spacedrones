@@ -1,14 +1,14 @@
 package org.spacedrones.physics;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
-
 import org.spacedrones.Configuration;
 import org.spacedrones.components.sensors.PowerLawSignalPropagationModel;
 import org.spacedrones.data.PhysicsDataProvider;
 import org.spacedrones.universe.CelestialConstants;
 import org.spacedrones.utils.math.BigDecimalMath;
+
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 
 public class Physics {
 	
@@ -52,13 +52,13 @@ public class Physics {
 	}
 	
 	public static double absMag2LuminosityInW(double absMag) {
-		return Math.pow(10, (-0.4)*((absMag-4.85))  ) * CelestialConstants.G_STAR_LUMINOSITY;
+		return Math.pow(10, (-0.4)*((absMag-4.85))  ) * CelestialConstants.G2V_STAR_LUMINOSITY;
 	}
 	
 	
 	
 	public static double luminosityInW2AbsMag(double luminosity) {
-		double luminosityInLg = luminosity / CelestialConstants.G_STAR_LUMINOSITY;
+		double luminosityInLg = luminosity / CelestialConstants.G2V_STAR_LUMINOSITY;
 		return 4.85 - ( 2.5 * (  Math.log10(luminosityInLg)  ) ) ;
 	}
 	
