@@ -1,23 +1,31 @@
 package org.spacedrones.universe;
 
 import org.spacedrones.Configuration;
-import org.spacedrones.components.*;
+import org.spacedrones.components.Taxonomic;
+import org.spacedrones.components.Tickable;
+import org.spacedrones.components.sensors.SensorType;
+import org.spacedrones.components.sensors.SignalResponse;
 import org.spacedrones.data.EnvironmentDataProvider;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.Spacecraft;
 import org.spacedrones.universe.celestialobjects.CelestialObject;
 import org.spacedrones.universe.dataprovider.ObjectLocationDataProvider;
+import org.spacedrones.universe.dataprovider.ObjectMeta;
+import org.spacedrones.universe.dataprovider.SignalResponseProvider;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Optional;
 
-public class Universe implements ObjectLocationDataProvider, EnvironmentDataProvider, Tickable {
+public class Universe implements ObjectLocationDataProvider, EnvironmentDataProvider, Tickable, SignalResponseProvider {
 
 	private ObjectLocationDataProvider spacecraftDataProvider = Configuration.getUniverseSpacecraftLocationDataProvider();
 	private EnvironmentDataProvider universeEnvironmentDataProvider = Configuration.getEnvironmentDataProvider();
+	private SignalResponseProvider signalResponseProvider = Configuration.getSignalResponseProvider();
 
 
-	private static volatile Universe instance, emptyInstance;
+	private static volatile Universe instance;
 
 
 	public static Universe getInstance() {
@@ -27,26 +35,12 @@ public class Universe implements ObjectLocationDataProvider, EnvironmentDataProv
 				localInstance = instance;
 				if(localInstance == null) {
 					instance = localInstance = new Universe();
-					instance.populate();
+					//instance.populate();
 				}
 			}
 		}
 		return localInstance;
 	}
-
-	public static Universe getEmptyInstance() {
-		Universe localEmptyInstance = emptyInstance;
-		if(localEmptyInstance == null) {
-			synchronized (Universe.class) {
-				localEmptyInstance = emptyInstance;
-				if(localEmptyInstance == null) {
-					emptyInstance = localEmptyInstance = new Universe();
-				}
-			}
-		}
-		return localEmptyInstance;
-	}
-
 
 
 	public void addSpacecraft(Spacecraft spacecraft, Coordinates coordinates, double[] velocity) {
@@ -81,7 +75,17 @@ public class Universe implements ObjectLocationDataProvider, EnvironmentDataProv
     return spacecraftDataProvider.getCelestialObjectLocationById(celestialObjectID);
   }
 
+	@Override
+	public List<CelestialObject> getAllCelestialObjectsCloserThan(final Coordinates coordinates, final BigDecimal range, final Unit unit) {
+		return spacecraftDataProvider.getAllCelestialObjectsCloserThan(coordinates, range, unit);
+	}
+
   @Override
+  public List<ObjectMeta<CelestialObject>> getAllCelestialObjectsCloserThanAsMeta(final Coordinates coordinates, final BigDecimal range, final Unit unit) {
+    return spacecraftDataProvider.getAllCelestialObjectsCloserThanAsMeta(coordinates, range, unit);
+  }
+
+	@Override
 	public Optional<Spacecraft> getSpacecraftById(String ident) {
 		return spacecraftDataProvider.getSpacecraftById(ident);
 	}
@@ -191,6 +195,10 @@ public class Universe implements ObjectLocationDataProvider, EnvironmentDataProv
 						(millisecond/(365.0*86400000.0)));
 	}
 
+	@Override
+	public SignalResponse getSignalResponse(final CelestialObject celestialObject, final SensorType sensorType, final BigDecimal distance) {
+		return signalResponseProvider.getSignalResponse(celestialObject, sensorType, distance);
+	}
 }
 
 

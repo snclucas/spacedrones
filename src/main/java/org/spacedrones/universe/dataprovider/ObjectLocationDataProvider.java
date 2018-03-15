@@ -17,8 +17,8 @@ public interface ObjectLocationDataProvider {
   void addCelestialObject(String name, CelestialObject celestialObject, Coordinates coordinates, double[] velocity);
   Optional<CelestialObject> getCelestialObjectById(String celestialObjectID);
   Optional<Coordinates> getCelestialObjectLocationById(String celestialObjectID);
-
-
+  List<CelestialObject> getAllCelestialObjectsCloserThan(Coordinates coordinates, BigDecimal range, Unit unit);
+  List<ObjectMeta<CelestialObject>> getAllCelestialObjectsCloserThanAsMeta(Coordinates coordinates, BigDecimal range, Unit unit);
 
 	void addSpacecraft(Spacecraft spacecraft, Coordinates coordinates, double[] velocity);
   List<Spacecraft> getAllSpacecraft();

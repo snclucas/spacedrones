@@ -2,10 +2,7 @@ package org.spacedrones.universe.celestialobjects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.spacedrones.Configuration;
-import org.spacedrones.components.sensors.SensorType;
-import org.spacedrones.components.sensors.SignalResponse;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,11 +50,6 @@ public abstract class AbstractCelestialObject implements CelestialObject {
 
 	public SensorSignalResponseProfile getSensorSignalResponseProfile() {
 		return sensorSignalResponseProfile;
-	}
-
-	@Override
-	public SignalResponse getSignalResponse(SensorType sensorType, BigDecimal distance) {
-		return sensorSignalResponseProfile.getSignalResponse(sensorType, distance);
 	}
 
 	public String getOpticalSignature() {

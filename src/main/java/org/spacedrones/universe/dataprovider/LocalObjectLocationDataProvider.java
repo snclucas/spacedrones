@@ -17,7 +17,8 @@ import java.util.stream.Collectors;
 
 public class LocalObjectLocationDataProvider implements ObjectLocationDataProvider {
 
-	private final Map<String, ObjectLocationMeta> objectsInUniverse = new HashMap<>();
+  private final Map<String, ObjectMeta> cellestialObjectsInUniverse = new HashMap<>();
+	private final Map<String, ObjectMeta> objectsInUniverse = new HashMap<>();
 
   private static BiPredicate<Taxonomic, Class<? extends Taxonomic>> dd =
           (lhs, rhs)  -> lhs.getClass() == rhs ||
@@ -33,14 +34,14 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
 
   @Override
   public void addCelestialObject(String name, CelestialObject celestialObject, Coordinates coordinates, double[] velocity) {
-    ObjectLocationMeta<CelestialObject> meta =
-            new ObjectLocationMeta<>(celestialObject.id(), celestialObject.name(), coordinates, velocity, celestialObject);
-    objectsInUniverse.put(celestialObject.id(), meta);
+    ObjectMeta<CelestialObject> meta =
+            new ObjectMeta<>(celestialObject.id(), celestialObject.name(), coordinates, velocity, celestialObject);
+    cellestialObjectsInUniverse.put(celestialObject.id(), meta);
   }
 
   @Override
   public Optional<CelestialObject> getCelestialObjectById(String celestialObjectID) {
-    Taxonomic possibleCelestialObject = objectsInUniverse.get(celestialObjectID).object;
+    Taxonomic possibleCelestialObject = cellestialObjectsInUniverse.get(celestialObjectID).object;
     if(dd.test(possibleCelestialObject, CelestialObject.class)) {
       return Optional.of((CelestialObject) possibleCelestialObject);
     }
@@ -51,7 +52,7 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
 
   @Override
   public Optional<Coordinates> getCelestialObjectLocationById(String celestialObjectID) {
-    ObjectLocationMeta possibleCelestialObject = objectsInUniverse.get(celestialObjectID);
+    ObjectMeta possibleCelestialObject = cellestialObjectsInUniverse.get(celestialObjectID);
     if(dd.test(possibleCelestialObject.object, CelestialObject.class)) {
       return Optional.of(possibleCelestialObject.coordinates);
     }
@@ -60,23 +61,47 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
     }
   }
 
+  @Override
+  public List<CelestialObject> getAllCelestialObjectsCloserThan(Coordinates coordinates, BigDecimal range, Unit unit) {
+    List<CelestialObject> result = new ArrayList<>();
+
+    for (ObjectMeta meta : cellestialObjectsInUniverse.values()) {
+      if (Utils.distanceToLocation(meta.coordinates, coordinates, unit).compareTo(range) <= 0) {
+        result.add((CelestialObject) meta.object);
+      }
+    }
+    return result;
+  }
+
+  @Override
+  public List<ObjectMeta<CelestialObject>> getAllCelestialObjectsCloserThanAsMeta(Coordinates coordinates, BigDecimal range, Unit unit) {
+    List<ObjectMeta<CelestialObject>> result = new ArrayList<>();
+
+    for (ObjectMeta meta : cellestialObjectsInUniverse.values()) {
+      if (Utils.distanceToLocation(meta.coordinates, coordinates, unit).compareTo(range) <= 0) {
+        result.add(meta);
+      }
+    }
+    return result;
+  }
+
 	@Override
 	public void addSpacecraft(Spacecraft spacecraft, Coordinates coordinates, double[] velocity) {
-    ObjectLocationMeta<Spacecraft> meta =
-            new ObjectLocationMeta<>(spacecraft.id(), spacecraft.name(), coordinates, velocity, spacecraft);
+    ObjectMeta<Spacecraft> meta =
+            new ObjectMeta<>(spacecraft.id(), spacecraft.name(), coordinates, velocity, spacecraft);
 		objectsInUniverse.put(spacecraft.id(), meta);
 	}
 
 	@Override
 	public void addObject(Taxonomic object, Coordinates coordinates, double[] velocity) {
-    ObjectLocationMeta<Taxonomic> meta =
-            new ObjectLocationMeta<>(object.id(), object.name(), coordinates, velocity, object);
+    ObjectMeta<Taxonomic> meta =
+            new ObjectMeta<>(object.id(), object.name(), coordinates, velocity, object);
 		objectsInUniverse.put(object.id(), meta);
 	}
 
 	@Override
 	public void updateSpacecraftLocation(String spacecraftIdent, Coordinates coordinates) {
-    ObjectLocationMeta meta = objectsInUniverse.get(spacecraftIdent);
+    ObjectMeta meta = objectsInUniverse.get(spacecraftIdent);
     if(!dd.test(meta.object, Spacecraft.class)) {
       return;
     }
@@ -87,7 +112,7 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
 
 	@Override
 	public void updateSpacecraftVelocity(String spacecraftIdent, double[] velocity) {
-    ObjectLocationMeta meta = objectsInUniverse.get(spacecraftIdent);
+    ObjectMeta meta = objectsInUniverse.get(spacecraftIdent);
     if(!dd.test(meta.object, Spacecraft.class)) {
       return;
     }
@@ -98,7 +123,7 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
 
 	@Override
 	public Coordinates getSpacecraftLocation(String spacecraftIdent) {
-    ObjectLocationMeta meta = objectsInUniverse.get(spacecraftIdent);
+    ObjectMeta meta = objectsInUniverse.get(spacecraftIdent);
     if(meta == null || !dd.test(meta.object, Spacecraft.class))
 			throw new SpacecraftNotFoundException("Spacecraft [" + spacecraftIdent + "] is not in the Universe");
 		return meta.coordinates;
@@ -106,7 +131,7 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
 
 	@Override
 	public double[] getSpacecraftVelocity(String spacecraftIdent) {
-    ObjectLocationMeta meta = objectsInUniverse.get(spacecraftIdent);
+    ObjectMeta meta = objectsInUniverse.get(spacecraftIdent);
 		if(meta == null || !dd.test(meta.object, Spacecraft.class))
 			throw new SpacecraftNotFoundException("Spacecraft [" + spacecraftIdent + "] is not in the Universe");
 		return meta.velocity;
@@ -146,7 +171,7 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
   public <T extends Taxonomic> List<T> getAllObjectsByType(Class<T> type) {
     List<T> result = new ArrayList<>();
 
-    for (ObjectLocationMeta meta : objectsInUniverse.values()) {
+    for (ObjectMeta meta : objectsInUniverse.values()) {
       if (dd.test(meta.object, type)) {
         result.add((T) meta.object);
       }
@@ -158,7 +183,7 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
   public <T extends Taxonomic> List<T> getAllObjectsCloserThan(Coordinates coordinates, BigDecimal range, Unit unit) {
     List<T> result = new ArrayList<>();
 
-    for (ObjectLocationMeta meta : objectsInUniverse.values()) {
+    for (ObjectMeta meta : objectsInUniverse.values()) {
       if (Utils.distanceToLocation(meta.coordinates, coordinates, unit).compareTo(range) <= 0) {
         result.add((T) meta.object);
       }
@@ -170,7 +195,7 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
   public <T extends Taxonomic> List<T> getAllObjectsByTypeCloserThan(Class<T> type, Coordinates coordinates, BigDecimal range, Unit unit) {
     List<T> result = new ArrayList<>();
 
-    for (ObjectLocationMeta meta : objectsInUniverse.values()) {
+    for (ObjectMeta meta : objectsInUniverse.values()) {
       if (dd.test(meta.object, type) && Utils.distanceToLocation(meta.coordinates, coordinates, unit).compareTo(range) <= 0) {
         result.add((T) meta.object);
       }

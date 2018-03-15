@@ -8,6 +8,7 @@ import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.Universe;
 import org.spacedrones.universe.celestialobjects.CelestialObject;
 import org.spacedrones.universe.celestialobjects.UnknownObject;
+import org.spacedrones.universe.dataprovider.ObjectMeta;
 import org.spacedrones.utils.Utils;
 
 import java.math.BigDecimal;
@@ -48,30 +49,30 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 
 		BigDecimal maximumDistanceScanned = new BigDecimal(1000000 * Unit.Ly.value());
 
-		List<CelestialObject> objectsWithinDistance =
-            universe.getAllObjectsCloserThan(spacecraftLocation, maximumDistanceScanned, Unit.Ly);
+		List<ObjectMeta<CelestialObject>> objectsWithinDistance =
+            universe.getAllCelestialObjectsCloserThanAsMeta(spacecraftLocation, maximumDistanceScanned, Unit.Ly);
 
-		for(CelestialObject object : objectsWithinDistance) {
-		  if(id.equals(object.id())) {
+		for(ObjectMeta<CelestialObject> object : objectsWithinDistance) {
+		  if(id.equals(object.object.id())) {
 		    continue;
       }
-			Coordinates coordinates = universe.getCelestialObjectLocationById(object.id()).get();
-			BigDecimal distance = Utils.distanceToLocation(coordinates, spacecraftLocation, Unit.One);
 
-			SignalResponse returnedSignalResponse = object.getSignalResponse(sensorProfile.getSensorType(), distance);
+			BigDecimal distance = Utils.distanceToLocation(object.coordinates, spacecraftLocation, Unit.One);
+
+			SignalResponse returnedSignalResponse = universe.getSignalResponse(object.object, sensorProfile.getSensorType(), distance);
 			// TODO maybe set celestial object as UNKNOWN if under a certain threshold?
 
-			System.out.println(object + " " +
-			returnedSignalResponse.getSignalStrength() + " " +
-					returnedSignalResponse.getSignalDispersion() + " " +
-			distance.doubleValue()/Unit.Ly.value());
+			//System.out.println(object + " " +
+			//returnedSignalResponse.getSignalStrength() + " " +
+			//		returnedSignalResponse.getSignalDispersion() + " " +
+			//distance.doubleValue()/Unit.Ly.value());
 
 			if(returnedSignalResponse.getSignalStrength() > 1.0) {
-        object = new UnknownObject(object.getSensorSignalResponse());
+        object.object = new UnknownObject(object.object.getSensorSignalResponse());
       }
 
-			SensorResult result = new SensorResult(object, Utils.distanceToLocation(coordinates, spacecraftLocation, Unit.One),
-					Utils.vectorToLocation(coordinates, spacecraftLocation, false), returnedSignalResponse);
+			SensorResult result = new SensorResult(object.object, Utils.distanceToLocation(object.coordinates, spacecraftLocation, Unit.One),
+					Utils.vectorToLocation(object.coordinates, spacecraftLocation, false), returnedSignalResponse);
 			results.add(result);
 		}
 		return results;

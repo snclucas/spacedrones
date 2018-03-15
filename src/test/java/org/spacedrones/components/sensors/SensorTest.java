@@ -6,13 +6,35 @@ import org.junit.Test;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.Universe;
+import org.spacedrones.universe.celestialobjects.SensorSignalResponseLibrary;
+import org.spacedrones.universe.celestialobjects.Star;
+import org.spacedrones.universe.celestialobjects.StarClass;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.List;
 
 public class SensorTest {
 
+  Universe universe = Universe.getInstance();
+
   @Before
   public void setUp() throws Exception {
+
+    Coordinates starACoords = new Coordinates(
+            new BigDecimal(1*Unit.Km.value()), new BigDecimal(0), new BigDecimal(0));
+    Star starA = new Star(StarClass.G,
+            SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.G));
+    universe.addCelestialObject("Star A", starA, starACoords, new double[]{0.0, 0.0, 0.0});
+
+
+    Coordinates starBCoords = new Coordinates(
+            new BigDecimal(-10*Unit.Km.value()),new BigDecimal(0), new BigDecimal(0));
+    Star starB = new Star(StarClass.G,
+            SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.G));
+    universe.addCelestialObject("Star B", starB, starBCoords, new double[]{0.0, 0.0, 0.0});
+
 
   }
 
@@ -20,21 +42,18 @@ public class SensorTest {
   @Test
   public void testLinearSensorArray() {
     Sensor sensor = SensorFactory.getSensor(LinearSensorArray.class.getSimpleName(), SensorType.OPTICAL, 1);
-    //sensor.registerSystemComputer(new BasicSystemComputer("Test computer", new BusComponentSpecification(), 10* Unit.GFLOPs.value()));
-
     SensorProfile sensorProfile = new SensorProfile(SensorType.OPTICAL, -9, 10);
 
-    Universe universe = Universe.getInstance();
-    universe.populate();
-    universe.addObject(sensor, new Coordinates(8.0* Unit.kPc.value(), 1.0* Unit.Ly.value(), 1.0* Unit.Ly.value()), new double[]{0.0, 0.0, 0.0});
+    universe.addObject(sensor, new Coordinates(0.0, 0.0, 0.0), new double[]{0.0, 0.0, 0.0});
 
-    //universe.list();
+    universe.list();
 
     List<SensorResult> ss = sensor.passiveScan(1, sensorProfile);
 
-    ss.stream().forEach(s -> {
-      System.out.println(s.toString());
-    });
+    ss.forEach(
+            s -> System.out.println(s.getCelestialObject().getClass().getSimpleName() + " : " + s.getDistance().round(
+                    new MathContext(10, RoundingMode.HALF_UP)).toString())
+    );
 
 
   }

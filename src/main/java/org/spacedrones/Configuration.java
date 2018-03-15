@@ -5,7 +5,9 @@ import org.spacedrones.components.sensors.SensorResponseMediator;
 import org.spacedrones.data.*;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.universe.dataprovider.LocalObjectLocationDataProvider;
+import org.spacedrones.universe.dataprovider.LocalSignalResponseProvider;
 import org.spacedrones.universe.dataprovider.ObjectLocationDataProvider;
+import org.spacedrones.universe.dataprovider.SignalResponseProvider;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -60,4 +62,7 @@ public class Configuration {
 		return new LocalMaterialDataProvider();
 	}
 
+	public static SignalResponseProvider getSignalResponseProvider() {
+		return new LocalSignalResponseProvider();
+	}
 }
