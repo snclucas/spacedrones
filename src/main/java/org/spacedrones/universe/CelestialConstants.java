@@ -4,6 +4,10 @@ import org.spacedrones.physics.Constants;
 import org.spacedrones.physics.Unit;
 
 public class CelestialConstants {
+
+  public static double MBOL_SUN = 4.75;
+
+
 	public static double O_STAR_RADIUS =  695500 * Unit.Km.value();
 	public static double B_STAR_RADIUS =  695500 * Unit.Km.value();
 	public static double A_STAR_RADIUS =  695500 * Unit.Km.value();
@@ -78,7 +82,7 @@ public class CelestialConstants {
   public static double M9V_STAR_TEMP = 2300;
 
 
-	
+
 	public static double G2V_STAR_LUMINOSITY = 3.846E26 * Unit.W.value();
 
   public static double M0V_STAR_LUMINOSITY = 0.072 * Constants.L0;
@@ -91,7 +95,7 @@ public class CelestialConstants {
   public static double M7V_STAR_LUMINOSITY = 0.0005 * Constants.L0;
   public static double M8V_STAR_LUMINOSITY = 0.0003 * Constants.L0;
   public static double M9V_STAR_LUMINOSITY = 0.00015 * Constants.L0;
-	
+
 	//SOLAR CONSTANTS
   public static double Lsun = 3.839e33; //erg s-1
   public static double Rsun = 6.955e10; //cm
@@ -148,5 +152,12 @@ public class CelestialConstants {
   public static double eccUranus  = 0.050363;
   public static double eccNeptune = 0.004014;
   public static double eccPluto   = 0.256695;
+
+
+  public double Lstar(double Mbol) {
+    return Math.pow(10,((MBOL_SUN - Mbol)/2.5));
+  }
+
+
 
 }
