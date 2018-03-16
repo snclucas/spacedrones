@@ -273,8 +273,8 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
 
 
     Coordinates solCoordinates = new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value()));
-    Star sol = new Star(StarClass.G,
-            SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.G));
+    Star sol = new Star(StarClass.G2V,
+            SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.G2V.getStarClass()));
 
     addCelestialObject("Sol", sol, solCoordinates, new double[]{0.0, 0.0, 0.0});
 
@@ -284,8 +284,8 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
                     new BigDecimal(2.83* Unit.Ly.value()),
                     new BigDecimal(101.34*Unit.Ly.value()));
 
-    Star alphaCenturi = new Star(StarClass.G,
-            SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.O));
+    Star alphaCenturi = new Star(StarClass.G2V,
+            SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.O.getStarClass()));
 
     addCelestialObject("Alpha centuri", alphaCenturi, alphaCenturiCoordinates, new double[]{0.0, 0.0, 0.0});
 

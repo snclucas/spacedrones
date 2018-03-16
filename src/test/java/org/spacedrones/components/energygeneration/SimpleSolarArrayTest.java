@@ -41,8 +41,8 @@ public class SimpleSolarArrayTest {
 		Spacecraft shuttle = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SHUTTLE);
 
 		Coordinates solCoords = new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value()));
-		Star sol = new Star(StarClass.G,
-				SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.G));
+		Star sol = new Star(StarClass.G2V,
+				SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.G2V.getStarClass()));
 
 		Coordinates coords = solCoords.add(
 				new Coordinates(new BigDecimal(10*Unit.AU.value()), BigDecimal.ZERO, BigDecimal.ZERO));

@@ -27,8 +27,8 @@ public class UniverseTest {
 		Coordinates solCoords =  new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value()));
 
 
-		Star sol = new Star(StarClass.G,
-				SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.G));
+		Star sol = new Star(StarClass.G2V,
+				SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.G2V.getStarClass()));
 		Coordinates coords = solCoords.add(
 				new Coordinates(new BigDecimal(10*Unit.AU.value()), BigDecimal.ZERO, BigDecimal.ZERO));
 		universe.addSpacecraft(spacecraft, coords, new double[]{0.0, 0.0, 0.0});
@@ -52,7 +52,7 @@ public class UniverseTest {
 		BigDecimal coord2 = new BigDecimal(10000000000000000.0); // 2.3 Ly
 		BigDecimal coord3 = new BigDecimal(10000000000000000.0); // 100 Ly above galactic plane
 
-		Star sol = new Star(StarClass.G,
+		Star sol = new Star(StarClass.G2V,
 				new SensorSignalResponseProfile(1.0, 1.0, 1.0, 1.0, 1.0));
 
 		Coordinates solCoords = new Coordinates(coord1, coord2, coord3);
@@ -73,7 +73,7 @@ public class UniverseTest {
 		Coordinates nemesisCoords = new Coordinates(coordOffset1, coordOffset2, coordOffset3);
 		nemesisCoords = nemesisCoords.add(solCoords);
 
-		Star nemesis = new Star(StarClass.G,
+		Star nemesis = new Star(StarClass.G2V,
 				new SensorSignalResponseProfile(1.0, 1.0, 1.0, 1.0, 1.0));
 
 		assertEquals("Nemesis coord1 incorrectly set", coord1.doubleValue()+coordOffset1.doubleValue(), nemesisCoords.get(0).doubleValue(), 0.001);

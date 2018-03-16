@@ -84,8 +84,10 @@ public class Physics {
 	}
 	
 	
-	public static double opticalSignalAtDistance(double p0, BigDecimal distance) {
-		return Math.pow(10, new PowerLawSignalPropagationModel(physicsDataProvider.getValue(PhysicsDataProvider.OPTICAL_PROPAGATION_INDEX)).getSignal(Math.log10(p0), distance));
+	public static double opticalSignalAtDistance(double p0, BigDecimal distance, boolean perMeter) {
+	  double surfaceArea = perMeter ? 4*Math.PI*distance.doubleValue()*distance.doubleValue() : 1.0;
+		return Math.pow(10, new PowerLawSignalPropagationModel(physicsDataProvider.getValue(
+						PhysicsDataProvider.OPTICAL_PROPAGATION_INDEX)).getSignal(Math.log10(p0), distance)) / surfaceArea;
 	}
 	
 	public static double opticalSignalAtDistanceInLog10(double p0, BigDecimal distance) {

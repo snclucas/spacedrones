@@ -1,21 +1,30 @@
 package org.spacedrones.universe.celestialobjects;
 
 
-import java.io.*;
-import java.util.*;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.spacedrones.universe.data.JSONUtils;
 
-import org.spacedrones.universe.data.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 public class StellarClassificationIO {
 
   private List<StellarClassification> classifications;
 
-  StellarClassificationIO() {
+  private StellarClassificationIO() {
     classifications = new ArrayList<>();
   }
 
   private void readCSV() {
-    String csvFile = "C:\\Users\\simon\\IdeaProjects\\spacedrones-latest\\data\\stellar_data.csv";
+    String csvFile = Thread.currentThread().getContextClassLoader().getResource("stellar_data.csv").getFile();
     BufferedReader br = null;
     String line;
     String cvsSplitBy = ",";
@@ -65,6 +74,26 @@ public class StellarClassificationIO {
     new StellarClassificationIO().readCSV();
   }
 
+  public static StellarClassification getStellarClassification(String starClass) {
+    StellarClassification stellarClassification = null;
+
+    File file = new File(Thread.currentThread().getContextClassLoader().getResource("stellar_data.json").getFile());
+      ObjectMapper mapper = new ObjectMapper();
+      try {
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        List<StellarClassification> myObjects = mapper.readValue(file, new TypeReference<List<StellarClassification>>() {});
+
+        Optional<StellarClassification> classificationFromLibrary = myObjects
+                .stream()
+                .filter(o -> o.type.toUpperCase().equals(starClass.toUpperCase())).findAny();
+
+        stellarClassification = classificationFromLibrary.orElseThrow(() -> new NoSuchElementException("Stellar classification not in library"));
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+
+    return stellarClassification;
+  }
 
 }
 
@@ -79,6 +108,10 @@ class StellarClassification {
   public double boloCorr;
   public double boloMag;
   public String starColor;
+
+  public StellarClassification() {
+
+  }
 
   public StellarClassification(String type, double mass, double luminosity,
                                double radius, double temp, double colorIndex,

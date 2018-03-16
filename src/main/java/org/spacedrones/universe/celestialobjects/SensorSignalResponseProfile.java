@@ -28,7 +28,7 @@ public class SensorSignalResponseProfile {
 	public SignalResponse getSignalResponse(SensorType sensorType, BigDecimal atDistance) {
 		if(SensorType.OPTICAL == sensorType) {
 			double powerInW = (Physics.absMag2LuminosityInW(getOpticalResponse()));
-			double powerInWAtDistance = Physics.opticalSignalAtDistance(powerInW, atDistance);
+			double powerInWAtDistance = Physics.opticalSignalAtDistance(powerInW, atDistance, true);
 			return new SignalResponse(
               powerInWAtDistance,
 					0.0);

@@ -73,7 +73,7 @@ public class PhysicsTest {
 		double absMag = 4.85;
 		double luminosity = Physics.absMag2LuminosityInW(absMag);
 		
-		double atdist = Physics.opticalSignalAtDistance(luminosity, distance);
+		double atdist = Physics.opticalSignalAtDistance(luminosity, distance, false);
 
 		System.out.println(luminosity + " " + atdist);
 		

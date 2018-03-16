@@ -9,8 +9,7 @@ import java.math.BigDecimal;
 
 public class LocalSignalResponseProvider implements SignalResponseProvider {
 
-  public LocalSignalResponseProvider() {
-  }
+  public LocalSignalResponseProvider() {}
 
   @Override
   public SignalResponse getSignalResponse(final CelestialObject object, final SensorType sensorType, final BigDecimal distance) {

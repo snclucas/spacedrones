@@ -29,8 +29,8 @@ public class JSONUtils {
 
 
   public static void main(String[] args) {
-    Star star = new Star(StarClass.K, SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.K));
-    Star star2 = new Star(StarClass.A, SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.A));
+    Star star = new Star(StarClass.K2V, SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.K2V.getStarClass()));
+    Star star2 = new Star(StarClass.A, SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.A.getStarClass()));
     Coordinates coord = new Coordinates(0,0,0);
 
     Map<String, CelestialObject> stars = new HashMap<>();

@@ -10,8 +10,8 @@ public class DataStoreTestSuite {
 	@Test
 	public void testDataRecord() {
 		
-		Star sol = new Star(StarClass.G,
-				SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.G));
+		Star sol = new Star(StarClass.G2V,
+				SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.G2V.getStarClass()));
 		
 //		DataRecord record = new DataRecord("sol", sol);
 //		assertEquals("Data record ID not correct", "sol", record.getRecordID());

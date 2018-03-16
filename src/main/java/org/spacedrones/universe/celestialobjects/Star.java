@@ -15,7 +15,6 @@ public class Star extends AbstractCelestialObject {
 		this.classification = classification;
 	}
 
-
 	StarClass getClassification() {
 		return classification;
 	}

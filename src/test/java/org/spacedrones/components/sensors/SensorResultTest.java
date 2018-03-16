@@ -15,7 +15,7 @@ public class SensorResultTest {
 	@Test
 	public void testSensorResult() {
 		
-		Star sol = new Star(StarClass.G,
+		Star sol = new Star(StarClass.G2V,
 				new SensorSignalResponseProfile(1.0, 1.0, 1.0, 1.0, 1.0));
 		
 		BigDecimal distance = new BigDecimal(24423522352352345.234234);
