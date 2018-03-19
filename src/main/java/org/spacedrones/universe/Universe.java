@@ -9,6 +9,7 @@ import org.spacedrones.data.EnvironmentDataProvider;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.Spacecraft;
 import org.spacedrones.universe.celestialobjects.CelestialObject;
+import org.spacedrones.universe.celestialobjects.SensorSignalResponseProfile;
 import org.spacedrones.universe.dataprovider.ObjectLocationDataProvider;
 import org.spacedrones.universe.dataprovider.ObjectMeta;
 import org.spacedrones.universe.dataprovider.SignalResponseProvider;
@@ -198,6 +199,11 @@ public class Universe implements ObjectLocationDataProvider, EnvironmentDataProv
 	@Override
 	public SignalResponse getSignalResponse(final CelestialObject celestialObject, final SensorType sensorType, final BigDecimal distance) {
 		return signalResponseProvider.getSignalResponse(celestialObject, sensorType, distance);
+	}
+
+	@Override
+	public SignalResponse getSignalResponse(SensorSignalResponseProfile sensorSignalResponseProfile, final SensorType sensorType, final BigDecimal distance) {
+		return signalResponseProvider.getSignalResponse(sensorSignalResponseProfile, sensorType, distance);
 	}
 }
 

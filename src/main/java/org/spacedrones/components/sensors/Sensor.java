@@ -11,7 +11,7 @@ public interface Sensor extends SpacecraftBusComponent, UniverseAware {
 
 	double getSensorGain();
 
-	double getSensorThreshold();
+	SensorThreshold getSensorThreshold();
 
 	List activeScan(double duration, double signalStrength, SignalPropagationModel propagationModel, int sensorType);
 

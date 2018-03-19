@@ -61,9 +61,13 @@ public class Physics {
 		double luminosityInLg = luminosity / CelestialConstants.G2V_STAR_LUMINOSITY;
 		return 4.85 - ( 2.5 * (  Math.log10(luminosityInLg)  ) ) ;
 	}
-	
-	
-	public static double luminosityInLg2AbsMag(double luminosity) {
+
+  public static void main(String[] args) {
+    System.out.println(luminosityInW2AbsMag(CelestialConstants.G2V_STAR_LUMINOSITY));
+    System.out.println(CelestialConstants.G2V_STAR_LUMINOSITY /  (4 * Math.PI * 1*Unit.AU.value()*Unit.AU.value()));
+  }
+
+  public static double luminosityInLg2AbsMag(double luminosity) {
 		return 4.85 - ( 2.5 * (  Math.log10(luminosity)  ) ) ;
 	}
 

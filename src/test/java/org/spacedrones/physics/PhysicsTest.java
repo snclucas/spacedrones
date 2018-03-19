@@ -38,7 +38,12 @@ public class PhysicsTest {
 		assertEquals("dB to W conversion incorrect", W, Physics.dB2W(dB), 0.001);
 		assertEquals("W to dB conversion incorrect", dB, Physics.W2dB(W), 0.001);
 	}
-	
+
+
+	@Test
+	public void testRemove() {
+
+	}
 	
 	
 	@Test

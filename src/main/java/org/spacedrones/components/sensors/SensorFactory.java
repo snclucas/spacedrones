@@ -21,7 +21,7 @@ public class SensorFactory {
 
 			double gainPerElement = 10.0;
 			double signalDetectionThreshold = -9;
-			SensorProfile sensorProfile = new SensorProfile(sensorSensingType, signalDetectionThreshold, gainPerElement);
+			SensorProfile sensorProfile = new SensorProfile(sensorSensingType, SensorThreshold.asMagnitude(signalDetectionThreshold), gainPerElement);
 
 			return new LinearSensorArray(
 					LinearSensorArray.class.getSimpleName(), data.getBusComponentSpecification(), sensorProfile, numberOfSensorElements);
@@ -31,7 +31,7 @@ public class SensorFactory {
 
 			double gainPerElement = 100.0;
 			double signalDetectionThreshold = -9;
-			SensorProfile sensorProfile = new SensorProfile(sensorSensingType, signalDetectionThreshold, gainPerElement);
+			SensorProfile sensorProfile = new SensorProfile(sensorSensingType, SensorThreshold.asMagnitude(signalDetectionThreshold), gainPerElement);
 
 			return new FractalSensorArray(
 					FractalSensorArray.class.getSimpleName(), data.getBusComponentSpecification(), sensorProfile, numberOfSensorElements);
@@ -41,7 +41,7 @@ public class SensorFactory {
 
       double gainPerElement = 100.0;
       double signalDetectionThreshold = -9;
-      SensorProfile sensorProfile = new SensorProfile(sensorSensingType, signalDetectionThreshold, gainPerElement);
+      SensorProfile sensorProfile = new SensorProfile(sensorSensingType, SensorThreshold.asMagnitude(signalDetectionThreshold), gainPerElement);
 
       return new StarTracker(
               StarTracker.class.getSimpleName(), data.getBusComponentSpecification(), sensorProfile);

@@ -23,7 +23,7 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 	}
 
 	@Override
-	public double getSensorThreshold() {
+	public SensorThreshold getSensorThreshold() {
 		return sensorProfile.getSignalThreshold();
 	}
 

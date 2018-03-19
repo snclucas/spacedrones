@@ -3,15 +3,10 @@ package org.spacedrones.components.sensors;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.spacedrones.data.*;
-import org.spacedrones.physics.Unit;
+import org.spacedrones.data.UniversePopulator;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.Universe;
-import org.spacedrones.universe.celestialobjects.SensorSignalResponseLibrary;
-import org.spacedrones.universe.celestialobjects.Star;
-import org.spacedrones.universe.celestialobjects.StarClass;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class SensorTest {
@@ -27,7 +22,7 @@ public class SensorTest {
   @Test
   public void testLinearSensorArray() {
     Sensor sensor = SensorFactory.getSensor(LinearSensorArray.class.getSimpleName(), SensorType.OPTICAL, 1);
-    SensorProfile sensorProfile = new SensorProfile(SensorType.OPTICAL, -9, 10);
+    SensorProfile sensorProfile = new SensorProfile(SensorType.OPTICAL, SensorThreshold.asMagnitude(-9), 10);
 
     universe.addObject(sensor, new Coordinates(0.0, 0.0, 0.0), new double[]{0.0, 0.0, 0.0});
     universe.list();

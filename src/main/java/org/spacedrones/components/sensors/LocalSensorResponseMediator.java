@@ -67,7 +67,7 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 			//		returnedSignalResponse.getSignalDispersion() + " " +
 			//distance.doubleValue()/Unit.Ly.value());
 
-			if(returnedSignalResponse.getSignalStrength() > 1.0) {
+			if(returnedSignalResponse.getSignalStrength() < sensorProfile.getSignalThreshold().getThresholdInWatts()) {
         object.object = new UnknownObject(object.object.getSensorSignalResponse());
       }
 
