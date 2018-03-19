@@ -9,8 +9,7 @@ import org.spacedrones.components.energygeneration.SimpleSolarArray;
 import org.spacedrones.components.energygeneration.SubspacePowerExtractor;
 import org.spacedrones.components.propulsion.thrust.SimpleIonEngine;
 import org.spacedrones.components.propulsion.thrust.SimpleThruster;
-import org.spacedrones.components.sensors.FractalSensorArray;
-import org.spacedrones.components.sensors.LinearSensorArray;
+import org.spacedrones.components.sensors.*;
 import org.spacedrones.consumables.Fuel;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.BusComponentSpecification;
@@ -101,6 +100,9 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 					new PhysicalSpecification(100 * Unit.kg.value(), 1.3 * Unit.l.value()), new OperationalSpecification(1 * Unit.kW.value(), 1 * Unit.kFLOPs.value())));
 
 
+    if(componentType.equals(StarTracker.class.getSimpleName()))
+      return new SpacecraftComponentData(new BusComponentSpecification(
+              new PhysicalSpecification(100 * Unit.kg.value(), 1.3 * Unit.l.value()), new OperationalSpecification(1 * Unit.kW.value(), 1 * Unit.kFLOPs.value())));
 
 
 

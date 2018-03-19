@@ -1,20 +1,16 @@
 package org.spacedrones.components.sensors;
 
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.spacedrones.data.*;
-import org.spacedrones.physics.Unit;
-import org.spacedrones.universe.Coordinates;
-import org.spacedrones.universe.Universe;
-import org.spacedrones.universe.celestialobjects.SensorSignalResponseLibrary;
-import org.spacedrones.universe.celestialobjects.Star;
-import org.spacedrones.universe.celestialobjects.StarClass;
+import org.spacedrones.physics.*;
+import org.spacedrones.universe.*;
+import org.spacedrones.universe.celestialobjects.*;
 
-import java.math.BigDecimal;
-import java.util.List;
+import java.math.*;
+import java.util.*;
 
-public class SensorTest {
+public class StarTrackerTest {
 
   Universe universe = Universe.getInstance();
 
@@ -25,8 +21,8 @@ public class SensorTest {
 
 
   @Test
-  public void testLinearSensorArray() {
-    Sensor sensor = SensorFactory.getSensor(LinearSensorArray.class.getSimpleName(), SensorType.OPTICAL, 1);
+  public void testStarTracker() {
+    Sensor sensor = SensorFactory.getSensor(StarTracker.class.getSimpleName(), SensorType.OPTICAL, 1);
     SensorProfile sensorProfile = new SensorProfile(SensorType.OPTICAL, -9, 10);
 
     universe.addObject(sensor, new Coordinates(0.0, 0.0, 0.0), new double[]{0.0, 0.0, 0.0});

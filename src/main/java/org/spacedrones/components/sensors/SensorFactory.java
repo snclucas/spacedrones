@@ -10,6 +10,7 @@ public class SensorFactory {
 
   public final static String LinearSensorArray = LinearSensorArray.class.getSimpleName();
   public final static String FractalSensorArray = FractalSensorArray.class.getSimpleName();
+  public final static String StarTracker = StarTracker.class.getSimpleName();
 
 
 	public static Sensor getSensor(String sensorType, SensorType sensorSensingType, int numberOfSensorElements){
@@ -34,7 +35,17 @@ public class SensorFactory {
 
 			return new FractalSensorArray(
 					FractalSensorArray.class.getSimpleName(), data.getBusComponentSpecification(), sensorProfile, numberOfSensorElements);
-		}
+		} else if(Objects.equals(sensorType, StarTracker)){
+
+      SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(sensorType);
+
+      double gainPerElement = 100.0;
+      double signalDetectionThreshold = -9;
+      SensorProfile sensorProfile = new SensorProfile(sensorSensingType, signalDetectionThreshold, gainPerElement);
+
+      return new StarTracker(
+              StarTracker.class.getSimpleName(), data.getBusComponentSpecification(), sensorProfile);
+    }
 		throw new IllegalArgumentException("Requested thingy now found");
 	}
 
