@@ -62,19 +62,14 @@ public class Physics {
 		return 4.85 - ( 2.5 * (  Math.log10(luminosityInLg)  ) ) ;
 	}
 
-  public static void main(String[] args) {
-    System.out.println(luminosityInW2AbsMag(CelestialConstants.G2V_STAR_LUMINOSITY));
-    System.out.println(CelestialConstants.G2V_STAR_LUMINOSITY /  (4 * Math.PI * 1*Unit.AU.value()*Unit.AU.value()));
-  }
-
   public static double luminosityInLg2AbsMag(double luminosity) {
 		return 4.85 - ( 2.5 * (  Math.log10(luminosity)  ) ) ;
 	}
 
 	
 	public static double absoluteMagnitude2ApparentMagnitudeAtDistance(double absMag, BigDecimal distance) {
-		if(distance.compareTo(new BigDecimal(1e-50)) < 0)
-			return absMag;
+		//if(distance.compareTo(new BigDecimal(1e-50)) < 0)
+		//	return absMag;
 		double distanceInPc = distance.divide(new BigDecimal(Unit.Pc.value()), Configuration.mc).doubleValue();
 		double distanceModulous = 5.0 * Math.log10(distanceInPc) - 5.0;
 		return distanceModulous + absMag;
@@ -133,5 +128,46 @@ public class Physics {
 	public static double subspaceSignalAtDistanceInLog10(double p0, BigDecimal distance) {
 		return new PowerLawSignalPropagationModel(physicsDataProvider.getValue(PhysicsDataProvider.SUBSPACE_PROPAGATION_INDEX)).getSignal(p0, distance);
 	}
+
+	public static double photons2Watts(double numberPhotons, double wavelength) {
+	  return numberPhotons * (Constants.c / wavelength) * Constants.Planck;
+  }
+
+  public static double watts2Photons(double photonPower, double wavelength) {
+    return photonPower * wavelength / (Constants.c * Constants.Planck);
+  }
+
+	public static double luminosity(double radius, double temperature) {
+	  return 4 * Math.PI * Math.pow(radius, 2) * Constants.sigmaSB * Math.pow(temperature, 4);
+  }
+
+  public static double peakBBWavelength(double temperatureInKelvin) {
+	  return 2.898e-3 / temperatureInKelvin;
+  }
+
+  public static double blackBody(double temperatureInK, double wavelengthInm) {
+	  return (8.0 * Math.PI * Constants.Planck * Constants.c) /
+            (Math.pow(wavelengthInm, 5) * (Math.exp((Constants.Planck * Constants.c) /
+                    (wavelengthInm * Constants.Kb * temperatureInK))-1)) ;
+  }
+
+  public static double spectralFluxDensityPerMeter(double spectralMagnitude, StdAppMagnitude standardApparentMagnitudes) {
+    double freq = Constants.c / standardApparentMagnitudes.peakWavelength;
+    double Fx0 = standardApparentMagnitudes.fluxInJy;
+	  double Fx_Fx0 = Math.pow(10, -0.4*(spectralMagnitude));
+    return Fx_Fx0 * Fx0 * freq;
+  }
+
+  public static void main(String[] args) {
+    System.out.println(luminosity(Constants.R0, 5778));
+    double peakWavelength = peakBBWavelength(5778);
+    System.out.println(peakWavelength);
+    System.out.println(blackBody(5778, peakWavelength));
+
+    for(int i = 50;i<=2000;i=i+50) {
+      System.out.println(i + " " +blackBody(5778, i * 1e-9));
+    }
+
+  }
 
 }

@@ -73,7 +73,7 @@ public class PropulsionManagementSoftwareTest {
 		Hull hull = HullFactory.getHull("Shuttle");
 		SystemComputer computer = new BasicSystemComputer("Simple System Computer", data.getBusComponentSpecification(), 1000 * Unit.GFLOPs.value());
 
-		Spacecraft spacecraft = new SimpleSpacecraft("Shuttle", "1", hull, new SpacecraftBus(computer));
+		Spacecraft spacecraft = new SimpleSpacecraft("Shuttle", "1", hull);
 		PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.class.getSimpleName());
     spacecraftBuildManager.addComponent(powerGenerator);
 

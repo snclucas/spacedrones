@@ -3,9 +3,9 @@ package org.spacedrones.universe;
 import org.spacedrones.Configuration;
 import org.spacedrones.components.Taxonomic;
 import org.spacedrones.components.Tickable;
-import org.spacedrones.components.sensors.SensorType;
 import org.spacedrones.components.sensors.SignalResponse;
 import org.spacedrones.data.EnvironmentDataProvider;
+import org.spacedrones.physics.StdAppMagnitude;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.Spacecraft;
 import org.spacedrones.universe.celestialobjects.CelestialObject;
@@ -169,8 +169,8 @@ public class Universe implements ObjectLocationDataProvider, EnvironmentDataProv
 
 
 	@Override
-	public EnvironmentData getEnvironmentData(Coordinates coordinates) {
-		return universeEnvironmentDataProvider.getEnvironmentData(coordinates);
+	public EnvironmentData getEnvironmentData(Coordinates coordinates, StdAppMagnitude stdAppMagnitude) {
+		return universeEnvironmentDataProvider.getEnvironmentData(coordinates, stdAppMagnitude);
 	}
 
 
@@ -197,14 +197,46 @@ public class Universe implements ObjectLocationDataProvider, EnvironmentDataProv
 	}
 
 	@Override
-	public SignalResponse getSignalResponse(final CelestialObject celestialObject, final SensorType sensorType, final BigDecimal distance) {
-		return signalResponseProvider.getSignalResponse(celestialObject, sensorType, distance);
+	public SignalResponse getEMSignalResponse(final CelestialObject celestialObject, final StdAppMagnitude stdAppMagnitude, final BigDecimal distance) {
+		return signalResponseProvider.getEMSignalResponse(celestialObject, stdAppMagnitude, distance);
 	}
 
 	@Override
-	public SignalResponse getSignalResponse(SensorSignalResponseProfile sensorSignalResponseProfile, final SensorType sensorType, final BigDecimal distance) {
-		return signalResponseProvider.getSignalResponse(sensorSignalResponseProfile, sensorType, distance);
+	public SignalResponse getEMSignalResponse(SensorSignalResponseProfile sensorSignalResponseProfile, final StdAppMagnitude stdAppMagnitude, final BigDecimal distance) {
+		return signalResponseProvider.getEMSignalResponse(sensorSignalResponseProfile, stdAppMagnitude, distance);
 	}
+
+	@Override
+	public SignalResponse getGravimetricSignalResponse(final SensorSignalResponseProfile sensorSignalResponseProfile, final BigDecimal distance) {
+		return signalResponseProvider.getGravimetricSignalResponse(sensorSignalResponseProfile, distance);
+	}
+
+	@Override
+	public SignalResponse getGravimetricSignalResponse(final CelestialObject celestialObject, final BigDecimal distance) {
+		return signalResponseProvider.getGravimetricSignalResponse(celestialObject, distance);
+	}
+
+	@Override
+	public SignalResponse getMagnetometricSignalResponse(final SensorSignalResponseProfile sensorSignalResponseProfile, final BigDecimal distance) {
+		return signalResponseProvider.getMagnetometricSignalResponse(sensorSignalResponseProfile, distance);
+	}
+
+	@Override
+	public SignalResponse getMagnetometricSignalResponse(final CelestialObject celestialObject, final BigDecimal distance) {
+		return signalResponseProvider.getMagnetometricSignalResponse(celestialObject, distance);
+	}
+
+	@Override
+	public SignalResponse getSubspaceResonanceSignalResponse(final SensorSignalResponseProfile sensorSignalResponseProfile, final BigDecimal distance) {
+		return signalResponseProvider.getSubspaceResonanceSignalResponse(sensorSignalResponseProfile, distance);
+	}
+
+	@Override
+	public SignalResponse getSubspaceResonanceSignalResponse(final CelestialObject celestialObject, final BigDecimal distance) {
+		return signalResponseProvider.getSubspaceResonanceSignalResponse(celestialObject, distance);
+	}
+
+
 }
 
 

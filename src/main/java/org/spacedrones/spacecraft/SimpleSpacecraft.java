@@ -4,8 +4,8 @@ import org.spacedrones.structures.hulls.Hull;
 
 public class SimpleSpacecraft extends AbstractSpacecraft {
 
-	public SimpleSpacecraft(String name, String ident, Hull hull, Bus bus) {
-		super(name, ident, hull, bus);
+	public SimpleSpacecraft(String name, String ident, Hull hull) {
+		super(name, ident, hull);
 	}
 
 }

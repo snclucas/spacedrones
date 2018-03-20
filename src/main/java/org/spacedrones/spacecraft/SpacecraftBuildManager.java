@@ -2,14 +2,16 @@ package org.spacedrones.spacecraft;
 
 import org.spacedrones.Configuration;
 import org.spacedrones.components.SpacecraftBusComponent;
-import org.spacedrones.components.computers.*;
+import org.spacedrones.components.computers.ComputerFactory;
+import org.spacedrones.components.computers.SystemComputer;
 import org.spacedrones.exceptions.ComponentConfigurationException;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.structures.hulls.Hull;
 
-public final class SpacecraftBuildManager implements SpacecraftManager {
+import java.util.ArrayList;
+import java.util.List;
 
-  private Bus bus;
+public final class SpacecraftBuildManager implements SpacecraftManager {
 
   private Hull hull;
 
@@ -19,11 +21,12 @@ public final class SpacecraftBuildManager implements SpacecraftManager {
 
   private double hullVolumeRemaining;
 
+  private List<SpacecraftBusComponent> components = new ArrayList<>();
+
   public SpacecraftBuildManager(String name, Hull hull) {
     SystemComputer systemComputer = ComputerFactory.getSystemComputer("BasicSystemComputer");
     String ident = Configuration.getUUID();
-    Bus spacecraftBus = new SpacecraftBus();
-    spacecraft = new SimpleSpacecraft(name, ident, hull, spacecraftBus);
+    spacecraft = new SimpleSpacecraft(name, ident, hull);
     spacecraft.giveManagerHandleTo(this);
 
     maxVolumeForComponents = hull.getVolume(Unit.m3);
@@ -41,14 +44,14 @@ public final class SpacecraftBuildManager implements SpacecraftManager {
   }
 
   public void receiveManagerHandle(AbstractSpacecraft.Handle handle) {
-    this.bus = handle.getBus();
+    this.components = handle.getSCComponents();
   }
 
   public void addComponent(SpacecraftBusComponent component) {
     double volumeOfComponent = component.getVolume(Unit.m3);
     if(hullVolumeRemaining >= volumeOfComponent) {
-      bus.register(component);
       hullVolumeRemaining -= volumeOfComponent;
+      components.add(component);
     }
     else {
       throw new ComponentConfigurationException("Insufficient volume for component. "
@@ -57,8 +60,8 @@ public final class SpacecraftBuildManager implements SpacecraftManager {
   }
 
   public void removeComponent(SpacecraftBusComponent component) {
-    if(bus.getComponents().contains(component)) {
-      bus.getComponents().remove(component);
+    if(components.contains(component)) {
+      components.remove(component);
       hullVolumeRemaining += component.getVolume(Unit.m3);
     }
     else {

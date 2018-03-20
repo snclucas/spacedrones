@@ -1,6 +1,5 @@
 package org.spacedrones.components.computers;
 
-import org.spacedrones.spacecraft.Bus;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 
 
@@ -10,9 +9,9 @@ public class MockSystemComputer extends BasicSystemComputer{
 	private double totalCPUAvailable = 0.0;
 	
 	
-	public MockSystemComputer(String name, Bus bus,
+	public MockSystemComputer(String name,
 			BusComponentSpecification busResourceSpecification,
-			double maxCPUThroughput, Bus spacecraftBus) {
+			double maxCPUThroughput) {
 		super(name, busResourceSpecification, maxCPUThroughput);
 	}
 

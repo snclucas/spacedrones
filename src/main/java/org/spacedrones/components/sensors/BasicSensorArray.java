@@ -9,7 +9,7 @@ public abstract class BasicSensorArray extends AbstractSensor {
 	final private int numberOfSensorElements;
 
 	BasicSensorArray(String name, BusComponentSpecification busResourceSpecification,
-									 SensorProfile sensorProfile, int numberOfSensorElements) {
+                   EMSensorProfile sensorProfile, int numberOfSensorElements) {
 		super(name, busResourceSpecification, sensorProfile);
 		this.numberOfSensorElements = numberOfSensorElements;
 	}

@@ -1,6 +1,7 @@
 package org.spacedrones.universe;
 
 import org.junit.Test;
+import org.spacedrones.physics.StdAppMagnitude;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.Spacecraft;
 import org.spacedrones.spacecraft.SpacecraftFactory;
@@ -26,7 +27,6 @@ public class UniverseTest {
 
 		Coordinates solCoords =  new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value()));
 
-
 		Star sol = new Star(StarClass.G2V,
 				SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.G2V.getStarClass()));
 		Coordinates coords = solCoords.add(
@@ -36,7 +36,7 @@ public class UniverseTest {
 		//Coordinates spacecraftLocation = new Coordinates(new BigDecimal(8*Unit.kPc.value() + 149600000 * Unit.Km.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value()));
 		//universe.updateSpacecraftLocation(spacecraft.getIdent(), spacecraftLocation);
 
-		EnvironmentData data = universe.getEnvironmentData(universe.getSpacecraftLocation(spacecraft.id()));
+		EnvironmentData data = universe.getEnvironmentData(universe.getSpacecraftLocation(spacecraft.id()), StdAppMagnitude.V);
 
 	//	System.out.println(SpacecraftFirmware.getTotalPowerAvailable(spacecraft.getSpacecraftBus()));
 

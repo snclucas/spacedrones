@@ -4,6 +4,7 @@ package org.spacedrones.components.sensors;
 import org.junit.Before;
 import org.junit.Test;
 import org.spacedrones.data.UniversePopulator;
+import org.spacedrones.physics.StdAppMagnitude;
 import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.Universe;
 
@@ -22,7 +23,8 @@ public class SensorTest {
   @Test
   public void testLinearSensorArray() {
     Sensor sensor = SensorFactory.getSensor(LinearSensorArray.class.getSimpleName(), SensorType.OPTICAL, 1);
-    SensorProfile sensorProfile = new SensorProfile(SensorType.OPTICAL, SensorThreshold.asMagnitude(-9), 10);
+    StdAppMagnitude stdAppMagnitudes = StdAppMagnitude.V;
+    EMSensorProfile sensorProfile = new EMSensorProfile(stdAppMagnitudes, EMSensorThreshold.asMagnitude(9, stdAppMagnitudes), 10);
 
     universe.addObject(sensor, new Coordinates(0.0, 0.0, 0.0), new double[]{0.0, 0.0, 0.0});
     universe.list();

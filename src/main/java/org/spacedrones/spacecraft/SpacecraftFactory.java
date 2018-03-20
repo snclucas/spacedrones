@@ -34,7 +34,6 @@ public class SpacecraftFactory {
 	public static Spacecraft getSpacecraft(String spacecraftType) throws InvalidParameterException{
 		SpacecraftDataProvider spacecraftDataProvider = Configuration.getSpacecraftDataProvider();
 		SystemComputer systemComputer = ComputerFactory.getSystemComputer("BasicSystemComputer");
-		Bus spacecraftBus = new SpacecraftBus();
 
 		switch (spacecraftType) {
 

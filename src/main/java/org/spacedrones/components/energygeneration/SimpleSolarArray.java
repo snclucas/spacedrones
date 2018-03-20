@@ -3,6 +3,7 @@ package org.spacedrones.components.energygeneration;
 import org.spacedrones.Configuration;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.data.EnvironmentDataProvider;
+import org.spacedrones.physics.StdAppMagnitude;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.software.Message;
 import org.spacedrones.software.SystemMessage;
@@ -88,7 +89,7 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 		String spacecraftIdent = (String)(this.getSystemComputer().getSystemData("spaceraft-ident"));
 		Coordinates coordinates = Universe.getInstance()
 				.getSpacecraftLocation(spacecraftIdent);
-		return environmentDataProvider.getEnvironmentData(coordinates).getSolarFlux();
+		return environmentDataProvider.getEnvironmentData(coordinates, StdAppMagnitude.V).getSolarFlux();
 	}
 
 }

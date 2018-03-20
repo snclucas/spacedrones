@@ -20,7 +20,7 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 
 	public SystemStatusMessage callDrive(double powerLevel) {
 		SystemStatusMessage message = null;
-		List<SpacecraftBusComponent> engines = getSystemComputer().getSystemComputer().findComponentByType(Engine.class);
+		List<Engine> engines = getSystemComputer().getSystemComputer().findComponentByType(Engine.class);
 		for(SpacecraftBusComponent engine : engines)
 			if(engine instanceof ThrustingEngine) {
 				message =    ((ThrustDriveInterface) engine).callDrive(powerLevel);
@@ -89,7 +89,7 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 	}
 
 	private ThrustingEngine findEngineByIdent(String ident) {
-		List<SpacecraftBusComponent> engines = getSystemComputer().getSystemComputer().findComponentByType(Engine.class);
+		List<Engine> engines = getSystemComputer().getSystemComputer().findComponentByType(Engine.class);
 		//TODO LOOK at thisif(engines != null)
 			for(SpacecraftBusComponent engine : engines) {
 				if(Objects.equals(engine.id(), ident))

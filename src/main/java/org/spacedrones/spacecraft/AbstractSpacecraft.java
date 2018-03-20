@@ -1,10 +1,14 @@
 package org.spacedrones.spacecraft;
 
+import org.spacedrones.components.SpacecraftBusComponent;
 import org.spacedrones.components.comms.Status;
 import org.spacedrones.components.computers.*;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.status.SystemStatus;
 import org.spacedrones.structures.hulls.Hull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public abstract class AbstractSpacecraft implements Spacecraft {
@@ -20,14 +24,17 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 
 	private boolean systemsOnline;
 
-	private final Bus bus;
+  private List<SpacecraftBusComponent> components = new ArrayList<>();
 
-	AbstractSpacecraft(String name, String id, Hull hull, Bus bus) {
+	AbstractSpacecraft(String name, String id, Hull hull) {
 		this.name = name;
 		this.hull = hull;
-		this.bus = bus;
 		this.id = id;
 	}
+
+  //private List<SpacecraftBusComponent> getComponents() {
+  //  return spacecraftFirmware.getComponents();
+  //}
 
 	@Override
 	public String name() {
@@ -43,9 +50,9 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	public SystemStatus online() {
 		SystemStatus status = new SystemStatus(this);
 
-		SpacecraftFirmware.scanSpacecraftComponents(bus);
+		SpacecraftFirmware.scanSpacecraftComponents(components);
 
-		if(!SpacecraftFirmware.bootstrapSystemComputer(bus)) {
+		if(!SpacecraftFirmware.bootstrapSystemComputer(components)) {
 			status.addSystemMessage("No system computer found! Aborting spacecraft onlining.", Status.CRITICAL);
 			systemsOnline = false;
 			online = false;
@@ -53,14 +60,16 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 		}
 		else {
 			//Online the system computer
-			SystemStatus systemComputerStatus = bus.getSystemComputer().online();
+      SystemComputer systemComputer = SpacecraftFirmware.getSystemComputer(components);
+      systemComputer.setComponents(components);
+			SystemStatus systemComputerStatus = systemComputer.online();
 			status.mergeSystemStatus(systemComputerStatus);
 			if(status.isOK()) {
 				systemsOnline = true;
 				online = true;
 				SystemData systemData = new SystemData("spaceraft-ident", "");
 				DataRecord<SystemData> data = new DataRecord<>(systemData.getId(), SystemData.class.getSimpleName(), systemData);
-				bus.getSystemComputer().getStorageDevice().saveData(data);
+        SpacecraftFirmware.getSystemComputer(components).getStorageDevice().saveData(data);
 			}
 		}
 		return status;
@@ -86,7 +95,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 
 
 	public double getMass(Unit unit) {
-		return hull.getMass(unit) + bus.getComponents().stream().mapToDouble(f-> f.getMass(unit)).sum();
+		return hull.getMass(unit) + components.stream().mapToDouble(f-> f.getMass(unit)).sum();
 	}
 
 	public double getLength(Unit unit) {
@@ -113,18 +122,17 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 
 
 	public double getTotalPowerRequirementOfSpacecraftBusComponents() {
-		return SpacecraftFirmware.getTotalPowerAvailable(bus);
+		return SpacecraftFirmware.getTotalPowerAvailable(components);
 	}
 
 	public double getTotalCPURequirementOfSpacecraftBusComponents() {
-		return SpacecraftFirmware.getTotalCPUThroughputAvailable(bus);
+		return SpacecraftFirmware.getTotalCPUThroughputAvailable(components);
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((bus == null) ? 0 : bus.hashCode());
 		result = prime * result + ((hull == null) ? 0 : hull.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
@@ -139,11 +147,6 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 		if (getClass() != obj.getClass())
 			return false;
 		AbstractSpacecraft other = (AbstractSpacecraft) obj;
-		if (bus == null) {
-			if (other.bus != null)
-				return false;
-		} else if (!bus.equals(other.bus))
-			return false;
 		if (hull == null) {
 			if (other.hull != null)
 				return false;
@@ -165,7 +168,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 
 	@Override
 	public void tick(double dt) {
-		bus.getComponents().forEach(c-> c.tick(dt));
+    components.forEach(c-> c.tick(dt));
 	}
 
   public void giveManagerHandleTo(SpacecraftManager other) {
@@ -173,7 +176,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
   }
 
   public class Handle {
-    public Bus getBus() { return bus; }
+    public List<SpacecraftBusComponent> getSCComponents() { return components; }
 		public Hull getHull() { return hull; }
     private Handle() { }
   }

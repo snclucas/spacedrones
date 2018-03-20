@@ -24,7 +24,7 @@ public class GameRunner {
 	{
 
 		long lastLoopTime = System.nanoTime();
-		final int TARGET_FPS = 1;
+		final int TARGET_FPS = 10;
 		final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
 
 		// keep looping round til the game ends
@@ -37,6 +37,8 @@ public class GameRunner {
 			long updateLength = now - lastLoopTime;
 			lastLoopTime = now;
 			double delta = updateLength / ((double)OPTIMAL_TIME);
+
+			System.out.println(updateLength + " " + lastLoopTime + " " + delta);
 
 			// update the frame counter
 			lastFpsTime += updateLength;
@@ -55,9 +57,7 @@ public class GameRunner {
             //if(delta >-1)
 			    //System.out.println(delta);
 
-			// draw everything
-            universe.tick(delta);
-			runner.tick(delta);
+
 
 			// we want each frame to take 10 milliseconds, to do this
 			// we've recorded when we started the frame. We add 10 milliseconds
@@ -66,8 +66,13 @@ public class GameRunner {
 			// remember this is in ms, whereas our lastLoopTime etc. vars are in ns.
 
 			long ss = (lastLoopTime-System.nanoTime() + OPTIMAL_TIME)/1000000;
+      System.out.println(ss);
 
-			try{
+      // draw everything
+      universe.tick(ss / 1000.0);
+      runner.tick(ss / 1000.0);
+
+      try{
 				Thread.sleep(ss);
 
 			}
@@ -83,10 +88,10 @@ public class GameRunner {
 
 		Universe universe = Universe.getInstance();
 		Spacecraft simpleSpacecraft = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SHUTTLE);
-		Coordinates coords = new Coordinates(BigDecimal.ZERO, new BigDecimal(1* Unit.Ly.value()), BigDecimal.ZERO);
+		Coordinates coords = new Coordinates(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
 		universe.addObject(simpleSpacecraft, coords, new double[]{0.0, 0.0, 0.0});
 
-		universe.updateSpacecraftVelocity(simpleSpacecraft.id(), new double[]{1.5e4, 4.2e10, 23.8e2});
+		universe.updateSpacecraftVelocity(simpleSpacecraft.id(), new double[]{1.5* Unit.Kps.value(), 0.2* Unit.Kps.value(), 2.11* Unit.Kps.value()});
 
 		Runner runner = new Runner();
 		runner.addManager(new SpacecraftRunManager(universe));

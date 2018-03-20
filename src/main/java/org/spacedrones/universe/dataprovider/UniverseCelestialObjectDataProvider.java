@@ -1,8 +1,8 @@
 package org.spacedrones.universe.dataprovider;
 
-import org.spacedrones.components.sensors.SensorProfile;
+import org.spacedrones.components.sensors.EMSensorProfile;
 
 public interface UniverseCelestialObjectDataProvider {
-	double getSignalPropagationSpeed(SensorProfile sensorProfile);
+	double getSignalPropagationSpeed(EMSensorProfile sensorProfile);
 	void populate();
 }

@@ -27,9 +27,9 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 
 	@Override
 	public List<SensorResult> activeScan(double duration,
-			double signalStrength, SignalPropagationModel propagationModel, SensorProfile sensorProfile) {
+			double signalStrength, SignalPropagationModel propagationModel, EMSensorProfile sensorProfile) {
 
-		double signalPropagationSpeed = getSignalPropagationSpeed(sensorProfile);
+		double signalPropagationSpeed = getSignalPropagationSpeed(SensorType.OPTICAL);
 
 		List<SensorResult> results = new ArrayList<>();
 		Coordinates spacecraftLocation = universe.getSpacecraftLocation(id);
@@ -43,10 +43,9 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 	}
 
 
-	public List<SensorResult> passiveScan(double duration, SensorProfile sensorProfile) {
+	public List<SensorResult> passiveScan(double duration, EMSensorProfile sensorProfile) {
 		List<SensorResult> results = new ArrayList<>();
 		Coordinates spacecraftLocation = universe.getObjectLocationById(id).get();
-
 		BigDecimal maximumDistanceScanned = new BigDecimal(1000000 * Unit.Ly.value());
 
 		List<ObjectMeta<CelestialObject>> objectsWithinDistance =
@@ -58,28 +57,20 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
       }
 
 			BigDecimal distance = Utils.distanceToLocation(object.coordinates, spacecraftLocation, Unit.One);
+			SignalResponse returnedSignalResponse = universe.getEMSignalResponse(object.object, sensorProfile.getStdAppMagnitude(), distance);
 
-			SignalResponse returnedSignalResponse = universe.getSignalResponse(object.object, sensorProfile.getSensorType(), distance);
-			// TODO maybe set celestial object as UNKNOWN if under a certain threshold?
-
-			//System.out.println(object + " " +
-			//returnedSignalResponse.getSignalStrength() + " " +
-			//		returnedSignalResponse.getSignalDispersion() + " " +
-			//distance.doubleValue()/Unit.Ly.value());
-
-			if(returnedSignalResponse.getSignalStrength() < sensorProfile.getSignalThreshold().getThresholdInWatts()) {
+			if(returnedSignalResponse.getSignalStrength() < sensorProfile.getSignalThreshold().getThresholdInWattsPerMeter()) {
         object.object = new UnknownObject(object.object.getSensorSignalResponse());
       }
 
 			SensorResult result = new SensorResult(object.object, Utils.distanceToLocation(object.coordinates, spacecraftLocation, Unit.One),
-					Utils.vectorToLocation(object.coordinates, spacecraftLocation, false), returnedSignalResponse);
+					Utils.vectorToLocation(spacecraftLocation, object.coordinates, true), returnedSignalResponse);
 			results.add(result);
 		}
 		return results;
 	}
 
-  public double getSignalPropagationSpeed(SensorProfile sensorProfile) {
-    SensorType sensorType = sensorProfile.getSensorType();
+  public double getSignalPropagationSpeed(SensorType sensorType) {
     if(sensorType == SensorType.OPTICAL) {
       return 1.0 * Constants.c;
     }

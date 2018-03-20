@@ -9,13 +9,14 @@ import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.dataprovider.ObjectLocationDataProvider;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class SpacecraftRunManager implements SpacecraftManager, RunManager {
 
   private ObjectLocationDataProvider spacecraftDataProvider;
 
-  private Bus bus;
+  private List<SpacecraftBusComponent> components = new ArrayList<>();
 
   SpacecraftRunManager(ObjectLocationDataProvider spacecraftDataProvider) {
     this.spacecraftDataProvider = spacecraftDataProvider;
@@ -23,7 +24,7 @@ public final class SpacecraftRunManager implements SpacecraftManager, RunManager
   }
 
   public void receiveManagerHandle(AbstractSpacecraft.Handle handle) {
-    this.bus = handle.getBus();
+    this.components = handle.getSCComponents();
   }
 
   public void setSpacecraftVelocity(String ident, double[] velocity) {
@@ -49,8 +50,8 @@ public final class SpacecraftRunManager implements SpacecraftManager, RunManager
       spacecraft.giveManagerHandleTo(this);
 
       double[] dV = new double[]{0.0, 0.0, 0.0};
-      List<SpacecraftBusComponent> components = bus.findComponentByType(ThrustingEngine.class);
-      for (SpacecraftBusComponent component : components) {
+      List<ThrustingEngine> comps = SpacecraftFirmware.findBusComponentByType(components, ThrustingEngine.class);
+      for (SpacecraftBusComponent component : comps) {
         double[] thrust = ((ThrustingEngine) component).getThrust(currentVelocity);
         dV[0] += thrust[0] / spacecraft.getMass(Unit.kg) * 1 * Unit.s.value();
         dV[1] += thrust[1] / spacecraft.getMass(Unit.kg) * 1 * Unit.s.value();

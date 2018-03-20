@@ -21,8 +21,6 @@ public class SystemComputerTest {
 	private double maximumCPU = nominalCPU;
 	boolean vectored = false;
 
-	private Bus spacecraftBus = null;
-
   private SystemComputer computer = null;
 
   private BusComponentSpecification busSpecs = new BusComponentSpecification(
@@ -36,7 +34,6 @@ public class SystemComputerTest {
 		double efficiency = 75 * Unit.percent.value();
 
 		computer = new BasicSystemComputer("Test computer", busSpecs, 10 * Unit.GFLOPs.value());
-    spacecraftBus = new SpacecraftBus();
 
 		//BusComponentSpecification powerGeneratorBusSpecs = new BusComponentSpecification(
 		//		new PhysicalSpecification(mass, volume),
@@ -94,8 +91,6 @@ public class SystemComputerTest {
     assertNotEquals("Should have some messages", 0, systemStatus.getMessages().size());
 
     computer.getMaxCPUThroughput();
-
-		computer.registerBus(spacecraftBus);
 
     systemStatus = computer.online();
 

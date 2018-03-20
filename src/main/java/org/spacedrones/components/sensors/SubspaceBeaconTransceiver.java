@@ -27,7 +27,7 @@ public class SubspaceBeaconTransceiver extends AbstractSensor implements Positio
 
 	public SubspaceBeaconTransceiver(String name,
 			BusComponentSpecification busResourceSpecification,
-			SensorProfile sensorProfile) {
+			EMSensorProfile sensorProfile) {
 		super(name, busResourceSpecification, sensorProfile);
 
 		this.beaconSignals = new ArrayList<>();

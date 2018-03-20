@@ -7,14 +7,14 @@ import java.util.List;
 
 public interface Sensor extends SpacecraftBusComponent, UniverseAware {
 
-	SensorProfile getSensorProfile();
+	EMSensorProfile getSensorProfile();
 
 	double getSensorGain();
 
-	SensorThreshold getSensorThreshold();
+	EMSensorThreshold getSensorThreshold();
 
 	List activeScan(double duration, double signalStrength, SignalPropagationModel propagationModel, int sensorType);
 
-	List<SensorResult> passiveScan(double duration, SensorProfile sensorProfile);
+	List<SensorResult> passiveScan(double duration, EMSensorProfile sensorProfile);
 
 }

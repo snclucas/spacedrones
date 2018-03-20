@@ -9,10 +9,10 @@ import java.util.List;
 
 public abstract class AbstractSensor extends AbstractBusComponent implements Sensor {
 
-	final private SensorProfile sensorProfile;
+	final private EMSensorProfile sensorProfile;
 
 	AbstractSensor(String name, BusComponentSpecification busResourceSpecification,
-								 SensorProfile sensorProfile) {
+								 EMSensorProfile sensorProfile) {
 		super(name, busResourceSpecification);
 		this.sensorProfile = sensorProfile;
 	}
@@ -23,7 +23,7 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 	}
 
 	@Override
-	public SensorThreshold getSensorThreshold() {
+	public EMSensorThreshold getSensorThreshold() {
 		return sensorProfile.getSignalThreshold();
 	}
 
@@ -36,7 +36,7 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 	}
 
   @Override
-  public List<SensorResult> passiveScan(double duration, SensorProfile sensorProfile) {
+  public List<SensorResult> passiveScan(double duration, EMSensorProfile sensorProfile) {
 		SensorResponseMediator sensorResponseMediator = Configuration.getSensorResponseMediator(getIdent());
 		return sensorResponseMediator.passiveScan(duration, sensorProfile);
 	}
@@ -47,7 +47,7 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
   }
 
 	@Override
-	public SensorProfile getSensorProfile() {
+	public EMSensorProfile getSensorProfile() {
 		return sensorProfile;
 	}
 

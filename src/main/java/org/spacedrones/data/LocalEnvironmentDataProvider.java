@@ -1,10 +1,13 @@
 package org.spacedrones.data;
 
 import org.spacedrones.Configuration;
-import org.spacedrones.components.sensors.SensorType;
 import org.spacedrones.components.sensors.SignalResponse;
+import org.spacedrones.physics.StdAppMagnitude;
 import org.spacedrones.physics.Unit;
-import org.spacedrones.universe.*;
+import org.spacedrones.universe.CelestialConstants;
+import org.spacedrones.universe.Coordinates;
+import org.spacedrones.universe.EnvironmentData;
+import org.spacedrones.universe.Universe;
 import org.spacedrones.universe.celestialobjects.CelestialObject;
 import org.spacedrones.universe.celestialobjects.Star;
 import org.spacedrones.universe.dataprovider.LocalSignalResponseProvider;
@@ -21,7 +24,7 @@ public class LocalEnvironmentDataProvider implements EnvironmentDataProvider {
 	public LocalEnvironmentDataProvider () {
 	}
 
-	public EnvironmentData getEnvironmentData(Coordinates coordinates) {
+	public EnvironmentData getEnvironmentData(Coordinates coordinates, StdAppMagnitude stdAppMagnitude) {
 		final double subspaceNoise = getSubspaceNoise(coordinates);
 
 		final List<Star> nearByStars =
@@ -36,7 +39,7 @@ public class LocalEnvironmentDataProvider implements EnvironmentDataProvider {
 			if(celestial instanceof Star) {
 				Star star = ((Star)celestial);
 				BigDecimal d = Utils.distanceToLocation(coordinates, Universe.getInstance().getCelestialObjectLocationById(star.id()).get(), Unit.One);
-				SignalResponse response = signalResponseProvider.getSignalResponse(star, SensorType.OPTICAL, BigDecimal.ZERO);
+				SignalResponse response = signalResponseProvider.getEMSignalResponse(star, stdAppMagnitude, BigDecimal.ZERO);
 				d = d.max(new BigDecimal(CelestialConstants.G2V_STAR_RADIUS));
 				luminosity += response.getSignalStrength() / (4*Math.PI* (d.pow(2)).doubleValue() );
 				System.out.println(star.id() + " " + response.getSignalStrength() / (4*Math.PI* (d.pow(2)).doubleValue() ));

@@ -30,7 +30,7 @@ public abstract class AbstractReactor extends AbstractPowerGenerator implements 
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
 
-		List<SpacecraftBusComponent> busComponents = getSystemComputer().findComponentByType(FuelSubSystem.class);
+		List<FuelSubSystem> busComponents = getSystemComputer().findComponentByType(FuelSubSystem.class);
 
 		if(busComponents.size() > 0) {
 			for(SpacecraftBusComponent component : busComponents) {

@@ -3,6 +3,7 @@ package org.spacedrones.components.sensors;
 import org.spacedrones.Configuration;
 import org.spacedrones.data.SpacecraftComponentData;
 import org.spacedrones.data.SpacecraftDataProvider;
+import org.spacedrones.physics.StdAppMagnitude;
 
 import java.util.*;
 
@@ -20,8 +21,9 @@ public class SensorFactory {
 			SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(sensorType);
 
 			double gainPerElement = 10.0;
-			double signalDetectionThreshold = -9;
-			SensorProfile sensorProfile = new SensorProfile(sensorSensingType, SensorThreshold.asMagnitude(signalDetectionThreshold), gainPerElement);
+			double signalDetectionThreshold = 9;
+			StdAppMagnitude stdAppMagnitudes = StdAppMagnitude.V;
+			EMSensorProfile sensorProfile = new EMSensorProfile(stdAppMagnitudes, EMSensorThreshold.asMagnitude(signalDetectionThreshold, stdAppMagnitudes), gainPerElement);
 
 			return new LinearSensorArray(
 					LinearSensorArray.class.getSimpleName(), data.getBusComponentSpecification(), sensorProfile, numberOfSensorElements);
@@ -30,8 +32,9 @@ public class SensorFactory {
 			SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(sensorType);
 
 			double gainPerElement = 100.0;
-			double signalDetectionThreshold = -9;
-			SensorProfile sensorProfile = new SensorProfile(sensorSensingType, SensorThreshold.asMagnitude(signalDetectionThreshold), gainPerElement);
+			double signalDetectionThreshold = 9;
+			StdAppMagnitude stdAppMagnitudes = StdAppMagnitude.V;
+			EMSensorProfile sensorProfile = new EMSensorProfile(stdAppMagnitudes, EMSensorThreshold.asMagnitude(signalDetectionThreshold, stdAppMagnitudes), gainPerElement);
 
 			return new FractalSensorArray(
 					FractalSensorArray.class.getSimpleName(), data.getBusComponentSpecification(), sensorProfile, numberOfSensorElements);
@@ -40,8 +43,9 @@ public class SensorFactory {
       SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(sensorType);
 
       double gainPerElement = 100.0;
-      double signalDetectionThreshold = -9;
-      SensorProfile sensorProfile = new SensorProfile(sensorSensingType, SensorThreshold.asMagnitude(signalDetectionThreshold), gainPerElement);
+      double signalDetectionThreshold = 9;
+			StdAppMagnitude stdAppMagnitudes = StdAppMagnitude.V;
+      EMSensorProfile sensorProfile = new EMSensorProfile(stdAppMagnitudes, EMSensorThreshold.asMagnitude(signalDetectionThreshold, stdAppMagnitudes), gainPerElement);
 
       return new StarTracker(
               StarTracker.class.getSimpleName(), data.getBusComponentSpecification(), sensorProfile);

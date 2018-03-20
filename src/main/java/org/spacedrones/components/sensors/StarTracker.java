@@ -6,9 +6,7 @@ import java.util.*;
 
 public class StarTracker extends AbstractSensor {
 
-	public StarTracker(String name,
-              BusComponentSpecification busResourceSpecification,
-              SensorProfile sensorProfile) {
+	public StarTracker(String name, BusComponentSpecification busResourceSpecification, EMSensorProfile sensorProfile) {
 		super(name, busResourceSpecification, sensorProfile);
 	}
 

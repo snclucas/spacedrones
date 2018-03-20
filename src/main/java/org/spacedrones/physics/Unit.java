@@ -2,7 +2,10 @@ package org.spacedrones.physics;
 
 public class Unit {
 	
-	public enum Type {ANGLE, DIMENTIONLESS, LENGTH, MASS, AREA, VOLUME, TIME, FORCE, POWER, CPU, ENERGY, TEMPERATURE}
+	public enum Type {ANGLE, DIMENTIONLESS, LENGTH, MASS, AREA, VOLUME, TIME, FORCE, POWER, CPU, ENERGY, TEMPERATURE, FLUX_DENSITY, VELOCITY}
+
+
+  public static Unit Jy = new Unit(1.0e-26, Type.FLUX_DENSITY, "Jy");
 
 	//Unit of temperature
 	public static Unit K = new Unit(1.0, Type.TEMPERATURE, "K");
@@ -53,6 +56,9 @@ public class Unit {
 	public static Unit GJ = new Unit(1.0e9, Type.ENERGY, "GJ");
 	
 	//Units for length
+  public static Unit nm = new Unit(1.0e-9, Type.LENGTH, "um");
+  public static Unit um = new Unit(1.0e-6, Type.LENGTH, "um");
+	public static Unit mm = new Unit(1.0e-3, Type.LENGTH, "mm");
 	public static Unit cm = new Unit(1.0e-2, Type.LENGTH, "cm");
 	public static Unit m = new Unit(1.0, Type.LENGTH, "m");
 	public static Unit Km = new Unit(1.0e3, Type.LENGTH, "Km");
@@ -64,6 +70,8 @@ public class Unit {
 	
 	//Units for time
 	public static Unit s = new Unit(1.0, Type.TIME, "s");
+  public static Unit min = new Unit(60.0, Type.TIME, "s");
+  public static Unit hour = new Unit(3600.0, Type.TIME, "s");
 	public static Unit day = new Unit(86400.0, Type.TIME, "day");
 	public static Unit year = new Unit(365 * 86400.0, Type.TIME, "year");
 	
@@ -71,6 +79,11 @@ public class Unit {
 
 	public static Unit degrees = new Unit(Math.PI / 180.0, Type.ANGLE, "deg");
 	public static Unit radians = new Unit(1.0, Type.ANGLE, "rad");
+
+
+  //Unit of velocity
+  public static Unit Kps = new Unit(1.0 * Unit.Km.value() / Unit.s.value(), Type.VELOCITY, "Km/s");
+  public static Unit Kph = new Unit(1.0 * Unit.Km.value() / Unit.hour.value(), Type.VELOCITY, "Km/h");
 	
 	private double value;
 	private Type type;

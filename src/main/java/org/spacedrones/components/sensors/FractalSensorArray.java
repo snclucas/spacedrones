@@ -7,8 +7,8 @@ import org.spacedrones.spacecraft.BusComponentSpecification;
 public class FractalSensorArray extends BasicSensorArray {
 
 	FractalSensorArray(String name,
-			BusComponentSpecification busResourceSpecification,
-			SensorProfile sensorProfile, int numberOfSensorElements) {
+                     BusComponentSpecification busResourceSpecification,
+                     EMSensorProfile sensorProfile, int numberOfSensorElements) {
 		super(name, busResourceSpecification, sensorProfile,
 				numberOfSensorElements);
 	}

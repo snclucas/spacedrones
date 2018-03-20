@@ -8,16 +8,12 @@ import org.spacedrones.software.MessageMediator;
 import org.spacedrones.software.PropulsionManagementSoftware;
 import org.spacedrones.software.Software;
 import org.spacedrones.software.SystemMessageServiceSoftware;
-import org.spacedrones.spacecraft.Bus;
-import org.spacedrones.spacecraft.SpacecraftBus;
 
 import java.util.Objects;
 
 public class ComputerFactory extends DataFactory {
 
 	public static SystemComputer getSystemComputer(String computerType){
-
-		Bus spacecraftBus = new SpacecraftBus();
 
 		if(Objects.equals(computerType, BasicSystemComputer.class.getSimpleName())){
 			SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(Computer.class.getSimpleName());
