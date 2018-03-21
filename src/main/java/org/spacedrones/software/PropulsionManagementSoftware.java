@@ -9,8 +9,7 @@ import org.spacedrones.components.propulsion.thrust.ThrustingEngine;
 import org.spacedrones.spacecraft.BusRequirement;
 import org.spacedrones.status.SystemStatusMessage;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class PropulsionManagementSoftware extends AbstractSoftware implements Software, ThrustDriveInterface {
 
@@ -20,7 +19,8 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 
 	public SystemStatusMessage callDrive(double powerLevel) {
 		SystemStatusMessage message = null;
-		List<Engine> engines = getSystemComputer().getSystemComputer().findComponentByType(Engine.class);
+		List<Engine> engines = getSystemComputer().orElseThrow(() ->
+            new NoSuchElementException(this.getDescription() + ": No system computer")).findComponentByType(Engine.class);
 		for(SpacecraftBusComponent engine : engines)
 			if(engine instanceof ThrustingEngine) {
 				message =    ((ThrustDriveInterface) engine).callDrive(powerLevel);
@@ -35,7 +35,8 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
               Status.CRITICAL);
 
 		BusRequirement busRequirement = engine.callDrive(powerLevel);
-		SystemStatusMessage operationPermittedMessage = getSystemComputer().getSystemComputer().requestOperation(engine, busRequirement);
+		SystemStatusMessage operationPermittedMessage = getSystemComputer().orElseThrow(() ->
+            new NoSuchElementException(this.getDescription() + ": No system computer")).requestOperation(engine, busRequirement);
 
 		if(operationPermittedMessage.getStatus() == Status.PERMITTED) {
 			engine.execute();
@@ -60,7 +61,8 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 			return new SystemStatusMessage(null, "No engine found with id: "+engineIdent, Status.CRITICAL);
 
 		BusRequirement busRequirement = engine.callVector(engineVector);
-		SystemStatusMessage operationPermittedMessage = getSystemComputer().getSystemComputer().requestOperation(engine, busRequirement);
+		SystemStatusMessage operationPermittedMessage = getSystemComputer().orElseThrow(() ->
+            new NoSuchElementException(this.getDescription() + ": No system computer")).requestOperation(engine, busRequirement);
 
 		if(operationPermittedMessage.getStatus() == Status.PERMITTED) {
 			if(engine.isVectored()) {
@@ -89,7 +91,8 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 	}
 
 	private ThrustingEngine findEngineByIdent(String ident) {
-		List<Engine> engines = getSystemComputer().getSystemComputer().findComponentByType(Engine.class);
+		List<Engine> engines = getSystemComputer().orElseThrow(() ->
+            new NoSuchElementException(this.getDescription() + ": No system computer")).findComponentByType(Engine.class);
 		//TODO LOOK at thisif(engines != null)
 			for(SpacecraftBusComponent engine : engines) {
 				if(Objects.equals(engine.id(), ident))

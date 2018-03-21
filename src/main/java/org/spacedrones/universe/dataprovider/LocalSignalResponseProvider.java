@@ -22,7 +22,7 @@ public class LocalSignalResponseProvider implements SignalResponseProvider {
 //      double powerInWAtDistance = (atDistance.compareTo(BigDecimal.ZERO) != 0) ?
 //              Physics.opticalSignalAtDistance(powerInW, atDistance, false) : powerInW;
 //      double appMag = Physics.absoluteMagnitude2ApparentMagnitudeAtDistance(sensorSignalResponseProfile.getOpticalResponse(), atDistance);
-      return new SignalResponse(spectralPower, 0.0);
+    return new SignalResponse(spectralPower, 0.0);
   }
 
   @Override

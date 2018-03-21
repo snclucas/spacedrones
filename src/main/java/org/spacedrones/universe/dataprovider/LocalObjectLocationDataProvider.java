@@ -61,6 +61,7 @@ public class LocalObjectLocationDataProvider implements ObjectLocationDataProvid
     }
   }
 
+
   @Override
   public List<CelestialObject> getAllCelestialObjectsCloserThan(Coordinates coordinates, BigDecimal range, Unit unit) {
     List<CelestialObject> result = new ArrayList<>();

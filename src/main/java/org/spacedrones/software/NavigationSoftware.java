@@ -12,10 +12,7 @@ import org.spacedrones.universe.Coordinates;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class NavigationSoftware extends AbstractSoftware implements Software, NavigationInterface {
 
@@ -28,13 +25,15 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 
 	public NavigationSoftware(String name) {
 		super(name);
-		this.dataStore = getSystemComputer().getStorageDevice();
+		this.dataStore = getSystemComputer().orElseThrow(() ->
+            new NoSuchElementException(this.getDescription() + ": No system computer")).getStorageDevice();
 	}
 
 	public NavigationSoftware(String name, Computer computer) {
 		super(name);
 		populateSensors();
-		this.dataStore = getSystemComputer().getStorageDevice();
+		this.dataStore = getSystemComputer().orElseThrow(() ->
+            new NoSuchElementException(this.getDescription() + ": No system computer")).getStorageDevice();
 	}
 
 	private void populateSensors() {
@@ -63,7 +62,8 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 	}
 
 	private List<Sensor> getSensors() {
-		List<Sensor> components = getSystemComputer()
+		List<Sensor> components = getSystemComputer().orElseThrow(() ->
+            new NoSuchElementException(this.getDescription() + ": No system computer"))
 				.findComponentByType(Sensor.class);
 		List<Sensor> sensors = new ArrayList<>();
 		for(SpacecraftBusComponent sensor : components)

@@ -6,9 +6,7 @@ import org.spacedrones.universe.Coordinates;
 import org.spacedrones.universe.Location;
 import org.spacedrones.universe.structures.SubspaceBeacon;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TrilaterationSoftware extends AbstractSoftware implements Software {
 
@@ -28,7 +26,8 @@ public class TrilaterationSoftware extends AbstractSoftware implements Software 
 
 	private Coordinates calculatePosition() {
 
-		DataStore dataStore = getSystemComputer().getStorageDevice();
+		DataStore dataStore = getSystemComputer().orElseThrow(() ->
+            new NoSuchElementException(this.getDescription() + ": No system computer")).getStorageDevice();
 
 		// Look for subspace beacons in navigation archive
 		Map<String,DataRecord> subspaceBeacons = dataStore.getData(SubspaceBeacon.class.getSimpleName());

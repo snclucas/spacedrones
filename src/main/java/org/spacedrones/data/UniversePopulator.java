@@ -15,8 +15,8 @@ public class UniversePopulator {
             new BigDecimal(-1000.0*Unit.Ly.value()),
             new BigDecimal(0),
             new BigDecimal(0));
-    Star starA = new Star(StarClass.K5V,
-            SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.K5V.getStarClass()));
+    Star starA = new Star(StarClass.G5V,
+            SensorSignalResponseLibrary.getStandardSignalResponseForStar(StarClass.G5V.getStarClass()));
     universe.addCelestialObject("Star A", starA, starACoords, new double[]{0.0, 0.0, 0.0});
 
     Coordinates starBCoords = new Coordinates(

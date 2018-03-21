@@ -12,8 +12,7 @@ import org.spacedrones.universe.dataprovider.ObjectMeta;
 import org.spacedrones.utils.Utils;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class LocalSensorResponseMediator implements SensorResponseMediator {
 
@@ -51,7 +50,12 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 		List<ObjectMeta<CelestialObject>> objectsWithinDistance =
             universe.getAllCelestialObjectsCloserThanAsMeta(spacecraftLocation, maximumDistanceScanned, Unit.Ly);
 
-		for(ObjectMeta<CelestialObject> object : objectsWithinDistance) {
+    Comparator<SensorResult> bySignal = (SensorResult o1, SensorResult o2) ->
+            -Double.compare(
+                    o1.getSignalResponse().getSignalStrength(), o2.getSignalResponse().getSignalStrength());
+
+
+    for(ObjectMeta<CelestialObject> object : objectsWithinDistance) {
 		  if(id.equals(object.object.id())) {
 		    continue;
       }
@@ -67,6 +71,7 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 					Utils.vectorToLocation(spacecraftLocation, object.coordinates, true), returnedSignalResponse);
 			results.add(result);
 		}
+    results.sort(bySignal);
 		return results;
 	}
 
