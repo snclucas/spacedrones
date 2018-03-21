@@ -29,7 +29,7 @@ public class StarTrackerTest {
     EMSensorProfile sensorProfile = new EMSensorProfile(StdAppMagnitude.V, EMSensorThreshold.asMagnitude(16, stdAppMagnitudes), 10);
 
     universe.addObject(sensor, new Coordinates(0.0, 0.0, 0.0), new double[]{0.0, 0.0, 0.0});
-    universe.list();
+
 
     List<SensorResult> ss = sensor.passiveScan(1, sensorProfile);
 

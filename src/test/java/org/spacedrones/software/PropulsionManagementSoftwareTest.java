@@ -35,7 +35,7 @@ public class PropulsionManagementSoftwareTest {
 
 		SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(BasicSystemComputer.class.getSimpleName());
 
-		PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.class.getSimpleName());
+		PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.class.getSimpleName()).get();
     spacecraftBuildManager.addComponent(powerGenerator);
 
 		// Simple computer
@@ -74,7 +74,7 @@ public class PropulsionManagementSoftwareTest {
 		SystemComputer computer = new BasicSystemComputer("Simple System Computer", data.getBusComponentSpecification(), 1000 * Unit.GFLOPs.value());
 
 		Spacecraft spacecraft = new SimpleSpacecraft("Shuttle", "1", hull);
-		PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.class.getSimpleName());
+		PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.class.getSimpleName()).get();
     spacecraftBuildManager.addComponent(powerGenerator);
 
 		// Simple computer

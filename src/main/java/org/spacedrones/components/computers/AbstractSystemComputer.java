@@ -39,6 +39,11 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
   }
 
   @Override
+  public void registerSpacecraftComponent(final SpacecraftBusComponent component) {
+    components.add(component);
+  }
+
+  @Override
   public SystemStatusMessage addSystemMessage(SpacecraftBusComponent component, String message, String status) {
     SystemStatusMessage systemStatusMessage = new SystemStatusMessage(component, message, status);
     this.systemMessages.add(systemStatusMessage);

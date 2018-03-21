@@ -13,6 +13,8 @@ import java.util.List;
 
 public interface SystemComputer extends Computer {
 
+	void registerSpacecraftComponent(SpacecraftBusComponent component);
+
 	void setComponents(List<SpacecraftBusComponent> components);
 
 	SystemStatusMessage requestOperation(SpacecraftBusComponent component, BusRequirement busRequirement);

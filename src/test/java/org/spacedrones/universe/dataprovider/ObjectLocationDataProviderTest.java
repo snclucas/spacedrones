@@ -37,8 +37,8 @@ public class ObjectLocationDataProviderTest {
   private Sensor sensor1 = SensorFactory.getSensor(SensorFactory.LinearSensorArray, SensorType.OPTICAL, 10);
   private Sensor sensor2 = SensorFactory.getSensor(SensorFactory.FractalSensorArray, SensorType.OPTICAL, 10);
 
-  private PowerGenerator powerGenerator1 = PowerGenerationFactory.getPowerGenerator(SimpleSolarArray.class.getSimpleName());
-  private PowerGenerator powerGenerator2 = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.class.getSimpleName());
+  private PowerGenerator powerGenerator1 = PowerGenerationFactory.getPowerGenerator(SimpleSolarArray.class.getSimpleName()).get();
+  private PowerGenerator powerGenerator2 = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.class.getSimpleName()).get();
 
   private Engine engine1 = EngineFactory.getEngine(SimpleIonEngine.class.getSimpleName(), false);
   private Engine engine2 = EngineFactory.getEngine(SimpleThruster.class.getSimpleName(), false);

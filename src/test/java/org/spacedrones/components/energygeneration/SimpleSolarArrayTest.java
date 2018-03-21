@@ -14,6 +14,7 @@ import org.spacedrones.universe.celestialobjects.Star;
 import org.spacedrones.universe.celestialobjects.StarClass;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
@@ -37,6 +38,13 @@ public class SimpleSolarArrayTest {
 
 	@Test
 	public void testPowerGeneration() {
+
+    Optional<SimpleSolarArray> simpleSolarArray = PowerGenerationFactory.getPowerGenerator(
+            SimpleSolarArray.class.getSimpleName());
+
+
+    SimpleSolarArray ss = simpleSolarArray.get();
+
 		Universe universe = Universe.getInstance();
 		Spacecraft shuttle = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SHUTTLE);
 

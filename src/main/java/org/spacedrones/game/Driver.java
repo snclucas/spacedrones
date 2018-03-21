@@ -21,7 +21,7 @@ public class Driver {
     Computer auxComputer = ComputerFactory.getComputer("AuxiliaryComputer");
     sbm.addComponent(auxComputer);
 
-    PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.class.getSimpleName());
+    PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.class.getSimpleName()).get();
     sbm.addComponent(powerGenerator);
 
     Sensor sensor = SensorFactory.getSensor(LinearSensorArray.class.getSimpleName(), SensorType.RADAR, 1);

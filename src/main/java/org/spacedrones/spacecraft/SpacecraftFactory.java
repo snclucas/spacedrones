@@ -44,7 +44,7 @@ public class SpacecraftFactory {
 			//PropulsionManagementSoftware engineManagementSoftware = new PropulsionManagementSoftware("Test EngineManagementSoftware", systemComputer);
 			//systemComputer.loadSoftware(engineManagementSoftware);
 
-			PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator("SubspacePowerExtractor");
+			PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator("SubspacePowerExtractor").get();
       spacecraftBuildManager.addComponent(powerGenerator);
 
 			Sensor sensor = SensorFactory.getSensor("LinearSensorArray", SensorType.RADAR, 1);

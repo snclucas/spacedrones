@@ -1,11 +1,15 @@
 package org.spacedrones.software;
 
 
-import org.spacedrones.components.computers.*;
-import org.spacedrones.components.sensors.*;
-import org.spacedrones.physics.*;
+import org.spacedrones.components.sensors.EMSensorProfile;
+import org.spacedrones.components.sensors.EMSensorThreshold;
+import org.spacedrones.components.sensors.SensorResult;
+import org.spacedrones.components.sensors.StarTracker;
+import org.spacedrones.physics.StdAppMagnitude;
 
-import java.util.*;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 public class AttitudeSoftware extends AbstractSoftware implements Software {
 
@@ -30,7 +34,6 @@ public class AttitudeSoftware extends AbstractSoftware implements Software {
     StdAppMagnitude stdAppMagnitudes = StdAppMagnitude.V;
     EMSensorProfile sensorProfile = new EMSensorProfile(StdAppMagnitude.V,
             EMSensorThreshold.asMagnitude(16, stdAppMagnitudes), 10);
-
 
     List<SensorResult> starsFromScan = starTracker.passiveScan(1, sensorProfile);
 
