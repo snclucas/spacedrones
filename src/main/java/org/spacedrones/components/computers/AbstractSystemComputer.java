@@ -57,6 +57,10 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
     return systemStatusMessages;
   }
 
+  public SystemComputer getSystemComputer() {
+	  return this;
+  }
+
 
   @Override
   public List<SystemStatusMessage> getSystemMessages() {

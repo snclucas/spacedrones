@@ -11,14 +11,8 @@ public class AttitudeSoftware extends AbstractSoftware implements Software {
 
   private StarTracker starTracker;
 
-  private SystemComputer systemComputer = ComputerFactory.getSystemComputer(BasicSystemComputer.class.getSimpleName());
-
   AttitudeSoftware(final String name) {
     super(name);
-
-    systemComputer.loadSoftware(this);
-
-    init();
   }
 
   public boolean init() {
@@ -27,7 +21,6 @@ public class AttitudeSoftware extends AbstractSoftware implements Software {
             .findComponentByType(StarTracker.class).stream().findFirst();
     if(starTrackerOptional.isPresent()) {
       starTracker = starTrackerOptional.get();
-      starTracker.registerSystemComputer(systemComputer);
       return starTracker.isOnline();
     }
     return false;
@@ -52,14 +45,4 @@ public class AttitudeSoftware extends AbstractSoftware implements Software {
     return "Attitude control";
   }
 
-
-  public static void main(String[] args) {
-    AttitudeSoftware attitudeSoftware = new AttitudeSoftware("");
-
-
-
-
-
-
-  }
 }
