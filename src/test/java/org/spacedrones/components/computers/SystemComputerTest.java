@@ -19,7 +19,6 @@ public class SystemComputerTest {
 	private double nominalCPU = 10 * Unit.kFLOPs.value();
 	private double maximumPower = 1 * Unit.MW.value();
 	private double maximumCPU = nominalCPU;
-	boolean vectored = false;
 
   private SystemComputer computer = null;
 
@@ -30,17 +29,7 @@ public class SystemComputerTest {
 
 	@Before
 	public void setUp() {
-		double arrayArea = 1 * Unit.m.value() * 10 * Unit.m.value();
-		double efficiency = 75 * Unit.percent.value();
-
 		computer = new BasicSystemComputer("Test computer", busSpecs, 10 * Unit.GFLOPs.value());
-
-		//BusComponentSpecification powerGeneratorBusSpecs = new BusComponentSpecification(
-		//		new PhysicalSpecification(mass, volume),
-		//		new OperationalSpecification(0, nominalCPU, 0, maximumCPU));
-
-		//PowerGenerator powerGenerator = new SubspacePowerExtractor("Test power generator", powerGeneratorBusSpecs, arrayArea, efficiency);
-		//spacecraftBus.register(powerGenerator);
 	}
 
 	@Test
@@ -68,7 +57,6 @@ public class SystemComputerTest {
 	}
 
 
-
 	@Test
 	public void testSystemComputer() {
 
@@ -90,7 +78,7 @@ public class SystemComputerTest {
 
     assertNotEquals("Should have some messages", 0, systemStatus.getMessages().size());
 
-    computer.getMaxCPUThroughput();
+    computer.getCPUThroughputAvailable(Unit.MFLOPs);
 
     systemStatus = computer.online();
 
@@ -98,9 +86,6 @@ public class SystemComputerTest {
 
     String g = "";
 	}
-
-
-
 
 
 }

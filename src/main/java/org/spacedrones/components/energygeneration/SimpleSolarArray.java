@@ -81,8 +81,8 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 	}
 
 	@Override
-	public double getPowerOutput() {
-		return arrayArea*efficiency*getLightFlux();
+	public double getPowerOutput(Unit unit) {
+		return arrayArea*efficiency*getLightFlux() / unit.value();
 	}
 
 	private double getLightFlux() {

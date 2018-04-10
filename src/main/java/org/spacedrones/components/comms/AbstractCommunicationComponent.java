@@ -81,11 +81,11 @@ public abstract class AbstractCommunicationComponent extends AbstractBusComponen
 	public double getRange(double powerLevel) {
 		ModelInputs inputs = new ModelInputs();
 		inputs.addInput("CALC_TYPE", SimpleRadioFrequencyPropagationModel.RANGE_CALC);
-		inputs.addInput("POWER", getMaximumOperationalPower(Unit.MW) * (powerLevel/100.00));
+		inputs.addInput("POWER", getMaximumPower(Unit.MW) * (powerLevel/100.00));
 		inputs.addInput("NOISE", 0);
 		inputs.addInput("EFFICIENCY", this.efficiency);
 		inputs.addInput("RECIEVE_THRESHOLD", this.deviceNoiseLevel); //GJ/s
-		inputs.addInput("MAX_POWER", getMaximumOperationalPower(Unit.MW));
+		inputs.addInput("MAX_POWER", getMaximumPower(Unit.MW));
 
 		ModelResult result = propagationModel.getResult(inputs);
 		return result.getResult("CALCULATED_RANGE");

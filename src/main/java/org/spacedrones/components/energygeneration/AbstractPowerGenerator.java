@@ -1,6 +1,7 @@
 package org.spacedrones.components.energygeneration;
 
 import org.spacedrones.components.AbstractBusComponent;
+import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 
 public abstract class AbstractPowerGenerator extends AbstractBusComponent implements PowerGenerator {
@@ -16,8 +17,8 @@ public abstract class AbstractPowerGenerator extends AbstractBusComponent implem
 	}
 
 	@Override
-	public double getMaximumPowerOutput() {
-		return maxPower;
+	public double getPowerOutput(Unit unit) {
+		return maxPower / unit.value();
 	}
 
 	@Override

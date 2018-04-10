@@ -23,8 +23,6 @@ import java.util.List;
 public abstract class AbstractSystemComputer extends AbstractComputer implements SystemComputer {
 
   private final List<SystemStatusMessage> systemMessages;
-  private double totalPowerAvailable = Double.NEGATIVE_INFINITY;
-  private double totalCPUThroughputAvailable = Double.NEGATIVE_INFINITY;
 
   private List<SpacecraftBusComponent> components = new ArrayList<>();
 
@@ -32,6 +30,7 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 		super(name, busResourceSpecification, maxCPUThroughput);
     systemMessages = new ArrayList<>();
 		setMessagingSystem(new SystemMessageServiceSoftware("Default messaging system"));
+		registerSpacecraftComponent(this);
 	}
 
 	public void setComponents(List<SpacecraftBusComponent> components) {
@@ -205,36 +204,19 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 	}
 
   @Override
-  public double getTotalCPUThroughputAvailable(Unit unit) {
-    if(totalCPUThroughputAvailable != Double.NEGATIVE_INFINITY) {
-      return totalCPUThroughputAvailable;
-    }
-    else{
-      totalCPUThroughputAvailable = SpacecraftFirmware.getTotalCPUThroughputAvailable(components) / unit.value();
-      return totalCPUThroughputAvailable;
-    }
+  public SystemStats getSystemStats(Unit powerUnit, Unit cpuUnit) {
+    SystemStats stats = new SystemStats(
+            getTotalCurrentPower(powerUnit),
+            getCurrentCPUThroughput(cpuUnit),
+            getMaximumPower(powerUnit),
+            getMaximumCPUThroughput(cpuUnit),
+            getTotalPowerAvailable(powerUnit),
+            getTotalCPUThroughputAvailable(cpuUnit),
+            powerUnit,
+            cpuUnit
+    );
+    return stats;
   }
-
-  @Override
-  public double getTotalPowerAvailable(Unit unit) {
-    if(totalPowerAvailable != Double.NEGATIVE_INFINITY) {
-      return totalPowerAvailable;
-    }
-    else{
-      totalPowerAvailable = SpacecraftFirmware.getTotalPowerAvailable(components) / unit.value();
-      return totalPowerAvailable;
-    }
-  }
-
-	@Override
-	public double getTotalCurrentPower(Unit unit) {
-		return SpacecraftFirmware.getTotalCurrentPower(components, unit) / unit.value();
-	}
-
-	@Override
-	public double getTotalCurrentCPUThroughput(Unit unit) {
-		return SpacecraftFirmware.getTotalCurrentCPUThroughput(components, unit);
-	}
 
   @Override
   public boolean equals(final Object o) {
@@ -249,4 +231,29 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
   public int hashCode() {
     return id().hashCode();
   }
+
+
+
+  // POWER & CPU
+
+  @Override
+  public double getTotalCurrentPower(Unit unit) {
+    return SpacecraftFirmware.getTotalCurrentPower(components, unit);
+  }
+
+  @Override
+  public double getTotalCurrentCPUThroughput(Unit unit) {
+    return SpacecraftFirmware.getTotalCurrentCPUThroughput(components, unit);
+  }
+
+  @Override
+  public double getTotalCPUThroughputAvailable(Unit unit) {
+    return SpacecraftFirmware.getTotalCPUThroughputAvailable(components, unit);
+  }
+
+  @Override
+  public double getTotalPowerAvailable(Unit unit) {
+    return SpacecraftFirmware.getTotalPowerAvailable(components, unit);
+  }
+
 }

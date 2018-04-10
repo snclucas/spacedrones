@@ -30,7 +30,7 @@ public class SubspacePowerGeneratorTest {
 		SubspacePowerExtractor subspacePowerGenerator = new 
 				SubspacePowerExtractor("Test sub-ether generator", busSpecs, arrayArea, efficiency);
 		assertEquals("Max output power of sunether generator incorrect", arrayArea*efficiency*10.0*Unit.kW.value(), 
-				subspacePowerGenerator.getMaximumPowerOutput(), 0.001);
+				subspacePowerGenerator.getPowerOutput(Unit.kW), 0.001);
 	}
 
 }

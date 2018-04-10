@@ -2,6 +2,7 @@ package org.spacedrones.components.computers;
 
 import org.spacedrones.components.AbstractBusComponent;
 import org.spacedrones.components.comms.Status;
+import org.spacedrones.physics.Unit;
 import org.spacedrones.software.Software;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
@@ -15,15 +16,15 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
 	private boolean online;
 	private final Map<String, Software> loadedSoftware;
 
-  private final double maxCPUThroughput;
+  private final double maxCPUThroughputAvailable;
 
   private final DataStore storageDevice;
 
-	AbstractComputer(String name, BusComponentSpecification busResourceSpecification, double maxCPUThroughput) {
+	AbstractComputer(String name, BusComponentSpecification busResourceSpecification, double maxCPUThroughputAvailable) {
 		super(name, busResourceSpecification);
-    loadedSoftware = new HashMap<>();
-    this.maxCPUThroughput = maxCPUThroughput;
-    storageDevice = DataStoreFactory.getDataStore(DataStoreFactory.BASIC_DATASTORE);
+    this.loadedSoftware = new HashMap<>();
+    this.maxCPUThroughputAvailable = maxCPUThroughputAvailable;
+    this.storageDevice = DataStoreFactory.getDataStore(DataStoreFactory.BASIC_DATASTORE);
 	}
 
   @Override
@@ -31,8 +32,9 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
     return storageDevice;
   }
 
-  public double getMaxCPUThroughput() {
-    return maxCPUThroughput;
+  @Override
+  public double getCPUThroughputAvailable(Unit unit) {
+    return maxCPUThroughputAvailable / unit.value();
   }
 
 	@Override

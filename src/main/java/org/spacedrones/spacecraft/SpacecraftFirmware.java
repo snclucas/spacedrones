@@ -103,18 +103,18 @@ public class SpacecraftFirmware {
 		return engines;
 	}
 
-	public static double getTotalPowerAvailable(List<SpacecraftBusComponent> components) {
+	public static double getTotalPowerAvailable(List<SpacecraftBusComponent> components, Unit unit) {
     return components.stream()
-            .filter(PowerGenerator.class::isInstance)
+            .filter( pg -> dd.test(pg,PowerGenerator.class) )
             .map(PowerGenerator.class::cast)
-            .mapToDouble(PowerGenerator::getMaximumPowerOutput).sum();
+            .mapToDouble(d -> d.getPowerOutput(unit)).sum();
 	}
 
-	public static double getTotalCPUThroughputAvailable(List<SpacecraftBusComponent> components) {
+	public static double getTotalCPUThroughputAvailable(List<SpacecraftBusComponent> components, Unit unit) {
 		return components.stream()
-            .filter(Computer.class::isInstance)
+            .filter( pg -> dd.test(pg,Computer.class) )
             .map(Computer.class::cast)
-            .mapToDouble(Computer::getMaxCPUThroughput).sum();
+            .mapToDouble(d -> d.getCPUThroughputAvailable(unit)).sum();
 	}
 
 	public static double getTotalCurrentPower(List<SpacecraftBusComponent> components, Unit unit) {

@@ -76,8 +76,13 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent {
 		busResourceSpecification.setVolume(volume);
 	}
 
+
+
+
+
+	@Override
 	public double getNominalPower(Unit unit) {
-		return busResourceSpecification.getNominalPower(unit) / unit.value();
+		return busResourceSpecification.getNominalPower(unit);
 	}
 
 	@Override
@@ -86,13 +91,13 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent {
 	}
 
 	@Override
-	public double getMaximumOperationalPower(Unit unit) {
+	public double getMaximumPower(Unit unit) {
 		return busResourceSpecification.getMaximumOperationalPower(unit);
 	}
 
 	@Override
-	public double getMaximumOperationalCPUThroughput(Unit unit) {
-		return busResourceSpecification.getMaximumOperationalCPUThroughput(unit) / unit.value();
+	public double getMaximumCPUThroughput(Unit unit) {
+		return busResourceSpecification.getMaximumOperationalCPUThroughput(unit);
 	}
 
 	@Override
@@ -104,6 +109,9 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent {
 	public double getCurrentCPUThroughput(Unit unit) {
 		return currentCPUThroughput * (online ? 1 : 0) / unit.value();
 	}
+
+
+
 
 	public SystemComputer getSystemComputer() {
 		if(!isRegisteredWithSystemComputer())

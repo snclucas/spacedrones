@@ -42,26 +42,21 @@ public class BusComponentSpecification {
 		physicalSpecification.setWidth(width);
 	}
 
-
 	public double getHeight(Unit unit) {
 		return physicalSpecification.getHeight(unit);
 	}
-	
-	
+
 	public void setHeight(double height) {
 		physicalSpecification.setHeight(height);
 	}
-
 	
 	public double getMass(Unit unit) {
 		return physicalSpecification.getMass(unit);
 	}
 	
-	
 	public void setMass(double mass) {
 		physicalSpecification.setMass(mass);
 	}
-
 
 	public double getVolume(Unit unit) {
 		return physicalSpecification.getVolume(unit);
@@ -72,16 +67,13 @@ public class BusComponentSpecification {
 		physicalSpecification.setVolume(volume);
 	}
 
-	
 	public double getNominalPower(Unit unit) {
-		return operationalSpecification.getNominalPower(unit) / unit.value();
+		return operationalSpecification.getNominalPower(unit);
 	}
-	
-	
+
 	public void setNominalPower(double nominalPower) {
 		operationalSpecification.setNominalPower(nominalPower);
 	}
-
 
 	public double getNominalCPUThroughout(Unit unit) {
 		return operationalSpecification.getNominalCPUThroughout(unit);
@@ -91,16 +83,13 @@ public class BusComponentSpecification {
 		operationalSpecification.setNominalCPUThroughout(nominalCPUThroughout);
 	}
 
-	
 	public double getMaximumOperationalPower(Unit unit) {
-		return operationalSpecification.getMaximumOperationalPower(unit) / unit.value();
+		return operationalSpecification.getMaximumOperationalPower(unit);
 	}
-	
-	
+
 	public void setMaximumOperationalPower(double maximumOperationalPower) {
 		operationalSpecification.setMaximumOperationalPower(maximumOperationalPower);
 	}
-
 
 	public double getMaximumOperationalCPUThroughput(Unit unit) {
 		return operationalSpecification.getMaximumOperationalCPUThroughput(unit);
@@ -110,7 +99,6 @@ public class BusComponentSpecification {
 	public void setMaximumOperationalCPUThroughput(double maximumOperationalCPUThroughput) {
 		operationalSpecification.setMaximumOperationalCPUThroughput(maximumOperationalCPUThroughput);
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -150,7 +138,5 @@ public class BusComponentSpecification {
 			return false;
 		return true;
 	}
-
-
 	
 }

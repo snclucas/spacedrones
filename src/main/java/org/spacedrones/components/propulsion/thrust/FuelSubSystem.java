@@ -93,7 +93,7 @@ public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBus
 
 
 	@Override
-	public double getMaximumOperationalCPUThroughput(Unit unit) {
+	public double getMaximumCPUThroughput(Unit unit) {
 		return 0;
 	}
 

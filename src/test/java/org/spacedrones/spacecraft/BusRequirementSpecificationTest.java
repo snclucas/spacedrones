@@ -75,10 +75,10 @@ public class BusRequirementSpecificationTest {
 		busComponentSpecification.setLength(length);
 		
 		
-		nominalPower = 10.5 * Unit.W.value();
-		nominalCPU = 40.5 * Unit.MFLOPs.value();
-		maxPower = 10.5 * Unit.W.value();
-		maxCPU = 40.5 * Unit.MFLOPs.value();
+		nominalPower = 10.5*Unit.W.value();
+		nominalCPU = 40.5*Unit.MFLOPs.value();
+		maxPower = 10.5*Unit.W.value();
+		maxCPU = 40.5*Unit.MFLOPs.value();
 		
 		busComponentSpecification.setNominalPower(nominalPower);
 		busComponentSpecification.setNominalCPUThroughout(nominalCPU);

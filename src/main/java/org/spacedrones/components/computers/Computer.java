@@ -2,6 +2,7 @@ package org.spacedrones.components.computers;
 
 import org.spacedrones.components.BusCommunicator;
 import org.spacedrones.components.SpacecraftBusComponent;
+import org.spacedrones.physics.Unit;
 import org.spacedrones.software.Software;
 import org.spacedrones.status.SystemStatusMessage;
 
@@ -20,5 +21,5 @@ public interface Computer extends SpacecraftBusComponent, BusCommunicator  {
 
 	SystemStatusMessage loadSoftware(Software software);
 
-	double getMaxCPUThroughput();
+	double getCPUThroughputAvailable(Unit unit);
 }

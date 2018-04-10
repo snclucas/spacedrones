@@ -90,7 +90,7 @@ public class EngineTest {
 		double powerLevel = 0.0;
 		
 		assertEquals("Engine nominal power incorrect", nominalPower, engine.getNominalPower(Unit.W), 0.001);
-		assertEquals("Engine max power incorrect", maxPower, engine.getMaximumOperationalPower(Unit.W), 0.001);
+		assertEquals("Engine max power incorrect", maxPower, engine.getMaximumPower(Unit.W), 0.001);
 		assertEquals("Engine operating power incorrect", nominalPower, engine.getCurrentPower(Unit.W), 0.001);
 		assertEquals("Engine required power incorrect", nominalPower, engine.getRequiredPower(powerLevel, Unit.W), 0.001);
 
@@ -99,7 +99,7 @@ public class EngineTest {
 		engine.callDrive(powerLevel);
 
 		assertEquals("Engine nominal power incorrect", nominalPower, engine.getNominalPower(Unit.W), 0.001);
-		assertEquals("Engine max power incorrect", maxPower, engine.getMaximumOperationalPower(Unit.W), 0.001);
+		assertEquals("Engine max power incorrect", maxPower, engine.getMaximumPower(Unit.W), 0.001);
 		assertEquals("Engine operating power incorrect", nominalPower, engine.getCurrentPower(Unit.W), 0.001);
 		assertEquals("Engine required power incorrect", nominalPower, engine.getRequiredPower(powerLevel, Unit.W), 0.001);
 
@@ -109,7 +109,7 @@ public class EngineTest {
 		engine.callDrive(powerLevel);
 
 		assertEquals("Engine nominal power incorrect", nominalPower, engine.getNominalPower(Unit.W), 0.001);
-		assertEquals("Engine max power incorrect", maxPower, engine.getMaximumOperationalPower(Unit.W), 0.001);
+		assertEquals("Engine max power incorrect", maxPower, engine.getMaximumPower(Unit.W), 0.001);
 		assertEquals("Engine operating power incorrect", nominalPower, engine.getCurrentPower(Unit.W), 0.001);
 		assertEquals("Engine required power incorrect", nominalPower + (maxPower-nominalPower)*0.5, engine.getRequiredPower(powerLevel, Unit.W), 0.001);
 
@@ -119,7 +119,7 @@ public class EngineTest {
 
 		//Required and operating power should now be equal as the engine is operating at the set power level
 		assertEquals("Engine nominal power incorrect", nominalPower, engine.getNominalPower(Unit.W), 0.001);
-		assertEquals("Engine max power incorrect", maxPower, engine.getMaximumOperationalPower(Unit.W), 0.001);
+		assertEquals("Engine max power incorrect", maxPower, engine.getMaximumPower(Unit.W), 0.001);
 		assertEquals("Engine operating power incorrect", nominalPower + (maxPower-nominalPower)*0.5, engine.getCurrentPower(Unit.W), 0.001);
 		assertEquals("Engine required power incorrect", nominalPower + (maxPower-nominalPower)*0.5, engine.getRequiredPower(powerLevel, Unit.W), 0.001);
 
@@ -158,7 +158,7 @@ public class EngineTest {
 				engineVector.getVectorComponent(EngineVector.Axis.YAW) * maximumThrust * powerLevel
 		};
 
-		expectedPower = engine.getNominalPower(Unit.W) + (engine.getMaximumOperationalPower(Unit.W) - engine.getNominalPower(Unit.W)) * powerLevel;
+		expectedPower = engine.getNominalPower(Unit.W) + (engine.getMaximumPower(Unit.W) - engine.getNominalPower(Unit.W)) * powerLevel;
 		
 		assertEquals("Engine power not set correctly", expectedPower, engine.getCurrentPower(Unit.W), 0.001);
 		assertEquals("Engine thrust not set correctly ROLL_AXIS", expectedThrustVector[EngineVector.Axis.ROLL.getIndex()], 

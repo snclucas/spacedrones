@@ -35,9 +35,9 @@ public abstract class AbstractThrustingEngine extends AbstractEngine implements 
 	
 	public BusRequirement callDrive(double requestedPowerLevel) {
 		this.requestedPowerLevel = requestedPowerLevel;
-		double requiredPower = getRequiredPower(requestedPowerLevel, Unit.W);
-		double requiredCPUThroughput = getRequiredCPUThroughput(requestedPowerLevel, Unit.W);
-		return new BusRequirement(requiredPower, requiredCPUThroughput);
+		double requiredPowerInW = getRequiredPower(requestedPowerLevel, Unit.W);
+		double requiredCPUThroughput = getRequiredCPUThroughput(requestedPowerLevel, Unit.MFLOPs);
+		return new BusRequirement(requiredPowerInW, requiredCPUThroughput);
 	}
 	
 
