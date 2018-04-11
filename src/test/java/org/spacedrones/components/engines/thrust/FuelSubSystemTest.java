@@ -2,7 +2,7 @@ package org.spacedrones.components.engines.thrust;
 
 import org.junit.Test;
 import org.spacedrones.Configuration;
-import org.spacedrones.components.propulsion.thrust.FuelSubSystem;
+import org.spacedrones.components.propulsion.thrust.SimpleFuelSubSystem;
 import org.spacedrones.components.propulsion.thrust.FuelSubSystemFactory;
 import org.spacedrones.consumables.Fuel;
 import org.spacedrones.data.SpacecraftDataProvider;
@@ -47,7 +47,7 @@ public class FuelSubSystemTest {
 		assertEquals("Expected mass of fuel tank + fuel not correct", massOfFuelTankPlusHydrazineFuel, expectedMassOfFuelTankPlusHydrazineFuel, 0.001);
 		assertEquals("Expected volume of fuel tank + fuel not correct", volumeOfFuelTankPlusHydrazineFuel, expectedVolumeOfFuelTankPlusHydrazineFuel, 0.001);
 
-		FuelSubSystem fuelDeliverySystem = FuelSubSystemFactory.getFuelSubsystem(FuelSubSystem.BASIC_FUEL_SUBSYSTEM, FuelSubSystem.PROPULSION_FUEL_SUBSYSTEM);
+		SimpleFuelSubSystem fuelDeliverySystem = FuelSubSystemFactory.getFuelSubsystem(SimpleFuelSubSystem.BASIC_FUEL_SUBSYSTEM, SimpleFuelSubSystem.PROPULSION_FUEL_SUBSYSTEM);
 
 		double expectedMassOfFuelSubSystemOnly = 250 * Unit.kg.value(); // Basic fuel sub system
 		double massOfFuelSubSystemOnly = fuelDeliverySystem.getMass(Unit.kg);
@@ -59,7 +59,7 @@ public class FuelSubSystemTest {
 		assertEquals("Expected volume of fuel subsystem not correct", expectedVolumeOfFuelSubSystemOnly, volumeOfFuelSubSystemOnly, 0.001);
 
 
-		fuelDeliverySystem.addFuelTank(hydrazineTank);
+		fuelDeliverySystem.setFuelTank(hydrazineTank);
 
 
 		double expectedTotalMassOfFuelSubsystem = expectedMassOfFuelSubSystemOnly + expectedMassOfFuelTankPlusHydrazineFuel;
@@ -71,17 +71,17 @@ public class FuelSubSystemTest {
 
 
 		// Add a liquid Xenon tank
-		
+
 		FuelStorageTank xenonTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.class.getSimpleName(), tankCapacity);
 		Fuel liquidXenon = spacecraftDataProvider.getFuel(Fuel.LIQUID_XENON);
 		// Fill it up with liquid Xenon
 		xenonTank.setFuel(liquidXenon, tankCapacity);
 
-		fuelDeliverySystem.addFuelTank(xenonTank);
-		
+		fuelDeliverySystem.setFuelTank(xenonTank);
+
 		double expectedMassOfFuelSubSystemWithHydrazineAndXenonTank = expectedTotalMassOfFuelSubsystem + massOfFuelTankAlone + (liquidXenon.getDensity() * tankCapacity);
 		double expectedVolumeOfFuelSubSystemWithHydrazineAndXenonTank = expectedTotalVolumeOfFuelSubsystem + xenonTank.getVolume(Unit.m3);
-		
+
 
 		assertEquals("Fuel subsystem mass (Hydrazine + Xenon) incorrect.", expectedMassOfFuelSubSystemWithHydrazineAndXenonTank, fuelDeliverySystem.getMass(Unit.kg), 0.001);
 		assertEquals("Fuel subsystem volume (Hydrazine + Xenon) incorrect.", expectedVolumeOfFuelSubSystemWithHydrazineAndXenonTank, fuelDeliverySystem.getVolume(Unit.m3), 0.001);

@@ -9,7 +9,7 @@ import org.spacedrones.components.energygeneration.PowerGenerationFactory;
 import org.spacedrones.components.energygeneration.PowerGenerator;
 import org.spacedrones.components.propulsion.EngineFactory;
 import org.spacedrones.components.propulsion.thrust.FuelConsumingEngine;
-import org.spacedrones.components.propulsion.thrust.FuelSubSystem;
+import org.spacedrones.components.propulsion.thrust.SimpleFuelSubSystem;
 import org.spacedrones.components.propulsion.thrust.FuelSubSystemFactory;
 import org.spacedrones.components.sensors.Sensor;
 import org.spacedrones.components.sensors.SensorFactory;
@@ -56,9 +56,9 @@ public class SpacecraftFactory {
 			FuelStorageTank tank = FuelStorageTankFactory.getFuelStorageTank("CryogenicLiquidStorageTank", tankCapacity);
 			tank.setFuel(fuel, tankCapacity);
 
-			FuelSubSystem fuelDeliverySystem = FuelSubSystemFactory.getFuelSubsystem(
-					FuelSubSystem.BASIC_FUEL_SUBSYSTEM, FuelSubSystem.PROPULSION_FUEL_SUBSYSTEM);
-			fuelDeliverySystem.addFuelTank(tank);
+			SimpleFuelSubSystem fuelDeliverySystem = FuelSubSystemFactory.getFuelSubsystem(
+					SimpleFuelSubSystem.BASIC_FUEL_SUBSYSTEM, SimpleFuelSubSystem.PROPULSION_FUEL_SUBSYSTEM);
+			fuelDeliverySystem.setFuelTank(tank);
       spacecraftBuildManager.addComponent(fuelDeliverySystem);
       spacecraftBuildManager.addComponent(tank);
 

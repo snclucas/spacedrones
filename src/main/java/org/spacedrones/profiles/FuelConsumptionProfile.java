@@ -5,4 +5,6 @@ import org.spacedrones.status.StatusProvider;
 public interface FuelConsumptionProfile extends StatusProvider {
 	double getNormalizedFuelConsumption(double powerLevel);
 	double[][] getNormalizedFuelConsumptionProfile();
+  double getMinimum();
+  double getMaximum();
 }
