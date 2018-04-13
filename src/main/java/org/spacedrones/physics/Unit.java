@@ -2,7 +2,8 @@ package org.spacedrones.physics;
 
 public class Unit {
 	
-	public enum Type {ANGLE, DIMENTIONLESS, LENGTH, MASS, AREA, VOLUME, TIME, FORCE, POWER, CPU, ENERGY, TEMPERATURE, FLUX_DENSITY, VELOCITY}
+	public enum Type {ANGLE, DIMENTIONLESS, LENGTH, MASS, AREA, VOLUME, TIME, FORCE,
+		POWER, CPU, ENERGY, TEMPERATURE, FLUX_DENSITY, VELOCITY, FLOWRATE}
 
 
   public static Unit Jy = new Unit(1.0e-26, Type.FLUX_DENSITY, "Jy");
@@ -84,6 +85,10 @@ public class Unit {
   //Unit of velocity
   public static Unit Kps = new Unit(1.0 * Unit.Km.value() / Unit.s.value(), Type.VELOCITY, "Km/s");
   public static Unit Kph = new Unit(1.0 * Unit.Km.value() / Unit.hour.value(), Type.VELOCITY, "Km/h");
+
+  //Unit of flow rate
+  public static Unit ls = new Unit(1e-3 * Unit.m3.value() / Unit.s.value(), Type.FLOWRATE, "L/s");
+  public static Unit m3s = new Unit(1.0 * Unit.m3.value() / Unit.s.value(), Type.FLOWRATE, "M3/s");
 	
 	private double value;
 	private Type type;

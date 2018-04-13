@@ -11,6 +11,7 @@ import org.spacedrones.components.propulsion.thrust.SimpleIonEngine;
 import org.spacedrones.components.propulsion.thrust.SimpleThruster;
 import org.spacedrones.components.sensors.*;
 import org.spacedrones.consumables.Fuel;
+import org.spacedrones.consumables.Oxidizer;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.spacecraft.OperationalSpecification;
@@ -111,13 +112,15 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 
 
 	@Override
-	public Fuel getFuel(int fuelType) {
+	public Fuel getLiquid(int fuelType) {
 		if(Fuel.LIQUID_HYDROGEN == fuelType)
-			return new Fuel(70.8);
-		else if(Fuel.LIQUID_OXYGEN == fuelType)
-			return new Fuel(1141);
+			return new Fuel("LH2", 1.32, 70.8, 2.016);
+		else if(Oxidizer.LIQUID_OXYGEN == fuelType)
+			return new Fuel("LO2", 1.35, 32.0, 1141);
+		else if(Oxidizer.AIR == fuelType)
+			return new Fuel("Air", 1.4, 29.0, 870);
 		else
-			return new Fuel(1852.45);
+			throw new IllegalArgumentException("No fule found with that name");
 	}
 
 

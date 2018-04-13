@@ -15,6 +15,7 @@ import org.spacedrones.components.sensors.Sensor;
 import org.spacedrones.components.sensors.SensorFactory;
 import org.spacedrones.components.sensors.SensorType;
 import org.spacedrones.consumables.Fuel;
+import org.spacedrones.consumables.FuelConstituent;
 import org.spacedrones.data.SpacecraftDataProvider;
 import org.spacedrones.exceptions.ItemNotFoundException;
 import org.spacedrones.physics.Unit;
@@ -52,9 +53,9 @@ public class SpacecraftFactory {
 
 
 			double tankCapacity = 100 * Unit.l.value();
-			Fuel fuel = spacecraftDataProvider.getFuel(Fuel.HYDRAZINE);
+			FuelConstituent fuel = spacecraftDataProvider.getLiquid(Fuel.HYDRAZINE);
 			FuelStorageTank tank = FuelStorageTankFactory.getFuelStorageTank("CryogenicLiquidStorageTank", tankCapacity);
-			tank.setFuel(fuel, tankCapacity);
+			tank.setFuelConstituent(fuel, tankCapacity);
 
 			SimpleFuelSubSystem fuelDeliverySystem = FuelSubSystemFactory.getFuelSubsystem(
 					SimpleFuelSubSystem.BASIC_FUEL_SUBSYSTEM, SimpleFuelSubSystem.PROPULSION_FUEL_SUBSYSTEM);

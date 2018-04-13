@@ -1,10 +1,12 @@
 package org.spacedrones.components.propulsion;
 
 import org.junit.Test;
-import org.spacedrones.*;
+import org.spacedrones.Configuration;
 import org.spacedrones.components.propulsion.thrust.*;
-import org.spacedrones.consumables.*;
-import org.spacedrones.data.*;
+import org.spacedrones.consumables.Fuel;
+import org.spacedrones.consumables.FuelConstituent;
+import org.spacedrones.data.SpacecraftComponentData;
+import org.spacedrones.data.SpacecraftDataProvider;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.profiles.FuelConsumptionProfile;
 import org.spacedrones.profiles.FuelConsumptionProfileFactory;
@@ -13,8 +15,10 @@ import org.spacedrones.profiles.ThrustProfileFactory;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.spacecraft.OperationalSpecification;
 import org.spacedrones.spacecraft.PhysicalSpecification;
-import org.spacedrones.structures.storage.fuel.*;
-import org.spacedrones.utils.*;
+import org.spacedrones.structures.storage.fuel.CryogenicLiquidStorageTank;
+import org.spacedrones.structures.storage.fuel.FuelStorageTank;
+import org.spacedrones.structures.storage.fuel.FuelStorageTankFactory;
+import org.spacedrones.utils.Utils;
 
 import static org.junit.Assert.assertEquals;
 
@@ -230,8 +234,8 @@ public class EngineTest {
     double tankCapacity = 100 * Unit.m3.value();
     FuelStorageTank hydrazineTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.class.getSimpleName(), tankCapacity);
 
-    Fuel hydrazineFuel = spacecraftDataProvider.getFuel(Fuel.HYDRAZINE);
-    hydrazineTank.setFuel(hydrazineFuel, tankCapacity);
+		FuelConstituent hydrazineFuel = spacecraftDataProvider.getLiquid(Fuel.HYDRAZINE);
+    hydrazineTank.setFuelConstituent(hydrazineFuel, tankCapacity);
 
 
     System.out.println("capacity=" + hydrazineTank.getCapacity());

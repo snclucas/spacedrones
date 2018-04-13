@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.spacedrones.Configuration;
 import org.spacedrones.consumables.Fuel;
+import org.spacedrones.consumables.FuelConstituent;
 import org.spacedrones.data.SpacecraftDataProvider;
 import org.spacedrones.exceptions.NoFuelInTankException;
 import org.spacedrones.physics.Unit;
@@ -30,31 +31,31 @@ public class FuelStorageTankTest {
 		assertEquals("Tank capacity should be 1000L", capacity, testCryoTank.getCapacity(), 0.001);
 		assertEquals("Fuel tank should be empty on creation", 0.0, testCryoTank.getAmountOfFuelInTank(), 0.001);
 
-		Fuel fuel = spacecraftDataProvider.getFuel(Fuel.LIQUID_XENON);
+		FuelConstituent fuel = spacecraftDataProvider.getLiquid(Fuel.LIQUID_XENON);
 
 		//Add 500L of fuel
-		testCryoTank.setFuel(fuel, 436.45 * Unit.l.value());
+		testCryoTank.setFuelConstituent(fuel, 436.45 * Unit.l.value());
 		assertEquals("Fuel tank should have 436.45L", 436.45 * Unit.l.value(), testCryoTank.getAmountOfFuelInTank(), 0.001);
 		assertEquals("Fuel tank should have 436.45L", 43.645 * Unit.percent.value(), testCryoTank.getFuelLevel(), 0.001);
 
 		//Fill 100L of fuel
-		testCryoTank.fillFuel(100.00 * Unit.l.value());
+		testCryoTank.fillFuelConstituent(100.00 * Unit.l.value());
 		assertEquals("Fuel tank should have 536.45L", 536.45 * Unit.l.value(), testCryoTank.getAmountOfFuelInTank(), 0.001);
 		assertEquals("Fuel tank should have 436.45L", 53.645 * Unit.percent.value(), testCryoTank.getFuelLevel(), 0.001);
 
 		//Try to overfill the tank - 
-		testCryoTank.setFuel(fuel, 1000 * Unit.l.value());	
+		testCryoTank.setFuelConstituent(fuel, 1000 * Unit.l.value());
 		assertEquals("Fuel tank should have 1000L", 1000 * Unit.l.value(), testCryoTank.getAmountOfFuelInTank(), 0.001);
 		
-		testCryoTank.fillFuel(10000 * Unit.l.value());	
+		testCryoTank.fillFuelConstituent(10000 * Unit.l.value());
 		assertEquals("Fuel tank should have 1000L", 1000 * Unit.l.value(), testCryoTank.getAmountOfFuelInTank(), 0.001);
 
 
-		testCryoTank.removeFuel(300 * Unit.l.value());
+		testCryoTank.removeFuelConstituent(300 * Unit.l.value());
 		assertEquals("Fuel tank should have 700L", 700 * Unit.l.value(), testCryoTank.getAmountOfFuelInTank(), 0.001);
 
 
-		testCryoTank.removeFuel(800 * Unit.l.value());
+		testCryoTank.removeFuelConstituent(800 * Unit.l.value());
 		assertEquals("Fuel tank should have 0L", 0 * Unit.l.value(), testCryoTank.getAmountOfFuelInTank(), 0.001);
 		
 		
@@ -70,7 +71,7 @@ public class FuelStorageTankTest {
 	public void testTankThrowsErrorIfNoFuel() {
 		// Try to get the fuel, should throw NoFuelInTankException
 		FuelStorageTank testTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.class.getSimpleName(), capacity);
-		testTank.getFuel();
+		testTank.getFuelConstituent();
 	}
 
 

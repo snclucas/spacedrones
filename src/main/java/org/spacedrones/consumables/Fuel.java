@@ -1,22 +1,13 @@
 package org.spacedrones.consumables;
 
-public class Fuel {
-	
-	public static int LIQUID_XENON = "LiquidXenon".hashCode();
-	public static int LIQUID_HYDROGEN = "LiquidHydrogen".hashCode();
-	public static int LIQUID_OXYGEN = "LiquidOxygen".hashCode();
-	public static int HYDRAZINE = "Hydrazine".hashCode();
-	
-	double density;
+public class Fuel extends AbstractFuelConstituent {
+
+  public static int LIQUID_XENON = "LiquidXenon".hashCode();
+  public static int LIQUID_HYDROGEN = "LiquidHydrogen".hashCode();
+  public static int HYDRAZINE = "Hydrazine".hashCode();
 
 
-	public Fuel(double density) {
-		this.density = density;
-	}
-
-
-	public double getDensity() {
-		return this.density;
-	}
-	
+  public Fuel(final String symbol, final double gamma, final double density, final double molecularWeight) {
+    super(symbol, gamma, density, molecularWeight);
+  }
 }

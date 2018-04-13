@@ -1,20 +1,20 @@
 package org.spacedrones.structures.storage.fuel;
 
 import org.spacedrones.components.SpacecraftBusComponent;
-import org.spacedrones.consumables.Fuel;
+import org.spacedrones.consumables.FuelConstituent;
 
 public interface FuelStorageTank extends SpacecraftBusComponent {
 	double getCapacity();
 
 	double getFuelLevel();
 
-	void setFuel(Fuel fuel, double fuelVolume);
+	void setFuelConstituent(FuelConstituent fuelConstituent, double fuelVolume);
 	
-	void fillFuel(double fuelVolume);
+	void fillFuelConstituent(double fuelVolume);
 	
-	void removeFuel(double fuelVolume);
-	
-	Fuel getFuel();
+	void removeFuelConstituent(double fuelVolume);
+
+	FuelConstituent getFuelConstituent();
 	
 	double getAmountOfFuelInTank();
 

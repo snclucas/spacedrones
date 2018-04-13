@@ -66,13 +66,17 @@ public class SimpleFuelSubSystem extends AbstractBusComponent implements FuelSub
 
 	@Override
 	public double getMass(Unit unit) {
-		return super.getMass(unit) + fuelTank.getMass(unit);
+		return super.getMass(unit) +  + ((fuelTank != null)
+      ? fuelTank.getMass(unit)
+      : 0.0);
 	}
 
 
 	@Override
 	public double getVolume(Unit unit) {
-		return super.getVolume(unit) + fuelTank.getVolume(unit);
+		return super.getVolume(unit) + ((fuelTank != null)
+						? fuelTank.getVolume(unit)
+            : 0.0);
 	}
 
 
@@ -127,26 +131,22 @@ public class SimpleFuelSubSystem extends AbstractBusComponent implements FuelSub
 
 	@Override
 	public void tick(double dt) {
-
-    double fuelMassUsed = dt * fuelFlowRate;
-
-    double volumeOfFuelUsed = fuelMassUsed / fuelTank.getFuel().getDensity();
-    System.out.println(volumeOfFuelUsed);
-    fuelTank.removeFuel(volumeOfFuelUsed);
-
-    System.out.println("vol = " + fuelTank.getAmountOfFuelInTank());
-
+    double volumeOfFuelUsed = dt * fuelFlowRate;
+    fuelTank.removeFuelConstituent(volumeOfFuelUsed);
     fuelTank.tick(dt);
 	}
 
   @Override
-  public double getFuelFlowRate(double powerLevel) {
+  public double getFuelFlowRate(double powerLevel, Unit unit) {
     return fuelConsumptionProfile.getNormalizedFuelConsumption(powerLevel) *
-            (fuelConsumptionProfile.getMaximum() - fuelConsumptionProfile.getMinimum());
+            (fuelConsumptionProfile.getMaxFlowRate(unit) - fuelConsumptionProfile.getMinFlowRate(unit));
   }
 
   @Override
-  public void setFuelFlowRate(double flowRate) {
-    this.fuelFlowRate = flowRate;
+  public void setFuelFlowRate(double flowRate, Unit unit) {
+    if(unit.type() != Unit.Type.FLOWRATE) {
+      throw new IllegalArgumentException("Flow rate needs to be in flow rate units");
+    }
+    this.fuelFlowRate = flowRate * unit.value();
   }
 }

@@ -30,7 +30,7 @@ public abstract class AbstractThrustingFuelConsumingEngine extends AbstractThrus
 			double maximumThrust, EngineVector engineVector, boolean vectored) {
 		super(name, busResourceSpecification, maximumThrust,
 				engineVector, vectored);
-		this.fuelConsumptionProfile = new SimpleLinearFuelConsumptionProfile("Linear model", 0, 100);
+		this.fuelConsumptionProfile = new SimpleLinearFuelConsumptionProfile("Linear model", 0, 100, Unit.ls);
 	}
 
 	@Override
@@ -66,14 +66,14 @@ public abstract class AbstractThrustingFuelConsumingEngine extends AbstractThrus
   }
 
   @Override
-	public double getFuelConsumptionRate() {
-		return getFuelConsumptionRate(this.powerLevel);
+	public double getFuelConsumptionRate(Unit unit) {
+		return getFuelConsumptionRate(this.powerLevel, unit);
 	}
 
 	@Override
-	public double getFuelConsumptionRate(double powerLevel) {
+	public double getFuelConsumptionRate(double powerLevel, Unit unit) {
 		return fuelConsumptionProfile.getNormalizedFuelConsumption(powerLevel) *
-            (fuelConsumptionProfile.getMaximum() - fuelConsumptionProfile.getMinimum());
+            (fuelConsumptionProfile.getMaxFlowRate(unit) - fuelConsumptionProfile.getMinFlowRate(unit));
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public abstract class AbstractThrustingFuelConsumingEngine extends AbstractThrus
 
 	@Override
 	public void tick(double dt) {
-	  fuelSubSystem.setFuelFlowRate(getFuelConsumptionRate());
+	  fuelSubSystem.setFuelFlowRate(getFuelConsumptionRate(Unit.m3s), Unit.m3s);
 	  fuelSubSystem.tick(dt);
 	}
 
