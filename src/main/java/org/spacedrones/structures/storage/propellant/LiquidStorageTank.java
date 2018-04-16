@@ -1,4 +1,4 @@
-package org.spacedrones.structures.storage.fuel;
+package org.spacedrones.structures.storage.propellant;
 
 import org.spacedrones.spacecraft.BusComponentSpecification;
 

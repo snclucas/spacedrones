@@ -21,8 +21,8 @@ import org.spacedrones.exceptions.ItemNotFoundException;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.structures.hulls.Hull;
 import org.spacedrones.structures.hulls.HullFactory;
-import org.spacedrones.structures.storage.fuel.FuelStorageTank;
-import org.spacedrones.structures.storage.fuel.FuelStorageTankFactory;
+import org.spacedrones.structures.storage.propellant.Tank;
+import org.spacedrones.structures.storage.propellant.FuelStorageTankFactory;
 
 import java.security.InvalidParameterException;
 
@@ -54,7 +54,7 @@ public class SpacecraftFactory {
 
 			double tankCapacity = 100 * Unit.l.value();
 			FuelConstituent fuel = spacecraftDataProvider.getLiquid(Fuel.HYDRAZINE);
-			FuelStorageTank tank = FuelStorageTankFactory.getFuelStorageTank("CryogenicLiquidStorageTank", tankCapacity);
+			Tank tank = FuelStorageTankFactory.getFuelStorageTank("CryogenicLiquidStorageTank", tankCapacity);
 			tank.setFuelConstituent(fuel, tankCapacity);
 
 			SimpleFuelSubSystem fuelDeliverySystem = FuelSubSystemFactory.getFuelSubsystem(

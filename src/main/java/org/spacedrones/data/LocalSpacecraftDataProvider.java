@@ -16,8 +16,8 @@ import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.spacecraft.OperationalSpecification;
 import org.spacedrones.spacecraft.PhysicalSpecification;
-import org.spacedrones.structures.storage.fuel.CryogenicLiquidStorageTank;
-import org.spacedrones.structures.storage.fuel.LiquidStorageTank;
+import org.spacedrones.structures.storage.propellant.CryogenicLiquidStorageTank;
+import org.spacedrones.structures.storage.propellant.LiquidStorageTank;
 
 public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 

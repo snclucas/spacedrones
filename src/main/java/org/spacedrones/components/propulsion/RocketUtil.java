@@ -1,5 +1,7 @@
-package org.spacedrones.utils;
+package org.spacedrones.components.propulsion;
 
+
+import org.spacedrones.utils.AtmospheresUtil;
 
 import java.awt.*;
 import java.lang.Math;
@@ -121,7 +123,10 @@ public class RocketUtil extends java.applet.Applet {
 
     final double tt = (ttin + tref);
 
-    double[] vals = RocketEqns.compute(mweight, throatArea, exitAreaRatio, gamma, tt, psin, ptin, exitArea);
+    NozzledThrusterConfiguration nozzledThrusterConfiguration =
+            NozzledThrusterConfiguration.ConfigurationFromRatios(throatArea, plenomAreaRatio, exitAreaRatio);
+
+    double[] vals = RocketEqns.compute(nozzledThrusterConfiguration, mweight, gamma, tt, psin, ptin);
     double mFlow = vals[0];
     double mExit = vals[1];
     double uex = vals[2];
@@ -135,6 +140,8 @@ public class RocketUtil extends java.applet.Applet {
     double rthrt = Math.sqrt(throatArea / Math.PI);
     double rexit = Math.sqrt(exitArea / Math.PI);
     double rzero = Math.sqrt(azero / Math.PI);
+
+    System.out.println(throatArea + " " + exitArea + " " + exitAreaRatio + " " + exitAreaRatio*throatArea);
 
 
     loadOut(mFlow, mExit, psin, ptin, uex, exitArea, fgros, npr, pexit, machth);

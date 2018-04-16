@@ -1,44 +1,90 @@
 package org.spacedrones.utils;
 
 
+
 /*
-                Interactive Rocket Thrust Program
 
-     Program to perform one dimensional design and analysis of
-                        rocket nozzle
-                Derived from turbine nozzle program
+ROCKET PROPELLANT PERFORMANCE
 
-                     Version 1.5b   - 13 Dec 05
+Combustion chamber pressure, Pc = 68 atm (1000 PSI) ... Nozzle exit pressure, Pe = 1 atm
+Oxidizer	Fuel	Hypergolic	Mixture Ratio	Specific Impulse
+(s, sea level)
+Density Impulse
+(kg-s/l, S.L.)
+Liquid Oxygen
 
-                         Written by Tom Benson
-                       NASA Glenn Research Center
-
->                              NOTICE
->This software is in the Public Domain.  It may be freely copied and used in
->non-commercial products, assuming proper credit to the author is given.  IT
->MAY NOT BE RESOLD.  If you want to use the software for commercial
->products, contact the author.
->No copyright is claimed in the United States under Title 17, U. S. Code.
->This software is provided "as is" without any warranty of any kind, either
->express, implied, or statutory, including, but not limited to, any warranty
->that the software will conform to specifications, any implied warranties of
->merchantability, fitness for a particular purpose, and freedom from
->infringement, and any warranty that the documentation will conform to the
->program, or any warranty that the software will be error free.
->In no event shall NASA be liable for any damages, including, but not
->limited to direct, indirect, special or consequential damages, arising out
->of, resulting from, or in any way connected with this software, whether or
->not based on warranty, contract, tort or otherwise, whether or not injury
->was sustained by persons or property or otherwise, and whether or not loss
->was sustained from, or arose out of the results of, or use of, the software
->or services provided hereunder.
-
-      New Test :
-                 * change layout slightly
-                   add altitude input to flow
+Liquid Hydrogen	No	5.00	381	124
+Liquid Methane	No	2.77	299	235
+Ethanol + 25% water	No	1.29	269	264
+Kerosene	No	2.29	289	294
+Hydrazine	No	0.74	303	321
+MMH	No	1.15	300	298
+UDMH	No	1.38	297	286
+50-50	No	1.06	300	300
 
 
-                                                     TJB 13 Dec 05
+
+Liquid Fluorine
+
+Liquid Hydrogen	Yes	6.00	400	155
+Hydrazine	Yes	1.82	338	432
+
+
+
+FLOX-70
+
+Kerosene	Yes	3.80	320	385
+
+
+
+Nitrogen Tetroxide
+
+Kerosene	No	3.53	267	330
+Hydrazine	Yes	1.08	286	342
+MMH	Yes	1.73	280	325
+UDMH	Yes	2.10	277	316
+50-50	Yes	1.59	280	326
+
+
+
+
+Red-Fuming Nitric Acid
+
+(14% N2O4)	Kerosene	No	4.42	256	335
+Hydrazine	Yes	1.28	276	341
+MMH	Yes	2.13	269	328
+UDMH	Yes	2.60	266	321
+50-50	Yes	1.94	270	329
+
+
+
+
+Hydrogen Peroxide
+(85% concentration)
+
+Kerosene	No	7.84	258	324
+Hydrazine	Yes	2.15	269	328
+
+
+
+
+Nitrous Oxide
+
+HTPB (solid)	No	6.48	248	290
+
+
+
+Chlorine Pentafluoride
+
+Hydrazine	Yes	2.12	297	439
+
+
+
+Ammonium Perchlorate
+
+(solid)	Aluminum + HTPB (a)	No	2.12	277	474
+Aluminum + PBAN (b)	No	2.33	277	476
+
 */
 
 import java.awt.*;

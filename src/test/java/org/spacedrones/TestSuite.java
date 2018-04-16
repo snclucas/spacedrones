@@ -18,7 +18,7 @@ import org.spacedrones.software.PropulsionManagementSoftwareTest;
 import org.spacedrones.spacecraft.SpacecraftTestSuite;
 import org.spacedrones.status.SystemStatusTest;
 import org.spacedrones.structures.hulls.HullTest;
-import org.spacedrones.structures.storage.fuel.FuelStorageTankTest;
+import org.spacedrones.structures.storage.propellant.FuelStorageTankTest;
 import org.spacedrones.universe.UniverseTestSuite;
 import org.spacedrones.universe.celestialobjects.SensorSignalResponseProfileTest;
 import org.spacedrones.universe.celestialobjects.SubspaceBeaconTest;

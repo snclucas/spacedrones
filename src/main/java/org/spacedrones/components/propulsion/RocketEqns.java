@@ -1,4 +1,4 @@
-package org.spacedrones.utils;
+package org.spacedrones.components.propulsion;
 
 
 public class RocketEqns {
@@ -7,9 +7,10 @@ public class RocketEqns {
   private static double p0 = 101300; //14.7 ;
   private static double T0 = 298;//518 ;
 
-  public static double[] compute(double molecularWeight, double throatArea,
-                           double aratIn, double gammaIn, double exitTemperature,
-                           double ambientPressure, double totalPressure, double exitArea) {
+  public static double[] compute(NozzledThrusterConfiguration nozzledThrusterConfiguration,
+                                 double molecularWeight, double gammaIn,
+                                 double exitTemperature,
+                                 double ambientPressure, double totalPressure) {
     double temperatureRatio,aircor ;
     double mnsub,ptrat,anso,ansn,pso,psn,deriv ;
     int modeOut = 0;
@@ -23,11 +24,11 @@ public class RocketEqns {
     int counter = 0;
     double throatMach = 1.0 ;         // assume flow is choked
     aircor = RocketEqns.getMfr(1.0, rgas, gammaIn, g0, p0, T0) ;
-    double exitMach = RocketEqns.getMach(2,(aircor/aratIn), rgas, gammaIn, g0, p0, T0) ;
+    double exitMach = RocketEqns.getMach(2,(aircor/nozzledThrusterConfiguration.getExitAreaRatio()), rgas, gammaIn, g0, p0, T0) ;
 
     double pressureSupersonic = RocketEqns.getPisenRatio(exitMach, gammaIn) * totalPressure ;
 
-    double mflow = aircor* throatArea * (totalPressure/p0)/Math.sqrt(exitTemperature/T0) ;
+    double mflow = aircor* nozzledThrusterConfiguration.getThroatArea() * (totalPressure/p0)/Math.sqrt(exitTemperature/T0) ;
 
     double exitPressure = 0.0;
 
@@ -60,7 +61,7 @@ public class RocketEqns {
       if (ambientPressure > psub) {
         modeOut = 2 ;
         exitPressure = ambientPressure ;
-        anso  = exitArea ;
+        anso  = nozzledThrusterConfiguration.getThroatArea()*nozzledThrusterConfiguration.getExitAreaRatio() ;
         mnsup = exitMach ;
         mnsub = RocketEqns.getDownstreamMachNumber(mnsup,gammaIn) ;
         ptrat = RocketEqns.getTotalPressureRatio(mnsup,gammaIn) ;
@@ -68,10 +69,10 @@ public class RocketEqns {
         ansn = anso - 1. ;
         while ((Math.abs(exitPressure - pso) > .001) && (counter < 20)) {
           ++counter;
-          mnsup = RocketEqns.getMach(2,(aircor* throatArea /ansn), rgas,gammaIn, g0, p0, T0) ;
+          mnsup = RocketEqns.getMach(2,(aircor* nozzledThrusterConfiguration.getThroatArea() /ansn), rgas,gammaIn, g0, p0, T0) ;
           //mnsub = RocketEqns.getDownstreamMachNumber(mnsup,gammaIn) ;
           ptrat = RocketEqns.getTotalPressureRatio(mnsup,gammaIn) ;
-          exitMach = RocketEqns.getMach(0,(aircor/aratIn/ptrat), rgas,gammaIn, g0, p0, T0) ;
+          exitMach = RocketEqns.getMach(0,(aircor/nozzledThrusterConfiguration.getExitAreaRatio()/ptrat), rgas,gammaIn, g0, p0, T0) ;
           psn = RocketEqns.getPisenRatio(exitMach,gammaIn) * ptrat * totalPressure ;
           deriv = (psn-pso)/(ansn-anso) ;
           pso = psn ;
@@ -90,7 +91,9 @@ public class RocketEqns {
     else
       npr = 1000.;
 
-    double fgros = mflow * uex / g0 + (exitPressure - ambientPressure) * exitArea ;
+    double fgros = mflow * uex / g0 + (exitPressure - ambientPressure) *
+            nozzledThrusterConfiguration.getThroatArea() *
+            nozzledThrusterConfiguration.getExitAreaRatio() ;
 
     return new double[]{mflow, exitMach, uex, rns, fgros, npr, exitPressure, throatMach, modeOut};
   }

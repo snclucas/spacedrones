@@ -8,7 +8,7 @@ import org.spacedrones.software.Message;
 import org.spacedrones.software.SystemMessage;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
-import org.spacedrones.structures.storage.fuel.FuelStorageTank;
+import org.spacedrones.structures.storage.propellant.Tank;
 
 
 public class SimpleFuelSubSystem extends AbstractBusComponent implements FuelSubSystem {
@@ -22,7 +22,7 @@ public class SimpleFuelSubSystem extends AbstractBusComponent implements FuelSub
 
 	public final static String BASIC_FUEL_SUBSYSTEM = "Basic fuel subsystem";
 
-	private FuelStorageTank fuelTank = null;
+	private Tank fuelTank = null;
 
 	private int fuelSubsystemType;
 
@@ -36,7 +36,7 @@ public class SimpleFuelSubSystem extends AbstractBusComponent implements FuelSub
   }
 
 	public SimpleFuelSubSystem(String name, BusComponentSpecification busResourceSpecification,
-                             FuelStorageTank fuelTank, int fuelSubsystemType,
+                             Tank fuelTank, int fuelSubsystemType,
                              FuelConsumptionProfile fuelConsumptionProfile) {
 		super(name, busResourceSpecification);
 
@@ -45,7 +45,7 @@ public class SimpleFuelSubSystem extends AbstractBusComponent implements FuelSub
     this.fuelConsumptionProfile = fuelConsumptionProfile;
 	}
 
-  public void setFuelTank(FuelStorageTank fuelStorageTank) {
+  public void setFuelTank(Tank fuelStorageTank) {
     this.fuelTank = fuelStorageTank;
   }
 
@@ -57,7 +57,7 @@ public class SimpleFuelSubSystem extends AbstractBusComponent implements FuelSub
 
 //	public SystemStatusMessage registerSystemComputer(SystemComputer systemComputer) {
 //		SystemStatusMessage systemStatusMessage = super.registerSystemComputer(systemComputer);
-//		for(FuelStorageTank tank : fuelTanks)
+//		for(Tank tank : fuelTanks)
 //			tank.registerSystemComputer(systemComputer);
 //		return systemStatusMessage;
 //	}
@@ -80,7 +80,7 @@ public class SimpleFuelSubSystem extends AbstractBusComponent implements FuelSub
 	}
 
 
-	public FuelStorageTank getFuelTank() {
+	public Tank getFuelTank() {
 		return fuelTank;
 	}
 
@@ -132,7 +132,7 @@ public class SimpleFuelSubSystem extends AbstractBusComponent implements FuelSub
 	@Override
 	public void tick(double dt) {
     double volumeOfFuelUsed = dt * fuelFlowRate;
-    fuelTank.removeFuelConstituent(volumeOfFuelUsed);
+    fuelTank.empty(volumeOfFuelUsed);
     fuelTank.tick(dt);
 	}
 

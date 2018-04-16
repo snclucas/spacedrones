@@ -8,9 +8,9 @@ import org.spacedrones.consumables.Fuel;
 import org.spacedrones.consumables.FuelConstituent;
 import org.spacedrones.data.SpacecraftDataProvider;
 import org.spacedrones.physics.Unit;
-import org.spacedrones.structures.storage.fuel.CryogenicLiquidStorageTank;
-import org.spacedrones.structures.storage.fuel.FuelStorageTank;
-import org.spacedrones.structures.storage.fuel.FuelStorageTankFactory;
+import org.spacedrones.structures.storage.propellant.CryogenicLiquidStorageTank;
+import org.spacedrones.structures.storage.propellant.Tank;
+import org.spacedrones.structures.storage.propellant.FuelStorageTankFactory;
 
 import static org.junit.Assert.assertEquals;
 
@@ -23,7 +23,7 @@ public class FuelSubSystemTest {
 	@Test
 	public void testFuelSubSystem() {
 		double tankCapacity = 100 * Unit.l.value();
-		FuelStorageTank hydrazineTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.class.getSimpleName(), tankCapacity);
+		Tank hydrazineTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.class.getSimpleName(), tankCapacity);
 
 		assertEquals("Expected capacity of tank not correct", tankCapacity, hydrazineTank.getCapacity(), 0.001);
 

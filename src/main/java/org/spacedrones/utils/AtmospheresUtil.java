@@ -12,13 +12,13 @@ public class AtmospheresUtil {
     System.out.println(computeEarthAtmos(0.0));
   }
 
-  static double getGeopotential(double altitude_km)
+  public static double getGeopotential(double altitude_km)
   {
     double EARTH_RADIUS =  6356.766; // km
     return EARTH_RADIUS * altitude_km / (EARTH_RADIUS + altitude_km);
   }
 
-  static double computeEarthAtmos(double altitude /* meters */)   // Returns result in Pascals
+  public static double computeEarthAtmos(double altitude /* meters */)   // Returns result in Pascals
   {
     // Below 51 km: Practical Meteorology by Roland Stull, pg 12
     // Above 51 km: http://www.braeunig.us/space/atmmodel.htm
@@ -49,7 +49,7 @@ public class AtmospheresUtil {
 
   // geopot_height = earth_radius * altitude / (earth_radius + altitude) /// All in km
   // Temperature is in kelvins = 273.15 + Celsius
-  static double getStandardTemperature(double geopot_height)
+  public static double getStandardTemperature(double geopot_height)
   {
     // Standard atmospheric pressure
     // Below 51 km: Practical Meteorology by Roland Stull, pg 12
