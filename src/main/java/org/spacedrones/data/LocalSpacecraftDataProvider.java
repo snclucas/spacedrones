@@ -16,8 +16,8 @@ import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.spacecraft.OperationalSpecification;
 import org.spacedrones.spacecraft.PhysicalSpecification;
-import org.spacedrones.structures.storage.propellant.CryogenicLiquidStorageTank;
-import org.spacedrones.structures.storage.propellant.LiquidStorageTank;
+import org.spacedrones.structures.storage.propellant.*;
+
 
 public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 
@@ -41,7 +41,7 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg.value(), 1.1 * Unit.l.value()), new OperationalSpecification(1 * Unit.kW.value(), 1 * Unit.kFLOPs.value())));
 
-		if(componentType.equals(CryogenicLiquidStorageTank.class.getSimpleName()))
+		if(componentType.equals(GasStorageTank.class.getSimpleName()))
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg.value(), 1.3 * Unit.l.value()), new OperationalSpecification(1 * Unit.kW.value(), 1 * Unit.kFLOPs.value())));
 

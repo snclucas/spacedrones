@@ -1,10 +1,10 @@
 package org.spacedrones.materials;
 
 
-public interface Material {
+public interface Material extends Substance {
 	double getAtomicNumber();
 	double getMassNumber();
-	double getDensity();
+
 	double getImpactResistance();
 	double getEMResistance();
 	double getRadiationResistance();

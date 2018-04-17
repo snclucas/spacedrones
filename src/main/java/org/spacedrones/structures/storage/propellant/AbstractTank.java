@@ -1,20 +1,20 @@
 package org.spacedrones.structures.storage.propellant;
 
 import org.spacedrones.components.AbstractBusComponent;
-import org.spacedrones.consumables.FuelConstituent;
 import org.spacedrones.exceptions.NoFuelInTankException;
+import org.spacedrones.materials.*;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
 
-public abstract class AbstractFuelStorageTank extends AbstractBusComponent implements Tank {
+public abstract class AbstractTank extends AbstractBusComponent implements Tank {
 	private double amountOfFuelInTank;
 	private double capacity;
 	private double fuelLevel;
 
-	protected FuelConstituent fuel;
+	protected Fluid fuel;
 
-	public AbstractFuelStorageTank(String name, BusComponentSpecification busResourceSpecification, double capacity) {
+	public AbstractTank(String name, BusComponentSpecification busResourceSpecification, double capacity) {
 		super(name, busResourceSpecification);
 
 		setCapacity(capacity);
@@ -25,22 +25,22 @@ public abstract class AbstractFuelStorageTank extends AbstractBusComponent imple
 	public double getMass(Unit unit) {
 		if(fuel != null)
 			return super.getMass(unit) + fuel.getDensity() * amountOfFuelInTank;
-		else 
+		else
 			return super.getMass(unit);
 	}
 
 
-	public FuelConstituent getFuelConstituent() {
+	public Fluid getContent() {
 		if(fuel != null)
 			return fuel;
-		else 
+		else
 			throw new NoFuelInTankException("No fuel in tank [" + name() + "]");
 	}
 
 
 
 
-	public void setFuelConstituent(FuelConstituent fuel, double fuelVolume) {
+	public void setContent(Fluid fuel, double fuelVolume) {
 		this.fuel = fuel;
 		if(fuelVolume >= capacity)
 			amountOfFuelInTank = capacity;
@@ -54,7 +54,7 @@ public abstract class AbstractFuelStorageTank extends AbstractBusComponent imple
 	public void empty(double volume) {
 		if(volume < amountOfFuelInTank)
 			amountOfFuelInTank -= volume;
-		else 
+		else
 			amountOfFuelInTank = 0.0;
 
 	}
@@ -63,7 +63,7 @@ public abstract class AbstractFuelStorageTank extends AbstractBusComponent imple
 
 
 	public void fill(double volume) {
-		getFuelConstituent();
+		getContent();
 		if(volume >= capacity)
 			amountOfFuelInTank = capacity;
 		else
@@ -124,5 +124,5 @@ public abstract class AbstractFuelStorageTank extends AbstractBusComponent imple
 	@Override
 	public void tick(double dt) {
 	}
-	
+
 }

@@ -235,7 +235,7 @@ public class EngineTest {
     Tank hydrazineTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.class.getSimpleName(), tankCapacity);
 
 		FuelConstituent hydrazineFuel = spacecraftDataProvider.getLiquid(Fuel.HYDRAZINE);
-    hydrazineTank.setFuelConstituent(hydrazineFuel, tankCapacity);
+    hydrazineTank.setContent(hydrazineFuel, tankCapacity);
 
 
     System.out.println("capacity=" + hydrazineTank.getCapacity());

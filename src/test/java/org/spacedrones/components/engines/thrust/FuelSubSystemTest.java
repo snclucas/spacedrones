@@ -36,7 +36,7 @@ public class FuelSubSystemTest {
 
 		FuelConstituent hydrazineFuel = spacecraftDataProvider.getLiquid(Fuel.HYDRAZINE);
 
-		hydrazineTank.setFuelConstituent(hydrazineFuel, tankCapacity);
+		hydrazineTank.setContent(hydrazineFuel, tankCapacity);
 
 		//Should have 100L of fuel
 		assertEquals("Expected fuel level of tank not correct", tankCapacity, hydrazineTank.getAmountOfFuelInTank(), 0.001);
