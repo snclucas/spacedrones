@@ -77,7 +77,7 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 	@Override
 	public String toString() {
 		return "SimpleSolarArray [arrayArea=" + arrayArea + ", efficiency="
-				+ efficiency + ", lightFlux=" + getLightFlux() + "]";
+				+ efficiency + ", lightFlux=]";
 	}
 
 	@Override
@@ -86,10 +86,11 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 	}
 
 	private double getLightFlux() {
-		String spacecraftIdent = (String)(this.getSystemComputer().getSystemData("spaceraft-ident"));
-		Coordinates coordinates = Universe.getInstance()
-				.getSpacecraftLocation(spacecraftIdent);
+		Coordinates coordinates = Universe.getInstance().getSpacecraftLocation(getIdent());
 		return environmentDataProvider.getEnvironmentData(coordinates, StdAppMagnitude.V).getSolarFlux();
 	}
+
+
+
 
 }

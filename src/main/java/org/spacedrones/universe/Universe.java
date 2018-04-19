@@ -49,6 +49,7 @@ public class Universe implements ObjectLocationDataProvider, EnvironmentDataProv
 	}
 
 	public void addObject(Taxonomic object, Coordinates coordinates, double[] velocity) {
+		System.out.println("Adding object: " + object.id());
 		spacecraftDataProvider.addObject(object, coordinates, velocity);
 	}
 

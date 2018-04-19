@@ -22,6 +22,13 @@ public abstract class AbstractPowerGenerator extends AbstractBusComponent implem
 	}
 
 	@Override
+	public String getIdent() {
+	  String id = isRegisteredWithSystemComputer() ? getSystemComputer().id() : id();
+    System.out.println("Getting ID to be: " + id);
+    return id;
+	}
+
+	@Override
 	public void tick(double dt) {
 	}
 	

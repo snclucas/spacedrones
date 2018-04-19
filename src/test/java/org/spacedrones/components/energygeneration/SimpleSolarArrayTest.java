@@ -1,9 +1,11 @@
 package org.spacedrones.components.energygeneration;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.spacedrones.Configuration;
 import org.spacedrones.data.SpacecraftComponentData;
 import org.spacedrones.data.SpacecraftDataProvider;
+import org.spacedrones.data.UniversePopulator;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.Spacecraft;
 import org.spacedrones.spacecraft.SpacecraftFactory;
@@ -20,6 +22,13 @@ import static org.junit.Assert.assertEquals;
 
 public class SimpleSolarArrayTest {
 
+  private Universe universe = Universe.getInstance();
+
+  @Before
+  public void setUp() throws Exception {
+    UniversePopulator.populate(universe);
+  }
+add objects and not distinguish if they are spacecraft
 	/*  */
 	@Test
 	public void testSimpleSolarArray() {
@@ -31,8 +40,16 @@ public class SimpleSolarArrayTest {
 
 		SimpleSolarArray simpleSolarArray = new SimpleSolarArray("Test simple solar aarray",
 				data.getBusComponentSpecification(), arrayArea, efficiency);
+
+    universe.addObject(simpleSolarArray, new Coordinates(0.0, 0.0, 0.0), new double[]{0.0, 0.0, 0.0});
+
 		assertEquals("Array area of simple solar array incorrect", arrayArea, simpleSolarArray.getArrayArea(), 0.001);
 		assertEquals("Efficiency of simple solar array incorrect", efficiency, simpleSolarArray.getEfficiency(), 0.001);
+
+    simpleSolarArray.getPowerOutput(Unit.W);
+
+
+
 	}
 
 
