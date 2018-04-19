@@ -34,7 +34,7 @@ public class FuelSubSystemFactory {
 
 			return fuelDeliverySubSystem;
 		default:
-			throw new InvalidParameterException("No such fuel subsystem.");
+			throw new InvalidParameterException("No such fluid subsystem.");
 
 		}
 

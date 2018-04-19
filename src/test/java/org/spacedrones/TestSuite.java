@@ -6,10 +6,10 @@ import org.spacedrones.components.ComponentsTestSuite;
 import org.spacedrones.components.computers.ComputerTestSuite;
 import org.spacedrones.components.energygeneration.EnergyGenerationTestSuite;
 import org.spacedrones.components.energygeneration.SubspacePowerGeneratorTest;
-import org.spacedrones.components.engines.thrust.FuelSubSystemTest;
+import org.spacedrones.components.engines.thrust.LiquidFuelSubSystemTest;
 import org.spacedrones.components.propulsion.PropulsionTestSuite;
 import org.spacedrones.components.sensors.SensorTestSuite;
-import org.spacedrones.consumables.FuelTest;
+import org.spacedrones.consumables.LiquidFuelTest;
 import org.spacedrones.data.SpacecraftComponentDataTest;
 import org.spacedrones.materials.CompositeMaterialTest;
 import org.spacedrones.physics.PhysicsTest;
@@ -18,7 +18,7 @@ import org.spacedrones.software.PropulsionManagementSoftwareTest;
 import org.spacedrones.spacecraft.SpacecraftTestSuite;
 import org.spacedrones.status.SystemStatusTest;
 import org.spacedrones.structures.hulls.HullTest;
-import org.spacedrones.structures.storage.propellant.FuelStorageTankTest;
+import org.spacedrones.structures.storage.propellant.LiquidFuelStorageTankTest;
 import org.spacedrones.universe.UniverseTestSuite;
 import org.spacedrones.universe.celestialobjects.SensorSignalResponseProfileTest;
 import org.spacedrones.universe.celestialobjects.SubspaceBeaconTest;
@@ -31,8 +31,8 @@ import org.spacedrones.utils.math.DistanceSolverTest;
 	SensorTestSuite.class,
 	SubspacePowerGeneratorTest.class,
 	SpacecraftTestSuite.class,
-	FuelSubSystemTest.class,
-	FuelStorageTankTest.class,
+	LiquidFuelSubSystemTest.class,
+	LiquidFuelStorageTankTest.class,
 	PropulsionTestSuite.class,
 	ComputerTestSuite.class,
 	UniverseTestSuite.class,
@@ -40,7 +40,7 @@ import org.spacedrones.utils.math.DistanceSolverTest;
 	PhysicsTest.class,
 	ComponentsTestSuite.class,
 	HullTest.class,
-	FuelTest.class,
+	LiquidFuelTest.class,
 	DistanceSolverTest.class,
 	CompositeMaterialTest.class,
 	SpacecraftComponentDataTest.class,

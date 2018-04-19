@@ -9,20 +9,19 @@ import org.spacedrones.components.energygeneration.PowerGenerationFactory;
 import org.spacedrones.components.energygeneration.PowerGenerator;
 import org.spacedrones.components.propulsion.EngineFactory;
 import org.spacedrones.components.propulsion.thrust.FuelConsumingEngine;
-import org.spacedrones.components.propulsion.thrust.SimpleFuelSubSystem;
 import org.spacedrones.components.propulsion.thrust.FuelSubSystemFactory;
+import org.spacedrones.components.propulsion.thrust.SimpleFuelSubSystem;
 import org.spacedrones.components.sensors.Sensor;
 import org.spacedrones.components.sensors.SensorFactory;
 import org.spacedrones.components.sensors.SensorType;
-import org.spacedrones.consumables.Fuel;
-import org.spacedrones.consumables.FuelConstituent;
 import org.spacedrones.data.SpacecraftDataProvider;
 import org.spacedrones.exceptions.ItemNotFoundException;
+import org.spacedrones.materials.Liquid;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.structures.hulls.Hull;
 import org.spacedrones.structures.hulls.HullFactory;
-import org.spacedrones.structures.storage.propellant.Tank;
 import org.spacedrones.structures.storage.propellant.FuelStorageTankFactory;
+import org.spacedrones.structures.storage.propellant.Tank;
 
 import java.security.InvalidParameterException;
 
@@ -53,9 +52,9 @@ public class SpacecraftFactory {
 
 
 			double tankCapacity = 100 * Unit.l.value();
-			FuelConstituent fuel = spacecraftDataProvider.getLiquid(Fuel.HYDRAZINE);
+			Liquid fuel = spacecraftDataProvider.getLiquid(Liquid.HYDRAZINE);
 			Tank tank = FuelStorageTankFactory.getFuelStorageTank("CryogenicLiquidStorageTank", tankCapacity);
-			tank.setContent(fuel, tankCapacity);
+			tank.setContents(fuel);
 
 			SimpleFuelSubSystem fuelDeliverySystem = FuelSubSystemFactory.getFuelSubsystem(
 					SimpleFuelSubSystem.BASIC_FUEL_SUBSYSTEM, SimpleFuelSubSystem.PROPULSION_FUEL_SUBSYSTEM);

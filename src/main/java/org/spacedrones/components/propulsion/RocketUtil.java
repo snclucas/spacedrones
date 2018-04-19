@@ -1139,11 +1139,11 @@ public class RocketUtil extends java.applet.Applet {
             tcomch.addItem("Table");
             tcomch.select(1);
 
-            add(new Label("Fuel", Label.RIGHT));
+            add(new Label("LiquidFuel", Label.RIGHT));
             add(fuelch);
 
             add(new Label(" ", Label.RIGHT));
-            add(new Label("Ox / Fuel Ratio", Label.RIGHT));
+            add(new Label("Ox / LiquidFuel Ratio", Label.RIGHT));
 
             add(new Label("Mol. Wt. Ex", Label.RIGHT));
             add(molch);
@@ -1828,7 +1828,7 @@ public class RocketUtil extends java.applet.Applet {
         o6.setBackground(Color.black);
         o6.setForeground(Color.yellow);
 
-        add(new Label("Fuel", Label.RIGHT));
+        add(new Label("LiquidFuel", Label.RIGHT));
         add(o16);
         add(new Label("Oxidizer", Label.RIGHT));
         add(o17);

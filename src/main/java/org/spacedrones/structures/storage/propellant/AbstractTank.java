@@ -1,125 +1,96 @@
 package org.spacedrones.structures.storage.propellant;
 
 import org.spacedrones.components.AbstractBusComponent;
-import org.spacedrones.exceptions.NoFuelInTankException;
+import org.spacedrones.exceptions.EmptyTankException;
 import org.spacedrones.materials.*;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.status.SystemStatus;
 
 public abstract class AbstractTank extends AbstractBusComponent implements Tank {
-	private double amountOfFuelInTank;
-	private double capacity;
-	private double fuelLevel;
+	private double volumeOfContents;
+	private final double capacity;
 
-	protected Fluid fuel;
+	protected Fluid fluid;
 
-	public AbstractTank(String name, BusComponentSpecification busResourceSpecification, double capacity) {
+	AbstractTank(String name, BusComponentSpecification busResourceSpecification, double capacity) {
 		super(name, busResourceSpecification);
-
-		setCapacity(capacity);
-		this.fuelLevel = 0.0;
+		this.fluid = null;
+		this.capacity = capacity;
+		this.volumeOfContents = 0.0;
 	}
 
 	@Override
 	public double getMass(Unit unit) {
-		if(fuel != null)
-			return super.getMass(unit) + fuel.getDensity() * amountOfFuelInTank;
+		if(fluid != null)
+			return super.getMass(unit) + fluid.getDensity() * volumeOfContents;
 		else
 			return super.getMass(unit);
 	}
 
-
-	public Fluid getContent() {
-		if(fuel != null)
-			return fuel;
+  @Override
+	public Fluid getContents() {
+		if(fluid != null)
+			return fluid;
 		else
-			throw new NoFuelInTankException("No fuel in tank [" + name() + "]");
+			throw new EmptyTankException("No fluid in tank [" + name() + "]");
 	}
 
-
-
-
-	public void setContent(Fluid fuel, double fuelVolume) {
-		this.fuel = fuel;
-		if(fuelVolume >= capacity)
-			amountOfFuelInTank = capacity;
-		else
-			amountOfFuelInTank = fuelVolume;
+  @Override
+	public void setContents(Fluid fluid) {
+		this.fluid = fluid;
 	}
-
-
 
 	@Override
 	public void empty(double volume) {
-		if(volume < amountOfFuelInTank)
-			amountOfFuelInTank -= volume;
+    if(fluid == null)
+      throw new EmptyTankException("No fluid in tank [" + name() + "]");
+		if(volume < volumeOfContents)
+			volumeOfContents -= volume;
 		else
-			amountOfFuelInTank = 0.0;
-
+			volumeOfContents = 0.0;
 	}
 
-
-
-
+  @Override
 	public void fill(double volume) {
-		getContent();
+    if(fluid == null)
+      throw new EmptyTankException("No fluid in tank [" + name() + "]");
 		if(volume >= capacity)
-			amountOfFuelInTank = capacity;
+			volumeOfContents = capacity;
 		else
-			amountOfFuelInTank += volume;
+			volumeOfContents += volume;
 	}
-
-
-	public double getAmountOfFuelInTank() {
-		return this.amountOfFuelInTank;
-	}
-
-
-
 
 	@Override
 	public double getLevel() {
-		return getAmountOfFuelInTank() / getCapacity();
+		return volumeOfContents / capacity;
 	}
 
+  @Override
+  public double getVolumeLevel() {
+    return volumeOfContents;
+  }
 
-
-
-
-
+  @Override
 	public double getCapacity() {
 		return capacity;
 	}
-
-
-	public void setCapacity(double capacity) {
-		this.capacity = capacity;
-	}
-
-
 
 	@Override
 	public double getCurrentPower(Unit unit) {
 		return getNominalPower(unit);
 	}
 
-
-
 	@Override
 	public double getCurrentCPUThroughput(Unit unit) {
 		return getNominalCPUThroughput(unit);
 	}
-
-
-
 
 	@Override
 	public SystemStatus runDiagnostics(int level) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public void tick(double dt) {

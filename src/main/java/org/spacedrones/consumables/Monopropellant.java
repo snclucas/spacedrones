@@ -41,7 +41,7 @@ public class Monopropellant implements Propellant {
     return name;
   }
 
-  public double getGamma() {
+  public double getSpecificHeatRatio() {
     return gamma;
   }
 

@@ -7,7 +7,7 @@ package org.spacedrones.utils;
 ROCKET PROPELLANT PERFORMANCE
 
 Combustion chamber pressure, Pc = 68 atm (1000 PSI) ... Nozzle exit pressure, Pe = 1 atm
-Oxidizer	Fuel	Hypergolic	Mixture Ratio	Specific Impulse
+Oxidizer	LiquidFuel	Hypergolic	Mixture Ratio	Specific Impulse
 (s, sea level)
 Density Impulse
 (kg-s/l, S.L.)
@@ -1502,11 +1502,11 @@ public class Rnoz extends java.applet.Applet {
             tcomch.addItem("Table");
             tcomch.select(1) ;
 
-            add(new Label("Fuel", Label.RIGHT)) ;
+            add(new Label("LiquidFuel", Label.RIGHT)) ;
             add(fuelch) ;
 
             add(new Label(" ", Label.RIGHT)) ;
-            add(new Label("Ox / Fuel Ratio", Label.RIGHT)) ;
+            add(new Label("Ox / LiquidFuel Ratio", Label.RIGHT)) ;
 
             add(new Label("Mol. Wt. Ex", Label.RIGHT)) ;
             add(molch) ;
@@ -2196,7 +2196,7 @@ public class Rnoz extends java.applet.Applet {
         o6.setBackground(Color.black) ;
         o6.setForeground(Color.yellow) ;
 
-        add(new Label("Fuel", Label.RIGHT)) ;
+        add(new Label("LiquidFuel", Label.RIGHT)) ;
         add(o16) ;
         add(new Label("Oxidizer", Label.RIGHT)) ;
         add(o17) ;

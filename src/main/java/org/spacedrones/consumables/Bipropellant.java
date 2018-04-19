@@ -1,12 +1,14 @@
 package org.spacedrones.consumables;
 
 
+import org.spacedrones.materials.Liquid;
+
 public class Bipropellant implements Propellant{
 
   private final String name;
 
-  private final FuelConstituent fuel;
-  private final FuelConstituent oxidizer;
+  private final Liquid fuel;
+  private final Liquid oxidizer;
 
   private double fuelMassFraction;
   private double oxidizerMassFraction;
@@ -15,7 +17,7 @@ public class Bipropellant implements Propellant{
 
   private final double averageExhaustVelocity;
 
-  private final double mixtureRatio; //Mixture ratio: mass oxidizer / mass fuel
+  private final double mixtureRatio; //Mixture ratio: mass oxidizer / mass fluid
 
   private final double chamberTemperature;
 
@@ -23,15 +25,17 @@ public class Bipropellant implements Propellant{
 
   private final double characteristicVelocity;
 
+  private final double Isp;
+
 
   public void setMassFractions(final double mixtureRatio) {
     this.fuelMassFraction = 1/(mixtureRatio + 1);
     this.oxidizerMassFraction = 1 - this.fuelMassFraction;
   }
 
-  public Bipropellant(final String name, final FuelConstituent fuel, final FuelConstituent oxidizer, final double mixtureRatio,
+  public Bipropellant(final String name, final Liquid fuel, final Liquid oxidizer, final double mixtureRatio,
                       final double averageExhaustVelocity, final double chamberTemperature,
-                      final double characteristicVelocity) {
+                      final double characteristicVelocity, final double Isp) {
     this.name = name;
     this.fuel = fuel;
     this.oxidizer = oxidizer;
@@ -40,23 +44,25 @@ public class Bipropellant implements Propellant{
     this.averageExhaustVelocity = averageExhaustVelocity;
     this.chamberTemperature = chamberTemperature;
     this.characteristicVelocity = characteristicVelocity;
+    this.Isp = Isp;
 
-    gamma = getFuel().getGamma() * fuelMassFraction +
-            getOxidizer().getGamma() * oxidizerMassFraction;
+    gamma = getFuel().getSpecificHeatRatio() * fuelMassFraction +
+            getOxidizer().getSpecificHeatRatio() * oxidizerMassFraction;
 
     bulkDensity = getFuel().getDensity() * fuelMassFraction +
             getOxidizer().getDensity() * oxidizerMassFraction;
   }
 
+
   public String getName() {
     return name;
   }
 
-  public FuelConstituent getFuel() {
+  public Liquid getFuel() {
     return fuel;
   }
 
-  public FuelConstituent getOxidizer() {
+  public Liquid getOxidizer() {
     return oxidizer;
   }
 
@@ -68,7 +74,7 @@ public class Bipropellant implements Propellant{
     return oxidizerMassFraction;
   }
 
-  public double getGamma() {
+  public double getSpecificHeatRatio() {
     return gamma;
   }
 

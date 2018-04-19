@@ -28,7 +28,7 @@ public class SimpleLinearFuelConsumptionProfile extends AbstractProfile implemen
 
 	@Override
 	public String toString() {
-		return "Simple Linear Fuel Consumption";
+		return "Simple Linear LiquidFuel Consumption";
 	}
 
 	@Override

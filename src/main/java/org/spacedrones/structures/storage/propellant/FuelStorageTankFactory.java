@@ -19,7 +19,7 @@ public class FuelStorageTankFactory {
         double volume = capacity * tankMassOverheadFraction;
         BusComponentSpecification busSpecs = data.getBusComponentSpecification();
         busSpecs.setVolume(volume);
-        return new LiquidStorageTank(tankType, busSpecs, capacity);
+        return new GasStorageTank(tankType, busSpecs, capacity);
       }
       case "LiquidStorageTank": {
         double tankMassOverheadFraction = 1.3;
@@ -29,7 +29,7 @@ public class FuelStorageTankFactory {
         return new LiquidStorageTank(tankType, busSpecs, capacity);
       }
       default:
-        throw new ItemNotFoundException("No fuel tank found with type: " + tankType);
+        throw new ItemNotFoundException("No fluid tank found with type: " + tankType);
     }
 
 	}

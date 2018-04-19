@@ -1,10 +1,10 @@
 package org.spacedrones.exceptions;
 
-public class NoFuelInTankException extends RuntimeException {
+public class EmptyTankException extends RuntimeException {
 
 	private static final long serialVersionUID = -700448799990176916L;
 
-	public NoFuelInTankException(String message) {
+	public EmptyTankException(String message) {
 		super(message);
 	}
 	

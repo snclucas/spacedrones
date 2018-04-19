@@ -11,7 +11,7 @@ public interface Propellant {
 
   double getCharacteristicVelocity();
 
-  double getGamma();
+  double getSpecificHeatRatio();
 
   double getBulkDensity();
 }

@@ -21,6 +21,7 @@ public class RocketEqns {
     //gm1   = gammaIn - 1.0 ;
     //fac1  = gm1 / gammaIn ;
 
+
     int counter = 0;
     double throatMach = 1.0 ;         // assume flow is choked
     aircor = RocketEqns.getMfr(1.0, rgas, gammaIn, g0, p0, T0) ;
@@ -196,6 +197,15 @@ public class RocketEqns {
     double fac1 = Math.pow((1.0+.5*(gamma-1.0)*machNumber*machNumber),fac2);
     return front * Math.sqrt(gamma/gasConstant) * machNumber / fac1 ;
   }
+
+  public static double calculateCharacteristicVelocity(double chamberPressureInPa, double throatAreaInSqM, double massFlowRateInKgPerSec) {
+    return (chamberPressureInPa * throatAreaInSqM) / massFlowRateInKgPerSec;
+  }
+
+  public static double calculateMassFlowRate(double chamberPressureInPa, double throatAreaInSqM, double characteristicVelocityInMPerS) {
+    return (chamberPressureInPa * throatAreaInSqM) / characteristicVelocityInMPerS;
+  }
+
 
   public static void main(String[] args) {
     double corair = getMfr(2, 287.778, 1.4, g0, p0, T0);

@@ -9,14 +9,18 @@ import org.spacedrones.components.energygeneration.SimpleSolarArray;
 import org.spacedrones.components.energygeneration.SubspacePowerExtractor;
 import org.spacedrones.components.propulsion.thrust.SimpleIonEngine;
 import org.spacedrones.components.propulsion.thrust.SimpleThruster;
-import org.spacedrones.components.sensors.*;
-import org.spacedrones.consumables.Fuel;
+import org.spacedrones.components.sensors.FractalSensorArray;
+import org.spacedrones.components.sensors.LinearSensorArray;
+import org.spacedrones.components.sensors.StarTracker;
 import org.spacedrones.consumables.Oxidizer;
+import org.spacedrones.materials.Gas;
+import org.spacedrones.materials.Liquid;
 import org.spacedrones.physics.Unit;
 import org.spacedrones.spacecraft.BusComponentSpecification;
 import org.spacedrones.spacecraft.OperationalSpecification;
 import org.spacedrones.spacecraft.PhysicalSpecification;
-import org.spacedrones.structures.storage.propellant.*;
+import org.spacedrones.structures.storage.propellant.GasStorageTank;
+import org.spacedrones.structures.storage.propellant.LiquidStorageTank;
 
 
 public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
@@ -110,20 +114,26 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 		return null;
 	}
 
-
 	@Override
-	public Fuel getLiquid(int fuelType) {
-		if(Fuel.LIQUID_HYDROGEN == fuelType)
-			return new Fuel("LH2", 1.32, 70.8, 2.016);
-		else if(Oxidizer.LIQUID_OXYGEN == fuelType)
-			return new Fuel("LO2", 1.35, 32.0, 1141);
-		else if(Oxidizer.AIR == fuelType)
-			return new Fuel("Air", 1.4, 29.0, 870);
+	public Liquid getLiquid(int liquidType) {
+		if(Liquid.LIQUID_HYDROGEN == liquidType)
+			return new Liquid("LH2", 1.32, 70.8, 2.016);
+		else if(Oxidizer.LIQUID_OXYGEN == liquidType)
+			return new Liquid("LO2", 1.35, 32.0, 1141);
+		else if(Oxidizer.AIR == liquidType)
+			return new Liquid("Air", 1.4, 29.0, 870);
+    else if(Liquid.LIQUID_XENON == liquidType)
+      return new Liquid("Liquid Xenon", 2942, 1.7, 131.293);
 		else
-			throw new IllegalArgumentException("No fule found with that name");
+			throw new IllegalArgumentException("No liquid found with that name");
 	}
 
-
-
+	@Override
+	public Gas getGas(int gasType) {
+		if(Gas.HYDROGEN == gasType)
+			return new Gas("Hydrogen", 1.32, 70.8, 2.016);
+		else
+			throw new IllegalArgumentException("No liquid found with that name");
+	}
 
 }

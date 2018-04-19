@@ -42,18 +42,18 @@ public abstract class AbstractThrustingFuelConsumingEngine extends AbstractThrus
 		if(busComponents.size() > 0) {
 			for(SpacecraftBusComponent component : busComponents) {
 				if( ((SimpleFuelSubSystem)component).getFuelSubsystemType() == SimpleFuelSubSystem.PROPULSION_FUEL_SUBSYSTEM) {
-					systemStatus.addSystemMessage("Propulsion fuel subsystem found", Status.OK);
+					systemStatus.addSystemMessage("Propulsion fluid subsystem found", Status.OK);
 					SimpleFuelSubSystem fuelSubSystem = (SimpleFuelSubSystem)busComponents.get(0);
 					if(fuelSubSystem.hasFuelTank() == false)
-						systemStatus.addSystemMessage("No fuel storage tanks found",
+						systemStatus.addSystemMessage("No fluid storage tanks found",
 										Status.WARNING);
 					else
-						systemStatus.addSystemMessage("Fuel tank(s) found", Status.OK);
+						systemStatus.addSystemMessage("LiquidFuel tank(s) found", Status.OK);
 				}
 			}
 		}
 		else {
-			systemStatus.addSystemMessage("No fuel subsystem found",
+			systemStatus.addSystemMessage("No fluid subsystem found",
 							Status.WARNING);
 		}
 		systemStatus.addSystemMessage(name() + " online.", Status.OK);

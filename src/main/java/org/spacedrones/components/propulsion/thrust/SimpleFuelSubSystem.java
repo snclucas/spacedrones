@@ -20,7 +20,7 @@ public class SimpleFuelSubSystem extends AbstractBusComponent implements FuelSub
 
   private FuelConsumptionProfile fuelConsumptionProfile;
 
-	public final static String BASIC_FUEL_SUBSYSTEM = "Basic fuel subsystem";
+	public final static String BASIC_FUEL_SUBSYSTEM = "Basic fluid subsystem";
 
 	private Tank fuelTank = null;
 
